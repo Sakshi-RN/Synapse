@@ -9,7 +9,7 @@ import { BackIcon, Logo } from '../../Assets/svg';
 import images from '../../Themes/Images';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
-import OTPInput from '../../Components/OTPInput';
+import OTPInput from '../../Container/OTPInput';
 import CustomButton from '../../Components/CustomButton';
 
 const OTPVerification = () => {

@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 // import SignUp from '../Screens/SignUp';
 import SignIn from '../Screens/SignIn';
 import OtpVerify from '../Screens/OtpVerify';
+import BTabNavigation from './BTabNavigation';
 
 
 const Stack = createStackNavigator();
@@ -13,8 +14,7 @@ export default function AuthNavigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="SignIn"
-    
+        initialRouteName="BTabNavigation"
       >
 
         <Stack.Screen
@@ -24,7 +24,7 @@ export default function AuthNavigation() {
             headerShown: false,
           }}
         />
-    
+
         <Stack.Screen
           name="OtpVerify"
           component={OtpVerify}
@@ -32,7 +32,13 @@ export default function AuthNavigation() {
             headerShown: false,
           }}
         />
-     
+        <Stack.Screen
+          name="BTabNavigation"
+          component={BTabNavigation}
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
