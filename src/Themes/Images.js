@@ -4,7 +4,7 @@ const images = {
   bgImg: require(`${BASEURL}bgImg.png`),
   headerBgImg: require(`${BASEURL}headerBgImg.png`),
   bgHome: require(`${BASEURL}bgHome.png`),
-   
-};
+
+}
 
 export default images;
