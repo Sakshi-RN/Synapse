@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
       height: 4,
     },
     shadowOpacity: 4,
-    shadowRadius: 4,
+    shadowRadius: 5,
     elevation: 5,
     position: 'absolute',
     left: 0,

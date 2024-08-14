@@ -19,7 +19,8 @@ const Colors = {
   blue:'#01728B',
   lightblue:'#F2FDFF',
   newColor:'#F5F5F5',
-  paleblue:'#D9F4FA'
+  paleblue:'#D9F4FA',
+  OFFWHITE:"#D9D9D9"
 };
 
 export default Colors;

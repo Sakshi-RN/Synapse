@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity, ImageBackground, Platform } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
@@ -19,13 +19,6 @@ const HomeScreen = () => {
         { id: '3', name: 'Concierge', role: '', IconName: ConciergeImage }
     ];
 
-    const actions = [
-        { id: '1', name: 'Survey History', IconComponent: SurveyHistory },
-        { id: '2', name: 'Appointment', IconComponent: AppointmentImg },
-        { id: '3', name: 'Treatment Summary', IconComponent: TreatmentSummary },
-        { id: '4', name: 'Consent Form', IconComponent: ConsentForm },
-        { id: '5', name: 'Device', IconComponent: Device }
-    ];
 
     const renderHeader = () => {
         return (
@@ -60,36 +53,41 @@ const HomeScreen = () => {
 
     const SwiperCode = () => {
         return (
-            <Swiper showsButtons={false} autoplay={false}>
-                <View style={styles.slide}>
-                    <Text style={styles.slideText}>Prep Session (Physical Visit)Leena Joseph, LCSW</Text>
-                    <View style={styles.line} />
-                    <View style={styles.blueContainer}>
-                        <Text style={styles.slideTextSecondary}>July 5th 10:00am</Text>
-                        <MeetIcon />
+            <View style={{ flex: 1, top: responsiveHeight(-4) }}>
+                <Swiper showsButtons={false} autoplay={false}
+                    dot={<View style={styles.dot} />}
+                    activeDot={<View style={styles.activeDot} />}
+                >
+                    <View style={styles.slide}>
+                        <Text style={styles.slideText}>Prep Session (Physical Visit) Leena Joseph, LCSW</Text>
+                        <View style={styles.line} />
+                        <View style={styles.blueContainer}>
+                            <Text style={styles.slideTextSecondary}>July 5th 10:00am</Text>
+                            <MeetIcon />
+                        </View>
                     </View>
-                </View>
-                <View style={styles.slide}>
-                    <Text style={styles.slideText}>You have made 20% improvement since last KAT session. See more...</Text>
-                    <View style={styles.line} />
-                    <View style={styles.blueContainer}>
-                        <Text style={styles.slideTextHighlight}>20%</Text>
+                    <View style={styles.slide}>
+                        <Text style={styles.slideText}><Text>You have made 20% improvement since last KAT session.</Text><Text style={styles.seemoreText}> See more...</Text></Text>
+                        <View style={styles.line} />
+                        <View style={styles.blueviewContainer}>
+                            <Text style={styles.slideTextHighlight}>20%</Text>
+                        </View>
+                        <Arrowdown />
                     </View>
-                    <Arrowdown />
-                </View>
-                <View style={styles.slide}>
-                    <Text style={styles.slideText}>Your provider, Leena Joseph, LCSW has requested the survey to be completed.</Text>
-                    <View style={styles.blueContainer}>
-                        <Text style={styles.slideTextSecondary}>Start Survey</Text>
+                    <View style={styles.slide}>
+                        <Text style={styles.slideText}>Your provider, Leena Joseph, LCSW has requested the survey to be completed.</Text>
+                        <View style={styles.blueviewContainer}>
+                            <Text style={styles.startsurveytext}>Start Survey</Text>
+                        </View>
                     </View>
-                </View>
-            </Swiper>
+                </Swiper>
+            </View>
         );
     };
 
     const actionConatiner = () => {
         return (
-            <View style={{marginTop:responsiveHeight(1),paddingBottom:responsiveHeight(15)}}>
+            <View style={{ marginTop: responsiveHeight(1), paddingBottom: responsiveHeight(15) }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <TouchableOpacity style={{ marginBottom: responsiveHeight(1) }}>
                         <SurveyHistory />
@@ -112,6 +110,50 @@ const HomeScreen = () => {
             </View>
         )
     }
+    const reportSection = () => {
+        return (
+            <View style={styles.reportItem}>
+                <Text style={styles.reportDate}>July 07, 2024</Text>
+                <Text style={styles.reportTitle}>A Comprehensive Mental Health Report</Text>
+                <Text style={styles.leenatext}>Leena Joseph, LCSW</Text>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+
+                    <View style={{ flexDirection: 'row', marginTop: responsiveHeight(1), width: '40%', justifyContent: 'space-between' }}>
+                        <View>
+                            <Text style={styles.reportStats}>PHQ-9</Text>
+                            <Text style={styles.countText}>12</Text>
+                        </View>
+                        <View >
+                            <Text style={styles.reportStats}>GAD-7</Text>
+                            <Text style={styles.countText}>21</Text>
+                        </View>
+                    </View>
+                    <TouchableOpacity style={{ marginTop: responsiveHeight(3) }}>
+                        <Download />
+                    </TouchableOpacity>
+
+                </View>
+
+
+            </View>
+        )
+    }
+    const flatlistView = () => {
+        return (
+            <FlatList
+                data={careTeam}
+                horizontal
+                renderItem={({ item }) => (
+                    <View style={styles.careTeamMember}>
+                        <Image source={item.IconName} style={styles.careTeamImage} />
+                        <Text style={styles.careTeamName}>{item.name}</Text>
+                        <Text style={styles.careTeamRole}>{item.role}</Text>
+                    </View>
+                )}
+                keyExtractor={item => item.id}
+            />
+        )
+    }
 
     return (
         <View style={styles.container}>
@@ -119,49 +161,11 @@ const HomeScreen = () => {
             {SwiperCode()}
             <ScrollView showsVerticalScrollIndicator={false} style={{ paddingHorizontal: responsiveHeight(3) }}>
                 <Text style={styles.reportsTitle}>Recent Reports</Text>
-                <View style={styles.reportItem}>
-                    <Text style={styles.reportDate}>July 07, 2024</Text>
-                    <Text style={styles.reportTitle}>A Comprehensive Mental Health Report</Text>
-                    <Text style={styles.leenatext}>Leena Joseph, LCSW</Text>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-
-                        <View style={{ flexDirection: 'row', marginTop: responsiveHeight(1), width: '40%', justifyContent: 'space-between' }}>
-                            <View>
-                                <Text style={styles.reportStats}>PHQ-9</Text>
-                                <Text style={styles.countText}>12</Text>
-                            </View>
-                            <View >
-                                <Text style={styles.reportStats}>GAD-7</Text>
-                                <Text style={styles.countText}>21</Text>
-                            </View>
-
-                        </View>
-                        <TouchableOpacity style={{marginTop:responsiveHeight(3)}}>
-                        <Download />
-                        </TouchableOpacity>
-                      
-                    </View>
-
-
-                </View>
+                {reportSection()}
                 <Text style={styles.careTeamTitle}>Care Team</Text>
-                    <FlatList
-                        data={careTeam}
-                        horizontal
-                        renderItem={({ item }) => (
-                            <View style={styles.careTeamMember}>
-                                <Image source={item.IconName} style={styles.careTeamImage} />
-                                <Text style={styles.careTeamName}>{item.name}</Text>
-                                <Text style={styles.careTeamRole}>{item.role}</Text>
-                            </View>
-                        )}
-                        keyExtractor={item => item.id}
-                    />
-
-
+                {flatlistView()}
                 <Text style={styles.actionsTitle}>Other Actions</Text>
                 {actionConatiner()}
-
             </ScrollView>
         </View>
     );
@@ -202,37 +206,42 @@ const styles = StyleSheet.create({
         lineHeight: 20
     },
     slide: {
-        padding: 15,
+        paddingHorizontal: responsiveWidth(5),
+        paddingVertical: responsiveHeight(1.5),
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: Colors.white,
-        shadowColor: Colors.grey,
+        shadowColor: Platform.OS === 'ios' ? Colors.grey : Colors.black,
         shadowOffset: { width: 1, height: 3 },
         shadowOpacity: 4,
         shadowRadius: 4,
         elevation: 5,
         alignSelf: 'center',
         borderRadius: 8,
-        marginHorizontal: responsiveWidth(10),
-        width: '85%'
+        marginHorizontal: responsiveWidth(5),
+        width: '90%'
     },
     slideText: {
         color: Colors.blue,
-        fontSize: responsiveFontSize(1.3),
-        width: '50%',
-        fontWeight: '500'
+        fontSize: responsiveFontSize(1.7),
+        width: responsiveWidth(53),
+        fontWeight: '400',
+    },
+    seemoreText: {
+        textDecorationLine: 'underline'
     },
     slideTextSecondary: {
         color: Colors.black,
-        fontWeight: '500',
+        fontWeight: '600',
         fontSize: responsiveFontSize(1.5),
-        width: '40%'
+        width: responsiveWidth(15),
+
     },
     slideTextHighlight: {
         color: Colors.black,
         fontWeight: '700',
-        fontSize: responsiveFontSize(2)
+        fontSize: responsiveFontSize(2.2)
     },
     blueContainer: {
         borderWidth: 1.5,
@@ -241,13 +250,31 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         borderRadius: 5,
-        padding: 5
+        padding: 5,
+        justifyContent: 'center',
+    },
+    blueviewContainer: {
+        borderWidth: 1.5,
+        borderColor: Colors.blue,
+        backgroundColor: Colors.paleblue,
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 5,
+        paddingVertical: responsiveWidth(2),
+        justifyContent: 'center',
+        paddingHorizontal: responsiveWidth(2)
+
+    },
+    startsurveytext: {
+        color: Colors.black,
+        fontWeight: '600',
+        fontSize: responsiveFontSize(1.5),
     },
     line: {
         height: 20,
         width: 1,
         backgroundColor: Colors.grey,
-        marginHorizontal: responsiveWidth(3)
+        marginLeft: responsiveWidth(-3)
     },
     reportsContainer: {
         padding: responsiveWidth(4)
@@ -307,8 +334,8 @@ const styles = StyleSheet.create({
         color: Colors.blue
     },
     careTeamMember: {
-        marginTop:responsiveHeight(1.5),
-        marginHorizontal:responsiveWidth(3)
+        marginTop: responsiveHeight(1.5),
+        marginHorizontal: responsiveWidth(3)
     },
     careTeamImage: {
         width: 60,
@@ -319,7 +346,7 @@ const styles = StyleSheet.create({
         fontSize: responsiveFontSize(1.2),
         fontWeight: '600',
         textAlign: 'center',
-        marginTop:responsiveHeight(1)
+        marginTop: responsiveHeight(1)
     },
     careTeamRole: {
         fontSize: responsiveFontSize(1.2),
@@ -350,7 +377,27 @@ const styles = StyleSheet.create({
     actionName: {
         fontSize: responsiveFontSize(1.5),
         textAlign: 'center'
-    }
+    },
+    dot: {
+        backgroundColor: Colors.OFFWHITE,
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+        marginLeft: 3,
+        marginRight: 3,
+        marginTop: 3,
+        marginBottom: 3,
+    },
+    activeDot: {
+        backgroundColor: Colors.blue,
+        width: 12,
+        height: 12,
+        borderRadius: 6,
+        marginLeft: 3,
+        marginRight: 3,
+        marginTop: 3,
+        marginBottom: 3,
+    },
 });
 
 export default HomeScreen;
