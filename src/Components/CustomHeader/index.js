@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: responsiveFontSize(2),
+    fontSize: responsiveFontSize(2.2),
     color:Colors.white,
     fontWeight:'500',
     alignSelf:'center'

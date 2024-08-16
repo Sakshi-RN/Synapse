@@ -20,7 +20,8 @@ const Colors = {
   lightblue:'#F2FDFF',
   newColor:'#F5F5F5',
   paleblue:'#D9F4FA',
-  OFFWHITE:"#D9D9D9"
+  OFFWHITE:"#D9D9D9",
+  skyblue:'#B9EEFF'
 };
 
 export default Colors;

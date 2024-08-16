@@ -1,63 +1,93 @@
-import React from 'react';
-import {
-    View, Text, StyleSheet, ImageBackground,
-    TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, ScrollView
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { Logo } from '../../Assets/svg';
-import images from '../../Themes/Images';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, FlatList, ScrollView } from 'react-native';
+import AppointmentTabs from '../../Container/AppointmentTabs';
+import AppointmentCard from '../../Container/AppointmentCard';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
-import CustomTextInput from '../../Components/CustomTextInput';
-import CustomButton from '../../Components/CustomButton';
+import CustomHeader from '../../Components/CustomHeader';
+import AppointmentData from '../../Container/AppointmentData'; // Importing dummy data for the appointments
 
-const SignIn = () => {
-    const navigation = useNavigation();
+const Appointment = () => {
+    const [activeTab, setActiveTab] = useState('Pending');
+    const [filteredAppointments, setFilteredAppointments] = useState([]);
 
-    const handleVerifyPress = () => {
-        navigation.navigate('OtpVerify');
+    useEffect(() => {
+        // Filter appointments based on active tab
+        let filteredData;
+
+        if (activeTab === 'All') {
+            // Show all appointments if "All" tab is selected
+            filteredData = AppointmentData;
+        } else {
+            // Filter based on the status
+            filteredData = AppointmentData.filter(
+                appointment => appointment.status === activeTab
+            );
+        }
+
+        setFilteredAppointments(filteredData);
+
+        // Log the filtered appointments for debugging
+        console.log(`Filtered Appointments for ${activeTab}:`, filteredData);
+    }, [activeTab]);
+
+
+    // Dynamic header title
+    const getHeaderTitle = () => {
+        switch (activeTab) {
+            case 'Pending':
+                return 'Pending';
+            case 'Upcoming':
+                return 'Upcoming';
+            case 'Completed':
+                return 'Completed';
+            case 'Cancelled':
+                return 'Cancelled';
+            default:
+                return 'Appointments';
+        }
     };
 
+    // Get total number of appointments for the selected tab
+    const getAppointmentsText = () => {
+        return `${filteredAppointments.length} Appointments`; // Show the total number of appointments
+    };
+
+    const renderAppointmentCard = ({ item }) => <AppointmentCard appointment={item} />;
+
     return (
- <View>
-    <Text>Appointmemnt</Text>
- </View>
+        <View style={styles.container}>
+            <CustomHeader title={getHeaderTitle()} />
+            <ScrollView style={styles.flatListContent}>
+                <Text style={styles.appointmentsText}>{'0' + getAppointmentsText()}</Text>
+                <AppointmentTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+                <FlatList
+                    scrollEnabled={false}
+                    data={filteredAppointments} // Show all appointments for the selected tab
+                    renderItem={renderAppointmentCard}
+                    keyExtractor={item => item.id.toString()}
+                    ListEmptyComponent={<Text>No appointments available.</Text>} // Show when there are no appointments
+                />
+            </ScrollView>
+        </View>
     );
 };
 
+export default Appointment;
+
 const styles = StyleSheet.create({
-    content: { flex: 1, backgroundColor: Colors.white },
     container: {
-        height: responsiveHeight(50),
-        alignItems: 'center',
-        paddingTop: responsiveHeight(8)
-    },
-
-    formContainer: {
         flex: 1,
+        backgroundColor: Colors.white,
     },
-    title: {
-        marginTop: responsiveHeight(2),
-        alignSelf: 'center',
-        fontWeight: 'bold',
-        fontSize: responsiveFontSize(3),
-        color: Colors.black
-    },
-    centerText: {
-        marginTop: responsiveHeight(2),
+    appointmentsText: {
         fontSize: responsiveFontSize(2),
-        textAlign: 'center',
-        marginHorizontal: responsiveWidth(7),
-        color: Colors.grey
+        fontWeight: 'bold',
+        color: Colors.blue,
     },
-    centerStyle: {
-        marginTop: responsiveHeight(3),
-        marginHorizontal: responsiveWidth(5)
+    flatListContent: {
+        flex: 1,
+        paddingHorizontal: responsiveWidth(5),
+        paddingVertical: responsiveHeight(3)
     },
-    btnStyle: {
-        alignSelf: 'center',
-        marginTop: responsiveHeight(5)
-    }
 });
-
-export default SignIn;

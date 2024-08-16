@@ -53,7 +53,7 @@ const HomeScreen = () => {
 
     const SwiperCode = () => {
         return (
-            <View style={{  top: responsiveHeight(-4),height:responsiveHeight(12) }}>
+            <View style={{ top: responsiveHeight(-4), height: responsiveHeight(12) }}>
                 <Swiper showsButtons={false} autoplay={false}
                     dot={<View style={styles.dot} />}
                     activeDot={<View style={styles.activeDot} />}
@@ -159,7 +159,7 @@ const HomeScreen = () => {
         <View style={styles.container}>
             {renderHeader()}
             {SwiperCode()}
-            <ScrollView showsVerticalScrollIndicator={false} style={{ paddingHorizontal: responsiveHeight(3),  marginTop: responsiveHeight(-2), }}>
+            <ScrollView showsVerticalScrollIndicator={false} style={{ paddingHorizontal: responsiveHeight(3), marginTop: responsiveHeight(-2) }}>
                 <Text style={styles.reportsTitle}>Recent Reports</Text>
                 {reportSection()}
                 <Text style={styles.careTeamTitle}>Care Team</Text>
@@ -384,17 +384,17 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginLeft: 3,
         marginRight: 3,
-        top:responsiveHeight(2)
+        top: responsiveHeight(2)
 
     },
     activeDot: {
         backgroundColor: Colors.blue,
         width: 10,
         height: 10,
-        borderRadius:5,
+        borderRadius: 5,
         marginLeft: 3,
         marginRight: 3,
-        top:responsiveHeight(2)
+        top: responsiveHeight(2)
 
     },
 });
