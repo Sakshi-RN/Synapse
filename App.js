@@ -5,6 +5,7 @@ import Colors from './src/Themes/Colors';
 import AuthNavigation from './src/Navigations/AuthNavigation';
 import Splash from './src/Screens/Splash';
 import AppNavigaton from './src/Navigations/AppNavigaton';
+import CustomCamera from './src/Components/CustomCamera'
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -20,7 +21,8 @@ export default function App() {
   return (
     <>
       <StatusBar barStyle="light-content" backgroundColor={Colors.black} />
-      <AuthNavigation />
+      <CustomCamera/>
+      {/* <AuthNavigation /> */}
       {/* <AppNavigaton /> */}
     </>
   );

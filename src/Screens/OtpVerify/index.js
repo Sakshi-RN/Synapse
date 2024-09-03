@@ -18,6 +18,9 @@ const OTPVerification = () => {
     const handleBackPress = () => {
         navigation.navigate('SignIn');
     };
+    const handleSubmit = () => {
+        navigation.navigate('BTabNavigation');
+    };
 
     return (
         <KeyboardAvoidingView
@@ -44,6 +47,7 @@ const OTPVerification = () => {
                         <CustomButton
                             title="Submit"
                             buttonStyle={styles.btnStyle}
+                            onPress={handleSubmit}
                         />
                     </View>
                 </ScrollView>
