@@ -32,6 +32,7 @@ export default AppointmentTabs;
 const styles = StyleSheet.create({
     tabsContainer: {
         marginTop: responsiveHeight(1),
+           height:responsiveHeight(5)
 
     },
     tabButton: {
@@ -39,7 +40,9 @@ const styles = StyleSheet.create({
         height: responsiveHeight(3),
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 12
+        borderRadius: 12,
+        marginHorizontal: responsiveWidth(2),
+     
     },
     tabText: {
         fontSize: responsiveFontSize(1.5),

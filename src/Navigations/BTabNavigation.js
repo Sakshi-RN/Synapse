@@ -3,10 +3,10 @@ import { StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HomeIcon, AppointmentIcon, CareTeamIcon, MyProfileIcon } from '../Assets/svg';
-import Home from '../Screens/Home';
-import Appointment from '../Screens/Appointment';
-import CareTeam from '../Screens/CareTeam';
-import MyProfile from '../Screens/MyProfile';
+import HomeStack from '../Navigations/HomeStack';
+import AppoitnmentStack from '../Navigations/AppoitnmentStack';
+import CareTeamStack from '../Navigations/CareTeamStack'
+import ProfileStack from '../Navigations/ProfileStack';
 import Colors from '../Themes/Colors';
 import { responsiveHeight } from 'react-native-responsive-dimensions';
 
@@ -25,7 +25,7 @@ export default function BTabNavigation() {
       }}>
       <Tab.Screen
         name="Home"
-        component={Home}
+        component={HomeStack}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
@@ -35,7 +35,7 @@ export default function BTabNavigation() {
       />
       <Tab.Screen
         name="Appointment"
-        component={Appointment}
+        component={AppoitnmentStack}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
@@ -45,7 +45,7 @@ export default function BTabNavigation() {
       />
       <Tab.Screen
         name="CareTeam"
-        component={CareTeam}
+        component={CareTeamStack}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
@@ -55,7 +55,7 @@ export default function BTabNavigation() {
       />
       <Tab.Screen
         name="MyProfile"
-        component={MyProfile}
+        component={ProfileStack}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (

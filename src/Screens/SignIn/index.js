@@ -54,9 +54,10 @@ const SignIn = () => {
 const styles = StyleSheet.create({
     content: { flex: 1, backgroundColor: Colors.white },
     container: {
-        height: responsiveHeight(50),
+        height:  Platform.OS === 'ios' ?responsiveHeight(50):responsiveHeight(54),
         alignItems: 'center',
-        paddingTop: responsiveHeight(8)
+        paddingTop:Platform.OS === 'ios' ? responsiveHeight(8):responsiveHeight(5),
+
     },
 
     formContainer: {

@@ -62,12 +62,12 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     imageBackground: {
-        height: responsiveHeight(50),
+        height:  Platform.OS === 'ios' ?responsiveHeight(50):responsiveHeight(54),
     },
     row: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: responsiveHeight(8),
+        marginTop:Platform.OS === 'ios' ? responsiveHeight(8):responsiveHeight(5),
         paddingLeft: responsiveWidth(8),
         justifyContent: 'space-between',
         width: '70%',

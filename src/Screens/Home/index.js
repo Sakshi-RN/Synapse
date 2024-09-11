@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity, ImageBackground, Platform } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
@@ -13,12 +14,16 @@ import ConciergeImage from '../../Assets/Images/Concierge.png';
 
 
 const HomeScreen = () => {
+    const navigation = useNavigation();
+
     const careTeam = [
         { id: '1', name: 'Leena Joseph', role: 'LCSW', IconName: LCSWImage },
         { id: '2', name: 'Samuel Rush', role: 'MD', IconName: MDImage },
         { id: '3', name: 'Concierge', role: '', IconName: ConciergeImage }
     ];
 
+const handleAppointment =()=>{
+    navigation.navigate('Appointment');}
 
     const renderHeader = () => {
         return (
@@ -92,7 +97,7 @@ const HomeScreen = () => {
                     <TouchableOpacity style={{ marginBottom: responsiveHeight(1) }}>
                         <SurveyHistory />
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ marginHorizontal: responsiveWidth(3) }}>
+                    <TouchableOpacity style={{ marginHorizontal: responsiveWidth(3) }} onPress={handleAppointment}>
                         <AppointmentImg />
                     </TouchableOpacity>
                     <TouchableOpacity>
@@ -384,7 +389,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginLeft: 3,
         marginRight: 3,
-        top: responsiveHeight(2)
+        top: Platform.OS === 'ios' ? responsiveHeight(2):responsiveHeight(4)
 
     },
     activeDot: {
@@ -394,7 +399,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginLeft: 3,
         marginRight: 3,
-        top: responsiveHeight(2)
+        top: Platform.OS === 'ios' ? responsiveHeight(2):responsiveHeight(4)
 
     },
 });

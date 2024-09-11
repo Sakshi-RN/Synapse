@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 import AppointmentTabs from '../../Container/AppointmentTabs';
 import AppointmentCard from '../../Container/AppointmentCard';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
-import AppointmentData from '../../Container/AppointmentData'; // Importing dummy data for the appointments
+import AppointmentData from '../../Container/AppointmentData';
 
 const Appointment = () => {
     const [activeTab, setActiveTab] = useState('Pending');
@@ -58,17 +58,18 @@ const Appointment = () => {
     return (
         <View style={styles.container}>
             <CustomHeader title={getHeaderTitle()} />
-            <ScrollView style={styles.flatListContent}>
-                <Text style={styles.appointmentsText}>{'0' + getAppointmentsText()}</Text>
-                <AppointmentTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-                <FlatList
-                    scrollEnabled={false}
-                    data={filteredAppointments} // Show all appointments for the selected tab
-                    renderItem={renderAppointmentCard}
-                    keyExtractor={item => item.id.toString()}
-                    ListEmptyComponent={<Text>No appointments available.</Text>} // Show when there are no appointments
-                />
-            </ScrollView>
+            <Text style={styles.appointmentsText}>{'0' + getAppointmentsText()}</Text>
+            <AppointmentTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+            <FlatList
+                Enabled={false}
+                data={filteredAppointments} // Show all appointments for the selected tab
+                renderItem={renderAppointmentCard}
+                keyExtractor={item => item.id.toString()}
+                ListEmptyComponent={<Text>No appointments available.</Text>}
+                showsVerticalScrollIndicator={false}
+                style={styles.flatListStyle}
+            />
+
         </View>
     );
 };
@@ -78,16 +79,18 @@ export default Appointment;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.white,
+        paddingBottom: responsiveHeight(12),
     },
     appointmentsText: {
         fontSize: responsiveFontSize(2),
         fontWeight: 'bold',
         color: Colors.blue,
+        marginHorizontal: responsiveWidth(5),
+        marginTop: responsiveHeight(3),
+
     },
-    flatListContent: {
-        flex: 1,
-        paddingHorizontal: responsiveWidth(5),
-        paddingVertical: responsiveHeight(3)
-    },
+    flatListStyle: {
+        height: '100%'
+
+    }
 });

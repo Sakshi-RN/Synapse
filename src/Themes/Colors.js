@@ -1,6 +1,5 @@
 const Colors = {
-  sucess: '#0C9409',
-  error: '#ED1010',
+
   black: '#000000',
   white: '#FFFFFF',
   grey: '#a6a6a6',
@@ -16,12 +15,26 @@ const Colors = {
   bgColor: '#F8F8FA',
   bgGreen: '#038A1126',
   green: '#038A11',
-  blue:'#01728B',
-  lightblue:'#F2FDFF',
-  newColor:'#F5F5F5',
-  paleblue:'#D9F4FA',
-  OFFWHITE:"#D9D9D9",
-  skyblue:'#B9EEFF'
+  blue: '#01728B',
+  lightblue: '#F2FDFF',
+  newColor: '#F5F5F5',
+  paleblue: '#D9F4FA',
+  OFFWHITE: "#D9D9D9",
+  skyblue: '#B9EEFF',
+  PURPLE: '#F3EAFF',
+  Dark_Purple: '#9747FF',
+  ORANGE: '#FFE2B3',
+  Dark_Orange: '#FF7900',
+  GREEN: '#E2F8E3',
+ Dark_Green: '#04AD01',
+  PINK: '#FFEAE5',
+  Dark_Pink: '#F23A00'
+
+
+
+
+
+
 };
 
 export default Colors;

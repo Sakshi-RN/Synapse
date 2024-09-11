@@ -1,8 +1,6 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
-// import SignUp from '../Screens/SignUp';
 import SignIn from '../Screens/SignIn';
 import OtpVerify from '../Screens/OtpVerify';
 import BTabNavigation from './BTabNavigation';
@@ -14,7 +12,7 @@ export default function AuthNavigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="SignIn"
+        initialRouteName="BTabNavigation"
       >
 
         <Stack.Screen
