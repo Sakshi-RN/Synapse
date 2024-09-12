@@ -17,5 +17,5 @@ import TreatmentSummary from './TreatmentSummary.svg';
 import AppointmentImg from './AppointmentImg.svg';
 import SurveyHistory from './SurveyHistory.svg';
 import Download from './Download.svg';
-
-export{SplashIcon,Download,Logo,BackIcon,Bell,Circle,HomeIcon,AppointmentIcon,CareTeamIcon,MyProfileIcon,Arrowdown,Location,MeetIcon,Device,ConsentForm,TreatmentSummary,AppointmentImg,SurveyHistory}
+import ThreeDots from './ThreeDots.svg';
+export{ThreeDots,SplashIcon,Download,Logo,BackIcon,Bell,Circle,HomeIcon,AppointmentIcon,CareTeamIcon,MyProfileIcon,Arrowdown,Location,MeetIcon,Device,ConsentForm,TreatmentSummary,AppointmentImg,SurveyHistory}

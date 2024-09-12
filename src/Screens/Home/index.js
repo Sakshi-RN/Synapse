@@ -22,8 +22,19 @@ const HomeScreen = () => {
         { id: '3', name: 'Concierge', role: '', IconName: ConciergeImage }
     ];
 
-const handleAppointment =()=>{
-    navigation.navigate('Appointment');}
+    const handleAppointment = () => {
+        navigation.navigate('Appointment');
+    }
+
+    const handlNotification = () => {
+        navigation.navigate('Notification');
+    }
+
+
+    const handleCareTeam = () => {
+        navigation.navigate('CareTeam');
+    }
+
 
     const renderHeader = () => {
         return (
@@ -33,7 +44,7 @@ const handleAppointment =()=>{
                         <Circle height={25} width={25} />
                     </TouchableOpacity>
                     <Logo height={100} width={120} />
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={handlNotification}>
                         <Bell height={20} width={20} />
                     </TouchableOpacity>
                 </View>
@@ -149,11 +160,11 @@ const handleAppointment =()=>{
                 data={careTeam}
                 horizontal
                 renderItem={({ item }) => (
-                    <View style={styles.careTeamMember}>
+                    <TouchableOpacity style={styles.careTeamMember} onPress={handleCareTeam}>
                         <Image source={item.IconName} style={styles.careTeamImage} />
                         <Text style={styles.careTeamName}>{item.name}</Text>
                         <Text style={styles.careTeamRole}>{item.role}</Text>
-                    </View>
+                    </TouchableOpacity>
                 )}
                 keyExtractor={item => item.id}
             />
@@ -389,7 +400,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginLeft: 3,
         marginRight: 3,
-        top: Platform.OS === 'ios' ? responsiveHeight(2):responsiveHeight(4)
+        top: Platform.OS === 'ios' ? responsiveHeight(2) : responsiveHeight(4)
 
     },
     activeDot: {
@@ -399,7 +410,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginLeft: 3,
         marginRight: 3,
-        top: Platform.OS === 'ios' ? responsiveHeight(2):responsiveHeight(4)
+        top: Platform.OS === 'ios' ? responsiveHeight(2) : responsiveHeight(4)
 
     },
 });

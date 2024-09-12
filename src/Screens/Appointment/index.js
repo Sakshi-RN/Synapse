@@ -6,6 +6,7 @@ import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-nat
 import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
 import AppointmentData from '../../Container/AppointmentData';
+import CustomCalender from '../../Components/CustomCalender';
 
 const Appointment = () => {
     const [activeTab, setActiveTab] = useState('Pending');
@@ -27,8 +28,8 @@ const Appointment = () => {
 
         setFilteredAppointments(filteredData);
 
-        // Log the filtered appointments for debugging
-        console.log(`Filtered Appointments for ${activeTab}:`, filteredData);
+
+        // console.log(`Filtered Appointments for ${activeTab}:`, filteredData);
     }, [activeTab]);
 
 
@@ -58,6 +59,7 @@ const Appointment = () => {
     return (
         <View style={styles.container}>
             <CustomHeader title={getHeaderTitle()} />
+            <CustomCalender/>
             <Text style={styles.appointmentsText}>{'0' + getAppointmentsText()}</Text>
             <AppointmentTabs activeTab={activeTab} setActiveTab={setActiveTab} />
             <FlatList
@@ -69,7 +71,6 @@ const Appointment = () => {
                 showsVerticalScrollIndicator={false}
                 style={styles.flatListStyle}
             />
-
         </View>
     );
 };

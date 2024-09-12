@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5,
         width: '85%',
-        marginTop: responsiveHeight(2),
+        marginVertical: responsiveHeight(2),
         borderRadius: 12,
         marginRight: responsiveWidth(13)
 

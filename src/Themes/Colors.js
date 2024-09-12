@@ -28,10 +28,10 @@ const Colors = {
   GREEN: '#E2F8E3',
  Dark_Green: '#04AD01',
   PINK: '#FFEAE5',
-  Dark_Pink: '#F23A00'
-
-
-
+  Dark_Pink: '#F23A00',
+  Light_gray:"#D8DADF",
+  DARKBLUE:'#263257',
+  light_skyblue:'#D9F4FA'
 
 
 

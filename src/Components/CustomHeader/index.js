@@ -1,18 +1,24 @@
 // CustomHeader.js
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
+
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import {Circle,Bell} from '../../Assets/svg'
 import images from '../../Themes/Images';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import  Colors  from '../../Themes/Colors';
-const CustomHeader = ({ title, onLeftPress, onRightPress }) => {
+
+const CustomHeader = ({ title }) => {
+  const navigation = useNavigation();
+
+  const handlNotification =()=>{
+    navigation.navigate('Notification');
+}
   return (
     <ImageBackground source={images.headerBgImg} style={styles.headerContainer}>
-      <TouchableOpacity onPress={onLeftPress}>
       <Circle/>
-      </TouchableOpacity>
       <Text style={styles.title}>{title}</Text>
-      <TouchableOpacity onPress={onRightPress}>
+      <TouchableOpacity onPress={handlNotification}>
        <Bell/>
       </TouchableOpacity>
     </ImageBackground>

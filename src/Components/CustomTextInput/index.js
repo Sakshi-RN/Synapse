@@ -1,10 +1,12 @@
 import React from 'react';
-import { TextInput, StyleSheet } from 'react-native';
+import { TextInput, StyleSheet,View,Text } from 'react-native';
 import Colors from '../../Themes/Colors';
-import { responsiveFontSize } from 'react-native-responsive-dimensions';
+import { responsiveFontSize, responsiveHeight } from 'react-native-responsive-dimensions';
 
-const CustomTextInput = ({ placeholder, value, onChangeText, inputStyle,}) => {
+const CustomTextInput = ({ placeholder, value, onChangeText, inputStyle,title}) => {
   return (
+    <View>
+      <Text style={styles.titleText}>{title}</Text>
     <TextInput
       style={[styles.input, inputStyle]}
       placeholder={placeholder}
@@ -12,6 +14,7 @@ const CustomTextInput = ({ placeholder, value, onChangeText, inputStyle,}) => {
       value={value}
       onChangeText={onChangeText}
     />
+    </View>
   );
 };
 
@@ -30,6 +33,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84, 
   },
+  titleText:{
+    color: Colors.black,
+    fontSize: responsiveFontSize(1.8),
+    fontWeight: 'bold',
+    marginTop:responsiveHeight(3)
+  }
 });
 
 export default CustomTextInput;

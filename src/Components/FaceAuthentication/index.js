@@ -18,15 +18,15 @@ export default function App() {
       const enrolled = await LocalAuthentication.isEnrolledAsync(); // Checks if biometrics are enrolled (face/fingerprint)
       const supportedTypes = await LocalAuthentication.supportedAuthenticationTypesAsync(); // Gets the supported types
       
-      console.log('Hardware Available:', compatible);
-      console.log('Biometrics Enrolled:', enrolled);
-      console.log('Supported Authentication Types:', supportedTypes);
+      // console.log('Hardware Available:', compatible);
+      // console.log('Biometrics Enrolled:', enrolled);
+      // console.log('Supported Authentication Types:', supportedTypes);
   
       const isFaceIdAvailable = supportedTypes.includes(LocalAuthentication.AuthenticationType.FACIAL_RECOGNITION);
       const isFingerprintAvailable = supportedTypes.includes(LocalAuthentication.AuthenticationType.FINGERPRINT);
       
-      console.log('Face ID Available:', isFaceIdAvailable);
-      console.log('Fingerprint Available:', isFingerprintAvailable);
+      // console.log('Face ID Available:', isFaceIdAvailable);
+      // console.log('Fingerprint Available:', isFingerprintAvailable);
   
       setIsHardwareAvailable(compatible);
       setIsFaceIdAvailable(isFaceIdAvailable);
