@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { View, StyleSheet, FlatList, Text, Image, TouchableOpacity, Platform, Modal } from 'react-native';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
@@ -9,6 +10,7 @@ import CustomButton from '../../Components/CustomButton';
 
 
 const CareTeam = () => {
+  const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
@@ -37,6 +39,18 @@ const CareTeam = () => {
 
 
   ];
+  const handleAppointment = () => {
+    setModalVisible(false);
+    navigation.navigate('Appointment');
+}
+const handleReasonforChange = () => {
+  setModalVisible(false);
+  navigation.navigate('ReasonforChange');
+}
+const handlePrescriberProfile = () => {
+  setModalVisible(false);
+  navigation.navigate('PrescriberProfile');
+}
 
   const renderItem = ({ item }) => (
     <View style={styles.careTeamnCard}>
@@ -46,6 +60,7 @@ const CareTeam = () => {
         <Text style={styles.description}>{item.description}</Text>
         <View style={styles.cancelbtnRow}>
           <CustomButton
+          onPress={handlePrescriberProfile}
             buttonStyle={styles.Button}
             textStyle={styles.ButtonText}
             title={'View Profile'} />
@@ -70,7 +85,7 @@ const CareTeam = () => {
       >
         <TouchableOpacity style={styles.modalOverlay} onPress={closeModal}>
           <View style={styles.modalContent}>
-            <TouchableOpacity >
+            <TouchableOpacity onPress={handleAppointment}>
               <Text style={styles.modalOption}>Appointment</Text>
             </TouchableOpacity>
             <View style={styles.bordrline} />
@@ -78,7 +93,7 @@ const CareTeam = () => {
               <Text style={styles.modalOption}>Rate</Text>
             </TouchableOpacity>
             <View style={styles.bordrline} />
-            <TouchableOpacity >
+            <TouchableOpacity onPress={handleReasonforChange} >
               <Text style={styles.modalOption}>Request to change</Text>
             </TouchableOpacity>
           </View>

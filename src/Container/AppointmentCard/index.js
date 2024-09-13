@@ -3,8 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity, Platform, Image } from 'react
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 import LCSWImage from '../../Assets/Images/LCSW.png';
+import { useNavigation } from '@react-navigation/native';
+
 
 const AppointmentCard = ({ appointment }) => {
+    const navigation = useNavigation();
     return (
         <View style={styles.cardContainer}>
             <Text style={styles.time}>{appointment.time}</Text>
@@ -22,6 +25,7 @@ const AppointmentCard = ({ appointment }) => {
                                             appointment.status === 'Cancelled' ? styles.cancelledButton :
                                                 styles.defaultButton
                             }
+
                         >
                             <Text
                                 style={
@@ -41,9 +45,11 @@ const AppointmentCard = ({ appointment }) => {
                             style={
                                 appointment.buttonText === 'Join Session' ? styles.upcomingJoinButton :
                                     appointment.buttonText === 'View Details' ? styles.completedJoinButton : 'null'
-
                             }
-                        >
+
+                            onPress={() => { navigation.navigate(appointment.buttonText === 'Join Session' ? 'JoinSession' : appointment.buttonText === 'View Details' ? 'ViewDetails' : 'null') }}>
+
+
                             <Text
                                 style={
                                     appointment.buttonText === 'Join Session' ? styles.upcomingJoinButtonText :
@@ -186,7 +192,7 @@ const styles = StyleSheet.create({
         fontWeight: '600',
     },
     cancelledButtonText: {
-        color: Colors.darkPink,
+        color: Colors.red,
         fontSize: responsiveFontSize(1.3),
         fontWeight: '600',
     },

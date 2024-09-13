@@ -9,7 +9,7 @@ import AppointmentData from '../../Container/AppointmentData';
 import CustomCalender from '../../Components/CustomCalender';
 
 const Appointment = () => {
-    const [activeTab, setActiveTab] = useState('Pending');
+    const [activeTab, setActiveTab] = useState('All');
     const [filteredAppointments, setFilteredAppointments] = useState([]);
 
     useEffect(() => {
@@ -59,7 +59,7 @@ const Appointment = () => {
     return (
         <View style={styles.container}>
             <CustomHeader title={getHeaderTitle()} />
-            <CustomCalender/>
+            <CustomCalender />
             <Text style={styles.appointmentsText}>{'0' + getAppointmentsText()}</Text>
             <AppointmentTabs activeTab={activeTab} setActiveTab={setActiveTab} />
             <FlatList

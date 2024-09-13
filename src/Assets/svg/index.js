@@ -18,4 +18,11 @@ import AppointmentImg from './AppointmentImg.svg';
 import SurveyHistory from './SurveyHistory.svg';
 import Download from './Download.svg';
 import ThreeDots from './ThreeDots.svg';
-export{ThreeDots,SplashIcon,Download,Logo,BackIcon,Bell,Circle,HomeIcon,AppointmentIcon,CareTeamIcon,MyProfileIcon,Arrowdown,Location,MeetIcon,Device,ConsentForm,TreatmentSummary,AppointmentImg,SurveyHistory}
+import Chat from './Chat.svg';
+import MapView from './MapView.svg';
+import Star from './Star.svg';
+import Time from './Time.svg';
+import UpArrow from './upArrow.svg';
+import Calendar from './calendar.svg';
+
+export{Calendar,Time,UpArrow,Star,MapView,Chat,ThreeDots,SplashIcon,Download,Logo,BackIcon,Bell,Circle,HomeIcon,AppointmentIcon,CareTeamIcon,MyProfileIcon,Arrowdown,Location,MeetIcon,Device,ConsentForm,TreatmentSummary,AppointmentImg,SurveyHistory}

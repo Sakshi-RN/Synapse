@@ -31,7 +31,9 @@ const Colors = {
   Dark_Pink: '#F23A00',
   Light_gray:"#D8DADF",
   DARKBLUE:'#263257',
-  light_skyblue:'#D9F4FA'
+  light_skyblue:'#D9F4FA',
+  OFFBLACK:'#3E3E3E'
+
 
 
 
