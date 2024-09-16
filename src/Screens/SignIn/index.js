@@ -71,19 +71,19 @@ const styles = StyleSheet.create({
         color: Colors.black
     },
     centerText: {
-        marginTop: responsiveHeight(2),
+        marginTop: responsiveHeight(1.5),
         fontSize: responsiveFontSize(2),
         textAlign: 'center',
         marginHorizontal: responsiveWidth(7),
         color: Colors.grey
     },
     centerStyle: {
-        marginTop: responsiveHeight(3),
-        marginHorizontal: responsiveWidth(5)
+        marginHorizontal: responsiveWidth(5),
+        bottom:responsiveHeight(1)
     },
     btnStyle: {
         alignSelf: 'center',
-        marginTop: responsiveHeight(5)
+        marginTop: responsiveHeight(4)
     }
 });
 

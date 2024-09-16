@@ -59,6 +59,7 @@ const Appointment = () => {
     return (
         <View style={styles.container}>
             <CustomHeader title={getHeaderTitle()} />
+            <Text style={styles.monthText}>June 2024</Text>
             <CustomCalender />
             <Text style={styles.appointmentsText}>{'0' + getAppointmentsText()}</Text>
             <AppointmentTabs activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -93,5 +94,13 @@ const styles = StyleSheet.create({
     flatListStyle: {
         height: '100%'
 
-    }
+    },
+    monthText: {
+        fontSize: responsiveFontSize(2),
+        fontWeight: 'bold',
+        color: Colors.blue,
+        marginTop: responsiveHeight(1),
+        marginLeft: responsiveWidth(5)
+
+    },
 });

@@ -5,7 +5,6 @@ import Colors from './src/Themes/Colors';
 import AuthNavigation from './src/Navigations/AuthNavigation';
 import Splash from './src/Screens/Splash';
 import AppNavigaton from './src/Navigations/AppNavigaton';
-import CustomCamera from './src/Components/FaceAuthentication'
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -16,7 +15,7 @@ export default function App() {
     }, 3000);
   });
 
-  // if (loading) return <Splash />;
+  if (loading) return <Splash />;
 
   return (
     <>

@@ -10,7 +10,6 @@ export default function HorizontalCalendar() {
 
     return (
         <View>
-            <Text style={styles.monthText}>June 2024</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.container}>
                 {dates.map((date, index) => {
                     const day = dayjs(date).format('D');
@@ -32,14 +31,6 @@ export default function HorizontalCalendar() {
 const styles = StyleSheet.create({
     container: {
         marginHorizontal: responsiveWidth(3)
-    },
-    monthText: {
-        fontSize: responsiveFontSize(2),
-        fontWeight: 'bold',
-        color: Colors.blue,
-        marginTop: responsiveHeight(1),
-        marginLeft: responsiveWidth(5)
-
     },
     dateContainer: {
         alignItems: 'center',

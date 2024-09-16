@@ -1,26 +1,29 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground } from 'react-native';
-import { SplashIcon, Logo } from '../../Assets/svg';
-import images from '../../Themes/Images';
-import { responsiveHeight } from 'react-native-responsive-dimensions';
+import { View, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import Colors from '../../Themes/Colors';
+import CustomHeader from '../../Components/CustomHeader';
 
-const Splash = () => {
+const MyProfile = () => {
+  const navigation = useNavigation();
+
+
   return (
-    <View>
-    <Text>Profile</Text>
- </View>
+    <View style={styles.container}>
+      <CustomHeader title={'Profile & Settings'} />
+    </View>
+
   );
 };
+
+export default MyProfile;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: Colors.white,
   },
-  marginStyle:{
-    marginTop:responsiveHeight(2)
-  }
-});
 
-export default Splash;
+ 
+
+});
