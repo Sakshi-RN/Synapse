@@ -11,7 +11,7 @@ const AppointmentStackNav = createStackNavigator();
 export const AppointmentStack = (props) => {
   return (
     <AppointmentStackNav.Navigator
-        initialRouteName="Appointment"
+        initialRouteName="ResheduleRequest"
         screenOptions={{
             headerShown: false,
         }}

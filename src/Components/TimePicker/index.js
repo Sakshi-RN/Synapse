@@ -1,87 +1,93 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 
-
 const TimePicker = () => {
-  // Generate time slots for 24 hours with a 30-minute interval
-  const timeSlots = Array.from({ length: 48 }, (_, index) => {
-    const hours = String(Math.floor(index / 2)).padStart(2, '0');
-    const minutes = index % 2 === 0 ? '00' : '30';
-    return `${hours}:${minutes}`;
-  });
-
-  // State to manage selected time slot and input
   const [selectedTime, setSelectedTime] = useState(null);
-  const [reason, setReason] = useState('');
+
+  // Function to generate 24-hour time slots
+  const generateTimeSlots = () => {
+    const slots = Array(24 * 2) // 24 hours, 2 slots per hour (00 and 30 minutes)
+      .fill()
+      .map((_, index) => {
+        let hour = Math.floor(index / 2);
+        let minutes = (index % 2) * 30;
+        let displayHour = hour > 12 ? hour - 12 : hour;
+        let period = hour < 12 ? 'am' : 'pm';
+        if (hour === 0) {
+          displayHour = 12; // Midnight case
+          period = 'AM';
+        }
+        return [`${displayHour}:${minutes === 0 ? '00' : minutes} ${period}`];
+      });
+
+    return slots.flat();
+  };
+
+  const timeSlots = generateTimeSlots();
+
+  const renderItem = ({ item }) => (
+    <TouchableOpacity
+      style={[
+        styles.dateContainer,
+        selectedTime === item ? styles.selectedDateContainer : null,
+      ]}
+      onPress={() => setSelectedTime(item)}
+    >
+      <Text
+        style={[
+          styles.dayText,
+          selectedTime === item ? styles.selectedDayText : null,
+        ]}
+      >
+        {item}
+      </Text>
+    </TouchableOpacity>
+  );
 
   return (
-
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.container}>
-        {timeSlots.map((time, index) => (
-          <TouchableOpacity
-            key={index}
-            style={[styles.dateContainer, selectedTime === time && styles.selectedDateContainer]}
-            onPress={() => setSelectedTime(time)}
-          >
-            <Text style={selectedTime === time ? styles.isSelected : styles.selectedDayText}>{time}</Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+  
+      <FlatList
+        data={timeSlots}
+        renderItem={renderItem}
+        keyExtractor={(item) => item}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.timeContainer}
+      />
 
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-
-  },
-  scrollContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  timeSlot: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    marginHorizontal: 5,
-    borderRadius: 20,
-    backgroundColor: '#f0f0f0',
-  },
-  selectedTimeSlot: {
-    backgroundColor: '#3483FA',
-  },
-  timeText: {
-    fontSize: 16,
-    color: '#000',
-  },
-  selectedText: {
-    fontSize: 16,
-    color: '#fff',
+  timeContainer:{
+    marginHorizontal:responsiveWidth(2),
+    marginTop: responsiveHeight(1),
+    marginBottom:responsiveHeight(1.5)
   },
   dateContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: responsiveWidth(16),
-    height: responsiveHeight(10),
+    width: responsiveWidth(28),
+    height: responsiveHeight(5),
     borderRadius: 6,
-    marginHorizontal: responsiveWidth(0.8),
+    marginHorizontal: responsiveWidth(1),
     backgroundColor: Colors.lightgrey,
-    marginTop: responsiveHeight(2),
+ 
 },
 selectedDateContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: responsiveWidth(16),
-    height: responsiveHeight(10),
+    width: responsiveWidth(28),
+    height: responsiveHeight(5),
     borderRadius: 6,
-    marginHorizontal: responsiveWidth(0.8),
+    marginHorizontal: responsiveWidth(1),
     backgroundColor: Colors.blue,
-    marginTop: responsiveHeight(2),
+
 },
 dateText: {
-    color: Colors.darkgrey,
+    color: Colors.black,
     fontSize: responsiveFontSize(2.5),
     fontWeight: '500'
 },
@@ -91,16 +97,16 @@ selectedDateText: {
     color: Colors.white
 },
 dayText: {
-    color: Colors.grey,
-    fontSize: responsiveFontSize(1.7),
-    fontWeight: '600'
+    color: Colors.black,
+    fontSize: responsiveFontSize(1.5),
+    fontWeight: '500'
 },
 selectedDayText: {
-    color: Colors.black,
-    fontSize: responsiveFontSize(1.7),
+    color: Colors.white,
+    fontSize: responsiveFontSize(1.5),
+    fontWeight: '500'
 
 }
-
 });
 
 export default TimePicker;
