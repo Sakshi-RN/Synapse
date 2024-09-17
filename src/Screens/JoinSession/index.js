@@ -14,6 +14,10 @@ const JoinSession = () => {
   const handleWaitingRoom = () => {
     navigation.navigate('WaitingRoom');
 }
+const handleResheduleRequest = () => {
+  navigation.navigate('ResheduleRequest');
+}
+
 
   return (
     <View style={styles.container}>
@@ -36,7 +40,8 @@ const JoinSession = () => {
         <CustomButton
           buttonStyle={styles.Button}
           textStyle={styles.btnText}
-          title={'Reschedule Request'} />
+          title={'Reschedule Request'}
+          onPress={handleResheduleRequest}/>
         <CustomButton
           buttonStyle={styles.joinButton}
           textStyle={styles.joinText}
