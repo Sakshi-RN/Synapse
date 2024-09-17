@@ -15,15 +15,15 @@ const Emergencycontacts = () => {
             <View style={styles.content}>
                 <View style={CommonStyle.container}>
                     <View style={commonStyles.containerView}>
-                        <Text style={CommonStyle.titleText}>First Name</Text>
+                        <Text style={CommonStyle.nameTitleText}>First Name</Text>
                         <Text style={commonStyles.bodyText}>Nathan</Text>
                     </View>
                     <View style={commonStyles.containerView}>
-                        <Text style={CommonStyle.titleText}>Last Name</Text>
+                        <Text style={CommonStyle.nameTitleText}>Last Name</Text>
                         <Text style={commonStyles.bodyText}>Klin</Text>
                     </View>
                     <View style={commonStyles.containerView}>
-                        <Text style={[CommonStyle.titleText,{width:'60%'}]}>Phone Number</Text>
+                        <Text style={CommonStyle.nameTitleText}>Phone Number</Text>
                         <Text style={commonStyles.bodyText}>(924) 234-2548</Text>
                     </View>
                     <View style={commonStyles.bottomView}>

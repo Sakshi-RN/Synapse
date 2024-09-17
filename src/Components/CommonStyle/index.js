@@ -32,11 +32,18 @@ const commonStyles = StyleSheet.create({
     marginVertical:responsiveHeight(1),
 
   },
+  nameTitleText: {
+    fontSize: responsiveFontSize(1.8),
+    fontWeight: '400',
+    color:Colors.black,
+    marginVertical:responsiveHeight(1.5),
+
+  },
   bodyText: {
     fontSize: responsiveFontSize(1.6),
     color:Colors.blue,
     fontWeight:'bold',
-    marginVertical:responsiveHeight(1),
+    marginVertical:responsiveHeight(1.5),
 
   },
 
