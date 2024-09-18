@@ -34,7 +34,10 @@ const HomeScreen = () => {
     const handleCareTeam = () => {
         navigation.navigate('CareTeam');
     }
-
+    const handleSurveyHistory = () => {
+        navigation.navigate('SurveyHistory');
+    }
+    
 
     const renderHeader = () => {
         return (
@@ -75,11 +78,19 @@ const HomeScreen = () => {
                     activeDot={<View style={styles.activeDot} />}
                 >
                     <View style={styles.slide}>
-                        <Text style={styles.slideText}>Prep Session (Physical Visit) Leena Joseph, LCSW</Text>
+                        <Text style={styles.slideText}>Prep Session (Virtual) Leena Joseph, LCSW</Text>
                         <View style={styles.line} />
                         <View style={styles.blueContainer}>
                             <Text style={styles.slideTextSecondary}>July 5th 10:00am</Text>
                             <MeetIcon />
+                        </View>
+                    </View>
+                    <View style={styles.slide}>
+                        <Text style={styles.slideText}>Prep Session (Physical Visit) Leena Joseph, LCSW</Text>
+                        <View style={styles.line} />
+                        <View style={styles.blueContainer}>
+                            <Text style={styles.slideTextSecondary}>July 5th 10:00am</Text>
+                            <Location />
                         </View>
                     </View>
                     <View style={styles.slide}>
@@ -96,6 +107,7 @@ const HomeScreen = () => {
                             <Text style={styles.startsurveytext}>Start Survey</Text>
                         </View>
                     </View>
+
                 </Swiper>
             </View>
         );
@@ -105,7 +117,7 @@ const HomeScreen = () => {
         return (
             <View style={{ marginTop: responsiveHeight(1), paddingBottom: responsiveHeight(15) }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <TouchableOpacity style={{ marginBottom: responsiveHeight(1) }}>
+                    <TouchableOpacity style={{ marginBottom: responsiveHeight(1) }} onPress={handleSurveyHistory}>
                         <SurveyHistory />
                     </TouchableOpacity>
                     <TouchableOpacity style={{ marginHorizontal: responsiveWidth(3) }} onPress={handleAppointment}>
@@ -240,8 +252,8 @@ const styles = StyleSheet.create({
     },
     slideText: {
         color: Colors.blue,
-        fontSize: responsiveFontSize(1.7),
-        width: responsiveWidth(53),
+        fontSize: responsiveFontSize(1.5),
+        width: responsiveWidth(48),
         fontWeight: '400',
     },
     seemoreText: {

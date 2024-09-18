@@ -21,5 +21,10 @@ export const CommonStyles = StyleSheet.create({
   },
   marginTop7: {
     marginTop: 7,
-  }
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+   justifyContent:'space-between'
+},
 });

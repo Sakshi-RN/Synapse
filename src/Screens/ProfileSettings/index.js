@@ -72,7 +72,7 @@ const handleMyProfileScreen = () => {
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.sectionTitle}>Support</Text>
-                <View style={styles.section}>
+                <View style={[styles.section,{marginBottom:responsiveHeight(5)}]}>
                     <TouchableOpacity style={styles.row} onPress={() => {}}>
                         <Policy/>
                         <Text style={styles.rowText}>Privacy Policy</Text>

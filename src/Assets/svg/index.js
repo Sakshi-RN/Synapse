@@ -34,5 +34,9 @@ import Video from './Video.svg';
 import Starred from './Starred.svg';
 import TaraMind from './TaraMind.svg';
 import CommunicationPreferences from './CommunicationPreferences.svg';
+import Ace from './Ace.svg';
+import Diagonstic from './Diagonstic.svg';
+import PHQ from './PHQ.svg';
+import Intake from './Intake.svg';
 
-export{TaraMind,Starred,PhoneBook,Video,CommunicationPreferences,Policy,Advice,TermsOfUse,Logout,EditIcon,Calendar,Time,UpArrow,Star,MapView,Chat,ThreeDots,SplashIcon,Download,Logo,BackIcon,Bell,Circle,HomeIcon,AppointmentIcon,CareTeamIcon,MyProfileIcon,Arrowdown,Location,MeetIcon,Device,ConsentForm,TreatmentSummary,AppointmentImg,SurveyHistory}
+export{Ace,Intake,PHQ,Diagonstic,TaraMind,Starred,PhoneBook,Video,CommunicationPreferences,Policy,Advice,TermsOfUse,Logout,EditIcon,Calendar,Time,UpArrow,Star,MapView,Chat,ThreeDots,SplashIcon,Download,Logo,BackIcon,Bell,Circle,HomeIcon,AppointmentIcon,CareTeamIcon,MyProfileIcon,Arrowdown,Location,MeetIcon,Device,ConsentForm,TreatmentSummary,AppointmentImg,SurveyHistory}
