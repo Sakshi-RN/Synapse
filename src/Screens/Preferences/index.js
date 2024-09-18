@@ -7,8 +7,17 @@ import CustomHeader from '../../Components/CustomHeader';
 import CustomButton from '../../Components/CustomButton';
 import CommonStyle from '../../Components/CommonStyle';
 import commonStyles from '../../Components/CommonStyle';
+import { useNavigation } from '@react-navigation/native';
 
 const Preferences = () => {
+    const navigation = useNavigation();
+
+    const handleEditPreferences = () => {
+        navigation.navigate('EditPreferences');
+    };
+    const handleProfileSettings = () => {
+        navigation.navigate('ProfileSettings');
+    };
     return (
         <View style={styles.container}>
             <CustomHeader title={'Preferences'} />
@@ -31,11 +40,14 @@ const Preferences = () => {
                     <CustomButton
                         buttonStyle={styles.Button}
                         textStyle={styles.btnText}
-                        title={'Back'} />
+                        title={'Back'}
+                        onPress={handleProfileSettings} />
                     <CustomButton
                         buttonStyle={styles.joinButton}
                         textStyle={styles.joinText}
-                        title={'Edit Info'} />
+                        title={'Edit Info'}
+                        onPress={handleEditPreferences}
+                         />
                 </View>
             </View>
         </View>

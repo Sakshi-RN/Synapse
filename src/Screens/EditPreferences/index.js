@@ -6,8 +6,15 @@ import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
 import CustomButton from '../../Components/CustomButton';
 import CommonInput from '../../Components/CommonInput';
+import { useNavigation } from '@react-navigation/native';
 
 const EditPreferences = () => {
+    const navigation = useNavigation();
+
+    
+    const handlePreferences = () => {
+      navigation.navigate('Preferences');
+  }
     return (
         <View style={styles.container}>
             <CustomHeader title={'Edit Preferences'} />
@@ -32,11 +39,13 @@ const EditPreferences = () => {
                     <CustomButton
                         buttonStyle={styles.Button}
                         textStyle={styles.btnText}
-                        title={'Cancel'} />
+                        title={'Cancel'} 
+                        onPress={handlePreferences}/>
                     <CustomButton
                         buttonStyle={styles.joinButton}
                         textStyle={styles.joinText}
-                        title={'Save'} />
+                        title={'Save'}
+                        onPress={handlePreferences} />
                 </View>
             </View>
         </View>

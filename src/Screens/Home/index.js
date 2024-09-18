@@ -180,7 +180,7 @@ const HomeScreen = () => {
                 {reportSection()}
                 <Text style={styles.careTeamTitle}>Care Team</Text>
                 {flatlistView()}
-                <Text style={styles.actionsTitle}>Other Actions</Text>
+                <Text style={styles.actionsTitle}>Other Action</Text>
                 {actionConatiner()}
             </ScrollView>
         </View>

@@ -6,8 +6,15 @@ import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
 import CustomButton from '../../Components/CustomButton';
 import CommonInput from '../../Components/CommonInput';
+import { useNavigation } from '@react-navigation/native';
 
 const EditEmergencyContacts = () => {
+    const navigation = useNavigation();
+
+    const handleEmergencycontacts = () => {
+        navigation.navigate('Emergencycontacts');
+    };
+
     return (
         <View style={styles.container}>
             <CustomHeader title={'Edit Emergency contacts'} />
@@ -34,11 +41,13 @@ const EditEmergencyContacts = () => {
                     <CustomButton
                         buttonStyle={styles.Button}
                         textStyle={styles.btnText}
-                        title={'Cancel'} />
+                        title={'Cancel'} 
+                        onPress={handleEmergencycontacts}/>
                     <CustomButton
                         buttonStyle={styles.joinButton}
                         textStyle={styles.joinText}
-                        title={'Save'} />
+                        title={'Save'}
+                        onPress={handleEmergencycontacts} />
                 </View>
             </View>
         </View>

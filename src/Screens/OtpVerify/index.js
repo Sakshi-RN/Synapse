@@ -39,7 +39,7 @@ const OTPVerification = () => {
                     </ImageBackground>
                     <View style={styles.formContainer}>
                         <Text style={styles.title}>Enter Code</Text>
-                        <Text style={styles.centerText}>Please enter the code that was sent to your Email Id</Text>
+                        <Text style={styles.centerText}>Please enter the code that sent to your Email Id.</Text>
                         <OTPInput length={6} />
                         <TouchableOpacity>
                             <Text style={styles.resendText}>Resend Code</Text>

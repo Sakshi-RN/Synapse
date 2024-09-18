@@ -1,6 +1,6 @@
 import React from "react";
 import { createStackNavigator } from '@react-navigation/stack';
-import MyProfile from '../Screens/MyProfile';
+import ProfileSettings from '../Screens/ProfileSettings';
 import EditProfile from '../Screens/EditProfile';
 import EditPreferences from '../Screens/EditPreferences';
 import EditEmergencyContacts from '../Screens/EditEmergencyContacts';
@@ -14,12 +14,12 @@ const ProfileStackNav = createStackNavigator();
 export const ProfileStack = (props) => {
     return (
         <ProfileStackNav.Navigator
-            initialRouteName="MyProfileScreen"
+            initialRouteName="ProfileSettings"
             screenOptions={{
                 headerShown: false,
             }}
         >
-            <ProfileStackNav.Screen name="MyProfile" component={MyProfile} />
+            <ProfileStackNav.Screen name="ProfileSettings" component={ProfileSettings} />
             <ProfileStackNav.Screen name="EditProfile" component={EditProfile} />
             <ProfileStackNav.Screen name="EditPreferences" component={EditPreferences} />
             <ProfileStackNav.Screen name="EditEmergencyContacts" component={EditEmergencyContacts} />

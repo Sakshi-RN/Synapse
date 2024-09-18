@@ -24,5 +24,15 @@ import Star from './Star.svg';
 import Time from './Time.svg';
 import UpArrow from './upArrow.svg';
 import Calendar from './calendar.svg';
+import EditIcon from './EditIcon.svg';
+import TermsOfUse from './TermsOfUse.svg';
+import Logout from './Logout.svg';
+import Advice from './Advice.svg';
+import Policy from './Policy.svg';
+import PhoneBook from './PhoneBook.svg';
+import Video from './Video.svg';
+import Starred from './Starred.svg';
+import TaraMind from './TaraMind.svg';
+import CommunicationPreferences from './CommunicationPreferences.svg';
 
-export{Calendar,Time,UpArrow,Star,MapView,Chat,ThreeDots,SplashIcon,Download,Logo,BackIcon,Bell,Circle,HomeIcon,AppointmentIcon,CareTeamIcon,MyProfileIcon,Arrowdown,Location,MeetIcon,Device,ConsentForm,TreatmentSummary,AppointmentImg,SurveyHistory}
+export{TaraMind,Starred,PhoneBook,Video,CommunicationPreferences,Policy,Advice,TermsOfUse,Logout,EditIcon,Calendar,Time,UpArrow,Star,MapView,Chat,ThreeDots,SplashIcon,Download,Logo,BackIcon,Bell,Circle,HomeIcon,AppointmentIcon,CareTeamIcon,MyProfileIcon,Arrowdown,Location,MeetIcon,Device,ConsentForm,TreatmentSummary,AppointmentImg,SurveyHistory}

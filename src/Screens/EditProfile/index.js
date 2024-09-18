@@ -6,8 +6,15 @@ import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
 import CustomButton from '../../Components/CustomButton';
 import InputContainer from '../../Components/InputContainer';
+import { useNavigation } from '@react-navigation/native';
 
 const EditProfile = () => {
+
+    const navigation = useNavigation()
+    const handleMyProfileScreen = () => {
+        navigation.navigate('MyProfileScreen');
+      }
+
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -89,11 +96,13 @@ const EditProfile = () => {
                         <CustomButton
                             buttonStyle={styles.Button}
                             textStyle={styles.btnText}
-                            title={'Cancel'} />
+                            title={'Cancel'} 
+                            onPress={handleMyProfileScreen}/>
                         <CustomButton
                             buttonStyle={styles.joinButton}
                             textStyle={styles.joinText}
-                            title={'Save'} />
+                            title={'Save'}
+                            onPress={handleMyProfileScreen} />
                     </View>
                 </View>
             </TouchableWithoutFeedback>
