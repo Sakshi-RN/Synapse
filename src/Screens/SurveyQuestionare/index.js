@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, Alert } from 'react-native';
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
@@ -6,7 +6,6 @@ import CustomHeader from '../../Components/CustomHeader';
 import CustomButton from '../../Components/CustomButton';
 import * as Progress from 'react-native-progress';
 import { useNavigation } from '@react-navigation/native';
-
 
 const questions = [
     { id: 1, question: "1.  Little interest or pleasure in doing things?", options: ["Not at all", "Several days", "More than half the days", "Nearly every day"] },
@@ -18,15 +17,15 @@ const questions = [
     { id: 7, question: "7.  Trouble concentrating on things?", options: ["Not at all", "Several days", "More than half the days", "Nearly every day"] },
     { id: 8, question: "8.  Moving or speaking so slowly that others notice?", options: ["Not at all", "Several days", "More than half the days", "Nearly every day"] },
     { id: 9, question: "9.  Thoughts that you would be better off dead?", options: ["Not at all", "Several days", "More than half the days", "Nearly every day"] },
+    { id: 9, question: "10.  Thoughts that you would be better off dead?", options: ["Not at all", "Several days", "More than half the days", "Nearly every day"] },
 ];
-
 
 const SurveyLastQuestionare = () => {
     const navigation = useNavigation();
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedAnswers, setSelectedAnswers] = useState({});
     const [selectedOptions, setSelectedOptions] = useState(Array(questions.length).fill(null));
-
+    const [progress, setProgress] = useState(0); 
 
     const handleAnswerSelect = (questionId, answerIndex) => {
         setSelectedAnswers({
@@ -40,33 +39,32 @@ const SurveyLastQuestionare = () => {
         });
     };
 
-
     const handleNext = () => {
         const currentQuestion = questions[currentQuestionIndex];
-
 
         if (selectedAnswers[currentQuestion.id] === undefined) {
             Alert.alert('Please select an answer');
             return;
         }
 
-
         if (currentQuestionIndex === questions.length - 1) {
             navigation.navigate('SurveyLastQuestionare');
         } else {
-            setCurrentQuestionIndex(currentQuestionIndex + 1);
+            setCurrentQuestionIndex(prevIndex => prevIndex + 1);
         }
     };
-
 
     const handleBack = () => {
         if (currentQuestionIndex > 0) {
-            setCurrentQuestionIndex(currentQuestionIndex - 1);
+            setCurrentQuestionIndex(prevIndex => prevIndex - 1);
         }
     };
 
+    useEffect(() => {
 
-    const progress = currentQuestionIndex / (questions.length - 1);
+        const progressValue = 0.1 + (currentQuestionIndex / (questions.length - 1)) * 0.9;
+        setProgress(progressValue);
+    }, [currentQuestionIndex]);
 
     const ProgressBar = () => {
         return (
@@ -79,10 +77,12 @@ const SurveyLastQuestionare = () => {
                     borderWidth={0}
                     height={responsiveHeight(1.2)}
                     style={styles.progressBar}
+                    animated // Enable animation
                 />
-                <Text style={styles.progressText}>{`${Math.round(progress * 100)}%`}</Text></>
-        )
-    }
+                <Text style={styles.progressText}>{`${Math.round(progress * 100)}%`}</Text>
+            </>
+        );
+    };
 
     const QuestionAnswer = () => {
         return (
@@ -114,10 +114,9 @@ const SurveyLastQuestionare = () => {
                         </TouchableOpacity>
                     ))}
                 </View>
-
             </>
-        )
-    }
+        );
+    };
 
     const ButtonRow = () => {
         return (
@@ -139,8 +138,9 @@ const SurveyLastQuestionare = () => {
                 </View>
                 <Text style={styles.saveText}>Save and Complete Later</Text>
             </>
-        )
-    }
+        );
+    };
+
     return (
         <View style={styles.container}>
             <CustomHeader title={'Survey Questionnaire'} />
@@ -152,6 +152,7 @@ const SurveyLastQuestionare = () => {
 };
 
 export default SurveyLastQuestionare;
+
 
 const styles = StyleSheet.create({
     container: {
