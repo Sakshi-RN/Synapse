@@ -17,7 +17,7 @@ const questions = [
     { id: 7, question: "7.  Trouble concentrating on things?", options: ["Not at all", "Several days", "More than half the days", "Nearly every day"] },
     { id: 8, question: "8.  Moving or speaking so slowly that others notice?", options: ["Not at all", "Several days", "More than half the days", "Nearly every day"] },
     { id: 9, question: "9.  Thoughts that you would be better off dead?", options: ["Not at all", "Several days", "More than half the days", "Nearly every day"] },
-    { id: 9, question: "10.  Thoughts that you would be better off dead?", options: ["Not at all", "Several days", "More than half the days", "Nearly every day"] },
+    
 ];
 
 const SurveyLastQuestionare = () => {
@@ -25,7 +25,7 @@ const SurveyLastQuestionare = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedAnswers, setSelectedAnswers] = useState({});
     const [selectedOptions, setSelectedOptions] = useState(Array(questions.length).fill(null));
-    const [progress, setProgress] = useState(0); 
+    const [progress, setProgress] = useState(0); // Initial progress
 
     const handleAnswerSelect = (questionId, answerIndex) => {
         setSelectedAnswers({
