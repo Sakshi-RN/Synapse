@@ -14,7 +14,7 @@ const HomeStackNav = createStackNavigator();
 export const HomeStack = (props) => {
   return (
     <HomeStackNav.Navigator
-        initialRouteName="SurveyQuestionare"
+        initialRouteName="Home"
         screenOptions={{
             headerShown: false,
         }}

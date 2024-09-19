@@ -46,7 +46,7 @@ const SurveyLastQuestionare = () => {
 
 
         if (selectedAnswers[currentQuestion.id] === undefined) {
-            Alert.alert('Validation Error', 'Please select an answer before proceeding.');
+            Alert.alert('Please select an answer');
             return;
         }
 
