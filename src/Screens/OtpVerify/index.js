@@ -15,9 +15,11 @@ import CustomButton from '../../Components/CustomButton';
 const OTPVerification = () => {
     const navigation = useNavigation();
 
-    const handleBackPress = () => {
-        navigation.navigate('SignIn');
+
+    const handleGoBack = () => {
+        navigation.goBack();
     };
+
     const handleSubmit = () => {
         navigation.navigate('BTabNavigation');
     };
@@ -31,7 +33,7 @@ const OTPVerification = () => {
                 <ScrollView style={styles.container}>
                     <ImageBackground source={images.bgImg} style={styles.imageBackground}>
                         <View style={styles.row}>
-                            <TouchableOpacity onPress={handleBackPress}>
+                            <TouchableOpacity onPress={handleGoBack}>
                                 <BackIcon />
                             </TouchableOpacity>
                             <Logo width={160} />

@@ -16,8 +16,8 @@ const MyProfileScreen = () => {
     const handleEditProfile = () => {
         navigation.navigate('EditProfile');
     };
-    const handleProfileSettings = () => {
-        navigation.navigate('ProfileSettings');
+    const handleGoBack = () => {
+        navigation.goBack();
     };
     return (
         <View style={styles.container}>
@@ -94,7 +94,7 @@ const MyProfileScreen = () => {
                         buttonStyle={styles.Button}
                         textStyle={styles.btnText}
                         title={'Back'} 
-                        onPress={handleProfileSettings}
+                        onPress={handleGoBack}
                         />
                     <CustomButton
                         buttonStyle={styles.joinButton}

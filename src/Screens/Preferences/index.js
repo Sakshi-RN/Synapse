@@ -15,8 +15,8 @@ const Preferences = () => {
     const handleEditPreferences = () => {
         navigation.navigate('EditPreferences');
     };
-    const handleProfileSettings = () => {
-        navigation.navigate('ProfileSettings');
+    const handleGoBack = () => {
+        navigation.goBack();
     };
     return (
         <View style={styles.container}>
@@ -41,7 +41,7 @@ const Preferences = () => {
                         buttonStyle={styles.Button}
                         textStyle={styles.btnText}
                         title={'Back'}
-                        onPress={handleProfileSettings} />
+                        onPress={handleGoBack} />
                     <CustomButton
                         buttonStyle={styles.joinButton}
                         textStyle={styles.joinText}

@@ -6,14 +6,15 @@ import SurveyHistory from '../Screens/SurveyHistory';
 import PHQ from '../Screens/PHQ';
 import InTake from '../Screens/InTake';
 import Survey from '../Screens/Survey';
-
+import SurveyQuestionare from '../Screens/SurveyQuestionare';
+import SurveyLastQuestionare from '../Screens/SurveyLastQuestionare';
 
 const HomeStackNav = createStackNavigator();
 
 export const HomeStack = (props) => {
   return (
     <HomeStackNav.Navigator
-        initialRouteName="Home"
+        initialRouteName="SurveyQuestionare"
         screenOptions={{
             headerShown: false,
         }}
@@ -24,6 +25,8 @@ export const HomeStack = (props) => {
         <HomeStackNav.Screen name="PHQ" component={PHQ} />  
         <HomeStackNav.Screen name="InTake" component={InTake} />  
         <HomeStackNav.Screen name="Survey" component={Survey} />   
+        <HomeStackNav.Screen name="SurveyQuestionare" component={SurveyQuestionare} />  
+        <HomeStackNav.Screen name="SurveyLastQuestionare" component={SurveyLastQuestionare} />  
     </HomeStackNav.Navigator>
 );
 }

@@ -14,8 +14,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 const Survey = () => {
     const navigation = useNavigation();
 
-    const handleSurveyHistory = () => {
-        navigation.navigate('SurveyHistory');
+    const handleSurveyQuestionare = () => {
+        navigation.navigate('SurveyQuestionare');
     };
 
     return (
@@ -31,7 +31,7 @@ const Survey = () => {
                     buttonStyle={styles.joinButton}
                     textStyle={styles.joinText}
                     title={'Get Started'}
-                    onPress={handleSurveyHistory} />
+                    onPress={handleSurveyQuestionare} />
             </View>
 
         </View>

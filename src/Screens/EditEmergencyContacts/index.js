@@ -14,6 +14,9 @@ const EditEmergencyContacts = () => {
     const handleEmergencycontacts = () => {
         navigation.navigate('Emergencycontacts');
     };
+    const handleGoBack = () => {
+        navigation.goBack();
+    };
 
     return (
         <View style={styles.container}>
@@ -42,7 +45,7 @@ const EditEmergencyContacts = () => {
                         buttonStyle={styles.Button}
                         textStyle={styles.btnText}
                         title={'Cancel'} 
-                        onPress={handleEmergencycontacts}/>
+                        onPress={handleGoBack}/>
                     <CustomButton
                         buttonStyle={styles.joinButton}
                         textStyle={styles.joinText}

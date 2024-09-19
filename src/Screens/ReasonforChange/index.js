@@ -5,10 +5,15 @@ import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
 import CustomButton from '../../Components/CustomButton';
 import CustomTextInput from '../../Components/CustomTextInput';
+import { useNavigation } from '@react-navigation/native';
+
 
 
 const ReasonforChange = () => {
-
+    const navigation = useNavigation()
+    const handleGoBack = () => {
+        navigation.goBack();
+    };
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -34,9 +39,11 @@ const ReasonforChange = () => {
                         <CustomButton
                             buttonStyle={styles.Button}
                             textStyle={styles.ButtonText}
-                            title={'Cancel'} />
+                            title={'Cancel'}
+                        onPress={handleGoBack}/>
                         <CustomButton
-                            title={'Save'} />
+                            title={'Save'} 
+                            onPress={handleGoBack}/>
                     </View>
 
                 </>

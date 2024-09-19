@@ -15,6 +15,10 @@ const EditPreferences = () => {
     const handlePreferences = () => {
       navigation.navigate('Preferences');
   }
+
+  const handleGoBack = () => {
+    navigation.goBack();
+};
     return (
         <View style={styles.container}>
             <CustomHeader title={'Edit Preferences'} />
@@ -40,7 +44,7 @@ const EditPreferences = () => {
                         buttonStyle={styles.Button}
                         textStyle={styles.btnText}
                         title={'Cancel'} 
-                        onPress={handlePreferences}/>
+                        onPress={handleGoBack}/>
                     <CustomButton
                         buttonStyle={styles.joinButton}
                         textStyle={styles.joinText}

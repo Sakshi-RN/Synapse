@@ -13,8 +13,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 const InTake = () => {
     const navigation = useNavigation();
 
-    const handleSurveyHistory = () => {
-        navigation.navigate('SurveyHistory');
+    const handleGoBack = () => {
+        navigation.goBack();
     };
 
     return (
@@ -92,7 +92,7 @@ const InTake = () => {
                 buttonStyle={styles.joinButton}
                 textStyle={styles.joinText}
                 title={'Back'}
-                onPress={handleSurveyHistory} />
+                onPress={handleGoBack} />
 
 
         </View>

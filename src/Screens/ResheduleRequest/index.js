@@ -8,8 +8,14 @@ import CustomButton from '../../Components/CustomButton';
 import CustomCalender from '../../Components/CustomCalender';
 import TimePicker from '../../Components/TimePicker';
 import InputContainer from '../../Components/InputContainer';
+import { useNavigation } from '@react-navigation/native';
+
 
 const JoinSession = () => {
+    const navigation = useNavigation()
+    const handleGoBack = () => {
+        navigation.goBack();
+    };
     return (
                 <View style={styles.container}>
                     <CustomHeader title={'Reschedule Request'} />
@@ -32,11 +38,13 @@ const JoinSession = () => {
                         <CustomButton
                             buttonStyle={styles.Button}
                             textStyle={styles.btnText}
-                            title={'Cancel'} />
+                            title={'Cancel'}
+                            onPress={handleGoBack} />
                         <CustomButton
                             buttonStyle={styles.joinButton}
                             textStyle={styles.joinText}
-                            title={'Confirm'} />
+                            title={'Confirm'}
+                            onPress={handleGoBack} />
                     </View>
                 </View>
 

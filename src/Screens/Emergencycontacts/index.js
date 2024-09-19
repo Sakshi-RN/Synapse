@@ -15,8 +15,8 @@ const Emergencycontacts = () => {
     const handleEditEmergencyContacts = () => {
         navigation.navigate('EditEmergencyContacts');
     };
-    const handleProfileSettings = () => {
-        navigation.navigate('ProfileSettings');
+    const handleGoBack = () => {
+        navigation.goBack();
     };
     return (
         <View style={styles.container}>
@@ -45,7 +45,7 @@ const Emergencycontacts = () => {
                         buttonStyle={styles.Button}
                         textStyle={styles.btnText}
                         title={'Back'}
-                        onPress={handleProfileSettings}
+                        onPress={handleGoBack}
                          />
                     <CustomButton
                         buttonStyle={styles.joinButton}

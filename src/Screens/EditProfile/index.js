@@ -14,6 +14,9 @@ const EditProfile = () => {
     const handleMyProfileScreen = () => {
         navigation.navigate('MyProfileScreen');
       }
+      const handleGoBack = () => {
+        navigation.goBack();
+    };
 
     return (
         <KeyboardAvoidingView
@@ -97,7 +100,7 @@ const EditProfile = () => {
                             buttonStyle={styles.Button}
                             textStyle={styles.btnText}
                             title={'Cancel'} 
-                            onPress={handleMyProfileScreen}/>
+                            onPress={handleGoBack}/>
                         <CustomButton
                             buttonStyle={styles.joinButton}
                             textStyle={styles.joinText}
