@@ -20,6 +20,14 @@ const HomeScreen = () => {
         navigation.navigate('PHQ');
     }
 
+
+    const handleDiagonistic = () => {
+        navigation.navigate('Diagonistic');
+    }
+    const handleACE = () => {
+        navigation.navigate('ACE');
+    }
+
     const actionConatiner = () => {
         return (
             <View>
@@ -32,10 +40,10 @@ const HomeScreen = () => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.secondRow}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={handleDiagonistic}>
                         <Diagonstic />
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={handleACE}>
                         <Ace />
                     </TouchableOpacity>
                 </View>

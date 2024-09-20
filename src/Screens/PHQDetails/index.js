@@ -5,6 +5,7 @@ import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
 import CustomButton from '../../Components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
+import ScoreContainer from '../../Container/ScoreContainer';
 
 const PHQDetails = () => {
     const navigation = useNavigation();
@@ -61,7 +62,7 @@ const PHQDetails = () => {
 
     const renderOptions = () => {
         return (
-            <View>
+            <View style={{ paddingHorizontal: responsiveWidth(7)}}>
                 <View style={styles.row}>
                     <View style={[styles.answerBox, { borderColor: Colors.green }]}>
                         <Text style={[styles.answerText, { color: Colors.green }]}>0</Text>
@@ -88,16 +89,8 @@ const PHQDetails = () => {
     return (
         <View style={styles.container}>
             <CustomHeader title={'PHQ - 9'} />
-            <View style={styles.headerInfo}>
-                <Text style={styles.therapistText}>
-                    Therapist: <Text style={styles.linkText}>Leena Joseph, LCSW</Text>
-                </Text>
-                <View style={styles.row}>
-                    <Text style={styles.dateText}><Text style={styles.scoreText}>Date:</Text><Text> 04/10/2024</Text></Text>
-                    <Text style={styles.dateText}><Text style={styles.scoreText}>Score:</Text><Text> 11</Text></Text>
-                </View>
+            <ScoreContainer/>
                 {renderOptions()}
-            </View>
             <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
                 {questions.map((question, index) => renderQuestion(question, index))}
             </ScrollView>
@@ -117,39 +110,19 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Colors.white,
-        paddingBottom: responsiveHeight(2),
+        paddingBottom: responsiveHeight(11),
     },
     content: {
         paddingHorizontal: responsiveWidth(7),
         paddingTop: responsiveHeight(3),
         paddingBottom: responsiveHeight(5),
     },
-    headerInfo: {
-        paddingHorizontal: responsiveWidth(7),
-        paddingTop: responsiveHeight(2),
-    },
-    therapistText: {
-        color: Colors.black,
-        marginBottom: responsiveHeight(0.5),
-        fontWeight: 'bold'
-    },
-    linkText: {
-        color: Colors.blue,
-    },
-    dateText: {
-        color: Colors.black,
-        fontWeight: '600',
-        fontSize: responsiveFontSize(1.6),
-
-    },
-    scoreText: {
-        fontWeight: 'bold'
-    },
+   
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: responsiveHeight(2),
+        marginTop: responsiveHeight(1.5),
         width: responsiveWidth(54),
 
     },
@@ -202,6 +175,11 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: responsiveWidth(3),
         paddingVertical: responsiveHeight(2),
-    }
+    },
+    dateText: {
+        color: Colors.black,
+        fontWeight: '600',
+        fontSize: responsiveFontSize(1.6),
+    },
 
 });
