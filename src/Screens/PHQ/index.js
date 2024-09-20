@@ -10,8 +10,12 @@ import { useNavigation } from '@react-navigation/native';
 const PHQ = () => {
     const navigation = useNavigation();
 
-    const handleEditProfile = () => {
+    const handleStartSurvey = () => {
         navigation.navigate('Survey');
+    };
+
+    const handleViewSurvey = () => {
+        navigation.navigate('PHQDetails');
     };
 
     const renderSurveyItem = ({ item }) => (
@@ -35,7 +39,7 @@ const PHQ = () => {
                 buttonStyle={styles.surveyButton}
                 textStyle={styles.joinText}
                 title={'View Survey'}
-                onPress={handleEditProfile}
+                onPress={handleViewSurvey}
             />
         </View>
     );
@@ -55,7 +59,7 @@ const PHQ = () => {
                 buttonStyle={styles.joinButton}
                 textStyle={styles.joinText}
                 title={'Start Survey'}
-                onPress={handleEditProfile}
+                onPress={handleStartSurvey}
             />
         </View>
     );

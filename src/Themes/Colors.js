@@ -32,7 +32,12 @@ const Colors = {
   Light_gray:"#D8DADF",
   DARKBLUE:'#263257',
   light_skyblue:'#D9F4FA',
-  OFFBLACK:'#3E3E3E'
+  OFFBLACK:'#3E3E3E',
+  green:'#008000',
+  newOrange:'#FFA500',
+  fade_Yellow:'#CDCD06',
+  fade_red:'#FF0505'
+
 
 
 
