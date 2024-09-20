@@ -17,7 +17,7 @@ const HomeStackNav = createStackNavigator();
 export const HomeStack = (props) => {
   return (
     <HomeStackNav.Navigator
-        initialRouteName="Diagonistic"
+        initialRouteName="ACE"
         screenOptions={{
             headerShown: false,
         }}
