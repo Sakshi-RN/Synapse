@@ -41,6 +41,10 @@ const HomeScreen = () => {
     const handleTreatmentSummary = () => {
         navigation.navigate('TreatmentSummary');
     }
+    const handleConsentForm = () => {
+        navigation.navigate('ConsentForm');
+    }
+    
     const renderHeader = () => {
         return (
             <ImageBackground source={images.bgHome} style={styles.headerContainer}>
@@ -130,7 +134,7 @@ const HomeScreen = () => {
                     </TouchableOpacity>
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: responsiveHeight(1) }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={handleConsentForm}>
                         <ConsentForm />
                     </TouchableOpacity>
                     <TouchableOpacity style={{ marginLeft: responsiveWidth(3) }}>

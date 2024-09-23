@@ -13,13 +13,14 @@ import Diagonistic from '../Screens/Diagonistic';
 import ACE from '../Screens/ACE';
 import TreatmentSummary from '../Screens/TreatmentSummary';
 import ConsentForm from '../Screens/ConsentForm';
+import ConsentForTelehealth from '../Screens/ConsentForTelehealth';
 
 const HomeStackNav = createStackNavigator();
 
 export const HomeStack = (props) => {
   return (
     <HomeStackNav.Navigator
-        initialRouteName="ConsentForm"
+        initialRouteName="Home"
         screenOptions={{
             headerShown: false,
         }}
@@ -36,7 +37,8 @@ export const HomeStack = (props) => {
          <HomeStackNav.Screen name="Diagonistic" component={Diagonistic} />  
         <HomeStackNav.Screen name="ACE" component={ACE} />  
         <HomeStackNav.Screen name="TreatmentSummary" component={TreatmentSummary} /> 
-        <HomeStackNav.Screen name="ConsentForm" component={ConsentForm} /> 
+        <HomeStackNav.Screen name="ConsentForm" component={ConsentForm} />
+        <HomeStackNav.Screen name="ConsentForTelehealth" component={ConsentForTelehealth} /> 
     </HomeStackNav.Navigator>
 );
 }

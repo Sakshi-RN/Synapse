@@ -35,7 +35,9 @@ const ConsentForm = () => {
 
         fetchConsentStatus();
     }, []);
-
+    const handleConsentForTelehealth = () => {
+        navigation.navigate('ConsentForTelehealth');
+      }
     const CustomCheckBox = ({ checked }) => (
         <>
             {checked ? (
@@ -46,18 +48,20 @@ const ConsentForm = () => {
         </>
     );
 
+
+    
     return (
         <View style={styles.container}>
             <CustomHeader title={'Consent Form'} />
             <View style={styles.content}>
                 <Text style={styles.bodyText}>Therapist Consent</Text>
                 <View style={styles.containerBox}>
-                    <TouchableOpacity style={styles.containerView}>
+                    <TouchableOpacity style={styles.containerView} onPress={handleConsentForTelehealth}>
                         <Text style={styles.nameTitleText}>Informed Consent</Text>
                         <CustomCheckBox checked={therapistInformedConsent} />
                     </TouchableOpacity>
                     <View style={styles.line} />
-                    <TouchableOpacity style={styles.containerView}>
+                    <TouchableOpacity style={styles.containerView} onPress={handleConsentForTelehealth}>
                         <Text style={styles.nameTitleText}>Telehealth Consent</Text>
                         <CustomCheckBox checked={therapistTelehealthConsent} />
                     </TouchableOpacity>
@@ -65,7 +69,7 @@ const ConsentForm = () => {
 
                 <Text style={styles.bodyText}>Prescriber Consent</Text>
                 <View style={styles.containerBox}>
-                    <TouchableOpacity style={styles.containerView}>
+                    <TouchableOpacity style={styles.containerView} onPress={handleConsentForTelehealth}>
                         <Text style={styles.nameTitleText}>Informed Consent</Text>
                         <CustomCheckBox checked={prescriberInformedConsent} />
                     </TouchableOpacity>
