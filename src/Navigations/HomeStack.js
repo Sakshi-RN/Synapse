@@ -14,6 +14,7 @@ import ACE from '../Screens/ACE';
 import TreatmentSummary from '../Screens/TreatmentSummary';
 import ConsentForm from '../Screens/ConsentForm';
 import ConsentForTelehealth from '../Screens/ConsentForTelehealth';
+import Connect from '../Screens/Connect';
 
 const HomeStackNav = createStackNavigator();
 
@@ -39,6 +40,7 @@ export const HomeStack = (props) => {
         <HomeStackNav.Screen name="TreatmentSummary" component={TreatmentSummary} /> 
         <HomeStackNav.Screen name="ConsentForm" component={ConsentForm} />
         <HomeStackNav.Screen name="ConsentForTelehealth" component={ConsentForTelehealth} /> 
+        <HomeStackNav.Screen name="Connect" component={Connect} /> 
     </HomeStackNav.Navigator>
 );
 }
