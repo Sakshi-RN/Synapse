@@ -15,7 +15,7 @@ export default function App() {
     }, 3000);
   });
 
-  // if (loading) return <Splash />;
+  if (loading) return <Splash />;
 
   return (
     <>

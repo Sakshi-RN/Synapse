@@ -18,6 +18,13 @@ const FeedbackAfterSession = () => {
   const handleViewDetails = () => {
     navigation.navigate('ViewDetails');
   }
+
+
+  const handleSubmit = () => {
+    navigation.navigate('ThankyouForFeedback');
+  }
+
+
   const renderAvatar = () => {
     return (
       <>
@@ -49,9 +56,6 @@ const FeedbackAfterSession = () => {
           buttonStyle={styles.viewDetailsButton}
           textStyle={styles.viewDetailsButtonText}
         />
-        {/* <TouchableOpacity style={styles.viewDetailsButton}>
-          <Text style={styles.viewDetailsButtonText}>View Details</Text>
-        </TouchableOpacity> */}
       </View>
     );
   };
@@ -73,7 +77,7 @@ const FeedbackAfterSession = () => {
           placeholder={'Write your feedback here'}
           inputStyle={styles.input}
           dynamicStyle={styles.inputView} />
-        <CustomButton title="Submit" onPress={handleHome} />
+        <CustomButton title="Submit" onPress={handleSubmit} />
         <TouchableOpacity onPress={handleHome}>
           <Text style={styles.skipText}>Skip & Go to Dashboard</Text>
         </TouchableOpacity>
@@ -100,7 +104,7 @@ const FeedbackAfterSession = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: responsiveWidth(5),
+    paddingHorizontal: responsiveWidth(3),
     paddingTop: Platform.OS === "ios" ? responsiveHeight(8) : responsiveHeight(5),
     backgroundColor: Colors.white
   },
@@ -113,11 +117,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: responsiveHeight(2),
   },
-  avatarImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-  },
+
   avatarInitials: {
     width: 70,
     height: 70,
@@ -188,10 +188,7 @@ const styles = StyleSheet.create({
     color: Colors.blue,
     fontWeight: '600'
   },
-  feedbackContainer: {
-    paddingVertical: responsiveHeight(2),
-    backgroundColor: 'pink'
-  },
+
   feedbackTitle: {
     fontSize: responsiveFontSize(1.8),
     fontWeight: 'bold',
@@ -206,14 +203,7 @@ const styles = StyleSheet.create({
   heartIcon: {
     marginHorizontal: responsiveWidth(0.3),
   },
-  feedbackInput: {
-    borderColor: Colors.grey,
-    borderWidth: 1,
-    borderRadius: 5,
-    padding: responsiveHeight(1),
-    textAlignVertical: 'top',
-    minHeight: responsiveHeight(10),
-  },
+
   skipText: {
     color: Colors.blue,
     fontSize: responsiveFontSize(1.7),
