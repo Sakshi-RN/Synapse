@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import SignIn from '../Screens/SignIn';
 import OtpVerify from '../Screens/OtpVerify';
 import BTabNavigation from './BTabNavigation';
+import VideoCall from '../Screens/VideoCall';
 
 
 const Stack = createStackNavigator();
@@ -33,6 +34,13 @@ export default function AuthNavigation() {
         <Stack.Screen
           name="BTabNavigation"
           component={BTabNavigation}
+          options={{
+            headerShown: false,
+          }}
+        />
+            <Stack.Screen
+          name="VideoCall"
+          component={VideoCall}
           options={{
             headerShown: false,
           }}

@@ -5,9 +5,14 @@ import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
 import CustomButton from '../../Components/CustomButton';
 import { Time } from '../../Assets/svg';
+import { useNavigation } from '@react-navigation/native';
 
 
 const WaitingRoom = () => {
+  const navigation = useNavigation();
+  const handleVideoCall = () => {
+    navigation.navigate('VideoCall');
+}
 
   return (
     <View style={styles.container}>
@@ -28,7 +33,8 @@ const WaitingRoom = () => {
         </View>
         <CustomButton
           title={'Go to Waiting Room'}
-          buttonStyle={styles.btn} />
+          buttonStyle={styles.btn} 
+          onPress={handleVideoCall}/>
       </View>
     </View>
 

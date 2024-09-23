@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
   Button: {
     alignSelf: 'center',
     marginTop: responsiveHeight(3),
+    paddingHorizontal:responsiveWidth(8)
   },
 
   map: {

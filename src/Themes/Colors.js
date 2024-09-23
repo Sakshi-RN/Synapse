@@ -36,7 +36,9 @@ const Colors = {
   green:'#008000',
   newOrange:'#FFA500',
   fade_Yellow:'#CDCD06',
-  fade_red:'#FF0505'
+  fade_red:'#FF0505',
+  RED:'#F23A00'
+
 
 
 

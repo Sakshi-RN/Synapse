@@ -65,46 +65,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: responsiveWidth(5),
         paddingTop:responsiveHeight(4)
     },
-    profileSection: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: responsiveHeight(2),
-        paddingHorizontal: responsiveWidth(5),
-        backgroundColor:Colors.light_skyblue,
-        paddingVertical:responsiveHeight(1.5),
-        borderRadius:10,
-        shadowColor:Platform.OS === 'ios' ? Colors.OFFWHITE:Colors.black, 
-        shadowOffset: { width: 3, height: 5 }, 
-        shadowOpacity:1, 
-        shadowRadius:2, 
-        elevation: 5,
-    },
-    avatarBox: {
-        width: responsiveHeight(8),
-        height: responsiveHeight(8),
-        borderRadius: responsiveHeight(4),
-        backgroundColor: Colors.blue,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    avatarText: {
-        fontSize: responsiveFontSize(2.5),
-        color: Colors.white,
-        fontWeight: '500',
-    },
-    profileInfo: {
-      width:responsiveWidth(52),
-     marginHorizontal: responsiveWidth(4),
-    },
-    profileName: {
-        fontSize: responsiveFontSize(2),
-        fontWeight: 'bold',
-        color: Colors.blue,
-    },
-    profilePhone: {
-        fontSize: responsiveFontSize(1.8),
-        color: Colors.blue,
-    },
+
     section: {
        
         paddingHorizontal: responsiveWidth(5),
@@ -139,10 +100,7 @@ const styles = StyleSheet.create({
         marginLeft: responsiveWidth(3),
         fontWeight:'500'
     },
-    versionText:{
-      color:Colors.blue,
-      marginTop:responsiveHeight(1)
-    },
+ 
     line:{
       backgroundColor:Colors.light_skyblue,
     height:1,

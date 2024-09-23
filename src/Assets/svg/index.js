@@ -42,5 +42,9 @@ import Signature from './Signature.svg';
 import CheckboxIcon from './CheckboxIcon.svg';
 import AppleWatch from './AppleWatch.svg';
 import HealthApp from './HealthApp.svg';
+import DownloadSave from './downloadSave.svg';
+import Camera from './camera.svg';
+import Mic from './mic.svg';
+import Calling from './Calling.svg';
 
-export{HealthApp,AppleWatch,CheckboxIcon,Signature,Ace,Intake,PHQ,Diagonstic,TaraMind,Starred,PhoneBook,Video,CommunicationPreferences,Policy,Advice,TermsOfUse,Logout,EditIcon,Calendar,Time,UpArrow,Star,MapView,Chat,ThreeDots,SplashIcon,Download,Logo,BackIcon,Bell,Circle,HomeIcon,AppointmentIcon,CareTeamIcon,MyProfileIcon,Arrowdown,Location,MeetIcon,Device,ConsentForm,TreatmentSummary,AppointmentImg,SurveyHistory}
+export{Calling,Mic,Camera,DownloadSave,HealthApp,AppleWatch,CheckboxIcon,Signature,Ace,Intake,PHQ,Diagonstic,TaraMind,Starred,PhoneBook,Video,CommunicationPreferences,Policy,Advice,TermsOfUse,Logout,EditIcon,Calendar,Time,UpArrow,Star,MapView,Chat,ThreeDots,SplashIcon,Download,Logo,BackIcon,Bell,Circle,HomeIcon,AppointmentIcon,CareTeamIcon,MyProfileIcon,Arrowdown,Location,MeetIcon,Device,ConsentForm,TreatmentSummary,AppointmentImg,SurveyHistory}
