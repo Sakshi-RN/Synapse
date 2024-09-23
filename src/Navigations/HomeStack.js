@@ -11,13 +11,15 @@ import SurveyLastQuestionare from '../Screens/SurveyLastQuestionare';
 import PHQDetails from '../Screens/PHQDetails';
 import Diagonistic from '../Screens/Diagonistic';
 import ACE from '../Screens/ACE';
+import TreatmentSummary from '../Screens/TreatmentSummary';
+import ConsentForm from '../Screens/ConsentForm';
 
 const HomeStackNav = createStackNavigator();
 
 export const HomeStack = (props) => {
   return (
     <HomeStackNav.Navigator
-        initialRouteName="ACE"
+        initialRouteName="ConsentForm"
         screenOptions={{
             headerShown: false,
         }}
@@ -33,6 +35,8 @@ export const HomeStack = (props) => {
         <HomeStackNav.Screen name="PHQDetails" component={PHQDetails} /> 
          <HomeStackNav.Screen name="Diagonistic" component={Diagonistic} />  
         <HomeStackNav.Screen name="ACE" component={ACE} />  
+        <HomeStackNav.Screen name="TreatmentSummary" component={TreatmentSummary} /> 
+        <HomeStackNav.Screen name="ConsentForm" component={ConsentForm} /> 
     </HomeStackNav.Navigator>
 );
 }

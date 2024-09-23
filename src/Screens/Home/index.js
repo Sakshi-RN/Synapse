@@ -38,7 +38,9 @@ const HomeScreen = () => {
         navigation.navigate('SurveyHistory');
     }
     
-
+    const handleTreatmentSummary = () => {
+        navigation.navigate('TreatmentSummary');
+    }
     const renderHeader = () => {
         return (
             <ImageBackground source={images.bgHome} style={styles.headerContainer}>
@@ -123,7 +125,7 @@ const HomeScreen = () => {
                     <TouchableOpacity style={{ marginHorizontal: responsiveWidth(3) }} onPress={handleAppointment}>
                         <AppointmentImg />
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={handleTreatmentSummary}>
                         <TreatmentSummary />
                     </TouchableOpacity>
                 </View>

@@ -38,5 +38,7 @@ import Ace from './Ace.svg';
 import Diagonstic from './Diagonstic.svg';
 import PHQ from './PHQ.svg';
 import Intake from './Intake.svg';
+import Signature from './Signature.svg';
+import CheckboxIcon from './CheckboxIcon.svg';
 
-export{Ace,Intake,PHQ,Diagonstic,TaraMind,Starred,PhoneBook,Video,CommunicationPreferences,Policy,Advice,TermsOfUse,Logout,EditIcon,Calendar,Time,UpArrow,Star,MapView,Chat,ThreeDots,SplashIcon,Download,Logo,BackIcon,Bell,Circle,HomeIcon,AppointmentIcon,CareTeamIcon,MyProfileIcon,Arrowdown,Location,MeetIcon,Device,ConsentForm,TreatmentSummary,AppointmentImg,SurveyHistory}
+export{CheckboxIcon,Signature,Ace,Intake,PHQ,Diagonstic,TaraMind,Starred,PhoneBook,Video,CommunicationPreferences,Policy,Advice,TermsOfUse,Logout,EditIcon,Calendar,Time,UpArrow,Star,MapView,Chat,ThreeDots,SplashIcon,Download,Logo,BackIcon,Bell,Circle,HomeIcon,AppointmentIcon,CareTeamIcon,MyProfileIcon,Arrowdown,Location,MeetIcon,Device,ConsentForm,TreatmentSummary,AppointmentImg,SurveyHistory}
