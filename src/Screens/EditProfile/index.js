@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, ScrollView, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, } from 'react-native';
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
@@ -7,14 +7,28 @@ import CustomHeader from '../../Components/CustomHeader';
 import CustomButton from '../../Components/CustomButton';
 import InputContainer from '../../Components/InputContainer';
 import { useNavigation } from '@react-navigation/native';
+import CustomCalendarComponent from '../../Components/CustomCalendarComponent';
 
 const EditProfile = () => {
 
     const navigation = useNavigation()
+    const [isCalendarModalVisible, setIsCalendarModalVisible] = useState(false);
+    const [dateOfBirth, setDateOfBirth] = useState('');
+
+    const toggleCalendarModal = () => {
+        setIsCalendarModalVisible(!isCalendarModalVisible);
+    };
+
+    const dateSelected = (date) => {
+        setDateOfBirth(date);
+        toggleCalendarModal();
+    };
+
     const handleMyProfileScreen = () => {
         navigation.navigate('MyProfileScreen');
-      }
-      const handleGoBack = () => {
+    }
+
+    const handleGoBack = () => {
         navigation.goBack();
     };
 
@@ -56,6 +70,8 @@ const EditProfile = () => {
                             title={'Date Of Birthday'}
                             titleColor={styles.dobStyle}
                             iconName="calendar"
+                            value={dateOfBirth}
+                            onPress={toggleCalendarModal}
                         />
                         <InputContainer
                             placeholder={'Weight (in pounds)'}
@@ -93,14 +109,21 @@ const EditProfile = () => {
                                 titleColor={styles.zipCodeStyle}
                                 inputStyle={styles.widthStyle}
                             />
+
                         </View>
                     </ScrollView>
+                    <CustomCalendarComponent
+                        isCalendarModalVisible={isCalendarModalVisible}
+                        closeCalendarModal={toggleCalendarModal}
+                        dateSelected={dateSelected}
+                        current={dateOfBirth}
+                    />
                     <View style={styles.row}>
                         <CustomButton
                             buttonStyle={styles.Button}
                             textStyle={styles.btnText}
-                            title={'Cancel'} 
-                            onPress={handleGoBack}/>
+                            title={'Cancel'}
+                            onPress={handleGoBack} />
                         <CustomButton
                             buttonStyle={styles.joinButton}
                             textStyle={styles.joinText}
@@ -139,7 +162,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         width: '100%',
         paddingHorizontal: responsiveWidth(5),
-        marginTop:responsiveHeight(2)
+        marginTop: responsiveHeight(2)
 
     },
 

@@ -13,7 +13,9 @@ const InputContainer = ({
     showAsterisk = true,
     inputStyle,
     dynamicStyle,
-    placeholderTextColor = Colors.OFFBLACK 
+    placeholderTextColor = Colors.OFFBLACK ,
+    onPress,
+    value
 }) => {
     return (
         <View style={styles.container}>
@@ -27,8 +29,9 @@ const InputContainer = ({
                     placeholder={placeholder}
                     placeholderTextColor={placeholderTextColor}       
                     style={dynamicStyle}
+                    value={value}
                 />
-                <TouchableOpacity>
+                <TouchableOpacity onPress={onPress}>
                     {iconName && (
                         <Icon
                             name={iconName}

@@ -9,12 +9,25 @@ import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native';
 import { CheckboxIcon } from '../../Assets/svg';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import CustomCalendarComponent from '../../Components/CustomCalendarComponent';
 
 
 const ConsentForTelehealth = () => {
 
     const navigation = useNavigation();
     const [isChecked, setIsChecked] = useState(false);
+    const [isCalendarModalVisible, setIsCalendarModalVisible] = useState(false);
+    const [dateOfBirth, setDateOfBirth] = useState('');
+
+    const toggleCalendarModal = () => {
+        setIsCalendarModalVisible(!isCalendarModalVisible);
+    };
+
+    const dateSelected = (date) => {
+        setDateOfBirth(date);
+        toggleCalendarModal();
+    };
+
 
     const handleGoBack = () => {
         navigation.goBack();
@@ -82,6 +95,14 @@ const ConsentForTelehealth = () => {
                     title={'Client Date Of Birthday'}
                     titleColor={styles.dobStyle}
                     iconName="calendar"
+                    value={dateOfBirth}
+                    onPress={toggleCalendarModal}
+                />
+                <CustomCalendarComponent
+                    isCalendarModalVisible={isCalendarModalVisible}
+                    closeCalendarModal={toggleCalendarModal}
+                    dateSelected={dateSelected}
+                    current={dateOfBirth}
                 />
             </>
         )
