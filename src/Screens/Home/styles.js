@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
   blueContainer: {
       borderWidth: 1.5,
       borderColor: Colors.blue,
-      backgroundColor: Colors.paleblue,
       flexDirection: 'row',
       alignItems: 'center',
       borderRadius: 5,
@@ -89,7 +88,6 @@ const styles = StyleSheet.create({
   blueviewContainer: {
       borderWidth: 1.5,
       borderColor: Colors.blue,
-      backgroundColor: Colors.paleblue,
       flexDirection: 'row',
       alignItems: 'center',
       borderRadius: 5,
@@ -125,19 +123,19 @@ const styles = StyleSheet.create({
   },
   reportDate: {
       fontSize: responsiveFontSize(1.5),
-      color: Colors.darkgrey,
+      color: Colors.white,
       fontWeight: '500'
   },
   reportTitle: {
       fontSize: responsiveFontSize(1.8),
       fontWeight: '700',
-      color: Colors.black,
+      color: Colors.white,
       marginTop: responsiveHeight(0.5)
   },
   leenatext: {
       fontSize: responsiveFontSize(1.5),
       fontWeight: '600',
-      color: Colors.black,
+      color: Colors.white,
       marginTop: responsiveHeight(0.5)
   },
   reportAuthor: {
@@ -147,13 +145,13 @@ const styles = StyleSheet.create({
   reportStats: {
       fontSize: responsiveFontSize(1.3),
       fontWeight: '600',
-      color: Colors.black,
+      color: Colors.white,
       marginTop: responsiveHeight(0.5)
   },
   countText: {
       fontSize: responsiveFontSize(2),
       fontWeight: '700',
-      color: Colors.black,
+      color: Colors.white,
       marginTop: responsiveHeight(0.5)
   },
   careTeamContainer: {

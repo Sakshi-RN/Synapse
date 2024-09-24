@@ -49,7 +49,7 @@ const HomeScreen = () => {
     }
     const renderHeader = () => {
         return (
-            <ImageBackground source={images.bgHome} style={styles.headerContainer}>
+            <ImageBackground source={images.headerBgImg} style={styles.headerContainer}>
                 <View style={styles.headerContent}>
                     <TouchableOpacity>
                         <Circle height={25} width={25} />

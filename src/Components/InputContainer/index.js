@@ -26,14 +26,14 @@ const InputContainer = ({
                 <TextInput
                     placeholder={placeholder}
                     placeholderTextColor={placeholderTextColor}       
-                                 style={dynamicStyle}
+                    style={dynamicStyle}
                 />
                 <TouchableOpacity>
                     {iconName && (
                         <Icon
                             name={iconName}
                             size={17}
-                            color={Colors.OFFBLACK}
+                            color={Colors.blue}
                         />
                     )}
                 </TouchableOpacity>

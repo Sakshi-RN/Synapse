@@ -3,7 +3,6 @@ const images = {
   Splashbg: require(`${BASEURL}Splashbg.jpg`),
   bgImg: require(`${BASEURL}bgImg.png`),
   headerBgImg: require(`${BASEURL}headerBgImg.png`),
-  bgHome: require(`${BASEURL}bgHome.png`),
 
 }
 

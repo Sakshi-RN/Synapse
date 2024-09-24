@@ -13,13 +13,13 @@ const Connect = () => {
 
 
   const handlePreferences = () => {
-    navigation.navigate('Preferences');
+    navigation.navigate('Home');
 }
 const handleEmergencycontacts = () => {
-  navigation.navigate('Emergencycontacts');
+  navigation.navigate('Home');
 }
 const handleMyProfileScreen = () => {
-  navigation.navigate('MyProfileScreen');
+  navigation.navigate('Home');
 }
     return (
         <View style={styles.container}>
