@@ -6,6 +6,7 @@ import Colors from '../../Themes/Colors';
 import CustomButton from '../../Components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import { ThankyouChecked } from '../../Assets/svg';
+import LottieAutoplay from '../../Components/LottieViewComponent';
 
 const ThankyouForFeedback = () => {
   const navigation = useNavigation();
@@ -16,11 +17,14 @@ const ThankyouForFeedback = () => {
 
   return (
     <View style={styles.container}>
-    <ThankyouChecked style={styles.imgStyle}/>
+      <LottieAutoplay/>
+      <View style={styles.imgStyle}>
+      <ThankyouChecked />
       <Text style={styles.title}>Thank you for the feedback!</Text>
       <Text style={styles.description}>
       Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.
       </Text>
+      </View>
       <View style={styles.btnContainer}> 
       <CustomButton title="Go to Dashboard" onPress={handleHome} />
 
@@ -32,7 +36,6 @@ const ThankyouForFeedback = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     paddingHorizontal: responsiveWidth(3),
     backgroundColor: Colors.white,
   },
@@ -63,7 +66,9 @@ const styles = StyleSheet.create({
     alignSelf:'center'
   },
   imgStyle:{
-    alignSelf:'center'
+    alignItems:'center',
+    top:responsiveHeight(-28)
+
   }
 });
 
