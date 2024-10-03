@@ -18,7 +18,7 @@ import Loader from '../../Components/Loader';
 const HomeScreen = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
-     const { data, fetchLoading, fetchError } = useSelector(state => state.profile);
+    const { data, fetchLoading, fetchError } = useSelector(state => state.profile);
 
     useFocusEffect(
         useCallback(() => {
@@ -35,7 +35,7 @@ const HomeScreen = () => {
 
     const profile = data && data[0];
     const age = calculateAge(profile?.dob);
-    
+
     function parseDate(dobString) {
         const parts = dobString.split('/');
         return new Date(`${parts[2]}-${parts[1]}-${parts[0]}`);
@@ -65,13 +65,58 @@ const HomeScreen = () => {
         return age;
     }
 
+    function formatAppointmentDate(dateString) {
+        if (!dateString) return 'Invalid Date';
+    
+        const [month, day, year] = dateString.split('/');
+        if (!month || !day || !year) return 'Invalid Date Format';
+    
+        const date = new Date(`${year}-${month}-${day}`);
+        if (isNaN(date.getTime())) {
+            return 'Invalid Date';
+        }
+    
+        const options = { month: 'long', day: 'numeric' };
+        const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
+        const dayNumber = date.getDate();
+        const suffix = dayNumber % 10 === 1 && dayNumber !== 11 ? 'st' :
+            dayNumber % 10 === 2 && dayNumber !== 12 ? 'nd' :
+            dayNumber % 10 === 3 && dayNumber !== 13 ? 'rd' : 'th';
+    
+        return `${formattedDate}${suffix}`;
+    }
+    
+    
+    function formatAppointmentTime(timeString) {
+        if (!timeString) return 'Invalid Time';
+    
+        const [hours, minutes] = timeString.split(':');
+        if (!hours || !minutes) return 'Invalid Time Format';
+    
+        const date = new Date();
+        date.setHours(parseInt(hours, 10));
+        date.setMinutes(parseInt(minutes, 10));
+    
+        if (isNaN(date.getTime())) {
+            return 'Invalid Time';
+        }
+    
+        // Extract the time in 12-hour format
+        let time = date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true });
+        
+        // Convert AM/PM to lowercase
+        time = time.replace('AM', 'am').replace('PM', 'pm');
+        
+        return time;
+    }
+    
     function formatDateTime(dateTimeString) {
         if (!dateTimeString) return 'N/A';  // Handle cases where date is undefined
     
         const [datePart, timePart] = dateTimeString.split(' ');  // Split date and time
         const [month, day, year] = datePart.split('/');  // Split MM/DD/YYYY
     
-        const formattedDate = new Date(`${year}-${month}-${day}`);  // Create a new Date object
+        const formattedDate = new Date(`${year}-${month}-${day}T${timePart}:00`);  // Create a new Date object
     
         // Format the date using Intl.DateTimeFormat for better readability
         const options = { year: 'numeric', month: 'numeric', day: 'numeric', };
@@ -144,36 +189,30 @@ const HomeScreen = () => {
                     activeDot={<View style={styles.activeDot} />}
                 >
                     <View style={styles.slide}>
-                        <View style={{backgroundColor:'yellow',width:'70%'}}>  
-                    <View>
-                     <Text><Text style={styles.slideText}>{profile?.nextAppointment?.appointmentType} (Virtual) {profile?.therapist?.providerName}{','} </Text></Text>
-                        {profile?.therapist?.designation?.map((designation, index) => (
-                              <View style={{backgroundColor:'red',flexDirection:'row'}}>
-                    <Text key={index} style={styles.designationText}>{designation}{','}</Text> 
-                    </View>
-                      ))}
-                </View>
-                </View>
-                        <View style={styles.line}/>
+                        <Text style={styles.slideText}>
+                            {profile?.nextAppointment?.appointmentType} (Virtual) {profile?.therapist?.providerName},{' '}
+                            {profile?.therapist?.designation?.join(', ')}
+                        </Text>
+
+                        <View style={styles.line} />
                         <View style={styles.blueContainer}>
-                        <Text style={styles.slideTextSecondary}>{profile?.nextAppointment?.appointmentDate}+{profile?.nextAppointment?.appointmentStartTime}</Text>
+                            <Text style={styles.slideTextSecondary}>
+                            {formatAppointmentDate(profile?.nextAppointment?.appointmentDate)} {formatAppointmentTime(profile?.nextAppointment?.appointmentStartTime)}
+                            </Text>
                             <MeetIcon />
                         </View>
                     </View>
                     <View style={styles.slide}>
-                        <View style={{backgroundColor:'yellow',width:'70%'}}>  
-                    <View>
-                     <Text><Text style={styles.slideText}>{profile?.nextAppointment?.appointmentType} (Virtual) {profile?.therapist?.providerName}{','} </Text></Text>
-                        {profile?.therapist?.designation?.map((designation, index) => (
-                              <View style={{backgroundColor:'red',flexDirection:'row'}}>
-                    <Text key={index} style={styles.designationText}>{designation}{','}</Text> 
-                    </View>
-                      ))}
-                </View>
-                </View>
+                        <Text style={styles.slideText}>
+                            {profile?.nextAppointment?.appointmentType} (Physical Visit) {profile?.therapist?.providerName},{' '}
+                            {profile?.therapist?.designation?.join(', ')}
+                        </Text>
+
                         <View style={styles.line} />
                         <View style={styles.blueContainer}>
-                        <Text style={styles.slideTextSecondary}>{profile?.nextAppointment?.appointmentDate}+{profile?.nextAppointment?.appointmentStartTime}</Text>
+                            <Text style={styles.slideTextSecondary}>
+{formatAppointmentDate(profile?.nextAppointment?.appointmentDate)} {formatAppointmentTime(profile?.nextAppointment?.appointmentStartTime)}
+                            </Text>
                             <Location />
                         </View>
                     </View>
@@ -186,21 +225,16 @@ const HomeScreen = () => {
                         <Arrowdown />
                     </View>
                     <View style={styles.slide}>
-                    <View style={{backgroundColor:'yellow',width:'68%'}}> 
-                    <Text><Text style={styles.slideText}>Your provider, {profile?.therapist?.providerName}{','}</Text></Text>
-                    {profile?.therapist?.designation?.map((designation, index) => (
-                              <View style={{backgroundColor:'red',flexDirection:'row'}}>
-                    <Text key={index} style={styles.designationText}>{designation}{','}</Text> 
-                    </View>
-                      ))}
-                        <Text style={styles.slideText}> has requested the survey to be completed.</Text>
-                        </View>
+                        <Text style={styles.slideText}>
+                            Your provider,{profile?.therapist?.providerName},{' '}
+                            {profile?.therapist?.designation?.join(', ')} {' '}
+                            has requested the survey to be completed.
+                        </Text>
                         <View style={styles.line} />
                         <View style={styles.blueviewContainer}>
                             <Text style={styles.startsurveytext}>Start Survey</Text>
                         </View>
                     </View>
-
                 </Swiper>
             </View>
         );
@@ -234,16 +268,14 @@ const HomeScreen = () => {
     const reportSection = () => {
         return (
             <View style={styles.reportItem}>
-            <Text style={styles.reportDate}>{formatDateTime(profile?.lastPHQCompletedDate)}</Text>
+                <Text style={styles.reportDate}>{formatDateTime(profile?.lastPHQCompletedDate)}</Text>
                 <Text style={styles.reportTitle}>A Comprehensive Mental Health Report</Text>
                 <View style={styles.rowNew}>
-                <Text style={styles.leenatext}>{profile?.therapist?.providerName}{','}</Text>
-                        {profile?.therapist?.designation?.map((designation, index) => (
-                    <Text key={index} style={styles.leenatext}>{designation}</Text> 
-                      ))}
+                    <Text style={styles.leenatext}>{profile?.therapist?.providerName}{','}</Text>
+                    {profile?.therapist?.designation?.map((designation, index) => (
+                        <Text key={index} style={styles.leenatext}>{designation}</Text>
+                    ))}
                 </View>
-              
-              
                 <View style={styles.reportContainer}>
                     <View style={styles.phqConatiner}>
                         <View>
@@ -265,26 +297,25 @@ const HomeScreen = () => {
     const flatlistView = () => {
         return (
             <View style={styles.rowNew}>
-                    <View style={styles.careTeamMember} >
-                        <Image source={LCSWImage} style={styles.careTeamImage} />
-                        <Text style={styles.careTeamName}>{profile?.therapist?.providerName}</Text>
-                        {profile?.therapist?.designation?.map((designation, index) => (
-                    <Text key={index} style={styles.careTeamRole}>{designation}</Text>
-                ))}
-                    </View>
                 <View style={styles.careTeamMember} >
-                <Image source={MDImage} style={styles.careTeamImage} />
-                <Text style={styles.careTeamName}>{profile?.prescriber?.providerName}</Text>
-                {profile?.prescriber?.designation?.map((designation, index) => (
-                    <Text key={index} style={styles.careTeamRole}>{designation}</Text>
-                ))}
+                    <Image source={LCSWImage} style={styles.careTeamImage} />
+                    <Text style={styles.careTeamName}>{profile?.therapist?.providerName}</Text>
+                    <Text style={styles.careTeamRole}>
+                        {profile?.therapist?.designation?.join(', ')}
+                    </Text>
+                </View>
+                <View style={styles.careTeamMember} >
+                    <Image source={MDImage} style={styles.careTeamImage} />
+                    <Text style={styles.careTeamName}>{profile?.prescriber?.providerName}</Text>
+                    <Text style={styles.careTeamRole}>
+                        {profile?.prescriber?.designation?.join(', ')}
+                    </Text>
+                </View>
+                <View style={styles.careTeamMember} >
+                    <Image source={ConciergeImage} style={styles.careTeamImage} />
+                    <Text style={styles.careTeamName}>Concierge</Text>
+                </View>
             </View>
-              <View style={styles.careTeamMember} >
-              <Image source={ConciergeImage} style={styles.careTeamImage} />
-              <Text style={styles.careTeamName}>Concierge</Text>
-
-          </View>
-          </View>
         )
     }
 

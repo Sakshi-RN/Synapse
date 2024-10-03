@@ -1,19 +1,27 @@
-import React, { useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { View, StyleSheet, FlatList, Text, Image, TouchableOpacity, Platform, Modal } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { View, StyleSheet, Text, Image, TouchableOpacity, Platform, Modal } from 'react-native';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
 import LCSWImage from '../../Assets/Images/LCSW.png';
+import MDImage from '../../Assets/Images/MD.png';
 import { ThreeDots } from '../../Assets/svg';
 import CustomButton from '../../Components/CustomButton';
+import { fetchProfile } from '../../redux/Reducers/profileReducer';
+import Loader from '../../Components/Loader';
 
 
 const CareTeam = () => {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const dispatch = useDispatch();
+  const { data, fetchLoading, fetchError } = useSelector(state => state.profile);
 
+
+  const profile = data && data[0];
   const openModal = (item) => {
     setSelectedItem(item);
     setModalVisible(true);
@@ -42,38 +50,74 @@ const CareTeam = () => {
   const handleAppointment = () => {
     setModalVisible(false);
     navigation.navigate('Appointment');
-}
-const handleReasonforChange = () => {
-  setModalVisible(false);
-  navigation.navigate('ReasonforChange');
-}
-const handlePrescriberProfile = () => {
-  setModalVisible(false);
-  navigation.navigate('PrescriberProfile');
-}
+  }
+  const handleReasonforChange = () => {
+    setModalVisible(false);
+    navigation.navigate('ReasonforChange');
+  }
+  const handlePrescriberProfile = () => {
+    setModalVisible(false);
+    navigation.navigate('PrescriberProfile');
+  }
 
-  const renderItem = ({ item }) => (
-    <View style={styles.careTeamnCard}>
-      <Image source={item.icon} style={styles.icon} />
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.description}>{item.description}</Text>
-        <View style={styles.cancelbtnRow}>
-          <CustomButton
-          onPress={handlePrescriberProfile}
-            buttonStyle={styles.Button}
-            textStyle={styles.ButtonText}
-            title={'View Profile'} />
-          <CustomButton
-            buttonStyle={styles.Button}
-            textStyle={styles.ButtonText}
-            title={'Appt'} />
-        </View>
+
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(fetchProfile());
+    }, [dispatch])
+  );
+  if (fetchLoading) {
+    return (
+      <View style={styles.centeredContainer}>
+        <Loader />
       </View>
-      <TouchableOpacity onPress={() => openModal(item)}>
-        <ThreeDots height={15} width={10} />
-      </TouchableOpacity>
-    </View>
+    );
+  }
+  const renderItem = () => (
+    <>
+      <View style={styles.careTeamnCard}>
+        <Image source={MDImage} style={styles.icon} />
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>{profile?.prescriber?.providerName}</Text>
+          <Text style={styles.description}> {profile?.prescriber?.designation?.join(', ')}</Text>
+          <View style={styles.cancelbtnRow}>
+            <CustomButton
+              onPress={handlePrescriberProfile}
+              buttonStyle={styles.Button}
+              textStyle={styles.ButtonText}
+              title={'View Profile'} />
+            <CustomButton
+              buttonStyle={styles.Button}
+              textStyle={styles.ButtonText}
+              title={'Appt'} />
+          </View>
+        </View>
+        <TouchableOpacity onPress={() => openModal(item)}>
+          <ThreeDots height={15} width={10} />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.careTeamnCard}>
+        <Image source={LCSWImage} style={styles.icon} />
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>{profile?.therapist?.providerName}</Text>
+          <Text style={styles.description}> {profile?.therapist?.designation?.join(', ')}</Text>
+          <View style={styles.cancelbtnRow}>
+            <CustomButton
+              onPress={handlePrescriberProfile}
+              buttonStyle={styles.Button}
+              textStyle={styles.ButtonText}
+              title={'View Profile'} />
+            <CustomButton
+              buttonStyle={styles.Button}
+              textStyle={styles.ButtonText}
+              title={'Appt'} />
+          </View>
+        </View>
+        <TouchableOpacity onPress={() => openModal(item)}>
+          <ThreeDots height={15} width={10} />
+        </TouchableOpacity>
+      </View>
+    </>
   );
 
   const renderModal = () => {
@@ -106,14 +150,8 @@ const handlePrescriberProfile = () => {
     <View style={styles.container}>
       <CustomHeader title={'Care Team'} />
       {renderModal()}
-      <FlatList
-        data={notifications}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        style={styles.flatlistContent}
-        showsVerticalScrollIndicator={false}
-      />
-      <View>
+      {renderItem()}
+      <View style={styles.bottomView}>
         <View style={styles.lineStyle} />
         <Text style={styles.questionText}>Do you have any questions?</Text>
         <CustomButton
@@ -179,7 +217,7 @@ const styles = StyleSheet.create({
   lineStyle: {
     width: "90%",
     marginHorizontal: responsiveWidth(5),
-    alignSelf: 'center',
+    // alignSelf: 'center',
     backgroundColor: Colors.black,
     height: 1.5,
   },
@@ -257,6 +295,16 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.skyblue,
 
 
+  },
+  centeredContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  bottomView: {
+    position: 'absolute',
+    bottom: responsiveHeight(14),
+    alignSelf: 'center',
+    width: "95%",
   }
-
 });

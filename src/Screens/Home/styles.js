@@ -58,10 +58,10 @@ const styles = StyleSheet.create({
     slideText: {
         color: Colors.blue,
         fontSize: responsiveFontSize(1.5),
-        width: responsiveWidth(48),
+        width: responsiveWidth(49),
         fontWeight: '400',
     },
-    designationText:{
+    designationText: {
         color: Colors.blue,
         fontSize: responsiveFontSize(1.5),
         fontWeight: '400',
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     slideTextSecondary: {
         color: Colors.black,
         fontWeight: '600',
-        fontSize: responsiveFontSize(1.5),
+        fontSize: responsiveFontSize(1.4),
         width: responsiveWidth(15),
 
     },
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     careTeamName: {
         fontSize: responsiveFontSize(1.2),
         fontWeight: '600',
-        textAlign: 'center',
+        // textAlign: 'center',
         marginTop: responsiveHeight(1)
     },
     careTeamRole: {
