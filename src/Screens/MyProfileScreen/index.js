@@ -91,11 +91,7 @@ const MyProfileScreen = () => {
     }
     
     const age = calculateAge(profile.dob);
-
-    
-    
-
-       
+  
     return (
         <View style={styles.container}>
             <CustomHeader title={'My Profile'} />
@@ -154,8 +150,6 @@ const MyProfileScreen = () => {
                         <Text style={styles.bodyText}>{profile.dob} </Text>
                     </View>
                     <View style={styles.line} />
-
-
                     <View style={styles.containerView}>
                         <Text style={CommonStyle.nameTitleText}>Age</Text>
                         <Text style={styles.bodyText}>{age}</Text> 
