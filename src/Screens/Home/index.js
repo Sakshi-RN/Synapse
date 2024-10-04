@@ -34,7 +34,8 @@ const HomeScreen = () => {
     }
 
     const profile = data && data[0];
-    const age = calculateAge(profile?.dob);
+    const age = calculateAge(profile?.dob)  ;
+
 
     function parseDate(dobString) {
         const parts = dobString.split('/');
@@ -150,6 +151,12 @@ const HomeScreen = () => {
     const handleConnect = () => {
         navigation.navigate('Connect');
     }
+
+    function capitalizeFirstLetter(value) {
+        if (typeof value !== 'string') return ''; 
+        return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+    }
+    
     const renderHeader = () => {
         return (
             <ImageBackground source={images.headerBgImg} style={styles.headerContainer}>
@@ -170,7 +177,7 @@ const HomeScreen = () => {
                     </View>
                     <View>
                         <Text style={styles.patientDetail}>Gender</Text>
-                        <Text style={styles.patientDetail}>{profile?.gender}</Text>
+                        <Text style={styles.patientDetail}>{capitalizeFirstLetter(profile?.gender)}</Text>
                     </View>
                     {/* <View>
                         <Text style={styles.patientDetail}>User ID</Text>
@@ -271,10 +278,7 @@ const HomeScreen = () => {
                 <Text style={styles.reportDate}>{formatDateTime(profile?.lastPHQCompletedDate)}</Text>
                 <Text style={styles.reportTitle}>A Comprehensive Mental Health Report</Text>
                 <View style={styles.rowNew}>
-                    <Text style={styles.leenatext}>{profile?.therapist?.providerName}{','}</Text>
-                    {profile?.therapist?.designation?.map((designation, index) => (
-                        <Text key={index} style={styles.leenatext}>{designation}</Text>
-                    ))}
+                    <Text style={styles.leenatext}>{profile?.therapist?.providerName}{','} {profile?.therapist?.designation?.join(', ')}</Text>  
                 </View>
                 <View style={styles.reportContainer}>
                     <View style={styles.phqConatiner}>

@@ -1,15 +1,27 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity,Platform } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 import Icon from 'react-native-vector-icons/FontAwesome'; 
 import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
+import {  useFocusEffect } from '@react-navigation/native';
+import { fetchProfile } from '../../redux/Reducers/profileReducer'; 
 import { Advice, CommunicationPreferences, PhoneBook, Policy, Starred, TaraMind, TermsOfUse, Video } from '../../Assets/svg';
 
 const ProfileSettings = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const { data, fetchLoading, fetchError } = useSelector(state => state.profile);
+
+  useFocusEffect(
+      useCallback(() => {
+          dispatch(fetchProfile());
+      }, [dispatch])
+  );
+
 
 
   const handlePreferences = () => {
@@ -21,6 +33,8 @@ const handleEmergencycontacts = () => {
 const handleMyProfileScreen = () => {
   navigation.navigate('MyProfileScreen');
 }
+const profile = data && data[0];
+
     return (
         <View style={styles.container}>
             <CustomHeader title={'Profile & Settings'} />
@@ -30,8 +44,8 @@ const handleMyProfileScreen = () => {
                         <Text style={styles.avatarText}>NK</Text>
                     </View>
                     <View style={styles.profileInfo}>
-                        <Text style={styles.profileName}>Nathan Klin</Text>
-                        <Text style={styles.profileName}>(924) 234-2342</Text>
+                        <Text style={styles.profileName}>{`${profile?.firstName} ${profile?.lastName}`}</Text>
+                        <Text style={styles.profileName}>{profile?.phone}</Text>
                     </View>
                     <TouchableOpacity onPress={handleMyProfileScreen}>
                     <Icon name="chevron-right" size={20} color={Colors.black} />

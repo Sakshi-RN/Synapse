@@ -6,16 +6,14 @@ import OtpVerify from '../Screens/OtpVerify';
 import BTabNavigation from './BTabNavigation';
 import VideoCall from '../Screens/VideoCall';
 
-
 const Stack = createStackNavigator();
 
 export default function AuthNavigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="SignIn"
+        initialRouteName="BTabNavigation"
       >
-
         <Stack.Screen
           name="SignIn"
           component={SignIn}
@@ -23,7 +21,6 @@ export default function AuthNavigation() {
             headerShown: false,
           }}
         />
-
         <Stack.Screen
           name="OtpVerify"
           component={OtpVerify}
@@ -38,7 +35,7 @@ export default function AuthNavigation() {
             headerShown: false,
           }}
         />
-            <Stack.Screen
+        <Stack.Screen
           name="VideoCall"
           component={VideoCall}
           options={{

@@ -13,6 +13,7 @@ import profileReducer from "../Reducers/profileReducer";
 import logger from "redux-logger";
 // import wishlistReducer from "../Reducers/wishlistReducer";
 // import CouponReducer from "../Reducers/CouponReducer";
+import AppointmentReducer from '../Reducers/AppointmentReducer';
 
 const reducer = combineReducers({
   // auth: authReducer,
@@ -21,7 +22,8 @@ const reducer = combineReducers({
   // user: userReducer,
   // carbon: carbonReducer,
   // cart: cartReducer,
-  profile: profileReducer,
+   profile: profileReducer,
+   Appointment:AppointmentReducer,
   // address: ChangeAddressFunc,
   // search: SearchReducer,
   // Cart: cartSlice,

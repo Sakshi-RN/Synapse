@@ -1,39 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import AppointmentTabs from '../../Container/AppointmentTabs';
 import AppointmentCard from '../../Container/AppointmentCard';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
-import AppointmentData from '../../Container/AppointmentData';
 import CustomCalender from '../../Components/CustomCalender';
 
 const Appointment = () => {
-    const [activeTab, setActiveTab] = useState('All');
+    const [appointments, setAppointments] = useState([]);
     const [filteredAppointments, setFilteredAppointments] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [activeTab, setActiveTab] = useState('All');
 
     useEffect(() => {
-        // Filter appointments based on active tab
-        let filteredData;
+        const fetchAppointments = async () => {
+            try {
+                const response = await fetch('https://eb1.taramind.com/getAllClientAppointments/9bfea3d5-74f4-11ef-9c86-02f35b8058b3', {
+                    method: 'GET',
+                    headers: {
+                        'X-Api-Key': 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b',
+                    },
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch appointments');
+                }
 
-        if (activeTab === 'All') {
-            // Show all appointments if "All" tab is selected
-            filteredData = AppointmentData;
-        } else {
-            // Filter based on the status
-            filteredData = AppointmentData.filter(
-                appointment => appointment.status === activeTab
-            );
-        }
+                const data = await response.json();
+                setAppointments(data);
+                setFilteredAppointments(data); 
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-        setFilteredAppointments(filteredData);
+        fetchAppointments();
+    }, []);
 
-
-        // console.log(`Filtered Appointments for ${activeTab}:`, filteredData);
-    }, [activeTab]);
-
-
-    // Dynamic header title
     const getHeaderTitle = () => {
         switch (activeTab) {
             case 'Pending':
@@ -49,25 +57,31 @@ const Appointment = () => {
         }
     };
 
-    // Get total number of appointments for the selected tab
     const getAppointmentsText = () => {
-        return `${filteredAppointments.length} Appointments`; // Show the total number of appointments
+        return `${filteredAppointments.length} Appointments`;
     };
 
     const renderAppointmentCard = ({ item }) => <AppointmentCard appointment={item} />;
+
+    if (loading) {
+        return <ActivityIndicator size="large" color={Colors.blue} />;
+    }
+
+    if (error) {
+        return <Text>Error: {error}</Text>;
+    }
 
     return (
         <View style={styles.container}>
             <CustomHeader title={getHeaderTitle()} />
             <Text style={styles.monthText}>June 2024</Text>
             <CustomCalender />
-            <Text style={styles.appointmentsText}>{'0' + getAppointmentsText()}</Text>
+            <Text style={styles.appointmentsText}>{getAppointmentsText()}</Text>
             <AppointmentTabs activeTab={activeTab} setActiveTab={setActiveTab} />
             <FlatList
-                Enabled={false}
-                data={filteredAppointments} // Show all appointments for the selected tab
+                data={filteredAppointments}
                 renderItem={renderAppointmentCard}
-                keyExtractor={item => item.id.toString()}
+                keyExtractor={item => item.id}
                 ListEmptyComponent={<Text>No appointments available.</Text>}
                 showsVerticalScrollIndicator={false}
                 style={styles.flatListStyle}
@@ -89,18 +103,15 @@ const styles = StyleSheet.create({
         color: Colors.blue,
         marginHorizontal: responsiveWidth(5),
         marginTop: responsiveHeight(3),
-
     },
     flatListStyle: {
-        height: '100%'
-
+        height: '100%',
     },
     monthText: {
         fontSize: responsiveFontSize(2),
         fontWeight: 'bold',
         color: Colors.blue,
         marginTop: responsiveHeight(1),
-        marginLeft: responsiveWidth(5)
-
+        marginLeft: responsiveWidth(5),
     },
 });

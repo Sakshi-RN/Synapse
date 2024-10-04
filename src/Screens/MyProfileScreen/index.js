@@ -13,7 +13,6 @@ import { fetchProfile } from '../../redux/Reducers/profileReducer';
 import Loader from '../../Components/Loader';
 
 
-
 const MyProfileScreen = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
