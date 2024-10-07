@@ -4,7 +4,8 @@ export const fetchAppointments = createAsyncThunk(
   'appointments/fetchAppointments',
   async (_, thunkAPI) => {
     try {
-      const response = await fetch('API_ENDPOINT', {
+      const response = await fetch('https://eb1.taramind.com/getAllClientAppointments/9bfea3d5-74f4-11ef-9c86-02f35b8058b3', {
+        method: 'GET',
         headers: {
           'X-Api-Key': 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b',
         },
@@ -12,11 +13,8 @@ export const fetchAppointments = createAsyncThunk(
       const data = await response.json();
       console.log('API Response:', data);
       return data;
-    } catch (error)
-
-     {
+    } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
-
     }
   }
 );
