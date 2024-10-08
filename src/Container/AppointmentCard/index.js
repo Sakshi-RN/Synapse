@@ -9,75 +9,67 @@ import moment from 'moment';
 
 const AppointmentCard = ({ appointment }) => {
     const navigation = useNavigation();
-    const [buttonStatus, setButtonStatus] = useStatus("")
    const formattedDate = moment(appointment.appointmentDate, 'MM/DD/YYYY').format('MMMM Do, YYYY');
     const formattedStartTime = moment(appointment.appointmentStartTime, 'HH:mm:ss').format('h:mm A');
     const formattedEndTime = moment(appointment.appointmentEndTime, 'HH:mm:ss').format('h:mm A');
     const formattedTime = `${formattedStartTime} - ${formattedEndTime}`;
     return (
         <>
-       
         <View style={styles.cardContainer}>
       <Text style={styles.time}>{formattedTime}</Text>
             <View style={styles.detailsContainer}>
                 <View style={{ flexDirection: 'row' }}>
                     <Image source={LCSWImage} style={styles.careTeamImage} />
                     <View style={styles.rowStyle}>
-                    <Text style={styles.name}>{appointment.providerName}</Text>
-                    <View style={{ flexDirection: 'row',marginTop:responsiveHeight(1) ,alignItems:'center'}}>
-                    <Text style={styles.type}>KAT Session .</Text>
-                    <Text style={styles.type}> {appointment.appointmentType}</Text>
-                    </View>
+                    <Text style={styles.name}>{appointment?.providerName}</Text>
+                    <Text style={styles.type}>Appointment Type - {appointment?.appointmentType}</Text>
                         <TouchableOpacity
                             style={
-                                 appointment.appointmentStatus === 'pending' ? styles.pendingButton :
-                                     appointment.appointmentStatus === 'scheduled' ? styles.upcomingButton :
+                                 appointment.appointmentStatus === 'scheduled' ? styles.pendingButton :
+                                     appointment.appointmentStatus === 'upcoming' ? styles.upcomingButton :
                                          appointment.appointmentStatus === 'completed' ? styles.completedButton :
                                              appointment.appointmentStatus === 'cancelled' ? styles.cancelledButton :
                                                 styles.defaultButton
                             }
-
                         >
-
                             <Text 
                                 style={
-                                   appointment.appointmentStatus === 'pending' ? styles.pendingButtonText :
-                                       appointment.appointmentStatus === 'scheduled' ? styles.upcomingButtonText :
+                                   appointment.appointmentStatus === 'scheduled' ? styles.pendingButtonText :
+                                       appointment.appointmentStatus === 'upcoming' ? styles.upcomingButtonText :
                                            appointment.appointmentStatus === 'completed' ? styles.completedButtonText :
                                                appointment.appointmentStatus === 'cancelled' ? styles.cancelledButtonText :
                                                     styles.buttonText
                                 }
-                            >{appointment.appointmentStatus}</Text>
+                            >{appointment?.appointmentStatus}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
-
                 {/* <>
                     {  appointment.appointmentStatus === 'completed' ||   appointment.appointmentStatus === 'View Details' ? */}
                         <TouchableOpacity
                             style={
-                                appointment.appointmentStatus === 'completed' ? styles.upcomingJoinButton :
-                                appointment.appointmentStatus === 'scheduled' ? styles.completedJoinButton : 'null'
+                                appointment.appointmentStatus === 'completed' ? styles.completedJoinButton :
+                                appointment.appointmentStatus === 'upcoming' ? styles.upcomingJoinButton : 'null'
                             }>
                             <Text
                                 style={
-                                    appointment.appointmentStatus === 'completed' ? styles.upcomingJoinButtonText :
-                                    appointment.appointmentStatus === 'scheduled' ? styles.completedJoinButtonText : 'null'
+                                    appointment.appointmentStatus === 'completed' ? styles.completedJoinButtonText :
+                                    appointment.appointmentStatus === 'upcoming' ? styles.upcomingJoinButtonText : 'null'
 
                                 }
-                            >{ appointment.appointmentStatus==='completed'?'View Details': appointment.appointmentStatus==='scheduled'?'Join Session':null}</Text>
+                            >{ appointment.appointmentStatus==='completed'?'View Details': appointment.appointmentStatus==='upcoming'?'Join Session':null}</Text>
                         </TouchableOpacity>
                         {/* : ''
                     }
                 </> */}
                 <>
-                    {appointment.appointmentStatus === 'pending' ?
+                    {appointment.appointmentStatus === 'scheduled' ?
                         <View style={styles.cancelbtnRow}>
-                            <TouchableOpacity style={appointment.appointmentStatus === 'pending' ? styles.declineButton : null}>
-                                <Text style={appointment.appointmentStatus === 'pending' ? styles.declineButtonText : null}>{appointment.appointmentStatus}</Text>
+                            <TouchableOpacity style={styles.declineButton }>
+                                <Text style={styles.declineButtonText}>Decline</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={appointment.accept === 'pending' ? styles.acceptButton : null}>
-                                <Text style={appointment.accept === 'pending' ? styles.acceptButtonText : null}>{appointment.accept}</Text>
+                            <TouchableOpacity style={styles.acceptButton}>
+                                <Text style={styles.acceptButtonText}>Accept</Text>
                             </TouchableOpacity>
                         </View>
                         : ''
@@ -85,8 +77,7 @@ const AppointmentCard = ({ appointment }) => {
                 </>
             </View>
         </View>
-    
-      
+
         </>
     );
 };
@@ -105,7 +96,7 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         color: Colors.darkgrey,
         textAlign: 'center',
-        marginTop: responsiveHeight(3),
+        marginTop: responsiveHeight(1.3),
 
 
     },
@@ -140,47 +131,44 @@ const styles = StyleSheet.create({
     },
     pendingButton: {
         backgroundColor: Colors.PURPLE,
-        paddingHorizontal: responsiveWidth(2),
-        paddingVertical: responsiveHeight(0.5),
+       padding:2,
         borderRadius: 5,
         marginTop: responsiveHeight(1),
-        alignItems: 'center',
-        // width: '46%',
-        alignItems: 'center'
-
+        alignItems:'center',
+        width:responsiveWidth(20)
 
     },
     upcomingButton: {
         backgroundColor: Colors.ORANGE,
-        paddingHorizontal: responsiveWidth(2),
-        paddingVertical: responsiveHeight(0.5),
+        padding:2,
         borderRadius: 5,
         marginTop: responsiveHeight(1),
-        alignItems: 'center'
+        alignItems:'center',
+        width:responsiveWidth(20)
+       
     },
     completedButton: {
         backgroundColor: Colors.GREEN,
-        paddingHorizontal: responsiveWidth(1.2),
-        paddingVertical: responsiveHeight(0.5),
+        padding:2,
         borderRadius: 5,
         marginTop: responsiveHeight(1),
-        alignItems: 'center',
-        justifyContent:'center'
+alignItems:'center',
+width:responsiveWidth(20)
     },
     cancelledButton: {
         backgroundColor: Colors.PINK,
-        paddingHorizontal: responsiveWidth(1.2),
-        paddingVertical: responsiveHeight(0.5),
+        padding:2,
         borderRadius: 5,
         marginTop: responsiveHeight(1),
-        // width: '48%',
-        alignItems: 'center'
+        alignItems:'center',
+        width:responsiveWidth(20)
     },
     defaultButton: {
         backgroundColor: Colors.default,
         paddingHorizontal: responsiveWidth(2),
-        paddingVertical: responsiveHeight(0.5),
+        paddingVertical: responsiveHeight(2),
         borderRadius: 5,
+        marginTop: responsiveHeight(1),
     },
     buttonText: {
         color: Colors.white,
@@ -274,199 +262,8 @@ const styles = StyleSheet.create({
     cancelbtnRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: responsiveHeight(2)
+        marginTop: responsiveHeight(0.2)
     }
 });
 
-
-// import React from 'react';
-// import { View, Text, StyleSheet, TouchableOpacity, Platform, Image } from 'react-native';
-// import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
-// import Colors from '../../Themes/Colors';
-// import LCSWImage from '../../Assets/Images/LCSW.png';
-// import { useNavigation } from '@react-navigation/native';
-// import moment from 'moment'; 
-
-// const AppointmentCard = ({ appointment }) => {
-//     const navigation = useNavigation();
-
-//     const formattedDate = moment(appointment.appointmentDate, 'MM/DD/YYYY').format('MMMM Do, YYYY');
-//     const formattedStartTime = moment(appointment.appointmentStartTime, 'HH:mm:ss').format('h:mm A');
-//     const formattedEndTime = moment(appointment.appointmentEndTime, 'HH:mm:ss').format('h:mm A');
-//     const formattedTime = `${formattedStartTime} - ${formattedEndTime}`;
-    
-
-//     return (
-//         <View style={styles.cardContainer}>
-//             <Text style={styles.time}>{formattedTime}</Text>
-//             <View style={styles.detailsContainer}>
-//                 <View style={{ flexDirection: 'row' }}>
-//                     <Image source={LCSWImage} style={styles.careTeamImage} />
-//                     <View style={styles.rowStyle}>
-//                         <Text style={styles.name}>{appointment.providerName}</Text>
-//                         <Text style={styles.type}>{appointment.appointmentType}</Text>
-//                                                 <TouchableOpacity
-//                             style={
-//                                 appointment.status === 'Pending' ? styles.pendingButton :
-//                                     appointment.status === 'Upcoming' ? styles.upcomingButton :
-//                                         appointment.status === 'Completed' ? styles.completedButton :
-//                                             appointment.status === 'Cancelled' ? styles.cancelledButton :
-//                                                 styles.defaultButton
-//                             }
-
-//                         >
-//                             <Text
-//                                 style={
-//                                     appointment.status === 'Pending' ? styles.pendingButtonText :
-//                                         appointment.status === 'Upcoming' ? styles.upcomingButtonText :
-//                                             appointment.status === 'Completed' ? styles.completedButtonText :
-//                                                 appointment.status === 'Cancelled' ? styles.cancelledButtonText :
-//                                                     styles.buttonText
-//                                 }
-//                             >{appointment.status}</Text>
-//                         </TouchableOpacity>
-//                     </View>
-//                 </View>
-
-//                 <TouchableOpacity
-//                     style={styles.detailsButton}
-//                     onPress={() => navigation.navigate('ViewDetails', { appointmentID: appointment.appointmentID })}
-//                 >
-//                     <Text style={styles.detailsButtonText}>View Details</Text>
-//                 </TouchableOpacity>
-//             </View>
-//         </View>
-//     );
-// };
-
-// export default AppointmentCard;
-
-// const styles = StyleSheet.create({
-//     cardContainer: {
-//         alignItems: 'center',
-//         flexDirection: 'row',
-//         justifyContent: 'space-evenly',
-//     },
-//     time: {
-//         transform: [{ rotate: '-90deg' }],
-//         fontSize: responsiveFontSize(1.4),
-//         fontWeight: '500',
-//         color: Colors.darkgrey,
-//         textAlign: 'center',
-//         marginTop: responsiveHeight(3),
-//     },
-//     detailsContainer: {
-//         paddingHorizontal: responsiveWidth(4),
-//         paddingVertical: responsiveHeight(2),
-//         backgroundColor: Colors.white,
-//         shadowColor: Platform.OS === 'ios' ? Colors.grey : Colors.black,
-//         shadowOffset: { width: 0.5, height: 0.5 },
-//         shadowOpacity: 0.4,
-//         shadowRadius: 4,
-//         elevation: 5,
-//         width: '85%',
-//         marginVertical: responsiveHeight(2),
-//         borderRadius: 12,
-//         marginRight: responsiveWidth(13),
-//     },
-//     name: {
-//         fontSize: responsiveFontSize(1.8),
-//         fontWeight: 'bold',
-//         color: Colors.black,
-//     },
-//     type: {
-//         fontSize: responsiveFontSize(1.4),
-//         color: Colors.darkgrey,
-//         fontWeight: '600',
-//     },
-//     pendingButton: {
-//         backgroundColor: Colors.PURPLE,
-//         paddingHorizontal: responsiveWidth(2),
-//         paddingVertical: responsiveHeight(0.5),
-//         borderRadius: 5,
-//         marginTop: responsiveHeight(1),
-//         alignItems: 'center',
-//         width: '46%',
-//     },
-//     upcomingButton: {
-//         backgroundColor: Colors.ORANGE,
-//         paddingHorizontal: responsiveWidth(2),
-//         paddingVertical: responsiveHeight(0.5),
-//         borderRadius: 5,
-//         marginTop: responsiveHeight(1),
-//         width: '39%',
-//         alignItems: 'center',
-//     },
-//     completedButton: {
-//         backgroundColor: Colors.GREEN,
-//         paddingHorizontal: responsiveWidth(2),
-//         paddingVertical: responsiveHeight(0.5),
-//         borderRadius: 5,
-//         marginTop: responsiveHeight(1),
-//         width: '58%',
-//         alignItems: 'center',
-//     },
-//     cancelledButton: {
-//         backgroundColor: Colors.PINK,
-//         paddingHorizontal: responsiveWidth(2),
-//         paddingVertical: responsiveHeight(0.5),
-//         borderRadius: 5,
-//         marginTop: responsiveHeight(1),
-//         width: '48%',
-//         alignItems: 'center',
-//     },
-//     defaultButton: {
-//         backgroundColor: Colors.default,
-//         paddingHorizontal: responsiveWidth(2),
-//         paddingVertical: responsiveHeight(0.5),
-//         borderRadius: 5,
-//     },
-//     buttonText: {
-//         color: Colors.white,
-//         fontSize: responsiveFontSize(1.5),
-//         fontWeight: '600',
-//     },
-//     pendingButtonText: {
-//         color: Colors.Dark_Purple,
-//         fontSize: responsiveFontSize(1.3),
-//         fontWeight: '600',
-//     },
-//     upcomingButtonText: {
-//         color: Colors.Dark_Orange,
-//         fontSize: responsiveFontSize(1.3),
-//         fontWeight: '600',
-//     },
-//     completedButtonText: {
-//         color: Colors.Dark_Green,
-//         fontSize: responsiveFontSize(1.3),
-//         fontWeight: '600',
-//     },
-//     cancelledButtonText: {
-//         color: Colors.red,
-//         fontSize: responsiveFontSize(1.3),
-//         fontWeight: '600',
-//     },
-//     careTeamImage: {
-//         width: 60,
-//         height: 60,
-//         borderRadius: 30,
-//     },
-//     rowStyle: {
-//         marginLeft: responsiveWidth(4),
-//     },
-//     detailsButton: {
-//         backgroundColor: Colors.blue,
-//         borderRadius: 8,
-//         paddingVertical: responsiveHeight(1),
-//         paddingHorizontal: responsiveWidth(15),
-//         alignItems: 'center',
-//         justifyContent: 'center',
-//         marginTop: responsiveHeight(2),
-//     },
-//     detailsButtonText: {
-//         color: Colors.white,
-//         fontSize: responsiveFontSize(1.8),
-//         fontWeight: '600',
-//     },
-// });
 
