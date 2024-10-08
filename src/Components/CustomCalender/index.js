@@ -3,24 +3,58 @@ import { ScrollView, View, Text, StyleSheet, TouchableOpacity } from 'react-nati
 import dayjs from 'dayjs';
 import Colors from '../../Themes/Colors';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+
 export default function HorizontalCalendar() {
     const [selectedDate, setSelectedDate] = useState('');
 
-    const dates = Array.from({ length: 30 }, (_, index) => dayjs(`2024-06-${index + 1}`).format('YYYY-MM-DD'));
+    // Function to generate the dates for the next 3 months starting from the current month
+    const generateDatesForNextMonths = () => {
+        const dates = [];
+        const today = dayjs(); 
+        const monthsToShow = 3; 
+
+        for (let monthOffset = 0; monthOffset <= monthsToShow; monthOffset++) {
+            const currentMonth = today.add(monthOffset, 'month');
+            const daysInMonth = currentMonth.daysInMonth();
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = currentMonth.date(day).format('YYYY-MM-DD');
+                dates.push(date);
+            }
+        }
+        return dates;
+    };
+
+    const dates = generateDatesForNextMonths();
+
+    // Function to check if a new month starts
+    const isNewMonth = (currentDate, previousDate) => {
+        return dayjs(currentDate).format('YYYY-MM') !== dayjs(previousDate).format('YYYY-MM');
+    };
 
     return (
         <View>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.container}>
                 {dates.map((date, index) => {
-                    const day = dayjs(date).format('D');
+                    const day = dayjs(date).format('D'); // Day of the month
+                    const dayOfWeek = dayjs(date).format('ddd'); // Day of the week abbreviation
+                    const monthNameWithYear = dayjs(date).format('MMMM YYYY'); // Month name with year
                     const isSelected = date === selectedDate;
+                    const showMonthName = index === 0 || isNewMonth(date, dates[index - 1]);
+
                     return (
-                        <TouchableOpacity style={[styles.dateContainer, isSelected && styles.selectedDateContainer]}
-                            key={index}
-                            onPress={() => setSelectedDate(date)}>
-                            <Text style={[styles.dateText, isSelected && styles.selectedDateText]}>{day}</Text>
-                            <Text style={[styles.dayText, isSelected && styles.selectedDayText]}>Mon</Text>
-                        </TouchableOpacity>
+                        <View key={index}>
+                            {/* Display month name with year when a new month starts */}
+                            {showMonthName && (
+                                <Text style={styles.monthText}>{monthNameWithYear}</Text>
+                            )}
+                            <TouchableOpacity
+                                style={[styles.dateContainer, isSelected && styles.selectedDateContainer]}
+                                onPress={() => setSelectedDate(date)}
+                            >
+                                <Text style={[styles.dateText, isSelected && styles.selectedDateText]}>{day}</Text>
+                                <Text style={[styles.dayText, isSelected && styles.selectedDayText]}>{dayOfWeek}</Text>
+                            </TouchableOpacity>
+                        </View>
                     );
                 })}
             </ScrollView>
@@ -32,6 +66,14 @@ const styles = StyleSheet.create({
     container: {
         marginHorizontal: responsiveWidth(3)
     },
+    monthText: {
+        fontSize: responsiveFontSize(2.2),
+        fontWeight: 'bold',
+        color: Colors.blue,
+        marginTop: responsiveHeight(2),
+        marginBottom: responsiveHeight(1),
+        marginLeft: responsiveWidth(3), // Adjust left margin to align properly
+    },
     dateContainer: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -40,7 +82,7 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         marginHorizontal: responsiveWidth(0.8),
         backgroundColor: Colors.lightgrey,
-        marginTop: responsiveHeight(2),
+        marginTop: responsiveHeight(1),
     },
     selectedDateContainer: {
         alignItems: 'center',
@@ -50,7 +92,7 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         marginHorizontal: responsiveWidth(0.8),
         backgroundColor: Colors.blue,
-        marginTop: responsiveHeight(2),
+        marginTop: responsiveHeight(1),
     },
     dateText: {
         color: Colors.darkgrey,
@@ -70,6 +112,5 @@ const styles = StyleSheet.create({
     selectedDayText: {
         color: Colors.white,
         fontSize: responsiveFontSize(1.7),
-
     }
 });
