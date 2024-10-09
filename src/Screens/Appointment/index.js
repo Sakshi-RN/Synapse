@@ -14,34 +14,36 @@ const Appointment = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [activeTab, setActiveTab] = useState('All');
-    
 
     useEffect(() => {
         const fetchAppointments = async () => {
-            try {
-                const response = await fetch('https://eb1.taramind.com/getAllClientAppointments/9bfea3d5-74f4-11ef-9c86-02f35b8058b3', {
-                    method: 'GET',
-                    headers: {
-                        'X-Api-Key': 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b',
-                    },
-                });
-                
-                if (!response.ok) {
-                    throw new Error('Failed to fetch appointments');
-                }
-
-                const data = await response.json();
-                setAppointments(data);
-                setFilteredAppointments(data); 
-            } catch (error) {
-                setError(error.message);
-            } finally {
-                setLoading(false);
+          try {
+            const response = await fetch(
+              'https://eb1.taramind.com/getAllClientAppointments/9bfea3d5-74f4-11ef-9c86-02f35b8058b3',
+              {
+                method: 'GET',
+                headers: {
+                  'X-Api-Key': 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b',
+                },
+              }
+            );
+    
+            if (!response.ok) {
+              throw new Error('Failed to fetch appointments');
             }
+    
+            const data = await response.json();
+            setAppointments(data);
+            setFilteredAppointments(data); 
+          } catch (error) {
+            setError(error.message);
+          } finally {
+            setLoading(false);
+          }
         };
-
+    
         fetchAppointments();
-    }, []);
+      }, []);
 
     const getHeaderTitle = () => {
         switch (activeTab) {
@@ -78,12 +80,12 @@ const Appointment = () => {
           
             <CustomCalender />
             <Text style={styles.appointmentsText}>{getAppointmentsText()}</Text>
-            <AppointmentTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+            <AppointmentTabs appointments={appointments} setFilteredAppointments={setFilteredAppointments} />
             <FlatList
                 data={filteredAppointments}
                 renderItem={renderAppointmentCard}
                 keyExtractor={item => item.id}
-                ListEmptyComponent={<Text>No appointments available.</Text>}
+                ListEmptyComponent={<Text style={styles.noData}>No appointments available.</Text>}
                 showsVerticalScrollIndicator={false}
                 style={styles.flatListStyle}
             />
@@ -108,5 +110,18 @@ const styles = StyleSheet.create({
     flatListStyle: {
         height: '100%',
     },
+        noData:{
+        alignSelf:'center',
+        marginTop:responsiveHeight(15),
+        fontSize: responsiveFontSize(2),
+        fontWeight: 'bold',
+        color: Colors.OFFBLACK,
+
+    }
   
 });
+
+
+
+
+

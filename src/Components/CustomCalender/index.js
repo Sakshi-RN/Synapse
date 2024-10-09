@@ -1,17 +1,18 @@
+
 import React, { useState } from 'react';
-import { ScrollView, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, TouchableOpacity, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import dayjs from 'dayjs';
 import Colors from '../../Themes/Colors';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 
 export default function HorizontalCalendar() {
     const [selectedDate, setSelectedDate] = useState('');
+    const [currentMonth, setCurrentMonth] = useState(dayjs().format('MMMM YYYY'));
 
-    // Function to generate the dates for the next 3 months starting from the current month
     const generateDatesForNextMonths = () => {
         const dates = [];
-        const today = dayjs(); 
-        const monthsToShow = 3; 
+        const today = dayjs();
+        const monthsToShow = 2;
 
         for (let monthOffset = 0; monthOffset <= monthsToShow; monthOffset++) {
             const currentMonth = today.add(monthOffset, 'month');
@@ -26,35 +27,51 @@ export default function HorizontalCalendar() {
 
     const dates = generateDatesForNextMonths();
 
-    // Function to check if a new month starts
+
     const isNewMonth = (currentDate, previousDate) => {
         return dayjs(currentDate).format('YYYY-MM') !== dayjs(previousDate).format('YYYY-MM');
     };
 
-    return (
-        <View>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.container}>
-                {dates.map((date, index) => {
-                    const day = dayjs(date).format('D'); // Day of the month
-                    const dayOfWeek = dayjs(date).format('ddd'); // Day of the week abbreviation
-                    const monthNameWithYear = dayjs(date).format('MMMM YYYY'); // Month name with year
-                    const isSelected = date === selectedDate;
-                    const showMonthName = index === 0 || isNewMonth(date, dates[index - 1]);
 
+    const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+        const scrollPosition = event.nativeEvent.contentOffset.x;
+        const itemWidth = responsiveWidth(17 + 2); 
+        const currentIndex = Math.round(scrollPosition / itemWidth);
+
+        if (dates[currentIndex]) {
+            const newMonth = dayjs(dates[currentIndex]).format('MMMM YYYY');
+            if (newMonth !== currentMonth) {
+                setCurrentMonth(newMonth);
+            }
+        }
+    };
+
+    return (
+        <View style={styles.container}>
+            <Text style={styles.headerText}>{currentMonth}</Text>
+            <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.scrollContainer}
+                onScroll={handleScroll}
+                scrollEventThrottle={16}
+            >
+                {dates.map((date, index) => {
+                    const day = dayjs(date).format('D');
+                    const dayOfWeek = dayjs(date).format('ddd');
+                    const isSelected = date === selectedDate;
                     return (
-                        <View key={index}>
-                            {/* Display month name with year when a new month starts */}
-                            {showMonthName && (
-                                <Text style={styles.monthText}>{monthNameWithYear}</Text>
-                            )}
-                            <TouchableOpacity
-                                style={[styles.dateContainer, isSelected && styles.selectedDateContainer]}
-                                onPress={() => setSelectedDate(date)}
-                            >
-                                <Text style={[styles.dateText, isSelected && styles.selectedDateText]}>{day}</Text>
-                                <Text style={[styles.dayText, isSelected && styles.selectedDayText]}>{dayOfWeek}</Text>
-                            </TouchableOpacity>
-                        </View>
+                        <TouchableOpacity
+                            key={index}
+                            style={[
+                                styles.dateContainer,
+                                isSelected && styles.selectedDateContainer
+                            ]}
+                            onPress={() => setSelectedDate(date)}
+                        >
+                            <Text style={[styles.dateText, isSelected && styles.selectedDateText]}>{day}</Text>
+                            <Text style={[styles.dayText, isSelected && styles.selectedDayText]}>{dayOfWeek}</Text>
+                        </TouchableOpacity>
                     );
                 })}
             </ScrollView>
@@ -64,53 +81,51 @@ export default function HorizontalCalendar() {
 
 const styles = StyleSheet.create({
     container: {
-        marginHorizontal: responsiveWidth(3)
+        paddingVertical: responsiveHeight(2),
+        backgroundColor: Colors.white,
     },
-    monthText: {
-        fontSize: responsiveFontSize(2.2),
+    headerText: {
+        fontSize: responsiveFontSize(2),
         fontWeight: 'bold',
         color: Colors.blue,
-        marginTop: responsiveHeight(2),
         marginBottom: responsiveHeight(1),
-        marginLeft: responsiveWidth(3), // Adjust left margin to align properly
+        marginLeft: responsiveWidth(3)
+    },
+    scrollContainer: {
+        flexDirection: 'row',
+        paddingHorizontal: responsiveWidth(2),
     },
     dateContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-        width: responsiveWidth(16),
+        width: responsiveWidth(17),
         height: responsiveHeight(10),
-        borderRadius: 6,
-        marginHorizontal: responsiveWidth(0.8),
+        borderRadius: 8,
+        marginHorizontal: responsiveWidth(1),
         backgroundColor: Colors.lightgrey,
-        marginTop: responsiveHeight(1),
     },
     selectedDateContainer: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: responsiveWidth(16),
-        height: responsiveHeight(10),
-        borderRadius: 6,
-        marginHorizontal: responsiveWidth(0.8),
         backgroundColor: Colors.blue,
-        marginTop: responsiveHeight(1),
+        borderColor: Colors.white,
+        borderWidth: 1,
     },
     dateText: {
         color: Colors.darkgrey,
-        fontSize: responsiveFontSize(2.5),
-        fontWeight: '500'
+        fontSize: responsiveFontSize(2.3),
+        fontWeight: '500',
     },
     selectedDateText: {
-        fontSize: responsiveFontSize(2.5),
-        fontWeight: '500',
-        color: Colors.white
+        color: Colors.white,
     },
     dayText: {
         color: Colors.grey,
         fontSize: responsiveFontSize(1.7),
-        fontWeight: '600'
+        fontWeight: '700',
     },
     selectedDayText: {
         color: Colors.white,
-        fontSize: responsiveFontSize(1.7),
-    }
+    },
 });
+
+
+

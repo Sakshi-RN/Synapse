@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5,
         width: '85%',
-        marginVertical: responsiveHeight(2),
+        marginVertical: responsiveHeight(1.5),
         borderRadius: 12,
         marginRight: responsiveWidth(13)
 
