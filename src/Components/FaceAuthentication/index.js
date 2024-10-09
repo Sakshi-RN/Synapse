@@ -52,7 +52,7 @@ export default function App() {
         cancelLabel: 'Cancel',
       });
 
-      console.log('Authentication Result:', result);
+     
 
       if (result.success) {
         setIsAuthenticated(true);

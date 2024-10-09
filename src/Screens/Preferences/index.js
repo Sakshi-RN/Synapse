@@ -108,6 +108,11 @@ const styles = StyleSheet.create({
     },
     joinText: {
         fontWeight: '500',
-    }
+    },
+    centeredContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 });
 

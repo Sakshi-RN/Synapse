@@ -35,10 +35,6 @@ const HomeScreen = () => {
     const profile = data && data[0];
 
 
-    function parseDate(dobString) {
-        const parts = dobString.split('/');
-        return new Date(`${parts[2]}-${parts[1]}-${parts[0]}`);
-    }
 
 
     function formatAppointmentDate(dateString) {

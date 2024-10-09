@@ -228,7 +228,7 @@ export default function HorizontalCalendar({ availableDates }) {
                 const data = await response.json();
 
                 // Log the entire response
-                console.log('API Response:', data);
+        
 
                 // Check if payload exists and is an array
                 if (data.payload && Array.isArray(data.payload)) {
