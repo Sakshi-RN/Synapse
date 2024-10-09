@@ -1,16 +1,34 @@
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
 import CustomButton from '../../Components/CustomButton';
 import CommonStyle from '../../Components/CommonStyle';
 import commonStyles from '../../Components/CommonStyle';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { fetchProfile } from '../../redux/Reducers/profileReducer';
+import Loader from '../../Components/Loader';
 
 const Preferences = () => {
     const navigation = useNavigation();
+    const dispatch = useDispatch();
+    const { data, fetchLoading } = useSelector(state => state.profile);
+    useFocusEffect(
+        useCallback(() => {
+            dispatch(fetchProfile());
+        }, [dispatch])
+    );
+    if (fetchLoading) {
+        return (
+            <View style={styles.centeredContainer}>
+                <Loader />
+            </View>
+        );
+    }
+    const profile = data && data[0];
 
     const handleEditPreferences = () => {
         navigation.navigate('EditPreferences');
@@ -24,16 +42,16 @@ const Preferences = () => {
             <View style={styles.content}>
                 <View style={CommonStyle.container}>
                     <View style={commonStyles.containerView}>
-                        <Text style={CommonStyle.titleText}>What language would you prefer your therapist to speak?</Text>
-                        <Text style={commonStyles.bodyText}>English</Text>
+                        <Text style={CommonStyle.titleText}>Preferred language for providers</Text>
+                        <Text style={commonStyles.bodyText}>{profile?.preferredLanguage}</Text>
                     </View>
                     <View style={commonStyles.containerView}>
-                        <Text style={CommonStyle.titleText}>Please select preferred communication method</Text>
-                        <Text style={commonStyles.bodyText}>Email</Text>
+                        <Text style={CommonStyle.titleText}>Preferred communication method</Text>
+                        <Text style={commonStyles.bodyText}>{profile?.commChannel?.join(', ') || 'N/A'}</Text>
                     </View>
                     <View style={commonStyles.bottomView}>
-                        <Text style={CommonStyle.titleText}>What is your preference for the gender of your therapist?</Text>
-                        <Text style={commonStyles.bodyText}>Male</Text>
+                        <Text style={CommonStyle.titleText}>Preferred gender for therapist</Text>
+                        <Text style={commonStyles.bodyText}>{profile?.genderProviderPreference}</Text>
                     </View>
                 </View>
                 <View style={styles.row}>

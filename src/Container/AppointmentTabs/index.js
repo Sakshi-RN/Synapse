@@ -4,7 +4,7 @@ import { View, FlatList, TouchableOpacity, Text, StyleSheet } from 'react-native
 import { responsiveWidth, responsiveHeight, responsiveFontSize } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 
-const tabs = ['All', 'scheduled', 'Upcoming', 'Completed', 'Cancelled'];
+const tabs = ['All'];
 
 const AppointmentTabs = ({ appointments, setFilteredAppointments }) => {
   const [activeTab, setActiveTab] = useState('All');
@@ -79,3 +79,5 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
+
+

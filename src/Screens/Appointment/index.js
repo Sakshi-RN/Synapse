@@ -1,4 +1,6 @@
 
+
+
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import AppointmentTabs from '../../Container/AppointmentTabs';
@@ -14,36 +16,42 @@ const Appointment = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [activeTab, setActiveTab] = useState('All');
+    const [availableDates, setAvailableDates] = useState([]); // State for available dates
 
     useEffect(() => {
         const fetchAppointments = async () => {
-          try {
-            const response = await fetch(
-              'https://eb1.taramind.com/getAllClientAppointments/9bfea3d5-74f4-11ef-9c86-02f35b8058b3',
-              {
-                method: 'GET',
-                headers: {
-                  'X-Api-Key': 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b',
-                },
-              }
-            );
-    
-            if (!response.ok) {
-              throw new Error('Failed to fetch appointments');
+            try {
+                const response = await fetch(
+                    'https://eb1.taramind.com/getAllClientAppointments/9bfea3d5-74f4-11ef-9c86-02f35b8058b3',
+                    {
+                        method: 'GET',
+                        headers: {
+                            'X-Api-Key': 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b',
+                        },
+                    }
+                );
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch appointments');
+                }
+
+                const data = await response.json();
+                setAppointments(data);
+                setFilteredAppointments(data);
+
+                // Extract available appointment dates
+                const dates = data.map(appointment => appointment.appointmentDate);
+                setAvailableDates(dates);
+
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
             }
-    
-            const data = await response.json();
-            setAppointments(data);
-            setFilteredAppointments(data); 
-          } catch (error) {
-            setError(error.message);
-          } finally {
-            setLoading(false);
-          }
         };
-    
+
         fetchAppointments();
-      }, []);
+    }, []);
 
     const getHeaderTitle = () => {
         switch (activeTab) {
@@ -77,8 +85,7 @@ const Appointment = () => {
     return (
         <View style={styles.container}>
             <CustomHeader title={getHeaderTitle()} />
-          
-            <CustomCalender />
+            <CustomCalender availableDates={availableDates} /> 
             <Text style={styles.appointmentsText}>{getAppointmentsText()}</Text>
             <AppointmentTabs appointments={appointments} setFilteredAppointments={setFilteredAppointments} />
             <FlatList
@@ -110,17 +117,14 @@ const styles = StyleSheet.create({
     flatListStyle: {
         height: '100%',
     },
-        noData:{
-        alignSelf:'center',
-        marginTop:responsiveHeight(15),
+    noData: {
+        alignSelf: 'center',
+        marginTop: responsiveHeight(15),
         fontSize: responsiveFontSize(2),
         fontWeight: 'bold',
         color: Colors.OFFBLACK,
-
-    }
-  
+    },
 });
-
 
 
 

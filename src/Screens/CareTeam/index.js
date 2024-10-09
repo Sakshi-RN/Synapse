@@ -73,53 +73,37 @@ const CareTeam = () => {
       </View>
     );
   }
+
   const renderItem = () => (
     <>
-      <View style={styles.careTeamnCard}>
-        <Image source={MDImage} style={styles.icon} />
-        <View style={styles.textContainer}>
-          <Text style={styles.title}>{profile?.prescriber?.providerName}</Text>
-          <Text style={styles.description}> {profile?.prescriber?.designation?.join(', ')}</Text>
-          <View style={styles.cancelbtnRow}>
-            <CustomButton
-              onPress={handlePrescriberProfile}
-              buttonStyle={styles.Button}
-              textStyle={styles.ButtonText}
-              title={'View Profile'} />
-            <CustomButton
-              buttonStyle={styles.Button}
-              textStyle={styles.ButtonText}
-              title={'Appt'} />
+      {notifications.map((notification) => (
+        <View key={notification.id} style={styles.careTeamnCard}>
+          <Image source={notification.icon} style={styles.icon} />
+          <View style={styles.textContainer}>
+            <Text style={styles.title}>{notification.title}</Text>
+            <Text style={styles.description}>{notification.description}</Text>
+            <View style={styles.cancelbtnRow}>
+              <CustomButton
+                onPress={handlePrescriberProfile}
+                buttonStyle={styles.Button}
+                textStyle={styles.ButtonText}
+                title={'View Profile'}
+              />
+              <CustomButton
+                buttonStyle={styles.Button}
+                textStyle={styles.ButtonText}
+                title={'Appt'}
+              />
+            </View>
           </View>
+          <TouchableOpacity onPress={() => openModal(notification)}>
+            <ThreeDots height={15} width={10} />
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => openModal(item)}>
-          <ThreeDots height={15} width={10} />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.careTeamnCard}>
-        <Image source={LCSWImage} style={styles.icon} />
-        <View style={styles.textContainer}>
-          <Text style={styles.title}>{profile?.therapist?.providerName}</Text>
-          <Text style={styles.description}> {profile?.therapist?.designation?.join(', ')}</Text>
-          <View style={styles.cancelbtnRow}>
-            <CustomButton
-              onPress={handlePrescriberProfile}
-              buttonStyle={styles.Button}
-              textStyle={styles.ButtonText}
-              title={'View Profile'} />
-            <CustomButton
-              buttonStyle={styles.Button}
-              textStyle={styles.ButtonText}
-              title={'Appt'} />
-          </View>
-        </View>
-        <TouchableOpacity onPress={() => openModal(item)}>
-          <ThreeDots height={15} width={10} />
-        </TouchableOpacity>
-      </View>
+      ))}
     </>
   );
-
+  
   const renderModal = () => {
     return (
       <Modal

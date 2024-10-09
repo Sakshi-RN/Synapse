@@ -26,9 +26,9 @@ const commonStyles = StyleSheet.create({
   },
   titleText: {
     fontSize: responsiveFontSize(1.8),
-    fontWeight: '400',
+    fontWeight: '500',
     color:Colors.black,
-    width:'76%',
+    width:responsiveWidth(60),
     marginVertical:responsiveHeight(1),
 
   },

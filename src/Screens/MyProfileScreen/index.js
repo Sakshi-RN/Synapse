@@ -58,12 +58,33 @@ const MyProfileScreen = () => {
     const handleGoBack = () => {
         navigation.goBack();
     };
+    function capitalizeFirstLetter(value) {
+        if (typeof value !== 'string') return '';
+        return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+    }
 
   
-    function parseDate(dobString) {
-        const parts = dobString.split('/');
-        return new Date(`${parts[2]}-${parts[1]}-${parts[0]}`); 
+
+function parseDate(dobString) {
+    const parts = dobString.split('/');
+    return new Date(`${parts[2]}-${parts[0]}-${parts[1]}`); 
+}
+
+
+function formatDate(dobString) {
+    const birthDate = parseDate(dobString);
+    if (isNaN(birthDate.getTime())) {
+        return 'Invalid Date';
     }
+
+    const options = { month: 'short' };  
+    const month = birthDate.toLocaleString('en-US', options);
+    const day = String(birthDate.getDate()).padStart(2, '0'); 
+    const year = birthDate.getFullYear(); 
+
+    return `${month}-${day}-${year}`; 
+}
+
     
     function calculateAge(birthDateString) {
         if (!birthDateString) {
@@ -146,7 +167,7 @@ const MyProfileScreen = () => {
 
                     <View style={styles.containerView}>
                         <Text style={CommonStyle.nameTitleText}>Date Of Birth</Text>
-                        <Text style={styles.bodyText}>{profile.dob} </Text>
+                        <Text style={styles.bodyText}>{formatDate(profile.dob)}</Text>
                     </View>
                     <View style={styles.line} />
                     <View style={styles.containerView}>
@@ -156,7 +177,7 @@ const MyProfileScreen = () => {
                     <View style={styles.line} />
                     <View style={styles.containerView}>
                         <Text style={CommonStyle.nameTitleText}>Gender</Text>
-                        <Text style={styles.bodyText}>{profile.gender}</Text>
+                        <Text style={styles.bodyText}>{capitalizeFirstLetter(profile?.gender)}</Text>
                     </View>
                     <View style={styles.line} />
 

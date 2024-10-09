@@ -41,7 +41,9 @@ const profile = data && data[0];
             <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
                 <View style={styles.profileSection}>
                     <View style={styles.avatarBox}>
-                        <Text style={styles.avatarText}>NK</Text>
+                        <Text style={styles.avatarText}>
+                        {`${profile?.firstName?.[0] ?? ''}${profile?.lastName[0]?.slice(-1) ?? ''}`}
+                        </Text>
                     </View>
                     <View style={styles.profileInfo}>
                         <Text style={styles.profileName}>{`${profile?.firstName} ${profile?.lastName}`}</Text>

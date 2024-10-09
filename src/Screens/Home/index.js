@@ -2,12 +2,11 @@ import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { View, Text, Image, FlatList, TouchableOpacity, ImageBackground } from 'react-native';
 import Swiper from 'react-native-swiper';
-import { Circle, Bell, Logo, MeetIcon, Location, Arrowdown, Device, ConsentForm, TreatmentSummary, AppointmentImg, SurveyHistory, Download } from '../../Assets/svg';
+import { Circle, Bell, Logo, MeetIcon, Location, Arrowdown, Device, ConsentForm, TreatmentSummary, AppointmentImg, SurveyHistory, Download, Concierge } from '../../Assets/svg';
 import images from '../../Themes/Images'
 import { ScrollView } from 'react-native-gesture-handler';
 import LCSWImage from '../../Assets/Images/LCSW.png';
 import MDImage from '../../Assets/Images/MD.png';
-import ConciergeImage from '../../Assets/Images/Concierge.png';
 import styles from './styles';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { fetchProfile } from '../../redux/Reducers/profileReducer';
@@ -18,7 +17,7 @@ import Loader from '../../Components/Loader';
 const HomeScreen = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
-    const { data, fetchLoading, fetchError } = useSelector(state => state.profile);
+    const { data, fetchLoading } = useSelector(state => state.profile);
 
     useFocusEffect(
         useCallback(() => {
@@ -34,7 +33,6 @@ const HomeScreen = () => {
     }
 
     const profile = data && data[0];
-    const age = calculateAge(profile?.dob)  ;
 
 
     function parseDate(dobString) {
@@ -42,88 +40,65 @@ const HomeScreen = () => {
         return new Date(`${parts[2]}-${parts[1]}-${parts[0]}`);
     }
 
-    function calculateAge(birthDateString) {
-        if (!birthDateString) {
-            return 'N/A';
-        }
-
-        const birthDate = parseDate(birthDateString);
-        if (isNaN(birthDate.getTime())) {
-            return 'Invalid Date';
-        }
-
-        const currentDate = new Date();
-        let age = currentDate.getFullYear() - birthDate.getFullYear();
-        const monthDifference = currentDate.getMonth() - birthDate.getMonth();
-
-        if (
-            monthDifference < 0 ||
-            (monthDifference === 0 && currentDate.getDate() < birthDate.getDate())
-        ) {
-            age--;
-        }
-
-        return age;
-    }
 
     function formatAppointmentDate(dateString) {
         if (!dateString) return 'Invalid Date';
-    
+
         const [month, day, year] = dateString.split('/');
         if (!month || !day || !year) return 'Invalid Date Format';
-    
+
         const date = new Date(`${year}-${month}-${day}`);
         if (isNaN(date.getTime())) {
             return 'Invalid Date';
         }
-    
+
         const options = { month: 'long', day: 'numeric' };
         const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
         const dayNumber = date.getDate();
         const suffix = dayNumber % 10 === 1 && dayNumber !== 11 ? 'st' :
             dayNumber % 10 === 2 && dayNumber !== 12 ? 'nd' :
-            dayNumber % 10 === 3 && dayNumber !== 13 ? 'rd' : 'th';
-    
+                dayNumber % 10 === 3 && dayNumber !== 13 ? 'rd' : 'th';
+
         return `${formattedDate}${suffix}`;
     }
-    
-    
+
+
     function formatAppointmentTime(timeString) {
         if (!timeString) return 'Invalid Time';
-    
+
         const [hours, minutes] = timeString.split(':');
         if (!hours || !minutes) return 'Invalid Time Format';
-    
+
         const date = new Date();
         date.setHours(parseInt(hours, 10));
         date.setMinutes(parseInt(minutes, 10));
-    
+
         if (isNaN(date.getTime())) {
             return 'Invalid Time';
         }
-    
+
         // Extract the time in 12-hour format
         let time = date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true });
-        
+
         // Convert AM/PM to lowercase
         time = time.replace('AM', 'am').replace('PM', 'pm');
-        
+
         return time;
     }
-    
+
     function formatDateTime(dateTimeString) {
         if (!dateTimeString) return 'N/A';  // Handle cases where date is undefined
-    
+
         const [datePart, timePart] = dateTimeString.split(' ');  // Split date and time
         const [month, day, year] = datePart.split('/');  // Split MM/DD/YYYY
-    
+
         const formattedDate = new Date(`${year}-${month}-${day}T${timePart}:00`);  // Create a new Date object
-    
+
         // Format the date using Intl.DateTimeFormat for better readability
         const options = { year: 'numeric', month: 'numeric', day: 'numeric', };
         return new Intl.DateTimeFormat('en-US', options).format(formattedDate);
     }
-    
+
 
     const handleAppointment = () => {
         navigation.navigate('Appointment');
@@ -134,9 +109,6 @@ const HomeScreen = () => {
     }
 
 
-    const handleCareTeam = () => {
-        navigation.navigate('CareTeam');
-    }
     const handleSurveyHistory = () => {
         navigation.navigate('SurveyHistory');
     }
@@ -152,11 +124,7 @@ const HomeScreen = () => {
         navigation.navigate('Connect');
     }
 
-    function capitalizeFirstLetter(value) {
-        if (typeof value !== 'string') return ''; 
-        return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
-    }
-    
+
     const renderHeader = () => {
         return (
             <ImageBackground source={images.headerBgImg} style={styles.headerContainer}>
@@ -169,21 +137,7 @@ const HomeScreen = () => {
                         <Bell height={20} width={20} />
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.patientName}>Hello {`${profile?.firstName} ${profile?.lastName}`}</Text>
-                <View style={styles.patientDetails}>
-                    <View>
-                        <Text style={styles.patientDetail}>Age</Text>
-                        <Text style={styles.patientDetail}>{age}</Text>
-                    </View>
-                    <View>
-                        <Text style={styles.patientDetail}>Gender</Text>
-                        <Text style={styles.patientDetail}>{capitalizeFirstLetter(profile?.gender)}</Text>
-                    </View>
-                    {/* <View>
-                        <Text style={styles.patientDetail}>User ID</Text>
-                        <Text style={styles.patientDetail}> 3356635915</Text>
-                    </View> */}
-                </View>
+                <Text style={styles.patientName}>Hello {`${profile?.firstName} ${profile?.lastName}`}{' , '}</Text>
             </ImageBackground>
         );
     };
@@ -196,29 +150,29 @@ const HomeScreen = () => {
                     activeDot={<View style={styles.activeDot} />}
                 >
                     <View style={styles.slide}>
-                        <Text style={styles.slideText}>
-                            {profile?.nextAppointment?.appointmentType} (Virtual) {profile?.therapist?.providerName},{' '}
-                            {profile?.therapist?.designation?.join(', ')}
-                        </Text>
 
+                        <Text style={styles.slideText}>
+                            <Text> {profile?.nextAppointment?.appointmentType} ({profile?.nextAppointment?.visitType}) {profile?.therapist?.providerName},</Text>
+                            <Text style={styles.therapistRoleText}>{profile?.therapist?.designation?.join(', ')}</Text>
+                        </Text>
                         <View style={styles.line} />
                         <View style={styles.blueContainer}>
                             <Text style={styles.slideTextSecondary}>
-                            {formatAppointmentDate(profile?.nextAppointment?.appointmentDate)} {formatAppointmentTime(profile?.nextAppointment?.appointmentStartTime)}
+                                {formatAppointmentDate(profile?.nextAppointment?.appointmentDate)} {formatAppointmentTime(profile?.nextAppointment?.appointmentStartTime)}
                             </Text>
                             <MeetIcon />
                         </View>
                     </View>
                     <View style={styles.slide}>
                         <Text style={styles.slideText}>
-                            {profile?.nextAppointment?.appointmentType} (Physical Visit) {profile?.therapist?.providerName},{' '}
-                            {profile?.therapist?.designation?.join(', ')}
+                            <Text> {profile?.nextAppointment?.appointmentType} ({profile?.nextAppointment?.visitType}) {profile?.therapist?.providerName},</Text>
+                            <Text style={styles.therapistRoleText}>{profile?.therapist?.designation?.join(', ')}</Text>
                         </Text>
 
                         <View style={styles.line} />
                         <View style={styles.blueContainer}>
                             <Text style={styles.slideTextSecondary}>
-{formatAppointmentDate(profile?.nextAppointment?.appointmentDate)} {formatAppointmentTime(profile?.nextAppointment?.appointmentStartTime)}
+                                {formatAppointmentDate(profile?.nextAppointment?.appointmentDate)} {formatAppointmentTime(profile?.nextAppointment?.appointmentStartTime)}
                             </Text>
                             <Location />
                         </View>
@@ -232,10 +186,10 @@ const HomeScreen = () => {
                         <Arrowdown />
                     </View>
                     <View style={styles.slide}>
-                        <Text style={styles.slideText}>
-                            Your provider,{profile?.therapist?.providerName},{' '}
-                            {profile?.therapist?.designation?.join(', ')} {' '}
-                            has requested the survey to be completed.
+                        <Text style={styles.slideText}><Text>Your provider,</Text>
+                            <Text>{profile?.therapist?.providerName},{' '}</Text>
+                            <Text style={styles.therapistRoleText}>{profile?.therapist?.designation?.join(', ')}{' '}</Text>
+                            <Text>has requested the survey to be completed.</Text>
                         </Text>
                         <View style={styles.line} />
                         <View style={styles.blueviewContainer}>
@@ -278,7 +232,7 @@ const HomeScreen = () => {
                 <Text style={styles.reportDate}>{formatDateTime(profile?.lastPHQCompletedDate)}</Text>
                 <Text style={styles.reportTitle}>A Comprehensive Mental Health Report</Text>
                 <View style={styles.rowNew}>
-                    <Text style={styles.leenatext}>{profile?.therapist?.providerName}{','} {profile?.therapist?.designation?.join(', ')}</Text>  
+                    <Text style={styles.leenatext}>{profile?.therapist?.providerName}{','} {profile?.therapist?.designation?.join(', ')}</Text>
                 </View>
                 <View style={styles.reportContainer}>
                     <View style={styles.phqConatiner}>
@@ -300,26 +254,23 @@ const HomeScreen = () => {
     }
     const flatlistView = () => {
         return (
-            <View style={styles.rowNew}>
-                <View style={styles.careTeamMember} >
-                    <Image source={LCSWImage} style={styles.careTeamImage} />
-                    <Text style={styles.careTeamName}>{profile?.therapist?.providerName}</Text>
-                    <Text style={styles.careTeamRole}>
-                        {profile?.therapist?.designation?.join(', ')}
-                    </Text>
+            <>
+                <View style={styles.careTeamRow}>
+                <Image source={{uri:profile?.therapist?.profilePicture}} style={styles.careTeamImage} />
+                <Image source={{uri:profile?.prescriber?.profilePicture}} style={styles.careTeamImage} />
+                <Concierge/>
                 </View>
-                <View style={styles.careTeamMember} >
-                    <Image source={MDImage} style={styles.careTeamImage} />
-                    <Text style={styles.careTeamName}>{profile?.prescriber?.providerName}</Text>
-                    <Text style={styles.careTeamRole}>
-                        {profile?.prescriber?.designation?.join(', ')}
-                    </Text>
+                <View style={styles.rowNew}>
+                <Text style={styles.careTeamName}>{profile?.therapist?.providerName}</Text>
+                <Text style={styles.careTeamName}>{profile?.prescriber?.providerName}</Text>
+                <Text style={styles.careTeamName}>Concierge</Text>
                 </View>
-                <View style={styles.careTeamMember} >
-                    <Image source={ConciergeImage} style={styles.careTeamImage} />
-                    <Text style={styles.careTeamName}>Concierge</Text>
+                <View style={styles.rowNew}>
+                <Text style={styles.careTeamRole}>{profile?.therapist?.designation?.join(', ')}</Text>
+                <Text style={styles.careTeamName}>{profile?.prescriber?.designation?.join(', ')}</Text>
+                <Text style={styles.ConcergeName}></Text>
                 </View>
-            </View>
+            </>
         )
     }
 

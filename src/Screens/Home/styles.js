@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
     patientName: {
         color: Colors.white,
         fontWeight: '600',
-        fontSize: responsiveFontSize(3)
+        fontSize: responsiveFontSize(3),
+        marginTop: responsiveHeight(1),
     },
     patientDetails: {
         flexDirection: 'row',
@@ -58,8 +59,9 @@ const styles = StyleSheet.create({
     slideText: {
         color: Colors.blue,
         fontSize: responsiveFontSize(1.5),
-        width: responsiveWidth(49),
+        width: responsiveWidth(44),
         fontWeight: '400',
+
     },
     designationText: {
         color: Colors.blue,
@@ -73,7 +75,7 @@ const styles = StyleSheet.create({
         color: Colors.black,
         fontWeight: '600',
         fontSize: responsiveFontSize(1.4),
-        width: responsiveWidth(15),
+        width: responsiveWidth(17),
 
     },
     slideTextHighlight: {
@@ -168,27 +170,49 @@ const styles = StyleSheet.create({
         marginTop: responsiveHeight(3),
         color: Colors.blue
     },
-    careTeamMember: {
-        marginTop: responsiveHeight(1.5),
-        marginHorizontal: responsiveWidth(2),
 
-    },
     careTeamImage: {
-        width: 60,
-        height: 60,
-        borderRadius: 30,
+        width: 70,
+        height: 70,
+        borderRadius: 35,
     },
     careTeamName: {
         fontSize: responsiveFontSize(1.2),
         fontWeight: '600',
-        // textAlign: 'center',
-        marginTop: responsiveHeight(1)
+        marginTop: responsiveHeight(1),
+        width:responsiveHeight(11),
+        marginTop:responsiveFontSize(1),
+        textAlign:'center',
+        alignItems:'center',
+        
+    },
+    samuelName: {
+        fontSize: responsiveFontSize(1.2),
+        color: Colors.black,
+        fontWeight: '500',
+        width:responsiveWidth(20),
+        textAlign:'center',
+         backgroundColor:'green'
+        
+    },
+    
+  ConcergeName: {
+    fontSize: responsiveFontSize(1.2),
+    color: Colors.black,
+    fontWeight: '500',
+    width:responsiveWidth(20),
+    textAlign:'center',
+
+        
     },
     careTeamRole: {
         fontSize: responsiveFontSize(1.2),
         color: Colors.black,
-        textAlign: 'center',
         fontWeight: '500',
+        width:responsiveWidth(22),
+        textAlign:'center',
+
+        
     },
     actionsContainer: {
         padding: responsiveWidth(4)
@@ -221,7 +245,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginLeft: 3,
         marginRight: 3,
-        top: Platform.OS === 'ios' ? responsiveHeight(2) : responsiveHeight(4)
+        top: Platform.OS === 'ios' ? responsiveHeight(3) : responsiveHeight(4)
 
     },
     activeDot: {
@@ -231,7 +255,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginLeft: 3,
         marginRight: 3,
-        top: Platform.OS === 'ios' ? responsiveHeight(2) : responsiveHeight(4)
+        top: Platform.OS === 'ios' ? responsiveHeight(3) : responsiveHeight(4)
 
     },
     reportContainer: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
@@ -250,7 +274,21 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    rowNew: { flexDirection: 'row', alignItems: 'center' }
+    rowNew: { flexDirection: 'row', alignItems: 'center' },
+    careTeamRow:{
+flexDirection: 'row', 
+alignItems: 'center',
+justifyContent:'space-between',
+width:responsiveWidth(65),
+marginTop:responsiveFontSize(2)
+    },
+
+    therapistRoleText:{
+        color: Colors.blue,
+        fontSize: responsiveFontSize(1.2),
+        width: responsiveWidth(49),
+        fontWeight: '600',
+    }
 });
 
 export default styles;
