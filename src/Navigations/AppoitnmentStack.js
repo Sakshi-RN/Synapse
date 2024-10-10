@@ -7,6 +7,8 @@ import WaitingRoom from '../Screens/WaitingRoom';
 import ResheduleRequest from '../Screens/ResheduleRequest';
 import Feedback from '../Screens/Feedback';
 import ThankyouForFeedback from '../Screens/ThankyouForFeedback';
+import ViewAllAppointments from '../Screens/ViewAllAppointments';
+
 
 const AppointmentStackNav = createStackNavigator();
 
@@ -25,6 +27,7 @@ export const AppointmentStack = (props) => {
         <AppointmentStackNav.Screen name="ResheduleRequest" component={ResheduleRequest} />
         <AppointmentStackNav.Screen name="Feedback" component={Feedback} />
         <AppointmentStackNav.Screen name="ThankyouForFeedback" component={ThankyouForFeedback} />
+        <AppointmentStackNav.Screen name="ViewAllAppointments" component={ViewAllAppointments} />
     </AppointmentStackNav.Navigator>
 );
 }

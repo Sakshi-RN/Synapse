@@ -7,12 +7,14 @@ import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 
 
-const AppointmentCard = ({ appointment }) => {
+const ViewAllAppointments = ({ appointment }) => {
     const navigation = useNavigation();
     const formattedDate = moment(appointment.appointmentDate, 'MM/DD/YYYY').format('MMMM Do, YYYY');
     const formattedStartTime = moment(appointment.appointmentStartTime, 'HH:mm:ss').format('h:mm A');
     const formattedEndTime = moment(appointment.appointmentEndTime, 'HH:mm:ss').format('h:mm A');
     const formattedTime = `${formattedStartTime} - ${formattedEndTime}`;
+
+
     return (
 
                 <View style={styles.detailsContainer}>
@@ -43,8 +45,7 @@ const AppointmentCard = ({ appointment }) => {
                             </TouchableOpacity>
                         </View>
                     </View>
-  <>
-                    {appointment.appointmentStatus === 'completed' || appointment.appointmentStatus === 'upcoming' ?
+
                     <TouchableOpacity
                         style={
                             appointment.appointmentStatus === 'completed' ? styles.completedJoinButton :
@@ -58,9 +59,7 @@ const AppointmentCard = ({ appointment }) => {
                             }
                         >{appointment.appointmentStatus === 'completed' ? 'View Details' : appointment.appointmentStatus === 'upcoming' ? 'Join Session' : null}</Text>
                     </TouchableOpacity>
-                           : ''
-                        }
-    </> 
+
                     {/* <>
                     {appointment.appointmentStatus === 'scheduled' ?
                         <View style={styles.cancelbtnRow}>
@@ -76,10 +75,11 @@ const AppointmentCard = ({ appointment }) => {
                 </> */}
                 </View>
 
+
     );
 };
 
-export default AppointmentCard;
+export default ViewAllAppointments;
 
 const styles = StyleSheet.create({
     cardContainer: {
@@ -269,9 +269,6 @@ const styles = StyleSheet.create({
         marginTop: responsiveHeight(0.2)
     }
 });
-
-
-
 
 
 

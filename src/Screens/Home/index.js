@@ -134,7 +134,7 @@ const HomeScreen = () => {
                         <Bell height={20} width={20} />
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.patientName}>Hello {`${profile?.firstName} ${profile?.lastName}`}{', '}</Text>
+                <Text style={styles.patientName}>Hello {`${profile?.firstName||''} ${profile?.lastName||''}`}{', '}</Text>
             </ImageBackground>
         );
     };

@@ -1,14 +1,12 @@
-
-
-
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
-import AppointmentTabs from '../../Container/AppointmentTabs';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 import AppointmentCard from '../../Container/AppointmentCard';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
 import CustomCalender from '../../Components/CustomCalender';
+import Loader from '../../Components/Loader';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Appointment = () => {
     const [appointments, setAppointments] = useState([]);
@@ -38,7 +36,6 @@ const Appointment = () => {
                 setAppointments(data);
                 setFilteredAppointments(data);
 
-                // Extract available appointment dates
                 const dates = data.map(appointment => appointment.appointmentDate);
                 setAvailableDates(dates);
 
@@ -52,20 +49,6 @@ const Appointment = () => {
         fetchAppointments();
     }, []);
 
-    const getHeaderTitle = () => {
-        switch (activeTab) {
-            case 'Pending':
-                return 'Pending';
-            case 'Upcoming':
-                return 'Upcoming';
-            case 'Completed':
-                return 'Completed';
-            case 'Cancelled':
-                return 'Cancelled';
-            default:
-                return 'Appointments';
-        }
-    };
 
     const getAppointmentsText = () => {
         return `${filteredAppointments.length} Appointments`;
@@ -74,19 +57,26 @@ const Appointment = () => {
     const renderAppointmentCard = ({ item }) => <AppointmentCard appointment={item} />;
 
     if (loading) {
-        return <ActivityIndicator size="large" color={Colors.blue} />;
+        return (
+            <View style={styles.centeredContainer}>
+                <Loader />
+            </View>
+        );
     }
-
     if (error) {
         return <Text>Error: {error}</Text>;
     }
 
     return (
         <View style={styles.container}>
-            <CustomHeader title={getHeaderTitle()} />
+            <CustomHeader title={'Appointments'} />
             <CustomCalender availableDates={availableDates} /> 
+            <View style={styles.row}>
             <Text style={styles.appointmentsText}>{getAppointmentsText()}</Text>
-            <AppointmentTabs appointments={appointments} setFilteredAppointments={setFilteredAppointments} />
+            <TouchableOpacity>
+            <Text style={styles.viewAllText}>View All</Text>
+            </TouchableOpacity>
+            </View>
             <FlatList
                 data={filteredAppointments}
                 renderItem={renderAppointmentCard}
@@ -105,13 +95,18 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingBottom: responsiveHeight(12),
+        backgroundColor:Colors.white
+    },
+    centeredContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     appointmentsText: {
-        fontSize: responsiveFontSize(2),
+        fontSize: responsiveFontSize(1.8),
         fontWeight: 'bold',
         color: Colors.blue,
-        marginHorizontal: responsiveWidth(5),
-        marginTop: responsiveHeight(3),
+
     },
     flatListStyle: {
         height: '100%',
@@ -123,8 +118,21 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: Colors.OFFBLACK,
     },
+    row:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+        marginHorizontal:responsiveWidth(5),
+        alignItems:'center',
+        marginBottom:responsiveHeight(1)
+
+
+    },
+    viewAllText:{
+        fontSize: responsiveFontSize(1.4),
+        color:'#5594C9',
+        fontWeight: '600',
+
+    }
 });
-
-
 
 

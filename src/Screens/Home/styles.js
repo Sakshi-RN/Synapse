@@ -180,40 +180,40 @@ const styles = StyleSheet.create({
         fontSize: responsiveFontSize(1.2),
         fontWeight: '600',
         marginTop: responsiveHeight(1),
-        width:responsiveWidth(22),
-        marginTop:responsiveFontSize(1),
-        textAlign:'center',
+        width: responsiveWidth(22),
+        marginTop: responsiveFontSize(1),
+        textAlign: 'center',
 
-   
-        
+
+
     },
     samuelName: {
         fontSize: responsiveFontSize(1.2),
         color: Colors.black,
         fontWeight: '500',
-        width:responsiveWidth(20),
-        textAlign:'center',
-         backgroundColor:'green'
-        
-    },
-    
-  ConcergeName: {
-    fontSize: responsiveFontSize(1.2),
-    color: Colors.black,
-    fontWeight: '500',
-    width:responsiveWidth(20),
-    textAlign:'center',
+        width: responsiveWidth(20),
+        textAlign: 'center',
+        backgroundColor: 'green'
 
-        
+    },
+
+    ConcergeName: {
+        fontSize: responsiveFontSize(1.2),
+        color: Colors.black,
+        fontWeight: '500',
+        width: responsiveWidth(20),
+        textAlign: 'center',
+
+
     },
     careTeamRole: {
         fontSize: responsiveFontSize(1),
         color: Colors.black,
         fontWeight: '700',
-        width:responsiveWidth(22),
-        textAlign:'center',
+        width: responsiveWidth(22),
+        textAlign: 'center',
 
-        
+
     },
     actionsContainer: {
         padding: responsiveWidth(4)
@@ -276,15 +276,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     rowNew: { flexDirection: 'row', alignItems: 'center' },
-    careTeamRow:{
-flexDirection: 'row', 
-alignItems: 'center',
-justifyContent:'space-between',
-width:responsiveWidth(65),
-marginTop:responsiveFontSize(2)
+    careTeamRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        width: responsiveWidth(65),
+        marginTop: responsiveFontSize(2)
     },
 
-    therapistRoleText:{
+    therapistRoleText: {
         color: Colors.blue,
         fontSize: responsiveFontSize(1.1),
         width: responsiveWidth(45),
