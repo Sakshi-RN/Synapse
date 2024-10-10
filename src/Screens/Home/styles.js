@@ -180,10 +180,11 @@ const styles = StyleSheet.create({
         fontSize: responsiveFontSize(1.2),
         fontWeight: '600',
         marginTop: responsiveHeight(1),
-        width:responsiveHeight(11),
+        width:responsiveWidth(22),
         marginTop:responsiveFontSize(1),
         textAlign:'center',
-        alignItems:'center',
+
+   
         
     },
     samuelName: {
@@ -206,9 +207,9 @@ const styles = StyleSheet.create({
         
     },
     careTeamRole: {
-        fontSize: responsiveFontSize(1.2),
+        fontSize: responsiveFontSize(1),
         color: Colors.black,
-        fontWeight: '500',
+        fontWeight: '700',
         width:responsiveWidth(22),
         textAlign:'center',
 
@@ -285,8 +286,8 @@ marginTop:responsiveFontSize(2)
 
     therapistRoleText:{
         color: Colors.blue,
-        fontSize: responsiveFontSize(1.2),
-        width: responsiveWidth(49),
+        fontSize: responsiveFontSize(1.1),
+        width: responsiveWidth(45),
         fontWeight: '600',
     }
 });

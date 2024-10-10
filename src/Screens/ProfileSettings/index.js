@@ -58,7 +58,7 @@ const profile = data && data[0];
                    
                     <TouchableOpacity style={styles.row} onPress={handlePreferences}>
                    <CommunicationPreferences/>
-                     <Text style={styles.rowText}>Communication Preferences</Text>
+                     <Text style={styles.rowText}>Preferences</Text>
                         <Icon name="chevron-right" size={20} color={Colors.black} />
                     </TouchableOpacity>
                     <View style={styles.line}/>

@@ -171,7 +171,7 @@ function formatDate(dobString) {
                     </View>
                     <View style={styles.line} />
                     <View style={styles.containerView}>
-                        <Text style={CommonStyle.nameTitleText}>Age</Text>
+                        <Text style={CommonStyle.nameTitleText}>Age (in years)</Text>
                         <Text style={styles.bodyText}>{age}</Text> 
                     </View>
                     <View style={styles.line} />
@@ -183,7 +183,12 @@ function formatDate(dobString) {
 
                     <View style={styles.containerView}>
                         <Text style={CommonStyle.nameTitleText}>Weight (in pounds)</Text>
-                        <Text style={styles.bodyText}>{profile.clientCurrentWeight} lbs</Text>
+                        <Text style={styles.bodyText}>{profile.clientCurrentWeight} lbs </Text>
+                    </View>
+                    <View style={styles.line} />
+                    <View style={styles.containerView}>
+                        <Text style={CommonStyle.nameTitleText}>Height (in feet)</Text>
+                        <Text style={styles.bodyText}>{profile.clientCurrentHeight}</Text>
                     </View>
                 </View>
             </ScrollView>

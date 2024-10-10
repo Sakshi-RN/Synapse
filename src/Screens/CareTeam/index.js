@@ -59,6 +59,10 @@ const CareTeam = () => {
     setModalVisible(false);
     navigation.navigate('PrescriberProfile');
   }
+  const handleTherapistProfile = () => {
+    setModalVisible(false);
+    navigation.navigate('PrescriberProfile');
+  }
 
 
   useFocusEffect(

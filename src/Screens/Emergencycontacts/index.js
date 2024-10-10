@@ -2,15 +2,15 @@
 import React, { useCallback } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
 import CustomButton from '../../Components/CustomButton';
-import CommonStyle from '../../Components/CommonStyle';
+
 import commonStyles from '../../Components/CommonStyle';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { fetchProfile } from '../../redux/Reducers/profileReducer';
 import Loader from '../../Components/Loader';
+import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 
 const Emergencycontacts = () => {
     const navigation = useNavigation();
@@ -40,22 +40,22 @@ const Emergencycontacts = () => {
         <View style={styles.container}>
             <CustomHeader title={'Emergency Contacts'} />
             <View style={styles.content}>
-                <View style={CommonStyle.container}>
+                <View style={commonStyles.container}>
                     <View style={commonStyles.containerView}>
-                        <Text style={CommonStyle.nameTitleText}>First Name</Text>
-                        <Text style={commonStyles.bodyText}>{profile?.emergencyContactFirstName}</Text>
+                        <Text style={styles.nameTitleText}>First Name</Text>
+                        <Text style={styles.bodyText}>{profile?.emergencyContactFirstName}</Text>
                     </View>
                     <View style={commonStyles.containerView}>
-                        <Text style={CommonStyle.nameTitleText}>Last Name</Text>
-                        <Text style={commonStyles.bodyText}>{profile?.emergencyContactLastName}</Text>
+                        <Text style={styles.nameTitleText}>Last Name</Text>
+                        <Text style={styles.bodyText}>{profile?.emergencyContactLastName}</Text>
                     </View>
                     <View style={commonStyles.containerView}>
-                        <Text style={CommonStyle.nameTitleText}>Phone Number</Text>
-                        <Text style={commonStyles.bodyText}>{profile?.emergencyContactPhone}</Text>
+                        <Text style={styles.nameTitleText}>Phone Number</Text>
+                        <Text style={styles.bodyText}>{profile?.emergencyContactPhone}</Text>
                     </View>
                     <View style={commonStyles.bottomView}>
-                        <Text style={CommonStyle.titleText}>What is your relation with that person?</Text>
-                        <Text style={commonStyles.bodyText}>{profile?.emergencyContactRelation}</Text>
+                    <Text style={styles.nameTitleText}>What is your relation with that person?</Text>
+                    <Text style={styles.bodyText}>{profile?.emergencyContactRelation}</Text>
                     </View>
                 </View>
                 <View style={styles.row}>
@@ -118,5 +118,23 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+ 
+      nameTitleText: {
+        fontSize: responsiveFontSize(1.8),
+        fontWeight: '500',
+        color:Colors.black,
+        marginVertical:responsiveHeight(1.3),
+        width:responsiveWidth(50)
+    
+      },
+      bodyText: {
+        fontSize: responsiveFontSize(1.5),
+        color:Colors.blue,
+        fontWeight:'bold',
+        marginVertical:responsiveHeight(1.5),
+        // width:responsiveWidth(20),
+            // backgroundColor:'red',
+    
+      },
 });
 

@@ -33,8 +33,8 @@ const EditEmergencyContacts = () => {
                 <CommonInput
                     placeholder={'Phone Number'}
                     title={'Emergency Contact Phone Number'}
-                    iconName={"chevron-down"}
-                /> 
+
+                />
                 <CommonInput
                     placeholder={'Select Relation'}
                     title={'What is your Emergency contact relation to you?'}
@@ -44,8 +44,8 @@ const EditEmergencyContacts = () => {
                     <CustomButton
                         buttonStyle={styles.Button}
                         textStyle={styles.btnText}
-                        title={'Cancel'} 
-                        onPress={handleGoBack}/>
+                        title={'Cancel'}
+                        onPress={handleGoBack} />
                     <CustomButton
                         buttonStyle={styles.joinButton}
                         textStyle={styles.joinText}

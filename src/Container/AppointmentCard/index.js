@@ -4,65 +4,62 @@ import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-nat
 import Colors from '../../Themes/Colors';
 import LCSWImage from '../../Assets/Images/LCSW.png';
 import { useNavigation } from '@react-navigation/native';
-import moment from 'moment'; 
+import moment from 'moment';
 
 
 const AppointmentCard = ({ appointment }) => {
     const navigation = useNavigation();
-   const formattedDate = moment(appointment.appointmentDate, 'MM/DD/YYYY').format('MMMM Do, YYYY');
+    const formattedDate = moment(appointment.appointmentDate, 'MM/DD/YYYY').format('MMMM Do, YYYY');
     const formattedStartTime = moment(appointment.appointmentStartTime, 'HH:mm:ss').format('h:mm A');
     const formattedEndTime = moment(appointment.appointmentEndTime, 'HH:mm:ss').format('h:mm A');
     const formattedTime = `${formattedStartTime} - ${formattedEndTime}`;
     return (
         <>
-        <View style={styles.cardContainer}>
-      <Text style={styles.time}>{formattedTime}</Text>
-            <View style={styles.detailsContainer}>
-                <View style={{ flexDirection: 'row' }}>
-                    <Image source={LCSWImage} style={styles.careTeamImage} />
-                    <View style={styles.rowStyle}>
-                    <Text style={styles.name}>{appointment?.providerName}</Text>
-                    <Text style={styles.type}>Appointment Type - {appointment?.appointmentType}</Text>
-                        <TouchableOpacity
-                            style={
-                                 appointment.appointmentStatus === 'scheduled' ? styles.pendingButton :
-                                     appointment.appointmentStatus === 'upcoming' ? styles.upcomingButton :
-                                         appointment.appointmentStatus === 'completed' ? styles.completedButton :
-                                             appointment.appointmentStatus === 'cancelled' ? styles.cancelledButton :
-                                                styles.defaultButton
-                            }
-                        >
-                            <Text 
+            <View style={styles.cardContainer}>
+                <Text style={styles.time}>{formattedTime}</Text>
+                <View style={styles.detailsContainer}>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Image source={LCSWImage} style={styles.careTeamImage} />
+                        <View style={styles.rowStyle}>
+                            <Text style={styles.name}>{appointment?.providerName}</Text>
+                            <Text style={styles.type}><Text style={styles.txetWidth}>{appointment?.appointmentType}</Text></Text>
+                            <TouchableOpacity
                                 style={
-                                   appointment.appointmentStatus === 'scheduled' ? styles.pendingButtonText :
-                                       appointment.appointmentStatus === 'upcoming' ? styles.upcomingButtonText :
-                                           appointment.appointmentStatus === 'completed' ? styles.completedButtonText :
-                                               appointment.appointmentStatus === 'cancelled' ? styles.cancelledButtonText :
-                                                    styles.buttonText
+                                    appointment.appointmentStatus === 'scheduled' ? styles.pendingButton :
+                                        appointment.appointmentStatus === 'upcoming' ? styles.upcomingButton :
+                                            appointment.appointmentStatus === 'completed' ? styles.completedButton :
+                                                appointment.appointmentStatus === 'cancelled' ? styles.cancelledButton :
+                                                    styles.defaultButton
                                 }
-                            >{appointment?.appointmentStatus}</Text>
-                        </TouchableOpacity>
+                            >
+                                <Text
+                                    style={
+                                        appointment.appointmentStatus === 'scheduled' ? styles.pendingButtonText :
+                                            appointment.appointmentStatus === 'upcoming' ? styles.upcomingButtonText :
+                                                appointment.appointmentStatus === 'completed' ? styles.completedButtonText :
+                                                    appointment.appointmentStatus === 'cancelled' ? styles.cancelledButtonText :
+                                                        styles.buttonText
+                                    }
+                                >{appointment?.appointmentStatus}</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                </View>
-                {/* <>
-                    {  appointment.appointmentStatus === 'completed' ||   appointment.appointmentStatus === 'View Details' ? */}
-                        <TouchableOpacity
-                            style={
-                                appointment.appointmentStatus === 'completed' ? styles.completedJoinButton :
+
+                    <TouchableOpacity
+                        style={
+                            appointment.appointmentStatus === 'completed' ? styles.completedJoinButton :
                                 appointment.appointmentStatus === 'upcoming' ? styles.upcomingJoinButton : 'null'
-                            }>
-                            <Text
-                                style={
-                                    appointment.appointmentStatus === 'completed' ? styles.completedJoinButtonText :
+                        }>
+                        <Text
+                            style={
+                                appointment.appointmentStatus === 'completed' ? styles.completedJoinButtonText :
                                     appointment.appointmentStatus === 'upcoming' ? styles.upcomingJoinButtonText : 'null'
 
-                                }
-                            >{ appointment.appointmentStatus==='completed'?'View Details': appointment.appointmentStatus==='upcoming'?'Join Session':null}</Text>
-                        </TouchableOpacity>
-                        {/* : ''
-                    }
-                </> */}
-                <>
+                            }
+                        >{appointment.appointmentStatus === 'completed' ? 'View Details' : appointment.appointmentStatus === 'upcoming' ? 'Join Session' : null}</Text>
+                    </TouchableOpacity>
+
+                    {/* <>
                     {appointment.appointmentStatus === 'scheduled' ?
                         <View style={styles.cancelbtnRow}>
                             <TouchableOpacity style={styles.declineButton }>
@@ -74,9 +71,9 @@ const AppointmentCard = ({ appointment }) => {
                         </View>
                         : ''
                     }
-                </>
+                </> */}
+                </View>
             </View>
-        </View>
 
         </>
     );
@@ -127,41 +124,46 @@ const styles = StyleSheet.create({
     type: {
         fontSize: responsiveFontSize(1.4),
         color: Colors.darkgrey,
-        fontWeight: '600'
+        fontWeight: '600',
+
+    },
+    txetWidth: {
+        width: responsiveHeight(60),
+        marginRight: responsiveWidth(2)
     },
     pendingButton: {
         backgroundColor: Colors.PURPLE,
-       padding:2,
+        padding: 2,
         borderRadius: 5,
         marginTop: responsiveHeight(1),
-        alignItems:'center',
-        width:responsiveWidth(20)
+        alignItems: 'center',
+        width: responsiveWidth(20)
 
     },
     upcomingButton: {
         backgroundColor: Colors.ORANGE,
-        padding:2,
+        padding: 2,
         borderRadius: 5,
         marginTop: responsiveHeight(1),
-        alignItems:'center',
-        width:responsiveWidth(20)
-       
+        alignItems: 'center',
+        width: responsiveWidth(20)
+
     },
     completedButton: {
         backgroundColor: Colors.GREEN,
-        padding:2,
+        padding: 2,
         borderRadius: 5,
         marginTop: responsiveHeight(1),
-alignItems:'center',
-width:responsiveWidth(20)
+        alignItems: 'center',
+        width: responsiveWidth(20)
     },
     cancelledButton: {
         backgroundColor: Colors.PINK,
-        padding:2,
+        padding: 2,
         borderRadius: 5,
         marginTop: responsiveHeight(1),
-        alignItems:'center',
-        width:responsiveWidth(20)
+        alignItems: 'center',
+        width: responsiveWidth(20)
     },
     defaultButton: {
         backgroundColor: Colors.default,

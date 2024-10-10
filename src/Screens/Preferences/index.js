@@ -36,6 +36,10 @@ const Preferences = () => {
     const handleGoBack = () => {
         navigation.goBack();
     };
+    function capitalizeFirstLetter(value) {
+        if (typeof value !== 'string') return '';
+        return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+    }
     return (
         <View style={styles.container}>
             <CustomHeader title={'Preferences'} />
@@ -43,7 +47,7 @@ const Preferences = () => {
                 <View style={CommonStyle.container}>
                     <View style={commonStyles.containerView}>
                         <Text style={CommonStyle.titleText}>Preferred language for providers</Text>
-                        <Text style={commonStyles.bodyText}>{profile?.preferredLanguage}</Text>
+                        <Text style={commonStyles.bodyText}>{profile?.primaryLanguage}</Text>
                     </View>
                     <View style={commonStyles.containerView}>
                         <Text style={CommonStyle.titleText}>Preferred communication method</Text>
@@ -51,7 +55,7 @@ const Preferences = () => {
                     </View>
                     <View style={commonStyles.bottomView}>
                         <Text style={CommonStyle.titleText}>Preferred gender for therapist</Text>
-                        <Text style={commonStyles.bodyText}>{profile?.genderProviderPreference}</Text>
+                        <Text style={commonStyles.bodyText}>{capitalizeFirstLetter(profile?.genderProviderPreference)}</Text>
                     </View>
                 </View>
                 <View style={styles.row}>
@@ -65,7 +69,7 @@ const Preferences = () => {
                         textStyle={styles.joinText}
                         title={'Edit Info'}
                         onPress={handleEditPreferences}
-                         />
+                    />
                 </View>
             </View>
         </View>

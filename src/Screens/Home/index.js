@@ -11,6 +11,7 @@ import styles from './styles';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { fetchProfile } from '../../redux/Reducers/profileReducer';
 import Loader from '../../Components/Loader';
+import { responsiveWidth } from 'react-native-responsive-dimensions';
 
 
 
@@ -133,7 +134,7 @@ const HomeScreen = () => {
                         <Bell height={20} width={20} />
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.patientName}>Hello {`${profile?.firstName} ${profile?.lastName}`}{' , '}</Text>
+                <Text style={styles.patientName}>Hello {`${profile?.firstName} ${profile?.lastName}`}{', '}</Text>
             </ImageBackground>
         );
     };
@@ -146,11 +147,11 @@ const HomeScreen = () => {
                     activeDot={<View style={styles.activeDot} />}
                 >
                     <View style={styles.slide}>
-
-                        <Text style={styles.slideText}>
-                            <Text> {profile?.nextAppointment?.appointmentType} ({profile?.nextAppointment?.visitType}) {profile?.therapist?.providerName},</Text>
+                        <View>
+                            <Text style={styles.slideText}>
+                                <Text>{profile?.nextAppointment?.appointmentType} ({profile?.nextAppointment?.visitType}) {profile?.therapist?.providerName},</Text></Text>
                             <Text style={styles.therapistRoleText}>{profile?.therapist?.designation?.join(', ')}</Text>
-                        </Text>
+                        </View>
                         <View style={styles.line} />
                         <View style={styles.blueContainer}>
                             <Text style={styles.slideTextSecondary}>
@@ -160,11 +161,11 @@ const HomeScreen = () => {
                         </View>
                     </View>
                     <View style={styles.slide}>
-                        <Text style={styles.slideText}>
-                            <Text> {profile?.nextAppointment?.appointmentType} ({profile?.nextAppointment?.visitType}) {profile?.therapist?.providerName},</Text>
+                    <View>
+                            <Text style={styles.slideText}>
+                                <Text>{profile?.nextAppointment?.appointmentType} ({profile?.nextAppointment?.visitType}) {profile?.therapist?.providerName},</Text></Text>
                             <Text style={styles.therapistRoleText}>{profile?.therapist?.designation?.join(', ')}</Text>
-                        </Text>
-
+                        </View>
                         <View style={styles.line} />
                         <View style={styles.blueContainer}>
                             <Text style={styles.slideTextSecondary}>
@@ -252,19 +253,23 @@ const HomeScreen = () => {
         return (
             <>
                 <View style={styles.careTeamRow}>
-                <Image source={{uri:profile?.therapist?.profilePicture}} style={styles.careTeamImage} />
-                <Image source={{uri:profile?.prescriber?.profilePicture}} style={styles.careTeamImage} />
-                <Concierge/>
+                    <TouchableOpacity>
+                    <Image source={{ uri: profile?.therapist?.profilePicture }} style={styles.careTeamImage} />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                    <Image source={{ uri: profile?.prescriber?.profilePicture }} style={styles.careTeamImage} />
+                        </TouchableOpacity>
+                    <Concierge />
                 </View>
                 <View style={styles.rowNew}>
-                <Text style={styles.careTeamName}>{profile?.therapist?.providerName}</Text>
-                <Text style={styles.careTeamName}>{profile?.prescriber?.providerName}</Text>
-                <Text style={styles.careTeamName}>Concierge</Text>
+                    <Text style={styles.careTeamName}>{profile?.therapist?.providerName}</Text>
+                    <Text style={[styles.careTeamName,{width:responsiveWidth(24)}]}>{profile?.prescriber?.providerName}</Text>
+                    <Text style={styles.careTeamName}>Concierge</Text>
                 </View>
                 <View style={styles.rowNew}>
-                <Text style={styles.careTeamRole}>{profile?.therapist?.designation?.join(', ')}</Text>
-                <Text style={styles.careTeamName}>{profile?.prescriber?.designation?.join(', ')}</Text>
-                <Text style={styles.ConcergeName}></Text>
+                    <Text style={[styles.careTeamRole, { width: responsiveWidth(23) }]}>{profile?.therapist?.designation?.join(', ')}</Text>
+                    <Text style={styles.careTeamRole}>{profile?.prescriber?.designation?.join(', ')}</Text>
+                    <Text style={styles.ConcergeName}></Text>
                 </View>
             </>
         )
@@ -277,7 +282,7 @@ const HomeScreen = () => {
             <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollContent}>
                 <Text style={styles.reportsTitle}>Recent Reports</Text>
                 {reportSection()}
-                <Text style={styles.careTeamTitle}>Care Team</Text>
+                <Text style={styles.careTeamTitle}>My Care Team</Text>
                 {flatlistView()}
                 <Text style={styles.actionsTitle}>Other Action</Text>
                 {actionConatiner()}

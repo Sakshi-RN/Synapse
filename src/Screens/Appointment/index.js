@@ -16,8 +16,7 @@ const Appointment = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [activeTab, setActiveTab] = useState('All');
-    const [availableDates, setAvailableDates] = useState([]); // State for available dates
-
+    const [availableDates, setAvailableDates] = useState([]); 
     useEffect(() => {
         const fetchAppointments = async () => {
             try {

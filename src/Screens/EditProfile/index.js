@@ -69,9 +69,9 @@ const EditProfile = () => {
                             placeholder={'MM/DD/YYYY'}
                             title={'Date Of Birthday'}
                             titleColor={styles.dobStyle}
-                            iconName="calendar"
-                            value={dateOfBirth}
-                            onPress={toggleCalendarModal}
+                            // iconName="calendar"
+                            // value={dateOfBirth}
+                            // onPress={toggleCalendarModal}
                         />
                         <InputContainer
                             placeholder={'Weight (in pounds)'}
