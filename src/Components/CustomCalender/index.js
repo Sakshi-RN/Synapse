@@ -4,21 +4,20 @@ import dayjs from 'dayjs';
 import Colors from '../../Themes/Colors';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 
-export default function HorizontalCalendar({ availableDates }) {
+export default function HorizontalCalendar({ availableDates, setFilteredAppointments, filteredAppointments }) {
     const [selectedDate, setSelectedDate] = useState('');
-    const [fetchAppointments, setfetchAppointments] = useState([]); 
+    const [fetchAppointments, setfetchAppointments] = useState([]);
     const [currentMonth, setCurrentMonth] = useState(dayjs().format('MMMM YYYY'));
-    const [appointmentsCount, setAppointmentsCount] = useState({}); 
-    const [filteredAppointments, setFilteredAppointments] = useState([]);
+    const [appointmentsCount, setAppointmentsCount] = useState({});
 
     const handleDateSelection = (date) => {
-const formattedDate = dayjs(date).format('MM/DD/YYYY');
-const filterData=fetchAppointments.filter(appointment => appointment.appointmentDate == formattedDate);
-
+        const formattedDate = dayjs(date).format('MM/DD/YYYY');
+        const filterData = fetchAppointments.filter(appointment => appointment.appointmentDate === formattedDate);
+        setFilteredAppointments(filterData);
+        setSelectedDate(date);
     };
 
-
-useEffect(() => {
+    useEffect(() => {
         const fetchAppointmentsData = async () => {
             try {
                 const response = await fetch(
@@ -36,12 +35,18 @@ useEffect(() => {
                 }
 
                 const data = await response.json();
-                // console.log(data,'@@responsee')
-                setfetchAppointments(data); 
-                setFilteredAppointments(data); 
+                setfetchAppointments(data);
 
                 const dates = data.map(appointment => appointment.appointmentDate);
-                availableDates(dates); 
+                availableDates(dates);
+
+                // Count appointments for each date
+                const countMap = {};
+                data.forEach(appointment => {
+                    const date = appointment.appointmentDate;
+                    countMap[date] = (countMap[date] || 0) + 1;
+                });
+                setAppointmentsCount(countMap);
 
             } catch (error) {
                 console.error(error.message);
@@ -50,7 +55,7 @@ useEffect(() => {
 
         fetchAppointmentsData();
     }, []);
-    // console.log('fetching',fetchAppointments)
+
     const today = dayjs();
 
     const generateDatesForNextMonths = () => {
@@ -70,8 +75,7 @@ useEffect(() => {
 
     const dates = generateDatesForNextMonths();
 
-  
-    const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const handleScroll = (event) => {
         const scrollPosition = event.nativeEvent.contentOffset.x;
         const itemWidth = responsiveWidth(17 + 2);
         const currentIndex = Math.round(scrollPosition / itemWidth);
@@ -82,6 +86,25 @@ useEffect(() => {
                 setCurrentMonth(newMonth);
             }
         }
+    };
+
+    const renderDots = (appointmentCount) => {
+        if (appointmentCount > 3) {
+   
+            return (
+                <Text style={styles.moreAppointmentsText}>
+                    ... +{appointmentCount - 3}
+                </Text>
+            );
+        }
+    
+        return (
+            <View style={styles.dotsContainer}>
+                {Array.from({ length: appointmentCount }).map((_, dotIndex) => (
+                    <View key={dotIndex} style={styles.dot} />
+                ))}
+            </View>
+        );
     };
 
     return (
@@ -111,22 +134,19 @@ useEffect(() => {
                                 isAvailable && !isSelected && styles.availableDateContainer,
                                 isToday && styles.todayDateContainer
                             ]}
-                            onPress={() => handleDateSelection(date)} 
+                            onPress={() => handleDateSelection(date)}
                         >
                             <Text style={[
-                                styles.dateText, 
-                                isSelected && styles.selectedDateText, 
+                                styles.dateText,
+                                isSelected && styles.selectedDateText,
                                 isToday && !isSelected && styles.todayDateText
                             ]}>{day}</Text>
                             <Text style={[
-                                styles.dayText, 
-                                isSelected && styles.selectedDayText, 
+                                styles.dayText,
+                                isSelected && styles.selectedDayText,
                                 isToday && !isSelected && styles.todayDayText
                             ]}>{dayOfWeek}</Text>
-                            <View style={styles.dotsContainer}>
-                                <View style={styles.dot} />
-                                <View style={styles.dot} />
-                            </View>
+     {renderDots(appointmentCount)}
                         </TouchableOpacity>
                     );
                 })}
@@ -161,12 +181,12 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.lightgrey,
     },
     selectedDateContainer: {
-        backgroundColor: Colors.blue, 
+        backgroundColor: Colors.blue,
         borderColor: Colors.white,
         borderWidth: 1,
     },
     availableDateContainer: {
-        backgroundColor: Colors.blue, 
+        backgroundColor: Colors.blue,
     },
     todayDateContainer: {
         backgroundColor: Colors.blue,
@@ -196,7 +216,7 @@ const styles = StyleSheet.create({
     dotsContainer: {
         flexDirection: 'row',
         marginTop: responsiveHeight(1),
-        alignItems: 'center'
+        alignItems: 'center',
     },
     dot: {
         width: 4,
@@ -204,5 +224,10 @@ const styles = StyleSheet.create({
         borderRadius: 2,
         backgroundColor: Colors.grey,
         marginHorizontal: 2,
+    },
+    moreAppointmentsText: {
+        color: Colors.grey,
+        marginTop: responsiveHeight(1),
+        fontSize: responsiveFontSize(1.5),
     },
 });

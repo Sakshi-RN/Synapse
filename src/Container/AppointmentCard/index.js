@@ -13,38 +13,39 @@ const AppointmentCard = ({ appointment }) => {
     const formattedStartTime = moment(appointment.appointmentStartTime, 'HH:mm:ss').format('h:mm A');
     const formattedEndTime = moment(appointment.appointmentEndTime, 'HH:mm:ss').format('h:mm A');
     const formattedTime = `${formattedStartTime} - ${formattedEndTime}`;
+    console.log(appointment,'@@@dataa')
     return (
 
-                <View style={styles.detailsContainer}>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Image source={LCSWImage} style={styles.careTeamImage} />
-                        <View style={styles.rowStyle}>
-                            <Text style={styles.name}>{appointment?.providerName}</Text>
-                            <Text style={styles.type}>{appointment?.appointmentType}</Text>
-                            <Text style={styles.type}>{formattedTime}</Text>
-                            <TouchableOpacity
-                                style={
-                                    appointment.appointmentStatus === 'scheduled' ? styles.pendingButton :
-                                        appointment.appointmentStatus === 'upcoming' ? styles.upcomingButton :
-                                            appointment.appointmentStatus === 'completed' ? styles.completedButton :
-                                                appointment.appointmentStatus === 'cancelled' ? styles.cancelledButton :
-                                                    styles.defaultButton
-                                }
-                            >
-                                <Text
-                                    style={
-                                        appointment.appointmentStatus === 'scheduled' ? styles.pendingButtonText :
-                                            appointment.appointmentStatus === 'upcoming' ? styles.upcomingButtonText :
-                                                appointment.appointmentStatus === 'completed' ? styles.completedButtonText :
-                                                    appointment.appointmentStatus === 'cancelled' ? styles.cancelledButtonText :
-                                                        styles.buttonText
-                                    }
-                                >{appointment?.appointmentStatus}</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-  <>
-                    {appointment.appointmentStatus === 'completed' || appointment.appointmentStatus === 'upcoming' ?
+        <View style={styles.detailsContainer}>
+            <View style={{ flexDirection: 'row' }}>
+                <Image source={LCSWImage} style={styles.careTeamImage} />
+                <View style={styles.rowStyle}>
+                    <Text style={styles.name}>{appointment?.providerName}</Text>
+                    <Text style={styles.type}>{appointment?.appointmentType}</Text>
+                    <Text style={styles.type}>{formattedTime}</Text>
+                    <TouchableOpacity
+                        style={
+                            appointment.appointmentStatus === 'scheduled' ? styles.pendingButton :
+                                appointment.appointmentStatus === 'upcoming' ? styles.upcomingButton :
+                                    appointment.appointmentStatus === 'completed' ? styles.completedButton :
+                                        appointment.appointmentStatus === 'cancelled' ? styles.cancelledButton :
+                                            styles.defaultButton
+                        }
+                    >
+                        <Text
+                            style={
+                                appointment.appointmentStatus === 'scheduled' ? styles.pendingButtonText :
+                                    appointment.appointmentStatus === 'upcoming' ? styles.upcomingButtonText :
+                                        appointment.appointmentStatus === 'completed' ? styles.completedButtonText :
+                                            appointment.appointmentStatus === 'cancelled' ? styles.cancelledButtonText :
+                                                styles.buttonText
+                            }
+                        >{appointment?.appointmentStatus}</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+            <>
+                {appointment.appointmentStatus === 'completed' || appointment.appointmentStatus === 'upcoming' ?
                     <TouchableOpacity
                         style={
                             appointment.appointmentStatus === 'completed' ? styles.completedJoinButton :
@@ -58,10 +59,10 @@ const AppointmentCard = ({ appointment }) => {
                             }
                         >{appointment.appointmentStatus === 'completed' ? 'View Details' : appointment.appointmentStatus === 'upcoming' ? 'Join Session' : null}</Text>
                     </TouchableOpacity>
-                           : ''
-                        }
-    </> 
-                    {/* <>
+                    : ''
+                }
+            </>
+            {/* <>
                     {appointment.appointmentStatus === 'scheduled' ?
                         <View style={styles.cancelbtnRow}>
                             <TouchableOpacity style={styles.declineButton }>
@@ -74,7 +75,7 @@ const AppointmentCard = ({ appointment }) => {
                         : ''
                     }
                 </> */}
-                </View>
+        </View>
 
     );
 };

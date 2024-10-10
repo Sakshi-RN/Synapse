@@ -15,6 +15,8 @@ const Appointment = () => {
     const [error, setError] = useState(null);
     const [activeTab, setActiveTab] = useState('All');
     const [availableDates, setAvailableDates] = useState([]); 
+
+
     useEffect(() => {
         const fetchAppointments = async () => {
             try {
@@ -34,7 +36,7 @@ const Appointment = () => {
 
                 const data = await response.json();
                 setAppointments(data);
-                setFilteredAppointments(data);
+                // setFilteredAppointments(data);
 
                 const dates = data.map(appointment => appointment.appointmentDate);
                 setAvailableDates(dates);
@@ -70,7 +72,7 @@ const Appointment = () => {
     return (
         <View style={styles.container}>
             <CustomHeader title={'Appointments'} />
-            <CustomCalender availableDates={availableDates} /> 
+            <CustomCalender availableDates={availableDates} setFilteredAppointments={setFilteredAppointments} filteredAppointments={filteredAppointments} /> 
             <View style={styles.row}>
             <Text style={styles.appointmentsText}>{getAppointmentsText()}</Text>
             <TouchableOpacity>
