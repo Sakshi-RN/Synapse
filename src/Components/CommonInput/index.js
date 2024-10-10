@@ -8,7 +8,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const CommonInput = ({
     placeholder,
     title,
-    iconName }) => {
+    iconName,
+onPress,
+value}) => {
     return (
         <View >
             <Text style={styles.label}>{title}</Text>
@@ -16,8 +18,9 @@ const CommonInput = ({
                 <TextInput
                     placeholder={placeholder}
                     placeholderTextColor={Colors.OFFBLACK}
+                    value={value}
                 />
-                <TouchableOpacity>
+                <TouchableOpacity onPress={onPress}>
                     {iconName && (
                         <Icon
                             name={iconName}

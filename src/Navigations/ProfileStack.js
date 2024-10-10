@@ -14,7 +14,7 @@ const ProfileStackNav = createStackNavigator();
 export const ProfileStack = (props) => {
     return (
         <ProfileStackNav.Navigator
-            initialRouteName="ProfileSettings"
+            initialRouteName="EditPreferences"
             screenOptions={{
                 headerShown: false,
             }}

@@ -80,12 +80,12 @@ const CareTeam = () => {
 
   const renderItem = () => (
     <>
-      {notifications.map((notification) => (
-        <View key={notification.id} style={styles.careTeamnCard}>
-          <Image source={notification.icon} style={styles.icon} />
+
+        <View style={styles.careTeamnCard}>
+          <Image source= {{ uri: profile?.therapist?.profilePicture }} style={styles.icon} />
           <View style={styles.textContainer}>
-            <Text style={styles.title}>{notification.title}</Text>
-            <Text style={styles.description}>{notification.description}</Text>
+            <Text style={styles.title}>{profile?.therapist?.providerName}</Text>
+            <Text style={styles.description}>{profile?.therapist?.designation?.join(', ')}</Text>
             <View style={styles.cancelbtnRow}>
               <CustomButton
                 onPress={handlePrescriberProfile}
@@ -104,7 +104,27 @@ const CareTeam = () => {
             <ThreeDots height={15} width={10} />
           </TouchableOpacity>
         </View>
-      ))}
+
+         <View style={styles.careTeamnCard}>
+          <Image source={{ uri: profile?.prescriber?.profilePicture }} style={styles.icon} />
+          <View style={styles.textContainer}>
+            <Text style={styles.title}>{profile?.prescriber?.providerName}</Text>
+            <Text style={styles.description}>{profile?.prescriber?.designation?.join(', ')}</Text>
+            <View style={styles.cancelbtnRow}>
+              <CustomButton
+                onPress={handlePrescriberProfile}
+                buttonStyle={styles.Button}
+                textStyle={styles.ButtonText}
+                title={'View Profile'}
+              />
+          
+       </View> 
+          </View>
+          <TouchableOpacity onPress={() => openModal(notification)}>
+            <ThreeDots height={15} width={10} />
+          </TouchableOpacity>
+        </View>
+ 
     </>
   );
   
@@ -181,9 +201,9 @@ const styles = StyleSheet.create({
 
   },
   icon: {
-    width: responsiveWidth(18),
-    height: responsiveWidth(18),
-    borderRadius: 8
+    width: responsiveWidth(20),
+    height: responsiveWidth(20),
+    borderRadius: 6
   },
   textContainer: {
     marginLeft: responsiveWidth(3),
