@@ -15,7 +15,8 @@ const InputContainer = ({
     dynamicStyle,
     placeholderTextColor = Colors.OFFBLACK ,
     onPress,
-    value
+    value,
+    editable
 }) => {
     return (
         <View style={styles.container}>
@@ -30,6 +31,7 @@ const InputContainer = ({
                     placeholderTextColor={placeholderTextColor}       
                     style={dynamicStyle}
                     value={value}
+                    editable={editable}
                 />
                 <TouchableOpacity onPress={onPress}>
                     {iconName && (

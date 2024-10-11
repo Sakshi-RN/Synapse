@@ -43,7 +43,7 @@ const ProfileSettings = () => {
                 <View style={styles.profileSection}>
                     <View style={styles.avatarBox}>
                         <Text style={styles.avatarText}>
-                            {`${profile?.firstName?.[0] ?? ''}${profile?.lastName[0]?.slice(-1) ?? ''}`}
+                            {`${profile?.firstName?.[0]?.toUpperCase() ?? ''}${profile?.lastName?.[0]?.toUpperCase() ?? ''}`}
                         </Text>
                     </View>
                     <View style={styles.profileInfo}>
