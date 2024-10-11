@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', 
     },
     modalContent: {
         width: responsiveWidth(90),
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     },
     closeButton: {
 
-        marginTop: 20,
+        marginTop:responsiveHeight(3),
     },
 
     Button: {

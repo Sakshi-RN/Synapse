@@ -13,7 +13,7 @@ const AppointmentCard = ({ appointment }) => {
     const formattedStartTime = moment(appointment.appointmentStartTime, 'HH:mm:ss').format('h:mm A');
     const formattedEndTime = moment(appointment.appointmentEndTime, 'HH:mm:ss').format('h:mm A');
     const formattedTime = `${formattedStartTime} - ${formattedEndTime}`;
-    console.log(appointment,'@@@dataa')
+
     return (
 
         <View style={styles.detailsContainer}>

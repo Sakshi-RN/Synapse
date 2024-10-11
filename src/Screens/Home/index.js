@@ -121,7 +121,9 @@ const HomeScreen = () => {
         navigation.navigate('Connect');
     }
 
-
+    const handlePrescriberProfile = () => {
+        navigation.navigate('PrescriberProfile');
+      }
     const renderHeader = () => {
         return (
             <ImageBackground source={images.headerBgImg} style={styles.headerContainer}>
@@ -253,17 +255,21 @@ const HomeScreen = () => {
         return (
             <>
                 <View style={styles.careTeamRow}>
-                    <TouchableOpacity>
+                    <TouchableOpacity  onPress={handlePrescriberProfile}>
                     <Image source={{ uri: profile?.therapist?.profilePicture }} style={styles.careTeamImage} />
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity  onPress={handlePrescriberProfile}>
                     <Image source={{ uri: profile?.prescriber?.profilePicture }} style={styles.careTeamImage} />
-                        </TouchableOpacity>
+                        </TouchableOpacity >
                     <Concierge />
                 </View>
                 <View style={styles.rowNew}>
+                <TouchableOpacity onPress={handlePrescriberProfile}>
                     <Text style={styles.careTeamName}>{profile?.therapist?.providerName}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handlePrescriberProfile}>
                     <Text style={[styles.careTeamName,{width:responsiveWidth(24)}]}>{profile?.prescriber?.providerName}</Text>
+                    </TouchableOpacity>
                     <Text style={styles.careTeamName}>Concierge</Text>
                 </View>
                 <View style={styles.rowNew}>

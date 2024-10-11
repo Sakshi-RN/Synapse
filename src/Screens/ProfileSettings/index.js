@@ -1,39 +1,40 @@
 import React, { useCallback } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity,Platform } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Platform } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
-import Icon from 'react-native-vector-icons/FontAwesome'; 
+import Icon from 'react-native-vector-icons/FontAwesome';
 import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
-import {  useFocusEffect } from '@react-navigation/native';
-import { fetchProfile } from '../../redux/Reducers/profileReducer'; 
+import { useFocusEffect } from '@react-navigation/native';
+import { fetchProfile } from '../../redux/Reducers/profileReducer';
 import { Advice, CommunicationPreferences, PhoneBook, Policy, Starred, TaraMind, TermsOfUse, Video } from '../../Assets/svg';
+import EditEmergencyContacts from '../EditEmergencyContacts';
 
 const ProfileSettings = () => {
-  const navigation = useNavigation();
-  const dispatch = useDispatch();
-  const { data, fetchLoading, fetchError } = useSelector(state => state.profile);
+    const navigation = useNavigation();
+    const dispatch = useDispatch();
+    const { data, fetchLoading, fetchError } = useSelector(state => state.profile);
 
-  useFocusEffect(
-      useCallback(() => {
-          dispatch(fetchProfile());
-      }, [dispatch])
-  );
+    useFocusEffect(
+        useCallback(() => {
+            dispatch(fetchProfile());
+        }, [dispatch])
+    );
 
 
 
-  const handlePreferences = () => {
-    navigation.navigate('Preferences');
-}
-const handleEmergencycontacts = () => {
-  navigation.navigate('Emergencycontacts');
-}
-const handleMyProfileScreen = () => {
-  navigation.navigate('MyProfileScreen');
-}
-const profile = data && data[0];
+    const handlePreferences = () => {
+        navigation.navigate('Preferences');
+    }
+    const handleEmergencycontacts = () => {
+        navigation.navigate('Emergencycontacts');
+    }
+    const handleMyProfileScreen = () => {
+        navigation.navigate('MyProfileScreen');
+    }
+    const profile = data && data[0];
 
     return (
         <View style={styles.container}>
@@ -42,7 +43,7 @@ const profile = data && data[0];
                 <View style={styles.profileSection}>
                     <View style={styles.avatarBox}>
                         <Text style={styles.avatarText}>
-                        {`${profile?.firstName?.[0] ?? ''}${profile?.lastName[0]?.slice(-1) ?? ''}`}
+                            {`${profile?.firstName?.[0] ?? ''}${profile?.lastName[0]?.slice(-1) ?? ''}`}
                         </Text>
                     </View>
                     <View style={styles.profileInfo}>
@@ -50,72 +51,75 @@ const profile = data && data[0];
                         <Text style={styles.profileName}>{profile?.phone}</Text>
                     </View>
                     <TouchableOpacity onPress={handleMyProfileScreen}>
-                    <Icon name="chevron-right" size={20} color={Colors.black} />
+                        <Icon name="chevron-right" size={20} color={Colors.black} />
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.sectionTitle}>Preferences</Text>
                 <View style={styles.section}>
-                   
-                    <TouchableOpacity style={styles.row} onPress={handlePreferences}>
-                   <CommunicationPreferences/>
-                     <Text style={styles.rowText}>Preferences</Text>
-                        <Icon name="chevron-right" size={20} color={Colors.black} />
-                    </TouchableOpacity>
-                    <View style={styles.line}/>
-                    <TouchableOpacity style={styles.row} onPress={handleEmergencycontacts}>
-                       <PhoneBook/>
+                    <View style={styles.row} >
+                        <CommunicationPreferences />
+                        <Text style={styles.rowText}>Preferences</Text>
+                        <TouchableOpacity onPress={handlePreferences}>
+                            <Icon name="chevron-right" size={20} color={Colors.black} />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.line} />
+                    <View style={styles.row} >
+                        <PhoneBook />
                         <Text style={styles.rowText}>Emergency Contacts</Text>
-                        <Icon name="chevron-right" size={20} color={Colors.black} />
-                    </TouchableOpacity>
+                        <TouchableOpacity onPress={handleEmergencycontacts}>
+                            <Icon name="chevron-right" size={20} color={Colors.black} />
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
                 <Text style={styles.sectionTitle}>Therapy Tools</Text>
                 <View style={styles.section}>
-                    <TouchableOpacity style={styles.row} onPress={() => {}}>
-                     <Starred/>
+                    <TouchableOpacity style={styles.row} onPress={() => { }}>
+                        <Starred />
                         <Text style={styles.rowText}>Starred Messages</Text>
                     </TouchableOpacity>
-                    <View style={styles.line}/>
-                    <TouchableOpacity style={styles.row} onPress={() => {}}>
-                        <Video/>
+                    <View style={styles.line} />
+                    <View style={styles.row}>
+                        <Video />
                         <Text style={styles.rowText}>Video Session Test</Text>
                         <Icon name="external-link" size={20} color={Colors.black} />
-                    </TouchableOpacity>
-                    <View style={styles.line}/>
-                    <TouchableOpacity style={styles.row} onPress={() => {}}>
-                        <Advice/>
+                    </View>
+                    <View style={styles.line} />
+                    <TouchableOpacity style={styles.row} onPress={() => { }}>
+                        <Advice />
                         <Text style={styles.rowText}>Advice</Text>
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.sectionTitle}>Support</Text>
-                <View style={[styles.section,{marginBottom:responsiveHeight(5)}]}>
-                    <TouchableOpacity style={styles.row} onPress={() => {}}>
-                        <Policy/>
+                <View style={[styles.section, { marginBottom: responsiveHeight(5) }]}>
+                    <TouchableOpacity style={styles.row} onPress={() => { }}>
+                        <Policy />
                         <Text style={styles.rowText}>Privacy Policy</Text>
                         <Icon name="external-link" size={20} color={Colors.black} />
                     </TouchableOpacity>
-                    <View style={styles.line}/>
-                    <TouchableOpacity style={styles.row} onPress={() => {}}>
-                      <TermsOfUse/>
+                    <View style={styles.line} />
+                    <TouchableOpacity style={styles.row} onPress={() => { }}>
+                        <TermsOfUse />
                         <Text style={styles.rowText}>Terms Of Use</Text>
                         <Icon name="external-link" size={20} color={Colors.black} />
                     </TouchableOpacity>
-                    <View style={styles.line}/>
-                    <TouchableOpacity style={styles.row} onPress={() => {}}>
+                    <View style={styles.line} />
+                    <TouchableOpacity style={styles.row} onPress={() => { }}>
                         <Icon name="question-circle" size={20} color={Colors.black} />
                         <Text style={styles.rowText}>FAQ</Text>
                         <Icon name="external-link" size={20} color={Colors.black} />
                     </TouchableOpacity>
-                    <View style={styles.line}/>
-                    <TouchableOpacity style={styles.row} onPress={() => {}}>
+                    <View style={styles.line} />
+                    <TouchableOpacity style={styles.row} onPress={() => { }}>
                         <Icon name="sign-out" size={20} color={Colors.red} />
                         <Text style={[styles.rowText, { color: Colors.red }]}>Logout</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
-            <View style={{alignItems:'center',marginTop:responsiveHeight(2)}}>
-            <TaraMind/>
-              <Text style={styles.versionText}>© 2024 TARA Mind. v0.19.0.</Text>
+            <View style={{ alignItems: 'center', marginTop: responsiveHeight(2) }}>
+                <TaraMind />
+                <Text style={styles.versionText}>© 2024 TARA Mind. v0.19.0.</Text>
             </View>
         </View>
     );
@@ -127,25 +131,25 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Colors.white,
-        paddingBottom:responsiveHeight(13),
+        paddingBottom: responsiveHeight(13),
     },
     content: {
         flex: 1,
         paddingHorizontal: responsiveWidth(5),
-        paddingTop:responsiveHeight(4)
+        paddingTop: responsiveHeight(4)
     },
     profileSection: {
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: responsiveHeight(2),
         paddingHorizontal: responsiveWidth(5),
-        backgroundColor:Colors.light_skyblue,
-        paddingVertical:responsiveHeight(1.5),
-        borderRadius:10,
-        shadowColor:Platform.OS === 'ios' ? Colors.OFFWHITE:Colors.black, 
-        shadowOffset: { width: 3, height: 5 }, 
-        shadowOpacity:1, 
-        shadowRadius:2, 
+        backgroundColor: Colors.light_skyblue,
+        paddingVertical: responsiveHeight(1.5),
+        borderRadius: 10,
+        shadowColor: Platform.OS === 'ios' ? Colors.OFFWHITE : Colors.black,
+        shadowOffset: { width: 3, height: 5 },
+        shadowOpacity: 1,
+        shadowRadius: 2,
         elevation: 5,
     },
     avatarBox: {
@@ -162,8 +166,8 @@ const styles = StyleSheet.create({
         fontWeight: '500',
     },
     profileInfo: {
-      width:responsiveWidth(52),
-     marginHorizontal: responsiveWidth(4),
+        width: responsiveWidth(52),
+        marginHorizontal: responsiveWidth(4),
     },
     profileName: {
         fontSize: responsiveFontSize(2),
@@ -175,18 +179,18 @@ const styles = StyleSheet.create({
         color: Colors.blue,
     },
     section: {
-       
+
         paddingHorizontal: responsiveWidth(5),
-        elevation: 5,  
-        shadowColor:Platform.OS === 'ios' ? Colors.OFFWHITE:Colors.black, 
-        shadowOffset: { width: 3, height: 3 }, 
-        shadowOpacity:1, 
-        shadowRadius:2, 
+        elevation: 5,
+        shadowColor: Platform.OS === 'ios' ? Colors.OFFWHITE : Colors.black,
+        shadowOffset: { width: 3, height: 3 },
+        shadowOpacity: 1,
+        shadowRadius: 2,
         borderColor: Colors.light_skyblue,
         borderWidth: 1,
         borderRadius: 10,
         backgroundColor: Colors.white,
-        marginBottom:responsiveHeight (2)
+        marginBottom: responsiveHeight(2)
     },
     sectionTitle: {
         fontSize: responsiveFontSize(2),
@@ -199,7 +203,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingVertical: responsiveHeight(2),
-      
+
     },
     rowText: {
         fontSize: responsiveFontSize(1.8),
@@ -207,13 +211,13 @@ const styles = StyleSheet.create({
         flex: 1,
         marginLeft: responsiveWidth(3),
     },
-    versionText:{
-      color:Colors.blue,
-      marginTop:responsiveHeight(1)
+    versionText: {
+        color: Colors.blue,
+        marginTop: responsiveHeight(1)
     },
-    line:{
-      backgroundColor:Colors.light_skyblue,
-    height:1,
+    line: {
+        backgroundColor: Colors.light_skyblue,
+        height: 1,
 
-      }
+    }
 });
