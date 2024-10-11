@@ -118,13 +118,21 @@ const styles = StyleSheet.create({
     },
     modalText: {
         fontSize: responsiveFontSize(2),
-        fontWeight: '600',
+        fontWeight: '700',
         marginTop: responsiveHeight(3),
-        textAlign: 'center'
+        textAlign: 'center',
+        color:Colors.blue
     },
     closeButton: {
         marginTop: responsiveHeight(3),
 
+    },
+    itemText: {
+        fontSize: responsiveFontSize(2),
+        fontWeight: '600',
+        marginTop: responsiveHeight(3),
+        textAlign: 'center',
+        color:Colors.black
     },
 });
 

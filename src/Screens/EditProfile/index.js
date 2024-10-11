@@ -2,7 +2,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import {
     View,
-    StyleSheet,
     Text,
     ScrollView,
     TouchableWithoutFeedback,
@@ -10,26 +9,23 @@ import {
     KeyboardAvoidingView,
     Platform,
     Modal,
-    TouchableOpacity,
 } from 'react-native';
-import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
-import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
 import CustomButton from '../../Components/CustomButton';
 import InputContainer from '../../Components/InputContainer';
-import { fetchProfile, updateProfile } from '../../redux/Reducers/profileReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import styles from './styles';
+import { updateProfile } from '../../redux/Reducers/profileReducer';
+import HeightList from '../../Components/HeightList';
+import StateList from '../../Components/StateList';
+import WeightList from '../../Components/WeightList';
+import GenderList from '../../Components/GenderList';
 
 const EditProfile = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
 
-    const [genderOptions, setGenderOptions] = useState([]);
-    const [weightOptions, setWeightOptions] = useState([]);
-    const [heightOptions, setHeightOptions] = useState([]);
-    const [stateOptions, setStateOptions] = useState([]);
     const [selectedGender, setSelectedGender] = useState('');
     const [selectedWeight, setSelectedWeight] = useState('');
     const [selectedHeight, setSelectedHeight] = useState('');
@@ -42,19 +38,15 @@ const EditProfile = () => {
     const [address1, setAddress1] = useState('');
     const [address2, setAddress2] = useState('');
     const [city, setCity] = useState('');
-    const [state, setState] = useState('');
     const [zip, setZip] = useState('');
     const [clientCurrentWeight, setClientCurrentWeight] = useState('');
     const [phoneError, setPhoneError] = useState('');
 
-    const { data, fetchLoading, fetchError } = useSelector(state => state.profile);
-
+    const { data } = useSelector(state => state.profile);
     const profile = data && data[0];
-
 
     useFocusEffect(
         useCallback(() => {
-            dispatch(fetchProfile());
         }, [dispatch])
     );
 
@@ -68,72 +60,14 @@ const EditProfile = () => {
             setAddress1(profile.address1 || '');
             setAddress2(profile.address2 || '');
             setCity(profile.city || '');
-            setState(profile.state || '');
             setZip(profile.zip || '');
             setClientCurrentWeight(profile.clientCurrentWeight || '');
-            setSelectedGender(capitalizeFirstLetter(profile.gender) || '');
+            setSelectedGender(capitalizeFirstLetter(profile?.gender) || '');
             setSelectedWeight(profile.clientCurrentWeight || '');
             setSelectedHeight(profile.clientCurrentHeight || '');
             setSelectedState(profile.state || '');
         }
     }, [data]);
-
-
-
-    const fetchOptions = async (url, setOptions) => {
-        try {
-            const response = await fetch(url, {
-                headers: {
-                    'X-Api-Key': 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b',
-                },
-            });
-            if (!response.ok) {
-                throw new Error(`Failed to fetch options from ${url}`);
-            }
-            const data = await response.json();
-            console.log(`${url} data:`, data);
-            if (Array.isArray(data)) {
-                setOptions(data);
-            } else {
-                console.error(`Fetched data from ${url} is not an array:`, data);
-                setOptions([]);
-            }
-        } catch (error) {
-            console.error(`Error fetching options from ${url}:`, error.message);
-        }
-    };
-
-
-
-    const fetchStateOptions = async () => {
-        try {
-            const response = await fetch('https://eb1.taramind.com/states', {
-                headers: {
-                    'X-Api-Key': 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b',
-                },
-            });
-            if (!response.ok) {
-                throw new Error('Failed to fetch states');
-            }
-            const data = await response.json();
-            console.log('States data:', data);
-            if (Array.isArray(data)) {
-                setStateOptions(data);
-            } else {
-                console.error('Fetched data is not an array:', data);
-                setStateOptions([]);
-            }
-        } catch (error) {
-            console.error('Error fetching states:', error.message);
-        }
-    };
-
-    useEffect(() => {
-        fetchOptions('https://eb1.taramind.com/getLookupMaster/mini-intake/gender', setGenderOptions);
-        fetchOptions('https://eb1.taramind.com/getLookupMaster/intake/weight', setWeightOptions);
-        fetchOptions('https://eb1.taramind.com/getLookupMaster/intake/height', setHeightOptions);
-        fetchStateOptions();
-    }, []);
 
     const toggleModal = (type) => {
         setModalVisible((prev) => ({ ...prev, [type]: !prev[type] }));
@@ -180,10 +114,9 @@ const EditProfile = () => {
             address1,
             address2,
             city,
-            state,
             zip,
             clientCurrentWeight: selectedWeight || clientCurrentWeight,
-            gender: selectedGender || capitalizeFirstLetter(data[0]?.gender),
+            gender: selectedGender,
         };
 
         dispatch(updateProfile(updatedProfile))
@@ -257,9 +190,8 @@ const EditProfile = () => {
                             title={'Weight (in pounds)'}
                             titleColor={styles.weightStyle}
                             iconName={"chevron-down"}
+                            value={selectedWeight}
                             onPress={() => toggleModal('weight')}
-                            value={clientCurrentWeight}
-                            onChangeText={setClientCurrentWeight}
                         />
                         <InputContainer
                             placeholder={selectedHeight || 'Height (in feet)'}
@@ -292,88 +224,23 @@ const EditProfile = () => {
                         />
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <InputContainer
-                                placeholder={selectedState || profile.state || 'State'}
+                                placeholder={selectedState || 'State'}
                                 title={'State'}
                                 titleColor={styles.stateStyle}
                                 inputStyle={styles.stateWidth}
                                 iconName={"chevron-down"}
+                                value={selectedState}
                                 onPress={() => toggleModal('state')}
-                                value={state}
                             />
                             <InputContainer
-                                placeholder={profile.zip || 'Zip Code'}
+                                placeholder={zip || 'Zip Code'}
                                 title={'Zip Code'}
                                 titleColor={styles.zipCodeStyle}
                                 inputStyle={styles.widthStyle}
                                 value={zip}
                             />
                         </View>
-
                     </ScrollView>
-                    <>
-                        <Modal transparent={true} visible={modalVisible.gender}>
-                            <View style={styles.modalContainer}>
-                                <View style={styles.modalContent}>
-                                    {genderOptions.map((gender) => (
-                                        <TouchableOpacity key={gender} onPress={() => handleSelect(gender, 'gender')}>
-                                            <Text style={styles.modalText}>{gender}</Text>
-                                        </TouchableOpacity>
-                                    ))}
-                                    <CustomButton title="Close" onPress={() => toggleModal('gender')} buttonStyle={styles.closeButton} />
-                                </View>
-                            </View>
-                        </Modal>
-
-                        <Modal transparent={true} visible={modalVisible.weight}>
-                            <View style={styles.modalContainer}>
-                                <View style={styles.modalContent}>
-                                    <ScrollView showsVerticalScrollIndicator={false}>
-                                        {weightOptions.map((weight) => (
-                                            <TouchableOpacity key={weight} onPress={() => handleSelect(weight, 'weight')}>
-                                                <Text style={styles.modalText}>{weight}</Text>
-                                            </TouchableOpacity>
-                                        ))}
-                                    </ScrollView>
-                                    <CustomButton title="Close" onPress={() => toggleModal('weight')} buttonStyle={styles.closeButton} />
-                                </View>
-                            </View>
-                        </Modal>
-
-                        <Modal transparent={true} visible={modalVisible.height}>
-                            <View style={styles.modalContainer}>
-                                <View style={styles.modalContent}>
-                                    <ScrollView showsVerticalScrollIndicator={false}>
-                                        {heightOptions.map((height) => (
-                                            <TouchableOpacity key={height} onPress={() => handleSelect(height, 'height')}>
-                                                <Text style={styles.modalText}>{height}</Text>
-                                            </TouchableOpacity>
-                                        ))}
-                                    </ScrollView>
-                                    <CustomButton title="Close" onPress={() => toggleModal('height')} buttonStyle={styles.closeButton} />
-                                </View>
-                            </View>
-                        </Modal>
-                        <Modal
-                            visible={modalVisible.state}
-                            transparent={true}
-
-                        >
-                            <View style={styles.modalContainer}>
-                                <View style={styles.modalContent}>
-                                    <ScrollView>
-
-                                        {stateOptions.map((state) => (
-                                            <TouchableOpacity key={state} onPress={() => handleSelect(state, 'state')}>
-                                                <Text style={styles.optionText}>{state}</Text>
-                                            </TouchableOpacity>
-                                        ))}
-                                    </ScrollView>
-                                    <CustomButton title="Close" onPress={toggleModal('state')} buttonStyle={styles.closeButton} />
-
-                                </View>
-                            </View>
-                        </Modal>
-                    </>
                     <View style={styles.row}>
                         <CustomButton
                             buttonStyle={styles.Button}
@@ -386,15 +253,76 @@ const EditProfile = () => {
                             title={'Save'}
                             onPress={handleSave} />
                     </View>
-                </View>
 
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={modalVisible.gender}
+                        onRequestClose={() => toggleModal('gender')}
+                    >
+                        <View style={styles.modalContainer}>
+                            <View style={styles.modalContent}>
+                                <Text style={styles.modalText}>Select Gender</Text>
+                                <ScrollView showsVerticalScrollIndicator={false}>
+                                <GenderList onSelect={(value) => handleSelect(value, 'gender')} />
+                                </ScrollView>
+                                <CustomButton title="Close" onPress={() => toggleModal('gender')} buttonStyle={styles.closeButton}/>
+                            </View>
+                        </View>
+                    </Modal>
+
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={modalVisible.weight}
+                        onRequestClose={() => toggleModal('weight')}
+                    >
+                        <View style={styles.modalContainer}>
+                            <View style={styles.modalContent}>
+                                <Text style={styles.modalText}>Select Weight</Text>
+                                <ScrollView showsVerticalScrollIndicator={false}>
+                                <WeightList onSelect={(value) => handleSelect(value, 'weight')} />
+                                </ScrollView>
+                                <CustomButton title="Close" onPress={() => toggleModal('weight')} buttonStyle={styles.closeButton} />
+                            </View>
+                        </View>
+                    </Modal>
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={modalVisible.height}
+                        onRequestClose={() => toggleModal('height')}
+                    >
+                        <View style={styles.modalContainer}>
+                            <View style={styles.modalContent}>
+                                <Text style={styles.modalText}>Select Height</Text>
+                                <ScrollView showsVerticalScrollIndicator={false}>
+                                <HeightList onSelect={(value) => handleSelect(value, 'height')} />
+                                </ScrollView>
+                                <CustomButton title="Close" onPress={() => toggleModal('height')} buttonStyle={styles.closeButton}/>
+                            </View>
+                        </View>
+                    </Modal>
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={modalVisible.state}
+                        onRequestClose={() => toggleModal('state')}
+                    >
+                        <View style={styles.modalContainer}>
+                            <View style={styles.modalContent}>
+                                <Text style={styles.modalText}>Select State</Text>
+                                <ScrollView showsVerticalScrollIndicator={false}>
+                                <StateList onSelect={(value) => handleSelect(value, 'state')} />
+                                </ScrollView>
+                                <CustomButton title="Close" onPress={() => toggleModal('state')} buttonStyle={styles.closeButton}/>
+                            </View>
+                        </View>
+                    </Modal>
+                </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
     );
 };
 
-
-
 export default EditProfile;
-
-

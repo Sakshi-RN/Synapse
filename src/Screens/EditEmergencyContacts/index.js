@@ -25,7 +25,6 @@ const EditEmergencyContacts = () => {
         try {
             const response = await fetch('https://eb1.taramind.com/getLookupMaster/intake/relationship', { headers });
             const data = await response.json();
-            // Split the description by commas to get the individual relationship options
             setRelationships(data[0].lookupMasterValueDesc.split(', '));
         } catch (error) {
             Alert.alert('Error', 'Failed to fetch data. Please try again.');
@@ -81,8 +80,8 @@ const EditEmergencyContacts = () => {
                     placeholder={'Select Relation'}
                     title={'What is your Emergency contact relation to you?'}
                     iconName={"chevron-down"}
-                    onPress={openModal} // Open modal on press
-                    value={selectedRelation} // Display selected relation
+                    onPress={openModal} 
+                    value={selectedRelation}
                 />
                 <View style={styles.row}>
                     <CustomButton
@@ -97,8 +96,6 @@ const EditEmergencyContacts = () => {
                         onPress={handleEmergencyContacts} />
                 </View>
             </View>
-
-            {/* Modal for selecting relationships */}
             <Modal
                 animationType="slide"
                 transparent={true}
