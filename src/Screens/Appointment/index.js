@@ -14,7 +14,7 @@ const Appointment = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [activeTab, setActiveTab] = useState('All');
-    const [availableDates, setAvailableDates] = useState([]); 
+    const [availableDates, setAvailableDates] = useState([]);
 
 
     useEffect(() => {
@@ -36,7 +36,6 @@ const Appointment = () => {
 
                 const data = await response.json();
                 setAppointments(data);
-                // setFilteredAppointments(data);
 
                 const dates = data.map(appointment => appointment.appointmentDate);
                 setAvailableDates(dates);
@@ -53,10 +52,10 @@ const Appointment = () => {
 
 
     const getAppointmentsText = () => {
-        return `${filteredAppointments.length} Appointments`;
+        return `${filteredAppointments.length}Appointments`;
     };
 
-    const renderAppointmentCard = ({ item }) => <AppointmentCard appointment={item} />;
+    const renderAppointmentCard = ({ item }) =><AppointmentCard appointment={item}/>;
 
     if (loading) {
         return (
@@ -72,12 +71,12 @@ const Appointment = () => {
     return (
         <View style={styles.container}>
             <CustomHeader title={'Appointments'} />
-            <CustomCalender availableDates={availableDates} setFilteredAppointments={setFilteredAppointments} filteredAppointments={filteredAppointments} /> 
+            <CustomCalender availableDates={availableDates} setFilteredAppointments={setFilteredAppointments} filteredAppointments={filteredAppointments} />
             <View style={styles.row}>
-            <Text style={styles.appointmentsText}>{getAppointmentsText()}</Text>
-            <TouchableOpacity>
-            <Text style={styles.viewAllText}>View All</Text>
-            </TouchableOpacity>
+                <Text style={styles.appointmentsText}>{getAppointmentsText()}</Text>
+                <TouchableOpacity>
+                    <Text style={styles.viewAllText}>View All</Text>
+                </TouchableOpacity>
             </View>
             <FlatList
                 data={filteredAppointments}
@@ -97,8 +96,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingBottom: responsiveHeight(12),
-        backgroundColor:Colors.white
+        backgroundColor: Colors.white
     },
+    
     centeredContainer: {
         flex: 1,
         justifyContent: 'center',
@@ -120,20 +120,18 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: Colors.OFFBLACK,
     },
-    row:{
-        flexDirection:'row',
-        justifyContent:'space-between',
-        marginHorizontal:responsiveWidth(5),
-        alignItems:'center',
-        marginBottom:responsiveHeight(1)
-
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginHorizontal: responsiveWidth(5),
+        alignItems: 'center',
+        marginBottom: responsiveHeight(1)
 
     },
-    viewAllText:{
-        fontSize: responsiveFontSize(1.4),
-        color:'#5594C9',
-        fontWeight: '600',
-
+    viewAllText: {
+        fontSize: responsiveFontSize(1.6),
+        color: '#5594C9',
+        fontWeight: '700',
     }
 });
 

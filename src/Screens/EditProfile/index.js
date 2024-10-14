@@ -1,4 +1,3 @@
-
 import React, { useCallback, useState, useEffect } from 'react';
 import {
     View,
@@ -16,15 +15,17 @@ import InputContainer from '../../Components/InputContainer';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import styles from './styles';
-import { updateProfile } from '../../redux/Reducers/profileReducer';
+import { updateProfile, fetchProfile } from '../../redux/Reducers/profileReducer';
 import HeightList from '../../Components/HeightList';
 import StateList from '../../Components/StateList';
 import WeightList from '../../Components/WeightList';
 import GenderList from '../../Components/GenderList';
+import Loader from '../../Components/Loader';
 
 const EditProfile = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
+
 
     const [selectedGender, setSelectedGender] = useState('');
     const [selectedWeight, setSelectedWeight] = useState('');
@@ -41,18 +42,20 @@ const EditProfile = () => {
     const [zip, setZip] = useState('');
     const [clientCurrentWeight, setClientCurrentWeight] = useState('');
     const [phoneError, setPhoneError] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const { data } = useSelector(state => state.profile);
+    const { data, error } = useSelector(state => state.profile);
     const profile = data && data[0];
+
 
     useFocusEffect(
         useCallback(() => {
+            dispatch(fetchProfile());
         }, [dispatch])
     );
 
     useEffect(() => {
-        if (data && data.length > 0) {
-            const profile = data[0];
+        if (profile) {
             setFirstName(profile.firstName || '');
             setLastName(profile.lastName || '');
             setEmail(profile.email || '');
@@ -62,12 +65,12 @@ const EditProfile = () => {
             setCity(profile.city || '');
             setZip(profile.zip || '');
             setClientCurrentWeight(profile.clientCurrentWeight || '');
-            setSelectedGender(capitalizeFirstLetter(profile?.gender) || '');
+            setSelectedGender(capitalizeFirstLetter(profile.gender) || '');
             setSelectedWeight(profile.clientCurrentWeight || '');
             setSelectedHeight(profile.clientCurrentHeight || '');
             setSelectedState(profile.state || '');
         }
-    }, [data]);
+    }, []);
 
     const toggleModal = (type) => {
         setModalVisible((prev) => ({ ...prev, [type]: !prev[type] }));
@@ -114,14 +117,23 @@ const EditProfile = () => {
             address1,
             address2,
             city,
+            state: selectedState,
             zip,
             clientCurrentWeight: selectedWeight || clientCurrentWeight,
             gender: selectedGender,
+            height: selectedHeight,
         };
-
+        setLoading(true);
         dispatch(updateProfile(updatedProfile))
-            .then(() => navigation.navigate('MyProfileScreen'))
-            .catch((error) => console.error('Failed to update profile:', error));
+            .then(() => {
+                setLoading(false); // Reset loading to false after success
+                navigation.navigate('MyProfileScreen');
+            })
+            .catch((error) => {
+                setLoading(false); // Reset loading to false on error
+                console.error('Failed to update profile:', error);
+            });
+
     };
 
     function capitalizeFirstLetter(value) {
@@ -139,120 +151,179 @@ const EditProfile = () => {
                     <CustomHeader title={'Edit Profile'} />
                     <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
                         <View style={styles.profileContainer}>
-                            <Text style={styles.profileName}>{`${firstName[0]?.toUpperCase() ?? ''}${lastName[0]?.toUpperCase() ?? ''}`}</Text>
+                            <Text style={styles.profileName}>
+                                {`${firstName.charAt(0)?.toUpperCase() || ''}${lastName.charAt(0)?.toUpperCase() || ''}`}
+                            </Text>
                         </View>
+
+                        {loading && (
+                            <View style={styles.centeredContainer}>
+                                <Loader />
+                            </View>
+                        )}
+
                         <InputContainer
-                            placeholder={firstName || 'First Name'}
+                            placeholder="First Name"
                             title={'First Name'}
                             titleColor={styles.nametitleStyle}
                             value={firstName}
                             onChangeText={setFirstName}
+                            keyboardType="default"
+                            autoCapitalize="words"
                         />
+
+
                         <InputContainer
-                            placeholder={lastName || 'Last Name'}
+                            placeholder="Last Name"
+                            title={'Last Name'}
                             titleColor={styles.nametitleStyle}
                             value={lastName}
                             onChangeText={setLastName}
-                            title={'Last Name'}
+                            keyboardType="default"
+                            autoCapitalize="words"
                         />
+
+
                         <InputContainer
-                            placeholder={email || 'Email Address'}
+                            placeholder="Email Address"
                             title={'Email Address'}
                             titleColor={styles.emailTitle}
                             value={email}
                             onChangeText={setEmail}
+                            keyboardType="email-address"
+                            autoCapitalize="none"
                         />
+
+
                         <InputContainer
-                            placeholder={phone || 'Phone Number'}
+                            placeholder="(XXX) XXX-XXXX"
                             title={'Phone Number'}
                             titleColor={styles.phoneTitle}
                             value={phone}
                             onChangeText={setPhone}
+                            keyboardType="phone-pad"
                         />
                         {phoneError ? (
                             <Text style={styles.errorText}>{phoneError}</Text>
                         ) : null}
+
+
                         <InputContainer
-                            placeholder={selectedGender || 'Gender'}
+                            placeholder="Select Gender"
                             title={'Gender'}
                             titleColor={styles.genderStyle}
                             iconName={"chevron-down"}
+                            value={selectedGender}
                             onPress={() => toggleModal('gender')}
+                            editable={false}
                         />
+
+
                         <InputContainer
                             placeholder={profile?.dob || 'MM/DD/YYYY'}
-                            title={'Date Of Birthday'}
+                            title={'Date Of Birth'}
                             titleColor={styles.dobStyle}
                             editable={false}
                         />
+
+
                         <InputContainer
-                            placeholder={selectedWeight || clientCurrentWeight || 'Weight (in pounds)'}
+                            placeholder="Select Weight"
                             title={'Weight (in pounds)'}
                             titleColor={styles.weightStyle}
                             iconName={"chevron-down"}
                             value={selectedWeight}
                             onPress={() => toggleModal('weight')}
+                            editable={false}
                         />
+
+
                         <InputContainer
-                            placeholder={selectedHeight || 'Height (in feet)'}
+                            placeholder="Select Height"
                             title={'Height (in feet)'}
                             titleColor={styles.heightStyle}
                             iconName={"chevron-down"}
+                            value={selectedHeight}
                             onPress={() => toggleModal('height')}
+                            editable={false}
                         />
+
                         <Text style={styles.name}>Address</Text>
+
+
                         <InputContainer
-                            placeholder={address1 || 'Street Address'}
+                            placeholder="Street Address"
                             title={'Street Address'}
                             titleColor={styles.streetsStyle}
                             value={address1}
                             onChangeText={setAddress1}
+                            keyboardType="default"
+                            autoCapitalize="sentences"
                         />
+
                         <InputContainer
-                            placeholder={address2 || 'Street Address 2'}
-                            titleColor={styles.streetsStyle}
+                            placeholder="Street Address 2"
                             title={'Street Address 2'}
+                            titleColor={styles.streetsStyle}
                             value={address2}
                             onChangeText={setAddress2}
+                            keyboardType="default"
+                            autoCapitalize="sentences"
                         />
+
+
                         <InputContainer
-                            placeholder={city || 'City'}
-                            titleColor={styles.cityStyle}
+                            placeholder="City"
                             title={'City'}
+                            titleColor={styles.cityStyle}
                             value={city}
                             onChangeText={setCity}
+                            keyboardType="default"
+                            autoCapitalize="words"
                         />
+
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+
                             <InputContainer
-                                placeholder={selectedState || 'State'}
+                                placeholder="Select State"
                                 title={'State'}
                                 titleColor={styles.stateStyle}
                                 inputStyle={styles.stateWidth}
                                 iconName={"chevron-down"}
                                 value={selectedState}
                                 onPress={() => toggleModal('state')}
+                                editable={false}
                             />
+
+
                             <InputContainer
-                                placeholder={zip || 'Zip Code'}
+                                placeholder="Zip Code"
                                 title={'Zip Code'}
                                 titleColor={styles.zipCodeStyle}
                                 inputStyle={styles.widthStyle}
                                 value={zip}
+                                onChangeText={setZip}
+                                keyboardType="numeric"
                             />
                         </View>
                     </ScrollView>
+
                     <View style={styles.row}>
                         <CustomButton
                             buttonStyle={styles.Button}
                             textStyle={styles.btnText}
                             title={'Cancel'}
-                            onPress={handleGoBack} />
+                            onPress={handleGoBack}
+                        />
                         <CustomButton
                             buttonStyle={styles.joinButton}
                             textStyle={styles.joinText}
                             title={'Save'}
-                            onPress={handleSave} />
+                            onPress={handleSave}
+                            loading={loading}
+                        />
                     </View>
+
 
                     <Modal
                         animationType="slide"
@@ -264,9 +335,13 @@ const EditProfile = () => {
                             <View style={styles.modalContent}>
                                 <Text style={styles.modalText}>Select Gender</Text>
                                 <ScrollView showsVerticalScrollIndicator={false}>
-                                <GenderList onSelect={(value) => handleSelect(value, 'gender')} />
+                                    <GenderList onSelect={(value) => handleSelect(value, 'gender')} />
                                 </ScrollView>
-                                <CustomButton title="Close" onPress={() => toggleModal('gender')} buttonStyle={styles.closeButton}/>
+                                <CustomButton
+                                    title="Close"
+                                    onPress={() => toggleModal('gender')}
+                                    buttonStyle={styles.closeButton}
+                                />
                             </View>
                         </View>
                     </Modal>
@@ -281,12 +356,17 @@ const EditProfile = () => {
                             <View style={styles.modalContent}>
                                 <Text style={styles.modalText}>Select Weight</Text>
                                 <ScrollView showsVerticalScrollIndicator={false}>
-                                <WeightList onSelect={(value) => handleSelect(value, 'weight')} />
+                                    <WeightList onSelect={(value) => handleSelect(value, 'weight')} />
                                 </ScrollView>
-                                <CustomButton title="Close" onPress={() => toggleModal('weight')} buttonStyle={styles.closeButton} />
+                                <CustomButton
+                                    title="Close"
+                                    onPress={() => toggleModal('weight')}
+                                    buttonStyle={styles.closeButton}
+                                />
                             </View>
                         </View>
                     </Modal>
+
                     <Modal
                         animationType="slide"
                         transparent={true}
@@ -297,12 +377,17 @@ const EditProfile = () => {
                             <View style={styles.modalContent}>
                                 <Text style={styles.modalText}>Select Height</Text>
                                 <ScrollView showsVerticalScrollIndicator={false}>
-                                <HeightList onSelect={(value) => handleSelect(value, 'height')} />
+                                    <HeightList onSelect={(value) => handleSelect(value, 'height')} />
                                 </ScrollView>
-                                <CustomButton title="Close" onPress={() => toggleModal('height')} buttonStyle={styles.closeButton}/>
+                                <CustomButton
+                                    title="Close"
+                                    onPress={() => toggleModal('height')}
+                                    buttonStyle={styles.closeButton}
+                                />
                             </View>
                         </View>
                     </Modal>
+
                     <Modal
                         animationType="slide"
                         transparent={true}
@@ -313,9 +398,13 @@ const EditProfile = () => {
                             <View style={styles.modalContent}>
                                 <Text style={styles.modalText}>Select State</Text>
                                 <ScrollView showsVerticalScrollIndicator={false}>
-                                <StateList onSelect={(value) => handleSelect(value, 'state')} />
+                                    <StateList onSelect={(value) => handleSelect(value, 'state')} />
                                 </ScrollView>
-                                <CustomButton title="Close" onPress={() => toggleModal('state')} buttonStyle={styles.closeButton}/>
+                                <CustomButton
+                                    title="Close"
+                                    onPress={() => toggleModal('state')}
+                                    buttonStyle={styles.closeButton}
+                                />
                             </View>
                         </View>
                     </Modal>

@@ -13,10 +13,11 @@ const InputContainer = ({
     showAsterisk = true,
     inputStyle,
     dynamicStyle,
-    placeholderTextColor = Colors.OFFBLACK ,
+    placeholderTextColor = Colors.OFFBLACK,
     onPress,
     value,
-    editable
+    editable,
+    onChangeText
 }) => {
     return (
         <View style={styles.container}>
@@ -25,13 +26,14 @@ const InputContainer = ({
                 <Text>{title}</Text>
                 {showAsterisk && <Text style={styles.startStyle}>{' '}*</Text>}
             </Text>
-            <View style={[styles.textInput,inputStyle]}>
+            <View style={[styles.textInput, inputStyle]}>
                 <TextInput
                     placeholder={placeholder}
-                    placeholderTextColor={placeholderTextColor}       
+                    placeholderTextColor={placeholderTextColor}
                     style={dynamicStyle}
                     value={value}
                     editable={editable}
+                    onChangeText={onChangeText}
                 />
                 <TouchableOpacity onPress={onPress}>
                     {iconName && (
@@ -70,7 +72,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         zIndex: 1,
         top: responsiveHeight(1),
-        height:responsiveHeight(3)
+        height: responsiveHeight(3)
     },
     textInput: {
         borderColor: Colors.darkgrey,

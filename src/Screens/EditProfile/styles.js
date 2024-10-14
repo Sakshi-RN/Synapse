@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         marginTop: responsiveHeight(3),
         textAlign: 'center',
-        color:Colors.blue
+        color: Colors.blue
     },
     closeButton: {
         marginTop: responsiveHeight(3),
@@ -132,8 +132,21 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         marginTop: responsiveHeight(3),
         textAlign: 'center',
-        color:Colors.black
+        color: Colors.black
     },
+    errorText: {
+        fontSize: responsiveFontSize(1.6),
+        fontWeight: '500',
+        marginTop: responsiveHeight(1),
+        color: Colors.red
+    },
+    centeredContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
 });
+
 
 export default styles;

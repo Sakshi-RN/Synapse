@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, View, Text, StyleSheet, TouchableOpacity, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import dayjs from 'dayjs';
 import Colors from '../../Themes/Colors';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 
 export default function HorizontalCalendar({ availableDates, setFilteredAppointments, filteredAppointments }) {
     const [selectedDate, setSelectedDate] = useState('');
-    const [fetchAppointments, setfetchAppointments] = useState([]);
+    const [fetchAppointments, setFetchAppointments] = useState([]);
     const [currentMonth, setCurrentMonth] = useState(dayjs().format('MMMM YYYY'));
     const [appointmentsCount, setAppointmentsCount] = useState({});
 
@@ -17,44 +17,7 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
         setSelectedDate(date);
     };
 
-    useEffect(() => {
-        const fetchAppointmentsData = async () => {
-            try {
-                const response = await fetch(
-                    'https://eb1.taramind.com/getAllClientAppointments/9bfea3d5-74f4-11ef-9c86-02f35b8058b3',
-                    {
-                        method: 'GET',
-                        headers: {
-                            'X-Api-Key': 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b',
-                        },
-                    }
-                );
 
-                if (!response.ok) {
-                    throw new Error('Failed to fetch appointments');
-                }
-
-                const data = await response.json();
-                setfetchAppointments(data);
-
-                const dates = data.map(appointment => appointment.appointmentDate);
-                availableDates(dates);
-
-                // Count appointments for each date
-                const countMap = {};
-                data.forEach(appointment => {
-                    const date = appointment.appointmentDate;
-                    countMap[date] = (countMap[date] || 0) + 1;
-                });
-                setAppointmentsCount(countMap);
-
-            } catch (error) {
-                console.error(error.message);
-            }
-        };
-
-        fetchAppointmentsData();
-    }, []);
 
     const today = dayjs();
 
@@ -77,7 +40,7 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
 
     const handleScroll = (event) => {
         const scrollPosition = event.nativeEvent.contentOffset.x;
-        const itemWidth = responsiveWidth(17 + 2);
+        const itemWidth = responsiveWidth(17 + 2); // Adjust this based on your layout
         const currentIndex = Math.round(scrollPosition / itemWidth);
 
         if (dates[currentIndex]) {
@@ -88,11 +51,83 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
         }
     };
 
-    const renderDots = (appointmentCount) => {
+    useEffect(() => {
+        const fetchAppointmentsData = async () => {
+            try {
+                const response = await fetch(
+                    'https://eb1.taramind.com/getAllClientAppointments/9bfea3d5-74f4-11ef-9c86-02f35b8058b3',
+                    {
+                        method: 'GET',
+                        headers: {
+                            'X-Api-Key': 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b',
+                        },
+                    }
+                );
+    
+                if (!response.ok) {
+                    throw new Error('Failed to fetch appointments');
+                }
+    
+                const data = await response.json();
+    
+                // Log the appointment date format
+                data.forEach(appointment => {
+                    console.log('Raw appointment date:', appointment.appointmentDate);
+                });
+    
+                setFetchAppointments(data);
+    
+                const countMap = {};
+                data.forEach(appointment => {
+                    // First, check the raw format of appointment.appointmentDate
+                    const rawDate = appointment.appointmentDate;
+    
+                    // Try to parse the date if it's in an unusual format, e.g., if it’s a timestamp or different string format
+                    let formattedDate;
+                    if (dayjs(rawDate).isValid()) {
+                        formattedDate = dayjs(rawDate).format('YYYY-MM-DD'); // Valid date
+                    } else {
+                        // Fallback for invalid date parsing (modify this based on the actual format)
+                        formattedDate = new Date(rawDate).toISOString().split('T')[0]; // Try ISO format fallback
+                    }
+    
+                    console.log('Formatted date:', formattedDate);
+    
+                    // If valid, add to count map
+                    if (formattedDate) {
+                        countMap[formattedDate] = (countMap[formattedDate] || 0) + 1;
+                    }
+                });
+    
+                // Log the countMap to ensure it’s populated correctly
+                console.log('Appointment counts:', countMap);
+    
+                setAppointmentsCount(countMap);
+    
+            } catch (error) {
+                console.error(error.message);
+            }
+        };
+    
+        fetchAppointmentsData();
+    }, []);
+    
+    
+    const renderDots = (appointmentCount, isSelected, isToday) => {
+        // Log the dots for debugging with appointment count and date statuses
+        console.log(`Date has ${appointmentCount} appointments. Selected: ${isSelected}, Today: ${isToday}`);
+        
+        if (appointmentCount === 0) {
+            return null; // No dots if no appointments
+        }
+    
         if (appointmentCount > 3) {
-   
             return (
-                <Text style={styles.moreAppointmentsText}>
+                <Text style={[
+                    styles.moreAppointmentsText,
+                    isSelected && styles.selectedMoreAppointmentsText,
+                    isToday && styles.todayMoreAppointmentsText
+                ]}>
                     ... +{appointmentCount - 3}
                 </Text>
             );
@@ -101,11 +136,19 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
         return (
             <View style={styles.dotsContainer}>
                 {Array.from({ length: appointmentCount }).map((_, dotIndex) => (
-                    <View key={dotIndex} style={styles.dot} />
+                    <View
+                        key={dotIndex}
+                        style={[
+                            styles.dot,
+                            isSelected && styles.selectedDot,
+                            isToday && styles.todayDot
+                        ]}
+                    />
                 ))}
             </View>
         );
     };
+    
 
     return (
         <View style={styles.container}>
@@ -146,7 +189,8 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
                                 isSelected && styles.selectedDayText,
                                 isToday && !isSelected && styles.todayDayText
                             ]}>{dayOfWeek}</Text>
-     {renderDots(appointmentCount)}
+                            
+                            {renderDots(appointmentCount, isSelected, isToday)}
                         </TouchableOpacity>
                     );
                 })}
@@ -219,15 +263,28 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     dot: {
-        width: 4,
-        height: 4,
-        borderRadius: 2,
+        width: 5,
+        height: 5,
+        borderRadius: 2.5,
         backgroundColor: Colors.grey,
         marginHorizontal: 2,
+    },
+    selectedDot: {
+        backgroundColor: Colors.white,
+    },
+    todayDot: {
+        backgroundColor: Colors.blue,
     },
     moreAppointmentsText: {
         color: Colors.grey,
         marginTop: responsiveHeight(1),
-        fontSize: responsiveFontSize(1.5),
+        fontSize: responsiveFontSize(1.7),
+        fontWeight: '700',
+    },
+    selectedMoreAppointmentsText: {
+        color: Colors.white,
+    },
+    todayMoreAppointmentsText: {
+        color: Colors.blue,
     },
 });
