@@ -40,25 +40,25 @@ const HomeScreen = () => {
 
     function formatAppointmentDate(dateString) {
         if (!dateString) return 'Invalid Date';
-
+    
         const [month, day, year] = dateString.split('/');
         if (!month || !day || !year) return 'Invalid Date Format';
-
+    
         const date = new Date(`${year}-${month}-${day}`);
         if (isNaN(date.getTime())) {
             return 'Invalid Date';
         }
-
-        const options = { month: 'long', day: 'numeric' };
-        const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
+    
+        const options = { month: 'short' }; 
+        const formattedMonth = new Intl.DateTimeFormat('en-US', options).format(date);
         const dayNumber = date.getDate();
         const suffix = dayNumber % 10 === 1 && dayNumber !== 11 ? 'st' :
             dayNumber % 10 === 2 && dayNumber !== 12 ? 'nd' :
-                dayNumber % 10 === 3 && dayNumber !== 13 ? 'rd' : 'th';
-
-        return `${formattedDate}${suffix}`;
+            dayNumber % 10 === 3 && dayNumber !== 13 ? 'rd' : 'th';
+    
+        return `${formattedMonth} ${dayNumber}${suffix}`;
     }
-
+    
 
     function formatAppointmentTime(timeString) {
         if (!timeString) return 'Invalid Time';
@@ -151,7 +151,8 @@ const HomeScreen = () => {
                     <View style={styles.slide}>
                         <View>
                             <Text style={styles.slideText}>
-                                <Text>{profile?.nextAppointment?.appointmentType} ({profile?.nextAppointment?.visitType}) {profile?.therapist?.providerName},</Text></Text>
+                                <Text>{profile?.nextAppointment?.appointmentType} ({profile?.nextAppointment?.visitType})</Text></Text>
+                                <Text style={styles.slideText}>{profile?.therapist?.providerName}</Text>
                             <Text style={styles.therapistRoleText}>{profile?.therapist?.designation?.join(', ')}</Text>
                         </View>
                         <View style={styles.line} />
@@ -165,7 +166,8 @@ const HomeScreen = () => {
                     <View style={styles.slide}>
                     <View>
                             <Text style={styles.slideText}>
-                                <Text>{profile?.nextAppointment?.appointmentType} ({profile?.nextAppointment?.visitType}) {profile?.therapist?.providerName},</Text></Text>
+                                <Text>{profile?.nextAppointment?.appointmentType} ({profile?.nextAppointment?.visitType})</Text></Text>
+                                <Text style={styles.slideText}>{profile?.therapist?.providerName}</Text>
                             <Text style={styles.therapistRoleText}>{profile?.therapist?.designation?.join(', ')}</Text>
                         </View>
                         <View style={styles.line} />

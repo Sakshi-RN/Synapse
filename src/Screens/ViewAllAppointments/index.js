@@ -10,6 +10,7 @@ import Colors from '../../Themes/Colors';
 import { useNavigation } from '@react-navigation/native';
 import CustomHeader from '../../Components/CustomHeader';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Loader from '../../Components/Loader';
 
 const ViewAllAppointments = () => {
     const navigation = useNavigation();
@@ -121,7 +122,9 @@ const ViewAllAppointments = () => {
             
                 <Text style={styles.header}>Upcoming</Text>
                 {loading ? (
-                    <Text>Loading...</Text>
+                       <View style={styles.centeredContainer}>
+                       <Loader />
+                   </View>
                 ) : (
                     appointments
                         .filter(app => app.appointmentStatus === 'scheduled')
@@ -335,6 +338,11 @@ const styles = StyleSheet.create({
         marginTop: responsiveHeight(1) ,
         marginLeft:responsiveWidth(3)
     },
+    centeredContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 
 });
 

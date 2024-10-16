@@ -72,7 +72,7 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
     
                 // Log the appointment date format
                 data.forEach(appointment => {
-                    console.log('Raw appointment date:', appointment.appointmentDate);
+          
                 });
     
                 setFetchAppointments(data);
@@ -91,7 +91,7 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
                         formattedDate = new Date(rawDate).toISOString().split('T')[0]; // Try ISO format fallback
                     }
     
-                    console.log('Formatted date:', formattedDate);
+
     
                     // If valid, add to count map
                     if (formattedDate) {
@@ -100,7 +100,7 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
                 });
     
                 // Log the countMap to ensure it’s populated correctly
-                console.log('Appointment counts:', countMap);
+
     
                 setAppointmentsCount(countMap);
     
@@ -114,11 +114,10 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
     
     
     const renderDots = (appointmentCount, isSelected, isToday) => {
-        // Log the dots for debugging with appointment count and date statuses
-        console.log(`Date has ${appointmentCount} appointments. Selected: ${isSelected}, Today: ${isToday}`);
+
         
         if (appointmentCount === 0) {
-            return null; // No dots if no appointments
+            return null; 
         }
     
         if (appointmentCount > 3) {

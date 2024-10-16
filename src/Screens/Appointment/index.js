@@ -6,9 +6,11 @@ import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
 import CustomCalender from '../../Components/CustomCalender';
 import Loader from '../../Components/Loader';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Appointment = () => {
+    const navigation = useNavigation();
     const [appointments, setAppointments] = useState([]);
     const [filteredAppointments, setFilteredAppointments] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -16,6 +18,9 @@ const Appointment = () => {
     const [activeTab, setActiveTab] = useState('All');
     const [availableDates, setAvailableDates] = useState([]);
 
+    const handleViewAllAppointment = () => {
+        navigation.navigate('ViewAllAppointments');
+    }
 
     useEffect(() => {
         const fetchAppointments = async () => {
@@ -52,7 +57,7 @@ const Appointment = () => {
 
 
     const getAppointmentsText = () => {
-        return `${filteredAppointments.length}Appointments`;
+        return `${filteredAppointments.length} Appointments`;
     };
 
     const renderAppointmentCard = ({ item }) =><AppointmentCard appointment={item}/>;
@@ -74,7 +79,7 @@ const Appointment = () => {
             <CustomCalender availableDates={availableDates} setFilteredAppointments={setFilteredAppointments} filteredAppointments={filteredAppointments} />
             <View style={styles.row}>
                 <Text style={styles.appointmentsText}>{getAppointmentsText()}</Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={handleViewAllAppointment}> 
                     <Text style={styles.viewAllText}>View All</Text>
                 </TouchableOpacity>
             </View>

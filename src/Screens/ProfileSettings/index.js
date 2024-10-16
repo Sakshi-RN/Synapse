@@ -10,7 +10,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { useFocusEffect } from '@react-navigation/native';
 import { fetchProfile } from '../../redux/Reducers/profileReducer';
 import { Advice, CommunicationPreferences, PhoneBook, Policy, Starred, TaraMind, TermsOfUse, Video } from '../../Assets/svg';
-import EditEmergencyContacts from '../EditEmergencyContacts';
 
 const ProfileSettings = () => {
     const navigation = useNavigation();
@@ -22,7 +21,6 @@ const ProfileSettings = () => {
             dispatch(fetchProfile());
         }, [dispatch])
     );
-
 
 
     const handlePreferences = () => {
@@ -39,86 +37,87 @@ const ProfileSettings = () => {
     return (
         <View style={styles.container}>
             <CustomHeader title={'Profile & Settings'} />
+            <TouchableOpacity onPress={handleMyProfileScreen} style={styles.profileSection}>
+                <View style={styles.avatarBox}>
+                    <Text style={styles.avatarText}>
+                        {`${profile?.firstName?.[0]?.toUpperCase() ?? ''}${profile?.lastName?.[0]?.toUpperCase() ?? ''}`}
+                    </Text>
+                </View>
+                <View style={styles.profileInfo}>
+                    <Text style={styles.profileName}>{`${profile?.firstName} ${profile?.lastName}`}</Text>
+                    <Text style={styles.profileName}>{profile?.phone}</Text>
+                </View>
+                <Icon name="chevron-right" size={20} color={Colors.black} />
+            </TouchableOpacity>
             <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-                <View style={styles.profileSection}>
-                    <View style={styles.avatarBox}>
-                        <Text style={styles.avatarText}>
-                            {`${profile?.firstName?.[0]?.toUpperCase() ?? ''}${profile?.lastName?.[0]?.toUpperCase() ?? ''}`}
-                        </Text>
-                    </View>
-                    <View style={styles.profileInfo}>
-                        <Text style={styles.profileName}>{`${profile?.firstName} ${profile?.lastName}`}</Text>
-                        <Text style={styles.profileName}>{profile?.phone}</Text>
-                    </View>
-                    <TouchableOpacity onPress={handleMyProfileScreen}>
+                <Text style={styles.sectionTitle}>Preferences</Text>
+                <View style={styles.section}>
+                    <TouchableOpacity onPress={handlePreferences} style={styles.row} >
+                        <CommunicationPreferences />
+                        <Text style={styles.rowText}>Preferences</Text>
+                        <Icon name="chevron-right" size={20} color={Colors.black} />
+                    </TouchableOpacity>
+                    <View style={styles.line} />
+                    <TouchableOpacity style={styles.row} onPress={handleEmergencycontacts}>
+                        <PhoneBook />
+                        <Text style={styles.rowText}>Emergency Contacts</Text>
                         <Icon name="chevron-right" size={20} color={Colors.black} />
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.sectionTitle}>Preferences</Text>
-                <View style={styles.section}>
-                    <View style={styles.row} >
-                        <CommunicationPreferences />
-                        <Text style={styles.rowText}>Preferences</Text>
-                        <TouchableOpacity onPress={handlePreferences}>
-                            <Icon name="chevron-right" size={20} color={Colors.black} />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.line} />
-                    <View style={styles.row} >
-                        <PhoneBook />
-                        <Text style={styles.rowText}>Emergency Contacts</Text>
-                        <TouchableOpacity onPress={handleEmergencycontacts}>
-                            <Icon name="chevron-right" size={20} color={Colors.black} />
-                        </TouchableOpacity>
-                    </View>
-                </View>
-
                 <Text style={styles.sectionTitle}>Therapy Tools</Text>
                 <View style={styles.section}>
-                    <TouchableOpacity style={styles.row} onPress={() => { }}>
+                    <TouchableOpacity style={styles.row} >
                         <Starred />
                         <Text style={styles.rowText}>Starred Messages</Text>
+                        <Text style={{ width: 20 }}></Text>
                     </TouchableOpacity>
+
                     <View style={styles.line} />
-                    <View style={styles.row}>
+                    <TouchableOpacity style={styles.row}>
                         <Video />
                         <Text style={styles.rowText}>Video Session Test</Text>
-                        <Icon name="external-link" size={20} color={Colors.black} />
-                    </View>
+                        <Text style={{ width: 20 }}></Text>
+                    </TouchableOpacity>
+
                     <View style={styles.line} />
-                    <TouchableOpacity style={styles.row} onPress={() => { }}>
+                    <TouchableOpacity style={styles.row}>
                         <Advice />
                         <Text style={styles.rowText}>Advice</Text>
+                        <Text style={{ width: 20 }}></Text>
                     </TouchableOpacity>
                 </View>
+
                 <Text style={styles.sectionTitle}>Support</Text>
-                <View style={[styles.section, { marginBottom: responsiveHeight(5) }]}>
-                    <TouchableOpacity style={styles.row} onPress={() => { }}>
+                <View style={styles.section}>
+                    <TouchableOpacity style={styles.row}>
                         <Policy />
                         <Text style={styles.rowText}>Privacy Policy</Text>
                         <Icon name="external-link" size={20} color={Colors.black} />
+                        <Text style={{ width: 20 }}></Text>
                     </TouchableOpacity>
                     <View style={styles.line} />
-                    <TouchableOpacity style={styles.row} onPress={() => { }}>
+                    <TouchableOpacity style={styles.row}>
                         <TermsOfUse />
                         <Text style={styles.rowText}>Terms Of Use</Text>
                         <Icon name="external-link" size={20} color={Colors.black} />
+                        <Text style={{ width: 20 }}></Text>
                     </TouchableOpacity>
                     <View style={styles.line} />
-                    <TouchableOpacity style={styles.row} onPress={() => { }}>
+                    <TouchableOpacity style={styles.row}>
                         <Icon name="question-circle" size={20} color={Colors.black} />
                         <Text style={styles.rowText}>FAQ</Text>
                         <Icon name="external-link" size={20} color={Colors.black} />
+                        <Text style={{ width: 20 }}></Text>
                     </TouchableOpacity>
                     <View style={styles.line} />
-                    <TouchableOpacity style={styles.row} onPress={() => { }}>
+                    <TouchableOpacity style={styles.row}>
                         <Icon name="sign-out" size={20} color={Colors.red} />
                         <Text style={[styles.rowText, { color: Colors.red }]}>Logout</Text>
+                        <Text style={{ width: 20 }}></Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
-            <View style={{ alignItems: 'center', marginTop: responsiveHeight(2) }}>
-                <TaraMind />
+            <View>
                 <Text style={styles.versionText}>© 2024 TARA Mind. v0.19.0.</Text>
             </View>
         </View>
@@ -134,14 +133,11 @@ const styles = StyleSheet.create({
         paddingBottom: responsiveHeight(13),
     },
     content: {
-        flex: 1,
         paddingHorizontal: responsiveWidth(5),
-        paddingTop: responsiveHeight(4)
     },
     profileSection: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: responsiveHeight(2),
         paddingHorizontal: responsiveWidth(5),
         backgroundColor: Colors.light_skyblue,
         paddingVertical: responsiveHeight(1.5),
@@ -151,6 +147,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 1,
         shadowRadius: 2,
         elevation: 5,
+        marginHorizontal: responsiveWidth(5),
+        marginTop: responsiveHeight(4)
     },
     avatarBox: {
         width: responsiveHeight(8),
@@ -179,7 +177,6 @@ const styles = StyleSheet.create({
         color: Colors.blue,
     },
     section: {
-
         paddingHorizontal: responsiveWidth(5),
         elevation: 5,
         shadowColor: Platform.OS === 'ios' ? Colors.OFFWHITE : Colors.black,
@@ -190,13 +187,13 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 10,
         backgroundColor: Colors.white,
-        marginBottom: responsiveHeight(2)
+        marginTop: responsiveHeight(1),
     },
     sectionTitle: {
         fontSize: responsiveFontSize(2),
         fontWeight: 'bold',
         color: Colors.black,
-        marginBottom: responsiveHeight(1),
+        marginTop: responsiveHeight(2),
     },
     row: {
         flexDirection: 'row',
@@ -208,12 +205,13 @@ const styles = StyleSheet.create({
     rowText: {
         fontSize: responsiveFontSize(1.8),
         color: Colors.black,
-        flex: 1,
         marginLeft: responsiveWidth(3),
+        width: responsiveWidth(65)
     },
     versionText: {
         color: Colors.blue,
-        marginTop: responsiveHeight(1)
+        alignSelf: 'center',
+        marginTop: responsiveHeight(3)
     },
     line: {
         backgroundColor: Colors.light_skyblue,
