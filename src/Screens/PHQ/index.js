@@ -55,12 +55,12 @@ const PHQ = () => {
                     showsVerticalScrollIndicator={false}
                 />
             </View>
-            <CustomButton
+            {/* <CustomButton
                 buttonStyle={styles.joinButton}
                 textStyle={styles.joinText}
                 title={'Start Survey'}
                 onPress={handleStartSurvey}
-            />
+            /> */}
         </View>
     );
 };

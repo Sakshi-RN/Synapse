@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     headerContainer: {
         paddingTop: responsiveHeight(5),
         paddingHorizontal: responsiveWidth(8),
-        height: responsiveHeight(28)
+        height: responsiveHeight(21)
     },
     headerContent: {
         flexDirection: 'row',
@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
     },
     patientName: {
         color: Colors.white,
-        fontWeight: '600',
-        fontSize: responsiveFontSize(3),
+        fontWeight: '500',
+        fontSize: responsiveFontSize(2.1),
         marginTop: responsiveHeight(1),
     },
     patientDetails: {
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
         padding: responsiveWidth(4)
     },
     reportsTitle: {
-        fontSize: responsiveFontSize(2.3),
+        fontSize: responsiveFontSize(2),
         fontWeight: '600',
         color: Colors.blue
     },
@@ -165,9 +165,9 @@ const styles = StyleSheet.create({
         padding: responsiveWidth(4)
     },
     careTeamTitle: {
-        fontSize: responsiveFontSize(2.3),
+        fontSize: responsiveFontSize(2),
         fontWeight: '600',
-        marginTop: responsiveHeight(3),
+        marginTop: responsiveHeight(2),
         color: Colors.blue
     },
 
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
         padding: responsiveWidth(4)
     },
     actionsTitle: {
-        fontSize: responsiveFontSize(2.3),
+        fontSize: responsiveFontSize(2),
         fontWeight: '600',
         marginTop: responsiveHeight(2),
         color: Colors.blue

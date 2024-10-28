@@ -1,17 +1,16 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { View, Text, Image, FlatList, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { Circle, Bell, Logo, MeetIcon, Location, Arrowdown, Device, ConsentForm, TreatmentSummary, AppointmentImg, SurveyHistory, Download, Concierge } from '../../Assets/svg';
 import images from '../../Themes/Images'
 import { ScrollView } from 'react-native-gesture-handler';
-import LCSWImage from '../../Assets/Images/LCSW.png';
-import MDImage from '../../Assets/Images/MD.png';
 import styles from './styles';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { fetchProfile } from '../../redux/Reducers/profileReducer';
 import Loader from '../../Components/Loader';
 import { responsiveWidth } from 'react-native-responsive-dimensions';
+
 
 
 
@@ -36,29 +35,27 @@ const HomeScreen = () => {
     const profile = data && data[0];
 
 
-
-
     function formatAppointmentDate(dateString) {
         if (!dateString) return 'Invalid Date';
-    
+
         const [month, day, year] = dateString.split('/');
         if (!month || !day || !year) return 'Invalid Date Format';
-    
+
         const date = new Date(`${year}-${month}-${day}`);
         if (isNaN(date.getTime())) {
             return 'Invalid Date';
         }
-    
-        const options = { month: 'short' }; 
+
+        const options = { month: 'short' };
         const formattedMonth = new Intl.DateTimeFormat('en-US', options).format(date);
         const dayNumber = date.getDate();
         const suffix = dayNumber % 10 === 1 && dayNumber !== 11 ? 'st' :
             dayNumber % 10 === 2 && dayNumber !== 12 ? 'nd' :
-            dayNumber % 10 === 3 && dayNumber !== 13 ? 'rd' : 'th';
-    
+                dayNumber % 10 === 3 && dayNumber !== 13 ? 'rd' : 'th';
+
         return `${formattedMonth} ${dayNumber}${suffix}`;
     }
-    
+
 
     function formatAppointmentTime(timeString) {
         if (!timeString) return 'Invalid Time';
@@ -123,7 +120,7 @@ const HomeScreen = () => {
 
     const handlePrescriberProfile = () => {
         navigation.navigate('PrescriberProfile');
-      }
+    }
     const renderHeader = () => {
         return (
             <ImageBackground source={images.headerBgImg} style={styles.headerContainer}>
@@ -136,7 +133,7 @@ const HomeScreen = () => {
                         <Bell height={20} width={20} />
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.patientName}>Hello {`${profile?.firstName||''} ${profile?.lastName||''}`}{', '}</Text>
+                <Text style={styles.patientName}>Hello {profile?.firstName || ''} </Text>
             </ImageBackground>
         );
     };
@@ -152,7 +149,7 @@ const HomeScreen = () => {
                         <View>
                             <Text style={styles.slideText}>
                                 <Text>{profile?.nextAppointment?.appointmentType} ({profile?.nextAppointment?.visitType})</Text></Text>
-                                <Text style={styles.slideText}>{profile?.therapist?.providerName}</Text>
+                            <Text style={styles.slideText}>{profile?.therapist?.providerName}</Text>
                             <Text style={styles.therapistRoleText}>{profile?.therapist?.designation?.join(', ')}</Text>
                         </View>
                         <View style={styles.line} />
@@ -164,10 +161,10 @@ const HomeScreen = () => {
                         </View>
                     </View>
                     <View style={styles.slide}>
-                    <View>
+                        <View>
                             <Text style={styles.slideText}>
                                 <Text>{profile?.nextAppointment?.appointmentType} ({profile?.nextAppointment?.visitType})</Text></Text>
-                                <Text style={styles.slideText}>{profile?.therapist?.providerName}</Text>
+                            <Text style={styles.slideText}>{profile?.therapist?.providerName}</Text>
                             <Text style={styles.therapistRoleText}>{profile?.therapist?.designation?.join(', ')}</Text>
                         </View>
                         <View style={styles.line} />
@@ -220,7 +217,7 @@ const HomeScreen = () => {
                     <TouchableOpacity onPress={handleConsentForm}>
                         <ConsentForm />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.devicebtnStyle} onPress={handleConnect}>
+                    <TouchableOpacity style={styles.devicebtnStyle}>
                         <Device />
                     </TouchableOpacity>
                 </View>
@@ -257,20 +254,26 @@ const HomeScreen = () => {
         return (
             <>
                 <View style={styles.careTeamRow}>
-                    <TouchableOpacity  onPress={handlePrescriberProfile}>
-                    <Image source={{ uri: profile?.therapist?.profilePicture }} style={styles.careTeamImage} />
-                    </TouchableOpacity>
-                    <TouchableOpacity  onPress={handlePrescriberProfile}>
-                    <Image source={{ uri: profile?.prescriber?.profilePicture }} style={styles.careTeamImage} />
-                        </TouchableOpacity >
+                    <TouchableOpacity onPress={handlePrescriberProfile}>
+                        <Image
+                            style={styles.careTeamImage}
+                            source={profile?.therapist?.profilePicture ? { uri: profile.therapist.profilePicture } : images.TherapistImg}
+                        />                
+                         </TouchableOpacity>
+                    <TouchableOpacity onPress={handlePrescriberProfile}>
+                    <Image   
+                    tyle={styles.careTeamImage}
+                     source={profile?.prescriber?.profilePicture? { uri: profile.prescriber.profilePicture } : images.PrescriberImg}
+                     />   
+                    </TouchableOpacity >
                     <Concierge />
                 </View>
                 <View style={styles.rowNew}>
-                <TouchableOpacity onPress={handlePrescriberProfile}>
-                    <Text style={styles.careTeamName}>{profile?.therapist?.providerName}</Text>
+                    <TouchableOpacity onPress={handlePrescriberProfile}>
+                        <Text style={styles.careTeamName}>{profile?.therapist?.providerName}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handlePrescriberProfile}>
-                    <Text style={[styles.careTeamName,{width:responsiveWidth(24)}]}>{profile?.prescriber?.providerName}</Text>
+                        <Text style={[styles.careTeamName, { width: responsiveWidth(24) }]}>{profile?.prescriber?.providerName}</Text>
                     </TouchableOpacity>
                     <Text style={styles.careTeamName}>Concierge</Text>
                 </View>
