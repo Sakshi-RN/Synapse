@@ -15,7 +15,7 @@ import ReviewTab from '../../Container/ReviewTab';
 const PrescriberProfile = () => {
   const [activeTab, setActiveTab] = useState('About Me');
   const navigation = useNavigation();
-  const tabs = ['About Me', 'Location', 'Review',];
+  const tabs = ['About Me', 'Location'];
 
   const renderContent = () => {
     switch (activeTab) {
@@ -23,8 +23,8 @@ const PrescriberProfile = () => {
         return <AboutmeTab />;
       case 'Location':
         return <LocationTab />;
-      case 'Review':
-        return <ReviewTab />;
+      // case 'Review':
+      //   return <ReviewTab />;
       default:
         return null;
     }
@@ -77,9 +77,9 @@ const PrescriberProfile = () => {
         <ScrollView showsVerticalScrollIndicator={false} style={styles.flatListStyle}>
         {renderContent()}
         </ScrollView>
-        <CustomButton
+        {/* <CustomButton
           buttonStyle={styles.Button}
-          title={'Ask a Question'} />
+          title={'Ask a Question'} /> */}
       </View>
     </View>
   );
@@ -152,6 +152,7 @@ const styles = StyleSheet.create({
   tabsContainer: {
     marginTop: responsiveHeight(3),
     height: responsiveHeight(10),
+    alignSelf:'center' // need to remove later
   },
   tabButton: {
     paddingHorizontal: responsiveWidth(8),

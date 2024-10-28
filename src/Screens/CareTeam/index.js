@@ -5,8 +5,6 @@ import { View, StyleSheet, Text, Image, TouchableOpacity, Platform, Modal } from
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
-import LCSWImage from '../../Assets/Images/LCSW.png';
-import MDImage from '../../Assets/Images/MD.png';
 import { ThreeDots } from '../../Assets/svg';
 import CustomButton from '../../Components/CustomButton';
 import { fetchProfile } from '../../redux/Reducers/profileReducer';
@@ -31,22 +29,7 @@ const CareTeam = () => {
     setModalVisible(false);
     setSelectedItem(null);
   };
-  const notifications = [
-    {
-      id: '1',
-      title: 'Samuel Rush',
-      description: 'MD',
-      icon: LCSWImage,
-    },
-    {
-      id: '2',
-      title: 'Leena Joseph',
-      description: 'LCSW',
-      icon: LCSWImage,
-    },
 
-
-  ];
   const handleAppointment = () => {
     setModalVisible(false);
     navigation.navigate('Appointment');
@@ -88,7 +71,7 @@ const CareTeam = () => {
             <Text style={styles.description}>{profile?.therapist?.designation?.join(', ')}</Text>
             <View style={styles.cancelbtnRow}>
               <CustomButton
-                onPress={handlePrescriberProfile}
+                onPress={handleTherapistProfile}
                 buttonStyle={styles.Button}
                 textStyle={styles.ButtonText}
                 title={'View Profile'}
@@ -100,7 +83,7 @@ const CareTeam = () => {
               />
             </View>
           </View>
-          <TouchableOpacity onPress={() => openModal(notification)}>
+          <TouchableOpacity onPress={() => openModal()}>
             <ThreeDots height={15} width={10} />
           </TouchableOpacity>
         </View>
@@ -120,7 +103,7 @@ const CareTeam = () => {
           
        </View> 
           </View>
-          <TouchableOpacity onPress={() => openModal(notification)}>
+          <TouchableOpacity onPress={() => openModal()}>
             <ThreeDots height={15} width={10} />
           </TouchableOpacity>
         </View>
@@ -144,10 +127,10 @@ const CareTeam = () => {
             <TouchableOpacity >
               <Text style={styles.modalOption}>Rate</Text>
             </TouchableOpacity>
-            <View style={styles.bordrline} />
+            {/* <View style={styles.bordrline} />
             <TouchableOpacity onPress={handleReasonforChange} >
               <Text style={styles.modalOption}>Request to change</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </TouchableOpacity>
       </Modal>

@@ -28,9 +28,9 @@ const ViewDetails = () => {
         />
         <MapView style={styles.map} />
       </ScrollView>
-      <CustomButton
+      {/* <CustomButton
         buttonStyle={styles.Button}
-        title={'Do you need a ride?'} />
+        title={'Do you need a ride?'} /> */}
     </View>
 
   );

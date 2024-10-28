@@ -50,7 +50,14 @@ const AppointmentCard = ({ appointment }) => {
                         style={
                             appointment.appointmentStatus === 'completed' ? styles.completedJoinButton :
                                 appointment.appointmentStatus === 'upcoming' ? styles.upcomingJoinButton : 'null'
-                        }>
+                        }
+                        onPress={() => {
+                            if (appointment.appointmentStatus === 'upcoming') {
+                                navigation.navigate('JoinSession');
+                            } else if (appointment.appointmentStatus === 'completed') {
+                                navigation.navigate('ViewDetails');
+                            }
+                        }}>
                         <Text
                             style={
                                 appointment.appointmentStatus === 'completed' ? styles.completedJoinButtonText :

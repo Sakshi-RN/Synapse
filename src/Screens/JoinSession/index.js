@@ -36,7 +36,7 @@ const handleResheduleRequest = () => {
           btnTextColor={styles.upcomingText}
         />
       </View>
-      <View style={styles.row}>
+      {/* <View style={styles.row}>
         <CustomButton
           buttonStyle={styles.Button}
           textStyle={styles.btnText}
@@ -47,7 +47,7 @@ const handleResheduleRequest = () => {
           textStyle={styles.joinText}
           title={'Join Session'} 
           onPress={handleWaitingRoom}/>
-      </View>
+      </View> */}
     </View>
 
   );

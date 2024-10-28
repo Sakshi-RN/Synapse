@@ -62,46 +62,48 @@ const ViewAllAppointments = () => {
                         <Text style={styles.type}>{appointment.appointmentType}</Text>
                         <Text style={styles.type}>{formattedDate}{' - '}{formattedTime}</Text>
                         <TouchableOpacity
-                            style={
-                                appointment.appointmentStatus === 'scheduled' ? styles.upcomingButton :
+                        style={
+                            appointment.appointmentStatus === 'scheduled' ? styles.pendingButton :
+                                appointment.appointmentStatus === 'upcoming' ? styles.upcomingButton :
                                     appointment.appointmentStatus === 'completed' ? styles.completedButton :
-                                        styles.defaultButton
-                            }
-                        >
-                            <Text
-                                style={
-                                    appointment.appointmentStatus === 'scheduled' ? styles.upcomingButtonText :
+                                        appointment.appointmentStatus === 'cancelled' ? styles.cancelledButton :
+                                            styles.defaultButton
+                        }
+                    >
+                        <Text
+                            style={
+                                appointment.appointmentStatus === 'scheduled' ? styles.pendingButtonText :
+                                    appointment.appointmentStatus === 'upcoming' ? styles.upcomingButtonText :
                                         appointment.appointmentStatus === 'completed' ? styles.completedButtonText :
-                                            styles.buttonText
-                                }
-                            >
-                                {appointment.appointmentStatus}
-                            </Text>
-                        </TouchableOpacity>
+                                            appointment.appointmentStatus === 'cancelled' ? styles.cancelledButtonText :
+                                                styles.buttonText
+                            }
+                        >{appointment?.appointmentStatus}</Text>
+                    </TouchableOpacity>
                     </View>
                 </View>
 
 
                 <TouchableOpacity
                     style={
-                        appointment.appointmentStatus === 'scheduled' ? styles.upcomingJoinButton :
+                        appointment.appointmentStatus === 'upcoming' ? styles.upcomingJoinButton :
                             appointment.appointmentStatus === 'completed' ? styles.completedJoinButton : null
                     }
                     onPress={() => {
-                        if (appointment.appointmentStatus === 'scheduled') {
-
+                        if (appointment.appointmentStatus === 'upcoming') {
+                            navigation.navigate('JoinSession');
                         } else if (appointment.appointmentStatus === 'completed') {
-
+                            navigation.navigate('ViewDetails');
                         }
                     }}
                 >
                     <Text
                         style={
-                            appointment.appointmentStatus === 'scheduled' ? styles.upcomingJoinButtonText :
+                            appointment.appointmentStatus === 'upcoming' ? styles.upcomingJoinButtonText :
                                 appointment.appointmentStatus === 'completed' ? styles.completedJoinButtonText : null
                         }
                     >
-                        {appointment.appointmentStatus === 'scheduled' ? 'Join Session' : appointment.appointmentStatus === 'completed' ? 'View Details' : null}
+                        {appointment.appointmentStatus === 'upcoming' ? 'Join Session' : appointment.appointmentStatus === 'completed' ? 'View Details' : null}
                     </Text>
                 </TouchableOpacity>
             </View>
