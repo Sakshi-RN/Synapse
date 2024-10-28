@@ -5,7 +5,7 @@ import { responsiveHeight } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 import { Intake, PHQ, Ace, Diagonstic } from '../../Assets/svg';
 import { ScrollView } from 'react-native-gesture-handler';
-import LCSWImage from '../../Assets/Images/graph.png';
+import GraphContainer from '../../Container/GraphContainer';
 import CustomHeader from '../../Components/CustomHeader';
 
 
@@ -56,9 +56,8 @@ const HomeScreen = () => {
             <CustomHeader title={'Survey History'} />
             <ScrollView >
                 <View style={styles.graphSyle}>
-                    <Image source={LCSWImage} />
+<GraphContainer/>
                 </View>
-
                 {actionConatiner()}
             </ScrollView>
         </View>
@@ -83,9 +82,10 @@ const styles = StyleSheet.create({
     },
     graphSyle: {
         height: responsiveHeight(25),
-        alignSelf: 'center',
+        alignItems: 'center',
         marginTop: responsiveHeight(4),
-        marginBottom: responsiveHeight(9)
+        marginBottom: responsiveHeight(9),
+        flex: 1, justifyContent: 'center', alignItems: 'center',  
     },
 
 });

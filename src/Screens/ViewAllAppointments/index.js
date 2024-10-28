@@ -1,6 +1,4 @@
 
-
-
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Platform } from 'react-native';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
@@ -59,7 +57,7 @@ const ViewAllAppointments = () => {
                     <View style={styles.rowStyle}>
                         <Text style={styles.name}>{appointment.providerName}</Text>
                         <Text style={styles.type}>{appointment.appointmentType}</Text>
-                        <Text style={styles.type}>{formattedDate}{' - '}{formattedTime}</Text>
+                        <Text style={styles.type}>{formattedDate}{' , '}{formattedTime}</Text>
                         <TouchableOpacity
                         style={
                             appointment.appointmentStatus === 'scheduled' ? styles.pendingButton :
