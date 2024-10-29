@@ -1,17 +1,26 @@
 
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, FlatList } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, StyleSheet, Text, FlatList, ScrollView } from 'react-native';
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
 import CustomButton from '../../Components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import Loader from '../../Components/Loader';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchSurveyData, selectSurveyData, selectLoading } from '../../redux/Reducers/PHQReducer';
+import GraphContainer from '../../Container/GraphContainer';
 
 const PHQ = () => {
     const navigation = useNavigation();
-    const [surveyData, setSurveyData] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const dispatch = useDispatch();
+    const surveyData = useSelector(selectSurveyData);
+
+
+    useEffect(() => {
+        dispatch(fetchSurveyData());
+    }, [dispatch]);
+
     const handleStartSurvey = () => {
         navigation.navigate('Survey');
     };
@@ -19,32 +28,6 @@ const PHQ = () => {
     const handleViewSurvey = () => {
         navigation.navigate('PHQDetails');
     };
-
-    const fetchSurveyData = async () => {
-        setLoading(true);
-        try {
-            const response = await fetch('https://eb1.taramind.com/getClientAssessment', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Api-Key': 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b',
-                },
-                body: JSON.stringify({
-                    clientId: '9bfea3d5-74f4-11ef-9c86-02f35b8058b3',
-                    assessmentName: 'PHQ-9',
-                }),
-            });
-            const data = await response.json();
-            setSurveyData(data);
-        } catch (error) {
-            console.error('Error fetching survey data:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
-    useEffect(() => {
-        fetchSurveyData();
-    }, []);
 
     const renderSurveyItem = ({ item }) => (
         <View style={styles.containerBox}>
@@ -74,19 +57,23 @@ const PHQ = () => {
 
     return (
         <View style={styles.container}>
-            <CustomHeader title={'PHQ - 9'} />
-            <View style={styles.content}>
-                {loading ? (
-                    <Loader />
-                ) : (
-                    <FlatList
-                        data={surveyData}
-                        keyExtractor={item => item.ID}
-                        renderItem={renderSurveyItem}
-                        showsVerticalScrollIndicator={false}
-                    />
-                )}
-            </View>
+            <CustomHeader title={'Survey History'} />
+            <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+                <GraphContainer />
+                    {surveyData.length > 0 ? (
+                        <FlatList
+                            data={surveyData}
+                            keyExtractor={item => item.ID}
+                            renderItem={renderSurveyItem}
+                            showsVerticalScrollIndicator={false}
+                            style={{ paddingHorizontal: responsiveWidth(5) }}
+                        />
+                    ) : (
+                        <Text style={styles.noDataText}>No survey data available.</Text>
+                    )}
+    
+            </ScrollView>
+                    
             {/* <CustomButton
                 buttonStyle={styles.joinButton}
                 textStyle={styles.joinText}
@@ -98,7 +85,6 @@ const PHQ = () => {
 };
 
 export default PHQ;
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -107,8 +93,8 @@ const styles = StyleSheet.create({
     },
     content: {
         flex: 1,
-        paddingHorizontal: responsiveWidth(5),
-        paddingTop: responsiveHeight(3),
+
+
     },
     surveyButton: {
         alignSelf: 'flex-end',
@@ -151,5 +137,11 @@ const styles = StyleSheet.create({
         color: Colors.blue,
         fontWeight: 'bold',
         width: responsiveWidth(43),
+    },
+    noDataText: {
+        textAlign: 'center',
+        fontSize: responsiveFontSize(1.6),
+        color: Colors.gray,
+        marginTop: responsiveHeight(2),
     },
 });

@@ -97,7 +97,7 @@ const HomeScreen = () => {
 
 
     const handleSurveyHistory = () => {
-        navigation.navigate('SurveyHistory');
+        navigation.navigate('PHQ');
     }
 
     const handleTreatmentSummary = () => {

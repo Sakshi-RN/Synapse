@@ -1,34 +1,15 @@
 import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../Reducers/authReducer";
-// import countryCodeReducer from "../Reducers/countryCodeReducer";
-// import { productReducer } from "../Reducers/getetProductReducer/index";
-// import userReducer from "../Reducers/userReducer";
-// import carbonReducer from "../Reducers/carbonReducer";
-// import cartReducer from "../Reducers/cartReducer";
 import profileReducer from "../Reducers/profileReducer";
-// import ChangeAddressFunc from "../Reducers/changeAddressReducer";
-// import SearchReducer from "../Reducers/SearchReducer";
-// import cartSlice from "../Reducers/getCartReducer";
+import phqReducer from '../Reducers/PHQReducer';
 import logger from "redux-logger";
-// import wishlistReducer from "../Reducers/wishlistReducer";
-// import CouponReducer from "../Reducers/CouponReducer";
 import AppointmentReducer from '../Reducers/AppointmentReducer';
 
 const reducer = combineReducers({
-  // auth: authReducer,
-  // country: countryCodeReducer,
-  // product: productReducer,
-  // user: userReducer,
-  // carbon: carbonReducer,
-  // cart: cartReducer,
    profile: profileReducer,
    Appointment:AppointmentReducer,
-  // address: ChangeAddressFunc,
-  // search: SearchReducer,
-  // Cart: cartSlice,
-  // wishlist: wishlistReducer,
-  // coupon: CouponReducer,
+   phq: phqReducer,
 });
 
 const thunkResponseLogger = (storeAPI) => (next) => async (action) => {
