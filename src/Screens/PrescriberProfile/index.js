@@ -1,41 +1,64 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, FlatList, Text, Image, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { View, StyleSheet, FlatList, Text, Image, TouchableOpacity, Platform, Modal, ScrollView } from 'react-native';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
-import LCSWImage from '../../Assets/Images/LCSW.png';
-import { Chat } from '../../Assets/svg';
-import CustomButton from '../../Components/CustomButton';
-import AboutmeTab from '../../Container/AboutmeTab';
-import LocationTab from '../../Container/LocationTab';
-import ReviewTab from '../../Container/ReviewTab';
-
+import { Chat, MeetIcon, MapView } from '../../Assets/svg';
+import Loader from '../../Components/Loader';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const PrescriberProfile = () => {
   const [activeTab, setActiveTab] = useState('About Me');
+  const [providerData, setProviderData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
   const tabs = ['About Me', 'Location'];
 
+  useEffect(() => {
+    const fetchProviderData = async () => {
+      try {
+        const response = await fetch(
+          'https://eb1.taramind.com/provider/publicProfile?providerId=cd71e5f2-c73d-4e30-9fbf-f20adf54de0e&facilityId=64149d0a-c9e6-4761-b31a-d553d76ef6eb',
+          {
+            method: 'GET',
+            headers: {
+              'X-Api-Key': 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b',
+            },
+          }
+        );
+        const data = await response.json();
+        setProviderData(data[0]);
+      } catch (error) {
+        console.error('Error fetching provider data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProviderData();
+  }, []);
+
   const renderContent = () => {
-    switch (activeTab) {
-      case 'About Me':
-        return <AboutmeTab />;
-      case 'Location':
-        return <LocationTab />;
-      // case 'Review':
-      //   return <ReviewTab />;
-      default:
-        return null;
+    if (activeTab === 'About Me') {
+      return <AboutmeTab providerData={providerData} />;
+    } else if (activeTab === 'Location') {
+      return <LocationTab providerData={providerData} />;
     }
+    return null;
   };
-  const profileCard = () => (
+
+  const renderProfileCard = () => (
     <View style={styles.careTeamnCard}>
-      <Image source={LCSWImage} style={styles.icon} />
+      {providerData?.profilePicture ? (
+        <Image source={{ uri: providerData.profilePicture }} style={styles.icon} />
+      ) : (
+        <Icon name="user" size={responsiveWidth(15)} color={Colors.grey} style={styles.icon} />
+      )}
       <View style={styles.textContainer}>
-        <Text style={styles.name}>Samuel Rush</Text>
-        <Text style={styles.mdText}>MD</Text>
-        <Text style={styles.description}>Treatment-resistant depression, Anxiety disorders, OCD, Chronic illness, and Cognitive disorders/TBI</Text>
+        <Text style={styles.name}>{providerData?.firstName} {providerData?.lastName}</Text>
+        <Text style={styles.mdText}>{providerData?.designation}</Text>
+        <Text style={styles.newdescription}>{providerData?.speciality}</Text>
       </View>
       <TouchableOpacity>
         <Chat />
@@ -43,52 +66,78 @@ const PrescriberProfile = () => {
     </View>
   );
 
+  const renderTab = ({ item: tab }) => (
+    <TouchableOpacity
+      onPress={() => setActiveTab(tab)}
+      style={[styles.tabButton, activeTab === tab && styles.activeTab]}
+    >
+      <Text style={[styles.tabText, activeTab === tab && styles.activeTabText]}>{tab}</Text>
+    </TouchableOpacity>
+  );
 
-  const renderTab = ({ item: tab }) => {
+  if (loading) {
     return (
-      <TouchableOpacity
-        onPress={() => setActiveTab(tab)}
-        style={[styles.tabButton, activeTab === tab && styles.activeTab]}
-      >
-        <Text style={[styles.tabText, activeTab === tab && styles.activeTabText]}>{tab}</Text>
-      </TouchableOpacity>
-    )
+      <View style={styles.centeredContainer}>
+        <Loader />
+      </View>
+    );
   }
 
-  const renderFlatlist = () => {
-    return (
-      <FlatList
-        data={tabs}
-        renderItem={renderTab}
-        keyExtractor={(item) => item}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.tabsContainer}
-      />
-    )
+  if (!providerData) {
+    return <Text style={styles.errorText}>No provider data available.</Text>;
   }
 
   return (
     <View style={styles.container}>
-      <CustomHeader title={'Prescriber Profile'} />
+      <CustomHeader title="Prescriber Profile" />
       <View style={styles.contentPadding}>
-        {profileCard()}
-        {renderFlatlist()}
+        {renderProfileCard()}
+        <FlatList
+          data={tabs}
+          renderItem={renderTab}
+          keyExtractor={(item) => item}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.tabsContainer}
+        />
         <ScrollView showsVerticalScrollIndicator={false} style={styles.flatListStyle}>
-        {renderContent()}
+          {renderContent()}
         </ScrollView>
-        {/* <CustomButton
-          buttonStyle={styles.Button}
-          title={'Ask a Question'} /> */}
       </View>
     </View>
   );
 };
 
+const AboutmeTab = ({ providerData }) => (
+  <>
+      <View style={styles.careTeamnCardNew}>
+      <Text style={styles.abTname}>
+        {providerData?.firstName} {providerData?.lastName}
+      </Text>
+      <MeetIcon />
+      <Text style={styles.virtualTYext}>Virtual</Text>
+    </View>
+    <Text style={styles.mdText}>{providerData?.designation}</Text>
+    <Text style={styles.specialitiesText}>Specialties</Text>
+    <Text style={styles.description}>{providerData?.speciality}</Text>
+    <Text style={styles.specialitiesText}>Background</Text>
+    {/* <Text style={styles.description}>{providerData?.firstName}</Text> */}
+  </>
+);
+
+const LocationTab = ({ providerData }) => (
+  <>
+    <Text style={[styles.specialitiesText, { marginTop: 0 }]}>Practice Place</Text>
+    <Text style={styles.description}>{providerData?.address1}</Text>
+    <Text style={styles.description}>{providerData?.address2}</Text>
+    <MapView style={styles.map} />
+  </>
+);
+
 export default PrescriberProfile;
 
 const styles = StyleSheet.create({
-  container: {
+    container: {
     flex: 1,
     paddingBottom: responsiveHeight(14),
     backgroundColor: Colors.white,
@@ -96,17 +145,13 @@ const styles = StyleSheet.create({
   contentPadding: {
     marginHorizontal: responsiveWidth(5),
     flex: 1,
-
   },
   careTeamnCard: {
     paddingHorizontal: responsiveWidth(3),
     paddingVertical: responsiveHeight(1.5),
     backgroundColor: Colors.white,
     shadowColor: Platform.OS === 'ios' ? Colors.grey : Colors.black,
-    shadowOffset: {
-      width: 4,
-      height: 5,
-    },
+    shadowOffset: { width: 4, height: 5 },
     shadowOpacity: 5,
     shadowRadius: 10,
     elevation: 5,
@@ -114,18 +159,17 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     borderColor: Colors.skyblue,
-    flexDirection: 'row'
-
+    flexDirection: 'row',
   },
   icon: {
     width: responsiveWidth(18),
     height: responsiveWidth(18),
-    borderRadius: 8
+    borderRadius: 8,
+
   },
   textContainer: {
     marginLeft: responsiveWidth(3),
     width: responsiveWidth(55),
-
   },
   name: {
     fontSize: responsiveFontSize(1.8),
@@ -138,12 +182,13 @@ const styles = StyleSheet.create({
     marginTop: responsiveHeight(0.5),
     fontWeight: '700',
   },
-  description: {
+  newdescription: {
     fontSize: responsiveFontSize(1.1),
     color: Colors.darkgrey,
     marginTop: responsiveHeight(0.5),
     fontWeight: '500',
     width: responsiveWidth(60),
+
   },
   Button: {
     marginHorizontal: responsiveWidth(5),
@@ -152,7 +197,7 @@ const styles = StyleSheet.create({
   tabsContainer: {
     marginTop: responsiveHeight(3),
     height: responsiveHeight(10),
-    alignSelf:'center' // need to remove later
+    alignSelf: 'center',
   },
   tabButton: {
     paddingHorizontal: responsiveWidth(8),
@@ -160,7 +205,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 6,
-
   },
   tabText: {
     fontSize: responsiveFontSize(1.3),
@@ -173,7 +217,7 @@ const styles = StyleSheet.create({
     height: responsiveHeight(3),
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 6
+    borderRadius: 6,
   },
   activeTabText: {
     color: Colors.blue,
@@ -181,9 +225,67 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   flatListStyle: {
-    height: '100%'
-
-}
+    height: '100%',
+  },
+  errorText: {
+    fontSize: responsiveFontSize(1.6),
+    color: Colors.red,
+    textAlign: 'center',
+    marginTop: responsiveHeight(2),
+  },
+  centeredContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+},
+careTeamnCardNew: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+},
+abTname: {
+  fontSize: responsiveFontSize(1.8),
+  fontWeight: '700',
+  color: Colors.blue,
+  width: responsiveWidth(70),
+},
+specialitiesText: {
+  fontSize: responsiveFontSize(1.8),
+  fontWeight: '700',
+  color: Colors.blue,
+  marginTop: responsiveHeight(1.5),
+},
+mdText: {
+  fontSize: responsiveFontSize(1.3),
+  color: Colors.darkgrey,
+  marginTop: responsiveHeight(0.5),
+  fontWeight: '500',
+},
+description: {
+  fontSize: responsiveFontSize(1.4),
+  color: Colors.darkgrey,
+  marginTop: responsiveHeight(0.5),
+  fontWeight: '500',
+},
+virtualTYext: {
+  fontSize: responsiveFontSize(1.4),
+  color: Colors.black,
+  fontWeight: '800',
+},
+loader: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+map: {
+  marginTop: responsiveHeight(2),
+},
+specialitiesText: {
+  fontSize: responsiveFontSize(1.8),
+  fontWeight: '700',
+  color: Colors.blue,
+  marginTop: responsiveHeight(1.5),
+},
 
 
 });
