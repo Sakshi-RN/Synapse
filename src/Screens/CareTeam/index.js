@@ -63,7 +63,6 @@ const CareTeam = () => {
 
   const renderItem = () => (
     <>
-
         <View style={styles.careTeamnCard}>
           <Image source= {{ uri: profile?.therapist?.profilePicture }} style={styles.icon} />
           <View style={styles.textContainer}>
@@ -83,9 +82,9 @@ const CareTeam = () => {
               />
             </View>
           </View>
-          <TouchableOpacity onPress={() => openModal()}>
+          {/* <TouchableOpacity onPress={() => openModal()}>
             <ThreeDots height={15} width={10} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
          <View style={styles.careTeamnCard}>
@@ -103,9 +102,9 @@ const CareTeam = () => {
           
        </View> 
           </View>
-          <TouchableOpacity onPress={() => openModal()}>
+          {/* <TouchableOpacity onPress={() => openModal()}>
             <ThreeDots height={15} width={10} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
  
     </>

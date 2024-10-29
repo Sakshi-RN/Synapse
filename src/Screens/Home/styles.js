@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
     },
     patientName: {
         color: Colors.white,
-        fontWeight: '500',
         fontSize: responsiveFontSize(2.1),
         marginTop: responsiveHeight(1),
     },

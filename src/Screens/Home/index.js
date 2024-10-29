@@ -71,24 +71,17 @@ const HomeScreen = () => {
             return 'Invalid Time';
         }
 
-        // Extract the time in 12-hour format
+
         let time = date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true });
-
-        // Convert AM/PM to lowercase
         time = time.replace('AM', 'am').replace('PM', 'pm');
-
         return time;
     }
 
     function formatDateTime(dateTimeString) {
-        if (!dateTimeString) return 'N/A';  // Handle cases where date is undefined
-
-        const [datePart, timePart] = dateTimeString.split(' ');  // Split date and time
-        const [month, day, year] = datePart.split('/');  // Split MM/DD/YYYY
-
-        const formattedDate = new Date(`${year}-${month}-${day}T${timePart}:00`);  // Create a new Date object
-
-        // Format the date using Intl.DateTimeFormat for better readability
+        if (!dateTimeString) return 'N/A'; 
+        const [datePart, timePart] = dateTimeString.split(' ');  
+        const [month, day, year] = datePart.split('/');  
+        const formattedDate = new Date(`${year}-${month}-${day}T${timePart}:00`); 
         const options = { year: 'numeric', month: 'numeric', day: 'numeric', };
         return new Intl.DateTimeFormat('en-US', options).format(formattedDate);
     }

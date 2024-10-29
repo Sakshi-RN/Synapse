@@ -40,7 +40,7 @@ const HomeScreen = () => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.secondRow}>
-                    <TouchableOpacity onPress={handleDiagonistic}>
+                    <TouchableOpacity>
                         <Diagonstic />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handleACE}>
@@ -56,7 +56,7 @@ const HomeScreen = () => {
             <CustomHeader title={'Survey History'} />
             <ScrollView >
                 <View style={styles.graphSyle}>
-<GraphContainer/>
+                    <GraphContainer />
                 </View>
                 {actionConatiner()}
             </ScrollView>
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: responsiveHeight(4),
         marginBottom: responsiveHeight(9),
-        flex: 1, justifyContent: 'center', alignItems: 'center',  
+        flex: 1, justifyContent: 'center', alignItems: 'center',
     },
 
 });

@@ -1,15 +1,17 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, FlatList } from 'react-native';
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
 import CustomButton from '../../Components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
+import Loader from '../../Components/Loader';
 
 const PHQ = () => {
     const navigation = useNavigation();
-
+    const [surveyData, setSurveyData] = useState([]);
+    const [loading, setLoading] = useState(true);
     const handleStartSurvey = () => {
         navigation.navigate('Survey');
     };
@@ -18,21 +20,47 @@ const PHQ = () => {
         navigation.navigate('PHQDetails');
     };
 
+    const fetchSurveyData = async () => {
+        setLoading(true);
+        try {
+            const response = await fetch('https://eb1.taramind.com/getClientAssessment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Api-Key': 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b',
+                },
+                body: JSON.stringify({
+                    clientId: '9bfea3d5-74f4-11ef-9c86-02f35b8058b3',
+                    assessmentName: 'PHQ-9',
+                }),
+            });
+            const data = await response.json();
+            setSurveyData(data);
+        } catch (error) {
+            console.error('Error fetching survey data:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+    useEffect(() => {
+        fetchSurveyData();
+    }, []);
+
     const renderSurveyItem = ({ item }) => (
         <View style={styles.containerBox}>
             <View style={styles.containerView}>
                 <Text style={styles.nameTitleText}>Survey Date</Text>
-                <Text style={styles.bodyText}>04/10/2024 08:08</Text>
+                <Text style={styles.bodyText}>{item.assessmentStartedDate}</Text>
             </View>
 
             <View style={styles.containerView}>
                 <Text style={styles.nameTitleText}>Ordered by</Text>
-                <Text style={styles.bodyText}>Leena Joseph, LCSW</Text>
+                <Text style={styles.bodyText}>{item.providerName}</Text>
             </View>
 
             <View style={styles.containerView}>
                 <Text style={styles.nameTitleText}>Score</Text>
-                <Text style={styles.bodyText}>11</Text>
+                <Text style={styles.bodyText}>{item.assessmentScore}</Text>
             </View>
 
             <CustomButton
@@ -48,12 +76,16 @@ const PHQ = () => {
         <View style={styles.container}>
             <CustomHeader title={'PHQ - 9'} />
             <View style={styles.content}>
-                <FlatList
-                    data={[1,2,3]}
-                    keyExtractor={item => item.id}
-                    renderItem={renderSurveyItem}
-                    showsVerticalScrollIndicator={false}
-                />
+                {loading ? (
+                    <Loader />
+                ) : (
+                    <FlatList
+                        data={surveyData}
+                        keyExtractor={item => item.ID}
+                        renderItem={renderSurveyItem}
+                        showsVerticalScrollIndicator={false}
+                    />
+                )}
             </View>
             {/* <CustomButton
                 buttonStyle={styles.joinButton}
@@ -100,7 +132,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: Colors.white,
         marginBottom: responsiveHeight(2),
-     
+
     },
     containerView: {
         flexDirection: 'row',
