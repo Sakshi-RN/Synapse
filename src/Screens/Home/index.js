@@ -36,14 +36,14 @@ const HomeScreen = () => {
 
 
     function formatAppointmentDate(dateString) {
-        if (!dateString) return 'Invalid Date';
+        if (!dateString) return '';
 
         const [month, day, year] = dateString.split('/');
-        if (!month || !day || !year) return 'Invalid Date Format';
+        if (!month || !day || !year) return '';
 
         const date = new Date(`${year}-${month}-${day}`);
         if (isNaN(date.getTime())) {
-            return 'Invalid Date';
+            return '';
         }
 
         const options = { month: 'short' };
@@ -58,17 +58,17 @@ const HomeScreen = () => {
 
 
     function formatAppointmentTime(timeString) {
-        if (!timeString) return 'Invalid Time';
+        if (!timeString) return 'N/A';
 
         const [hours, minutes] = timeString.split(':');
-        if (!hours || !minutes) return 'Invalid Time Format';
+        if (!hours || !minutes) return 'N/A';
 
         const date = new Date();
         date.setHours(parseInt(hours, 10));
         date.setMinutes(parseInt(minutes, 10));
 
         if (isNaN(date.getTime())) {
-            return 'Invalid Time';
+            return 'N/A';
         }
 
 

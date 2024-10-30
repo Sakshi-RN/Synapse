@@ -3,17 +3,37 @@ import { View, Text, StyleSheet } from 'react-native';
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 import { useNavigation } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 
 
 const ScoreContainer = () => {
-    const navigation = useNavigation();
-    return (
+    const route = useRoute();
+    const { therapistName = 'N/A', score = 'N/A', date = 'N/A' } = route.params || {};
+    // Function to format date in dd/mm/yyyy format and exclude the time
+    const formatSurveyDate = (dateStr) => {
+        if (!dateStr) return 'N/A';
 
+        // Extract just the date part before the space
+        const [datePart] = dateStr.split(" ");
+        const [month, day, year] = datePart.split("/");
+
+        return (day && month && year)
+            ? `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`
+            : 'Invalid date';
+    };
+    const formattedDate = formatSurveyDate(date);
+    return (
         <View style={styles.headerInfo}>
-            <Text style={styles.therapistText}>Therapist: <Text style={styles.linkText}>Leena Joseph, LCSW</Text></Text>
+            <Text style={styles.therapistText}>
+                Therapist: <Text style={styles.linkText}>{therapistName}</Text>
+            </Text>
             <View style={styles.row}>
-                <Text style={styles.dateText}><Text style={styles.scoreText}>Date:</Text> 04/10/2024</Text>
-                <Text style={styles.dateText}><Text style={styles.scoreText}>Score:</Text> 5</Text>
+                <Text style={styles.dateText}>
+                    <Text style={styles.scoreText}>Date:</Text> {formattedDate}
+                </Text>
+                <Text style={styles.dateText}>
+                    <Text style={styles.scoreText}>Score:</Text> {score}
+                </Text>
             </View>
         </View>
 

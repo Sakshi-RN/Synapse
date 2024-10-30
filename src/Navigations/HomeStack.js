@@ -22,7 +22,7 @@ const HomeStackNav = createStackNavigator();
 export const HomeStack = (props) => {
   return (
     <HomeStackNav.Navigator
-        initialRouteName="PHQ"
+        initialRouteName="Home"
         screenOptions={{
             headerShown: false,
         }}

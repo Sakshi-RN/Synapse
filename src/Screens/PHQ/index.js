@@ -25,9 +25,14 @@ const PHQ = () => {
         navigation.navigate('Survey');
     };
 
-    const handleViewSurvey = () => {
-        navigation.navigate('PHQDetails');
+    const handleViewSurvey = (item) => {
+        navigation.navigate('PHQDetails', {
+            therapistName: item.providerName,
+            score: item.assessmentScore,
+            date: item.assessmentStartedDate
+        });
     };
+    
 
     const renderSurveyItem = ({ item }) => (
         <View style={styles.containerBox}>
@@ -50,7 +55,7 @@ const PHQ = () => {
                 buttonStyle={styles.surveyButton}
                 textStyle={styles.joinText}
                 title={'View Survey'}
-                onPress={handleViewSurvey}
+                onPress={() => handleViewSurvey(item)}
             />
         </View>
     );
