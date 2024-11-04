@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { View, StyleSheet, Alert, TouchableOpacity, FlatList, Modal, Text } from 'react-native';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
 import CustomButton from '../../Components/CustomButton';
 import CommonInput from '../../Components/CommonInput';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { updateProfile, fetchProfile } from '../../redux/Reducers/profileReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import Loader from '../../Components/Loader';
 
 const EditPreferences = () => {
     const navigation = useNavigation();
+    const dispatch = useDispatch();
     const [languages, setLanguages] = useState([]);
     const [communicationMethods, setCommunicationMethods] = useState([]);
     const [genders, setGenders] = useState([]);
@@ -17,7 +21,25 @@ const EditPreferences = () => {
     const [selectedGender, setSelectedGender] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const [modalType, setModalType] = useState('');
+    const [loading, setLoading] = useState(false);
 
+    const { data, error } = useSelector(state => state.profile);
+    const profile = data && data[0];
+
+    useFocusEffect(
+        useCallback(() => {
+            dispatch(fetchProfile());
+        }, [dispatch])
+    );
+
+    useEffect(() => {
+        if (profile) {
+            setSelectedCommunicationMethod(profile.commChannel[0] || '');
+            setSelectedGender(profile.genderProviderPreference || '');
+            setSelectedLanguage(profile.preferredLanguage || '');
+        }
+    }, [profile]);
+    
     useEffect(() => {
         fetchOptions();
     }, []);
@@ -45,7 +67,23 @@ const EditPreferences = () => {
     };
 
     const handlePreferences = () => {
-        navigation.navigate('Preferences');
+        const updatedProfile = {
+            clientId: profile.clientID,
+            genderProviderPreference: selectedGender || profile.genderProviderPreference,
+            preferredLanguage: selectedLanguage || profile.preferredLanguage,
+            commChannel: [selectedCommunicationMethod || profile.commChannel[0]],
+        };
+
+        setLoading(true);
+        dispatch(updateProfile(updatedProfile))
+            .then(() => {
+                setLoading(false); 
+                navigation.navigate('Preferences');
+            })
+            .catch((error) => {
+                setLoading(false);
+                Alert.alert('Error', 'Failed to update profile. Please try again.');
+            });
     };
 
     const handleGoBack = () => {
@@ -72,7 +110,7 @@ const EditPreferences = () => {
                 } else if (modalType === 'Gender') {
                     setSelectedGender(item);
                 }
-                closeModal(); 
+                closeModal();
             }}
             style={styles.dropdownItem}
         >
@@ -88,22 +126,22 @@ const EditPreferences = () => {
                     placeholder={'Select Language'}
                     title={'What language would you prefer your therapist to speak?'}
                     iconName={"chevron-down"}
-                    onPress={() => openModal('Language')} // Corrected case
-                    value={selectedLanguage} // Set selected language
+                    onPress={() => openModal('Language')}
+                    value={selectedLanguage}
                 />
                 <CommonInput
                     placeholder={'Select Communication Method'}
                     title={'Please select preferred communication method'}
                     iconName={"chevron-down"}
-                    onPress={() => openModal('Communication Method')} // Corrected case
-                    value={selectedCommunicationMethod} // Set selected communication method
+                    onPress={() => openModal('Communication Method')}
+                    value={selectedCommunicationMethod}
                 />
                 <CommonInput
                     placeholder={'Select Gender'}
                     title={'What is your preference for the gender of your therapist?'}
                     iconName={"chevron-down"}
-                    onPress={() => openModal('Gender')} // Corrected case
-                    value={selectedGender} // Set selected gender
+                    onPress={() => openModal('Gender')}
+                    value={selectedGender}
                 />
 
                 <View style={styles.row}>
@@ -116,8 +154,15 @@ const EditPreferences = () => {
                         buttonStyle={styles.joinButton}
                         textStyle={styles.joinText}
                         title={'Save'}
-                        onPress={handlePreferences} />
+                        onPress={handlePreferences}
+                    />
                 </View>
+
+                {loading && (
+                    <View style={styles.centeredContainer}>
+                        <Loader />
+                    </View>
+                )}
             </View>
 
             <Modal
@@ -171,7 +216,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     modalTitle: {
-        fontSize:responsiveFontSize(2),
+        fontSize: responsiveFontSize(2),
         fontWeight: '700',
         marginBottom: 10,
     },
@@ -201,5 +246,9 @@ const styles = StyleSheet.create({
     textStyle: {
         fontWeight: '400',
         color: Colors.black,
+    },
+    centeredContainer: {
+        flex: 1,
+        marginTop: responsiveHeight(5)
     },
 });

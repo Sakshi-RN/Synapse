@@ -47,7 +47,7 @@ const Preferences = () => {
                 <View style={CommonStyle.container}>
                     <View style={commonStyles.containerView}>
                         <Text style={CommonStyle.titleText}>Preferred language for providers</Text>
-                        <Text style={commonStyles.bodyText}>{profile?.primaryLanguage}</Text>
+                        <Text style={commonStyles.bodyText}>{profile?.preferredLanguage}</Text>
                     </View>
                     <View style={commonStyles.containerView}>
                         <Text style={CommonStyle.titleText}>Preferred communication method</Text>

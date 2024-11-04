@@ -108,7 +108,6 @@ const EditProfile = () => {
         } else {
             setPhoneError('');
         }
-
         const updatedProfile = {
             firstName,
             lastName,
@@ -120,17 +119,18 @@ const EditProfile = () => {
             state: selectedState,
             zip,
             clientCurrentWeight: selectedWeight || clientCurrentWeight,
-            gender: selectedGender,
-            height: selectedHeight,
+            gender: selectedGender || capitalizeFirstLetter(profile.gender),
+            clientCurrentHeight: selectedHeight || profile.clientCurrentHeight, // Updated
         };
+        
         setLoading(true);
         dispatch(updateProfile(updatedProfile))
             .then(() => {
-                setLoading(false); // Reset loading to false after success
+                setLoading(false); 
                 navigation.navigate('MyProfileScreen');
             })
             .catch((error) => {
-                setLoading(false); // Reset loading to false on error
+                setLoading(false);
                 console.error('Failed to update profile:', error);
             });
 

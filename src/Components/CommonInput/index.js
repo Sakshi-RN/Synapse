@@ -9,6 +9,7 @@ const CommonInput = ({
     placeholder,
     title,
     iconName,
+    onChangeText,
 onPress,
 value}) => {
     return (
@@ -19,6 +20,7 @@ value}) => {
                     placeholder={placeholder}
                     placeholderTextColor={Colors.OFFBLACK}
                     value={value}
+                    onChangeText={onChangeText}
                 />
                 <TouchableOpacity onPress={onPress}>
                     {iconName && (

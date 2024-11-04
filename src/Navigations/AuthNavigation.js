@@ -12,7 +12,7 @@ export default function AuthNavigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="BTabNavigation"
+        initialRouteName="SignIn"
       >
         <Stack.Screen
           name="SignIn"
