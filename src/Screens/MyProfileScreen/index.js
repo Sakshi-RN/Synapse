@@ -180,7 +180,6 @@ function formatDate(dobString) {
                         <Text style={styles.bodyText}>{capitalizeFirstLetter(profile?.gender)}</Text>
                     </View>
                     <View style={styles.line} />
-
                     <View style={styles.containerView}>
                         <Text style={CommonStyle.nameTitleText}>Weight (in pounds)</Text>
                         <Text style={styles.bodyText}>{profile.clientCurrentWeight} lbs </Text>
@@ -273,18 +272,11 @@ const styles = StyleSheet.create({
         fontSize: responsiveFontSize(1.6),
         color: Colors.blue,
         fontWeight: 'bold',
-        // backgroundColor:'red',
       
     },
     line: {
         backgroundColor: Colors.light_skyblue,
         height: 1,
-    },
-    errorContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: Colors.white,
     },
     errorText: {
         color: Colors.red,
