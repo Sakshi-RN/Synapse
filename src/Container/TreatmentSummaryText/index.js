@@ -9,7 +9,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 const TreatmentSummary = () => {
-    const dispatch = useDispatch();
     const { data, fetchLoading, fetchError } = useSelector(state => state.profile);
     const [additionalData, setAdditionalData] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -32,15 +31,7 @@ const TreatmentSummary = () => {
         );
     }
 
-    const profile = data && data[0];
 
-    if (!profile) {
-        return (
-            <View style={styles.centeredContainer}>
-                <Text style={styles.errorText}>No data available.</Text>
-            </View>
-        );
-    }
 
     const xdata = [
         { id: '1', text: 'Based on this evaluation, this individual IS deemed appropriate for ketamine-assisted therapy treatment at this time.' },
@@ -68,7 +59,7 @@ const TreatmentSummary = () => {
 
             const result = await response.json();
             if (response.ok) {
-                setAdditionalData(result); // Make sure to set the fetched data
+                setAdditionalData(result);
             } else {
                 throw new Error('Failed to fetch profile data');
             }
@@ -86,20 +77,22 @@ const TreatmentSummary = () => {
     );
 
     const treatment = additionalData && additionalData[0];
-
+    const diagnosticDeterminationArray = JSON.parse(treatment?.diagnosticDetermination || '[]');
 
     const renderContent = () => {
         return (
             <View style={styles.flatlistContent}>
                 <Text style={styles.headingText}>Clinical Diagnosis List</Text>
                 <FlatList
-                    data={xdata}
-                    keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => (
-                        <Text style={styles.itemText}>{`${item.id}. ${item.text}`}</Text>
-                    )}
-                />
-                <Text style={styles.headingText}>Synopsis of client’s pre-treatment condition</Text>
+            data={diagnosticDeterminationArray}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item, index }) => (
+                <View style={styles.itemContainer}>
+                    <Text style={styles.itemText}>{index + 1}. {item}</Text>
+                </View>
+            )}
+        />
+                <Text style={styles.headingText}>Synopsis of pre-treatment condition</Text>
                 <Text style={styles.danielText}>{treatment?.clinicalSynopsis}</Text>
                 <Text style={styles.headingText}>Treatment Recommendations</Text>
                 <Text style={styles.itemText}>
@@ -163,7 +156,7 @@ const styles = StyleSheet.create({
         fontWeight: '400',
         color: Colors.black,
         marginTop: responsiveHeight(2),
-        bottom:responsiveHeight(-1)
+        bottom: responsiveHeight(-1)
 
     },
 
@@ -198,7 +191,7 @@ const styles = StyleSheet.create({
         marginTop: responsiveHeight(1),
         lineHeight: 16
     },
- 
+
     signTextStyle: {
         marginTop: responsiveHeight(3),
         fontSize: responsiveFontSize(3),

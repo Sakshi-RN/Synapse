@@ -1,16 +1,15 @@
 
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { View, StyleSheet, Text, FlatList } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
 import CustomButton from '../../Components/CustomButton';
 import CommonStyle from '../../Components/CommonStyle';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Signature } from '../../Assets/svg';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { fetchProfile } from '../../redux/Reducers/profileReducer'; 
+import { fetchProfile } from '../../redux/Reducers/profileReducer';
 import Loader from '../../Components/Loader';
 import TreatmentSummaryText from '../../Container/TreatmentSummaryText'
 
@@ -35,8 +34,8 @@ const TreatmentSummary = () => {
     if (fetchError) {
         return (
             <View style={styles.centeredContainer}>
-            <Text style={styles.errorText}>Failed to load data. Please try again later.</Text>
-        </View>
+                <Text style={styles.errorText}>Failed to load data. Please try again later.</Text>
+            </View>
         );
     }
 
@@ -45,19 +44,10 @@ const TreatmentSummary = () => {
     if (!profile) {
         return (
             <View style={styles.centeredContainer}>
-            <Text style={styles.errorText}>No data available.</Text>
-        </View>
+                <Text style={styles.errorText}>No data available.</Text>
+            </View>
         );
     }
-    const xdata = [
-        { id: '1', text: 'Based on this evaluation, this individual IS deemed appropriate for ketamine-assisted therapy treatment at this time.' },
-        { id: '2', text: 'Based on this evaluation and the client\'s ACE score, it is recommended that this client receive the standard protocol.' },
-        { id: '3', text: 'Checking this box is my request to have diagnosis-specific rating scales sent electronically by synapse to the patient automatically, at predetermined intervals.' },
-        { id: '4', text: 'The critical role of these rating scales in their treatment was discussed with the client, and they were instructed to promptly fill out all rating scales sent to them throughout and after their treatment course. The client has been informed that the first set will be sent for completion before the first preparation therapy session.' },
-        { id: '5', text: 'Client will schedule a preparation therapy session with this therapist.' },
-        { id: '6', text: 'Client has been instructed to contact this therapist with any pressing concerns between therapy sessions.' },
-        { id: '7', text: 'Document any additional recommendations, instructions, or concerns.' }
-    ];
 
 
     const handleGoBack = () => {
@@ -68,37 +58,37 @@ const TreatmentSummary = () => {
         return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
     }
 
-  
 
-function parseDate(dobString) {
-    const parts = dobString.split('/');
-    return new Date(`${parts[2]}-${parts[0]}-${parts[1]}`); 
-}
+
+    function parseDate(dobString) {
+        const parts = dobString.split('/');
+        return new Date(`${parts[2]}-${parts[0]}-${parts[1]}`);
+    }
 
     function calculateAge(birthDateString) {
         if (!birthDateString) {
-            return 'N/A'; 
+            return 'N/A';
         }
-    
+
         const birthDate = parseDate(birthDateString);
         if (isNaN(birthDate.getTime())) {
-            return 'Invalid Date'; 
+            return 'Invalid Date';
         }
-    
+
         const currentDate = new Date();
         let age = currentDate.getFullYear() - birthDate.getFullYear();
         const monthDifference = currentDate.getMonth() - birthDate.getMonth();
-    
+
         if (
             monthDifference < 0 ||
             (monthDifference === 0 && currentDate.getDate() < birthDate.getDate())
         ) {
             age--;
         }
-    
+
         return age;
     }
-    
+
     const age = calculateAge(profile.dob);
 
     const renderHealthDetails = () => {
@@ -169,7 +159,7 @@ function parseDate(dobString) {
             </View>
         )
     }
-    
+
 
 
     return (
@@ -177,8 +167,8 @@ function parseDate(dobString) {
             <CustomHeader title={'Treatment Summary'} />
             <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
                 {renderHealthDetails()}
-         <TreatmentSummaryText/>
-         <Text style={styles.nameText}>{profile?.therapist?.providerName}</Text>
+                <TreatmentSummaryText />
+                <Text style={styles.nameText}>{profile?.therapist?.providerName}</Text>
             </ScrollView>
             <CustomButton
                 buttonStyle={styles.joinButton}
@@ -255,7 +245,7 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         color: Colors.black,
         top: responsiveHeight(-11),
-        marginTop:responsiveHeight(1.5)
+        marginTop: responsiveHeight(1.5)
 
     },
 
