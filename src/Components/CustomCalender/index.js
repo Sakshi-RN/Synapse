@@ -26,23 +26,14 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
 
 
     const today = dayjs();
-
-    const generateDatesForNextMonths = () => {
+    const generateNextFourDays = () => {
         const dates = [];
-        const monthsToShow = 2;
-
-        for (let monthOffset = 0; monthOffset <= monthsToShow; monthOffset++) {
-            const currentMonth = today.add(monthOffset, 'month');
-            const daysInMonth = currentMonth.daysInMonth();
-            for (let day = 1; day <= daysInMonth; day++) {
-                const date = currentMonth.date(day).format('YYYY-MM-DD');
-                dates.push(date);
-            } 
+        for (let i = 0; i < 4; i++) {
+            dates.push(dayjs().add(i, 'day').format('YYYY-MM-DD'));
         }
         return dates;
     };
-
-    const dates = generateDatesForNextMonths();
+    const dates = generateNextFourDays();
 
     const handleScroll = (event) => {
         const scrollPosition = event.nativeEvent.contentOffset.x;
@@ -61,7 +52,7 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
         const fetchAppointmentsData = async () => {
             try {
                 const response = await fetch(
-                    'https://eb1.taramind.com/getAllClientAppointments/9bfea3d5-74f4-11ef-9c86-02f35b8058b3',
+                    'https://eb1.taramind.com/getAllClientAppointments/5dbbe704-9aab-11ef-83e8-02f35b8058b3',
                     {
                         method: 'GET',
                         headers: {
@@ -97,8 +88,6 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
                         formattedDate = new Date(rawDate).toISOString().split('T')[0]; // Try ISO format fallback
                     }
 
-
-
                     // If valid, add to count map
                     if (formattedDate) {
                         countMap[formattedDate] = (countMap[formattedDate] || 0) + 1;
@@ -106,7 +95,6 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
                 });
 
                 // Log the countMap to ensure it’s populated correctly
-
 
                 setAppointmentsCount(countMap);
 
@@ -118,41 +106,6 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
         fetchAppointmentsData();
     }, []);
 
-
-    const renderDots = (appointmentCount, isSelected, isToday) => {
-
-
-        if (appointmentCount === 0) {
-            return null;
-        }
-
-        if (appointmentCount > 3) {
-            return (
-                <Text style={[
-                    styles.moreAppointmentsText,
-                    isSelected && styles.selectedMoreAppointmentsText,
-                    isToday && styles.todayMoreAppointmentsText
-                ]}>
-                    ... +{appointmentCount - 3}
-                </Text>
-            );
-        }
-
-        return (
-            <View style={styles.dotsContainer}>
-                {Array.from({ length: appointmentCount }).map((_, dotIndex) => (
-                    <View
-                        key={dotIndex}
-                        style={[
-                            styles.dot,
-                            isSelected && styles.selectedDot,
-                            isToday && styles.todayDot
-                        ]}
-                    />
-                ))}
-            </View>
-        );
-    };
 
     const Calender = () => {
         return (
@@ -191,17 +144,9 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
                 </TouchableOpacity>
             </View>
             <View style={styles.calenderContainer}>
-                <Calender
-
-                />
+                <Calender/>
             </View>
-            <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.scrollContainer}
-                onScroll={handleScroll}
-                scrollEventThrottle={16}
-            >
+            <View style={styles.scrollContainer}>
                 {dates.map((date, index) => {
                     const day = dayjs(date).format('D');
                     const dayOfWeek = dayjs(date).format('ddd');
@@ -231,12 +176,15 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
                                 isSelected && styles.selectedDayText,
                                 isToday && !isSelected && styles.todayDayText
                             ]}>{dayOfWeek}</Text>
-
-                            {renderDots(appointmentCount, isSelected, isToday)}
+                            <Text  style={[
+                                styles.dayText,
+                                isSelected && styles.selectedDayText,
+                                isToday && !isSelected && styles.todayDayText
+                            ]}>...</Text>
                         </TouchableOpacity>
                     );
                 })}
-            </ScrollView>
+            </View>
         </View>
     );
 }
@@ -255,19 +203,19 @@ const styles = StyleSheet.create({
     },
     scrollContainer: {
         flexDirection: 'row',
-        paddingHorizontal: responsiveWidth(2),
+        paddingHorizontal: responsiveWidth(5),
     },
     dateContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-        width: responsiveWidth(18),
-        height: responsiveHeight(10),
+        width: responsiveWidth(19),
+        height: responsiveHeight(11),
         borderRadius: 8,
-        marginHorizontal: responsiveWidth(1),
-        backgroundColor: Colors.lightgrey,
+        marginHorizontal: responsiveWidth(1.5),
+        backgroundColor: '#F5F5F5',
     },
     selectedDateContainer: {
-        backgroundColor: Colors.blue,
+        backgroundColor:'#87ABC9',
         borderColor: Colors.white,
         borderWidth: 1,
     },
@@ -299,17 +247,12 @@ const styles = StyleSheet.create({
     todayDayText: {
         color: Colors.white,
     },
-    dotsContainer: {
-        flexDirection: 'row',
-        marginTop: responsiveHeight(1),
-        alignItems: 'center',
-    },
+   
     dot: {
-        width: 5,
-        height: 5,
-        borderRadius: 2.5,
-        backgroundColor: Colors.grey,
-        marginHorizontal: 2,
+        fontSize:20,
+        color: Colors.grey,
+        marginHorizontal:responsiveWidth(3),
+        fontWeight:'500'
     },
     selectedDot: {
         backgroundColor: Colors.white,

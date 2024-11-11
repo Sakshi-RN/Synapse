@@ -169,22 +169,13 @@ const styles = StyleSheet.create({
         marginTop: responsiveHeight(2),
         color: Colors.blue
     },
-
-    careTeamImage: {
-        width: 70,
-        height: 70,
-        borderRadius: 35,
-    },
     careTeamName: {
         fontSize: responsiveFontSize(1.2),
         fontWeight: '600',
         marginTop: responsiveHeight(1),
-        width: responsiveWidth(22),
+        width: responsiveWidth(20),
         marginTop: responsiveFontSize(1),
         textAlign: 'center',
-
-
-
     },
     samuelName: {
         fontSize: responsiveFontSize(1.2),
@@ -193,17 +184,14 @@ const styles = StyleSheet.create({
         width: responsiveWidth(20),
         textAlign: 'center',
         backgroundColor: 'green'
-
     },
 
     ConcergeName: {
         fontSize: responsiveFontSize(1.2),
         color: Colors.black,
         fontWeight: '500',
-        width: responsiveWidth(20),
+        width: responsiveWidth(22),
         textAlign: 'center',
-
-
     },
     careTeamRole: {
         fontSize: responsiveFontSize(1),
@@ -211,8 +199,6 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         width: responsiveWidth(22),
         textAlign: 'center',
-
-
     },
     actionsContainer: {
         padding: responsiveWidth(4)
@@ -229,7 +215,7 @@ const styles = StyleSheet.create({
         margin: responsiveWidth(2),
         backgroundColor: Colors.blue
     },
-    actionIcon: {
+    actionIcon: {  
         width: 40,
         height: 40,
         marginBottom: responsiveHeight(1)
@@ -306,25 +292,30 @@ const styles = StyleSheet.create({
 
     },
     text: {
-        transform: [{ rotate: '280deg' }],
-        fontWeight: '400',
+        transform: [{ rotate: '274deg' }],
+        fontWeight: '600',
         fontSize: responsiveFontSize(1.1),
         color: Colors.white,
         marginBottom: responsiveHeight(0),
         alignSelf: 'center',
-        width: responsiveWidth(16),
+        width: responsiveWidth(17),
 
     },
     firstPhase: {
-        transform: [{ rotate: '280deg' }],
-        fontWeight: '400',
+        transform: [{ rotate: '274deg' }],
+        fontWeight: '600',
         fontSize: responsiveFontSize(1.1),
         color: Colors.white,
         marginBottom: responsiveHeight(0),
         alignSelf: 'center',
-        width: responsiveWidth(10),
-
+        width: responsiveWidth(10)
     },
+    icon: {
+        width: 60,
+        height:60,
+        borderRadius:30,
+        marginLeft:responsiveWidth(2)
+      },
 
 });
 

@@ -1,4 +1,4 @@
-import React, { useCallback,useEffect,useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { View, Text, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import Swiper from 'react-native-swiper';
@@ -10,7 +10,8 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { fetchProfile } from '../../redux/Reducers/profileReducer';
 import Loader from '../../Components/Loader';
 import { responsiveWidth } from 'react-native-responsive-dimensions';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Colors from '../../Themes/Colors';
 
 
 
@@ -28,8 +29,8 @@ const HomeScreen = () => {
         { label: 'Integration 2', active: false },
         { label: 'Treatment 3', active: false },
         { label: 'Integration 3', active: false },
-      ];
-    
+    ];
+
     useFocusEffect(
         useCallback(() => {
             dispatch(fetchProfile());
@@ -89,10 +90,10 @@ const HomeScreen = () => {
     }
 
     function formatDateTime(dateTimeString) {
-        if (!dateTimeString) return 'N/A'; 
-        const [datePart, timePart] = dateTimeString.split(' ');  
-        const [month, day, year] = datePart.split('/');  
-        const formattedDate = new Date(`${year}-${month}-${day}T${timePart}:00`); 
+        if (!dateTimeString) return 'N/A';
+        const [datePart, timePart] = dateTimeString.split(' ');
+        const [month, day, year] = datePart.split('/');
+        const formattedDate = new Date(`${year}-${month}-${day}T${timePart}:00`);
         const options = { year: 'numeric', month: 'numeric', day: 'numeric', };
         return new Intl.DateTimeFormat('en-US', options).format(formattedDate);
     }
@@ -259,25 +260,27 @@ const HomeScreen = () => {
             <>
                 <View style={styles.careTeamRow}>
                     <TouchableOpacity onPress={handlePrescriberProfile}>
-                        <Image
-                            style={styles.careTeamImage}
-                            source={profile?.therapist?.profilePicture ? { uri: profile.therapist.profilePicture } : images.TherapistImg}
-                        />                
-                         </TouchableOpacity>
+                        {profile?.therapist?.profilePicture ? (
+                            <Image source={{ uri: profile?.therapist?.profilePicture }} style={styles.icon} />
+                        ) : (
+                         <Icon name="user" size={responsiveWidth(15)} color={Colors.grey} style={styles.icon} />
+                        )}
+                    </TouchableOpacity>
                     <TouchableOpacity onPress={handlePrescriberProfile}>
-                    <Image   
-                    tyle={styles.careTeamImage}
-                     source={profile?.prescriber?.profilePicture? { uri: profile.prescriber.profilePicture } : images.PrescriberImg}
-                     />   
+                        {profile?.prescriber?.profilePicture ? (
+                            <Image source={{ uri: profile?.prescriber?.profilePicture }} style={styles.icon} />
+                        ) : (
+                            <Icon name="user" size={responsiveWidth(15)} color={Colors.grey} style={styles.icon} />
+                        )}
                     </TouchableOpacity >
                     <Concierge />
                 </View>
                 <View style={styles.rowNew}>
                     <TouchableOpacity onPress={handlePrescriberProfile}>
-                        <Text style={styles.careTeamName}>{profile?.therapist?.providerName}</Text>
+                        <Text style={styles.careTeamName}>{profile?.therapist?.providerName || Therapist}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handlePrescriberProfile}>
-                        <Text style={[styles.careTeamName, { width: responsiveWidth(24) }]}>{profile?.prescriber?.providerName}</Text>
+                        <Text style={[styles.careTeamName, { width: responsiveWidth(24) }]}>{profile?.prescriber?.providerName || Prescriber}</Text>
                     </TouchableOpacity>
                     <Text style={styles.careTeamName}>Concierge</Text>
                 </View>
@@ -290,29 +293,26 @@ const HomeScreen = () => {
         )
     }
 
-
-    const processContainer =()=> {
+    const processContainer = () => {
         return (
             <View style={styles.newContainer}>
-              {phases.map((phase, index) => (
-                <View
-                  key={index}
-                  style={[
-                    styles.phase,
-                    { backgroundColor: phase.active ? '#354764' : '#ECECEC' },
-                   
-                    
-                  ]}
-                >
-                    <Text style={[styles.text,
-                         index === 0 ? styles.firstPhase : '' ]}>
-            {phase.label}
-          </Text>
-                </View>
-              ))}
+                {phases.map((phase, index) => (
+                    <View
+                        key={index}
+                        style={[
+                            styles.phase,
+                            { backgroundColor: phase.active ? '#354764' : '#ECECEC' }
+                        ]}
+                    >
+                        <Text style={[styles.text,
+                        index === 0 ? styles.firstPhase : '']}>
+                            {phase.label}
+                        </Text>
+                    </View>
+                ))}
             </View>
-          )
-        }
+        )
+    }
 
     return (
         <View style={styles.container}>

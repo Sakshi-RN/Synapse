@@ -26,7 +26,7 @@ const Appointment = () => {
         const fetchAppointments = async () => {
             try {
                 const response = await fetch(
-                    'https://eb1.taramind.com/getAllClientAppointments/9bfea3d5-74f4-11ef-9c86-02f35b8058b3',
+                    'https://eb1.taramind.com/getAllClientAppointments/5dbbe704-9aab-11ef-83e8-02f35b8058b3',
                     {
                         method: 'GET',
                         headers: {
@@ -77,17 +77,12 @@ const Appointment = () => {
         <View style={styles.container}>
             <CustomHeader title={'Appointments'} />
             <CustomCalender availableDates={availableDates} setFilteredAppointments={setFilteredAppointments} filteredAppointments={filteredAppointments} />
-            <View style={styles.row}>
                 <Text style={styles.appointmentsText}>{getAppointmentsText()}</Text>
-                <TouchableOpacity onPress={handleViewAllAppointment}> 
-                    <Text style={styles.viewAllText}>View All</Text>
-                </TouchableOpacity>
-            </View>
             <FlatList
                 data={filteredAppointments}
                 renderItem={renderAppointmentCard}
                 keyExtractor={item => item.id}
-                ListEmptyComponent={<Text style={styles.noData}>No appointments available.</Text>}
+                ListEmptyComponent={<Text style={styles.noData}>No Appointments</Text>}
                 showsVerticalScrollIndicator={false}
                 style={styles.flatListStyle}
             />
@@ -113,7 +108,7 @@ const styles = StyleSheet.create({
         fontSize: responsiveFontSize(1.8),
         fontWeight: 'bold',
         color: Colors.blue,
-
+        marginLeft: responsiveWidth(3),
     },
     flatListStyle: {
         height: '100%',
@@ -123,7 +118,7 @@ const styles = StyleSheet.create({
         marginTop: responsiveHeight(15),
         fontSize: responsiveFontSize(2),
         fontWeight: 'bold',
-        color: Colors.OFFBLACK,
+        color: Colors.blue,
     },
     row: {
         flexDirection: 'row',
