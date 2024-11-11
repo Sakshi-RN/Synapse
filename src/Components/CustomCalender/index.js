@@ -1,31 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Platform, Modal } from 'react-native';
 import dayjs from 'dayjs';
 import Colors from '../../Themes/Colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Calendar, LocaleConfig } from 'react-native-calendars';
+import { Calendar } from 'react-native-calendars';
 import moment from 'moment';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 
-export default function HorizontalCalendar({ availableDates, setFilteredAppointments, filteredAppointments }) {
+export default function HorizontalCalendar({ setFilteredAppointments }) {
     const [selectedDate, setSelectedDate] = useState('');
     const [fetchAppointments, setFetchAppointments] = useState([]);
     const [currentMonth, setCurrentMonth] = useState(dayjs().format('MMMM YYYY'));
     const [appointmentsCount, setAppointmentsCount] = useState({});
+    const [isCalendarModalVisible, setCalendarModalVisible] = useState(false);
     const [selected, setSelected] = useState('');
     const todays = moment().format('YYYY-MM-DD');
-
 
     const handleDateSelection = (date) => {
         const formattedDate = dayjs(date).format('MM/DD/YYYY');
         const filterData = fetchAppointments.filter(appointment => appointment.appointmentDate === formattedDate);
         setFilteredAppointments(filterData);
-        setSelectedDate(date);
+        setSelectedDate(date); // Update selectedDate directly here
     };
 
 
 
-    const today = dayjs();
     const generateNextFourDays = () => {
         const dates = [];
         for (let i = 0; i < 4; i++) {
@@ -35,17 +34,8 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
     };
     const dates = generateNextFourDays();
 
-    const handleScroll = (event) => {
-        const scrollPosition = event.nativeEvent.contentOffset.x;
-        const itemWidth = responsiveWidth(17 + 2); 
-        const currentIndex = Math.round(scrollPosition / itemWidth);
-
-        if (dates[currentIndex]) {
-            const newMonth = dayjs(dates[currentIndex]).format('MMMM YYYY');
-            if (newMonth !== currentMonth) {
-                setCurrentMonth(newMonth);
-            }
-        }
+    const toggleModalVisibility = () => {
+        setCalendarModalVisible(prev => !prev);
     };
 
     useEffect(() => {
@@ -66,38 +56,20 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
                 }
 
                 const data = await response.json();
-
-                // Log the appointment date format
-                data.forEach(appointment => {
-
-                });
-
                 setFetchAppointments(data);
 
                 const countMap = {};
                 data.forEach(appointment => {
-                    // First, check the raw format of appointment.appointmentDate
                     const rawDate = appointment.appointmentDate;
-
-                    // Try to parse the date if it's in an unusual format, e.g., if it’s a timestamp or different string format
-                    let formattedDate;
-                    if (dayjs(rawDate).isValid()) {
-                        formattedDate = dayjs(rawDate).format('YYYY-MM-DD'); // Valid date
-                    } else {
-                        // Fallback for invalid date parsing (modify this based on the actual format)
-                        formattedDate = new Date(rawDate).toISOString().split('T')[0]; // Try ISO format fallback
-                    }
-
-                    // If valid, add to count map
+                    const formattedDate = dayjs(rawDate).isValid()
+                        ? dayjs(rawDate).format('YYYY-MM-DD')
+                        : new Date(rawDate).toISOString().split('T')[0];
                     if (formattedDate) {
                         countMap[formattedDate] = (countMap[formattedDate] || 0) + 1;
                     }
                 });
 
-                // Log the countMap to ensure it’s populated correctly
-
                 setAppointmentsCount(countMap);
-
             } catch (error) {
                 console.error(error.message);
             }
@@ -106,12 +78,13 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
         fetchAppointmentsData();
     }, []);
 
-
     const Calender = () => {
         return (
             <Calendar
                 onDayPress={day => {
                     setSelected(day.dateString);
+                    handleDateSelection(day.dateString);
+                    toggleModalVisibility();
                 }}
                 markedDates={{
                     [selected]: { selected: true, disableTouchEvent: true, selectedDotColor: 'orange' },
@@ -139,30 +112,39 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
         <View style={styles.container}>
             <View style={styles.row}>
                 <Text style={styles.headerText}>{currentMonth}</Text>
-                <TouchableOpacity style={{ marginTop: responsiveHeight(0.2), marginLeft: responsiveWidth(1) }}>
+                <TouchableOpacity style={{ marginTop: responsiveHeight(0.2), marginLeft: responsiveWidth(1) }}
+                    onPress={toggleModalVisibility} >
                     <Icon name="chevron-down" size={15} color={Colors.black} />
                 </TouchableOpacity>
             </View>
             <View style={styles.calenderContainer}>
-                <Calender/>
+                <Modal
+                    transparent={true}
+                    visible={isCalendarModalVisible}
+                    onRequestClose={toggleModalVisibility}
+                >
+                    <View style={styles.modalOverlay}>
+                        <View style={styles.modalContent}>
+                            <Calender />
+                        </View>
+                    </View>
+                </Modal>
             </View>
             <View style={styles.scrollContainer}>
                 {dates.map((date, index) => {
                     const day = dayjs(date).format('D');
                     const dayOfWeek = dayjs(date).format('ddd');
                     const isSelected = date === selectedDate;
-                    const isAvailable = availableDates.includes(date);
-                    const appointmentCount = appointmentsCount[date] || 0;
                     const isToday = dayjs().isSame(date, 'day');
-
+                    const hasAppointments = appointmentsCount[date];
                     return (
                         <TouchableOpacity
                             key={index}
                             style={[
                                 styles.dateContainer,
+
                                 isSelected && styles.selectedDateContainer,
-                                isAvailable && !isSelected && styles.availableDateContainer,
-                                isToday && styles.todayDateContainer
+                                isToday && styles.todayDateContainer,  // Do not apply background change for today's date
                             ]}
                             onPress={() => handleDateSelection(date)}
                         >
@@ -176,11 +158,8 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
                                 isSelected && styles.selectedDayText,
                                 isToday && !isSelected && styles.todayDayText
                             ]}>{dayOfWeek}</Text>
-                            <Text  style={[
-                                styles.dayText,
-                                isSelected && styles.selectedDayText,
-                                isToday && !isSelected && styles.todayDayText
-                            ]}>...</Text>
+                            {hasAppointments && <Text style={styles.dot}>•</Text>}
+
                         </TouchableOpacity>
                     );
                 })}
@@ -215,7 +194,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F5F5F5',
     },
     selectedDateContainer: {
-        backgroundColor:'#87ABC9',
+        backgroundColor: '#87ABC9',
         borderColor: Colors.white,
         borderWidth: 1,
     },
@@ -247,12 +226,12 @@ const styles = StyleSheet.create({
     todayDayText: {
         color: Colors.white,
     },
-   
+
     dot: {
-        fontSize:20,
+        fontSize: 20,
         color: Colors.grey,
-        marginHorizontal:responsiveWidth(3),
-        fontWeight:'500'
+        marginHorizontal: responsiveWidth(3),
+        fontWeight: '500'
     },
     selectedDot: {
         backgroundColor: Colors.white,
@@ -289,5 +268,23 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         width: '75%',
         marginLeft: responsiveWidth(4)
-    }
+    },
+    modalOverlay: {
+        marginTop: responsiveHeight(20),
+        marginLeft: responsiveWidth(4)
+
+    },
+    modalContent: {
+        width: '75%',
+        backgroundColor: Colors.white,
+        paddingVertical: responsiveHeight(2),
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        elevation: 5,
+    },
 });
+
+

@@ -277,10 +277,10 @@ const HomeScreen = () => {
                 </View>
                 <View style={styles.rowNew}>
                     <TouchableOpacity onPress={handlePrescriberProfile}>
-                        <Text style={styles.careTeamName}>{profile?.therapist?.providerName || Therapist}</Text>
+                        <Text style={styles.careTeamName}>{profile?.therapist?.providerName || 'Therapist'}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handlePrescriberProfile}>
-                        <Text style={[styles.careTeamName, { width: responsiveWidth(24) }]}>{profile?.prescriber?.providerName || Prescriber}</Text>
+                        <Text style={[styles.careTeamName, { width: responsiveWidth(24) }]}>{profile?.prescriber?.providerName || 'Prescriber'}</Text>
                     </TouchableOpacity>
                     <Text style={styles.careTeamName}>Concierge</Text>
                 </View>

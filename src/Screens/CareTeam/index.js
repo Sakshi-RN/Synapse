@@ -9,7 +9,7 @@ import { ThreeDots } from '../../Assets/svg';
 import CustomButton from '../../Components/CustomButton';
 import { fetchProfile } from '../../redux/Reducers/profileReducer';
 import Loader from '../../Components/Loader';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const CareTeam = () => {
   const navigation = useNavigation();
@@ -63,53 +63,61 @@ const CareTeam = () => {
 
   const renderItem = () => (
     <>
-        <View style={styles.careTeamnCard}>
-          <Image source= {{ uri: profile?.therapist?.profilePicture }} style={styles.icon} />
-          <View style={styles.textContainer}>
-            <Text style={styles.title}>{profile?.therapist?.providerName}</Text>
-            <Text style={styles.description}>{profile?.therapist?.designation?.join(', ')}</Text>
-            <View style={styles.cancelbtnRow}>
-              <CustomButton
-                onPress={handleTherapistProfile}
-                buttonStyle={styles.Button}
-                textStyle={styles.ButtonText}
-                title={'View Profile'}
-              />
-              <CustomButton
-                buttonStyle={styles.Button}
-                textStyle={styles.ButtonText}
-                title={'Appt'}
-              />
-            </View>
+      <View style={styles.careTeamnCard}>
+        {profile?.therapist?.profilePicture ? (
+          <Image source={{ uri: profile?.therapist?.profilePicture }} style={styles.icon} />
+        ) : (
+          <Icon name="user" size={responsiveWidth(15)} color={Colors.grey} style={styles.icon} />
+        )}
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>{profile?.therapist?.providerName||'Therapist'}</Text>
+          <Text style={styles.description}>{profile?.therapist?.designation?.join(', ')}</Text>
+          <View style={styles.cancelbtnRow}>
+            <CustomButton
+              onPress={handleTherapistProfile}
+              buttonStyle={styles.Button}
+              textStyle={styles.ButtonText}
+              title={'View Profile'}
+            />
+            <CustomButton
+              buttonStyle={styles.Button}
+              textStyle={styles.ButtonText}
+              title={'Appt'}
+            />
           </View>
-          {/* <TouchableOpacity onPress={() => openModal()}>
+        </View>
+        {/* <TouchableOpacity onPress={() => openModal()}>
             <ThreeDots height={15} width={10} />
           </TouchableOpacity> */}
-        </View>
-
-         <View style={styles.careTeamnCard}>
+      </View>
+      <View style={styles.careTeamnCard}>
+         {profile?.prescriber?.profilePicture ?
+        (
           <Image source={{ uri: profile?.prescriber?.profilePicture }} style={styles.icon} />
-          <View style={styles.textContainer}>
-            <Text style={styles.title}>{profile?.prescriber?.providerName}</Text>
-            <Text style={styles.description}>{profile?.prescriber?.designation?.join(', ')}</Text>
-            <View style={styles.cancelbtnRow}>
-              <CustomButton
-                onPress={handlePrescriberProfile}
-                buttonStyle={styles.Button}
-                textStyle={styles.ButtonText}
-                title={'View Profile'}
-              />
-          
-       </View> 
+        ) : (
+          <Icon name="user" size={responsiveWidth(15)} color={Colors.grey} style={styles.icon} />
+        )}
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>{profile?.prescriber?.providerName||'Prescriber'}</Text>
+          <Text style={styles.description}>{profile?.prescriber?.designation?.join(', ')}</Text>
+          <View style={styles.cancelbtnRow}>
+            <CustomButton
+              onPress={handlePrescriberProfile}
+              buttonStyle={styles.Button}
+              textStyle={styles.ButtonText}
+              title={'View Profile'}
+            />
+
           </View>
-          {/* <TouchableOpacity onPress={() => openModal()}>
+        </View>
+        {/* <TouchableOpacity onPress={() => openModal()}>
             <ThreeDots height={15} width={10} />
           </TouchableOpacity> */}
-        </View>
- 
+      </View>
+
     </>
   );
-  
+
   const renderModal = () => {
     return (
       <Modal
