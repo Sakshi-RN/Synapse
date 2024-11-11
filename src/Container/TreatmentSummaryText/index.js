@@ -6,6 +6,7 @@ import Colors from '../../Themes/Colors';
 import { useFocusEffect } from '@react-navigation/native';
 import Loader from '../../Components/Loader';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Fonts } from '../../Themes/fonts';
 
 
 const TreatmentSummary = () => {
@@ -156,7 +157,8 @@ const styles = StyleSheet.create({
         fontWeight: '400',
         color: Colors.black,
         marginTop: responsiveHeight(2),
-        bottom: responsiveHeight(-1)
+        bottom: responsiveHeight(-1),
+
 
     },
 
@@ -193,10 +195,11 @@ const styles = StyleSheet.create({
     },
 
     signTextStyle: {
-        marginTop: responsiveHeight(3),
-        fontSize: responsiveFontSize(3),
+        marginTop: responsiveHeight(2),
+        fontSize: responsiveFontSize(3.2),
         color: '#457EA3',
-        fontWeight: '400',
+        fontFamily: Fonts.regular,
+        
 
     },
     flatlistContent: {

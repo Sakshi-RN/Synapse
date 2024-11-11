@@ -13,6 +13,7 @@ import { fetchProfile } from '../../redux/Reducers/profileReducer';
 import Loader from '../../Components/Loader';
 import TreatmentSummaryText from '../../Container/TreatmentSummaryText'
 
+
 const TreatmentSummary = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
@@ -258,7 +259,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-
 
 
 });

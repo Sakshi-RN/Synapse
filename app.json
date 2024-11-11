@@ -11,6 +11,17 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./src/Assets/fonts/WorkSans-Regular.ttf"
+          ]
+        }
+      ]
+    
+    ],
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
