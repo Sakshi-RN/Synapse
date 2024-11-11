@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, TouchableOpacity,Platform } from 'react-native';
 import dayjs from 'dayjs';
 import Colors from '../../Themes/Colors';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {Calendar, LocaleConfig} from 'react-native-calendars';
+import moment from 'moment';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 
 export default function HorizontalCalendar({ availableDates, setFilteredAppointments, filteredAppointments }) {
@@ -9,6 +12,9 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
     const [fetchAppointments, setFetchAppointments] = useState([]);
     const [currentMonth, setCurrentMonth] = useState(dayjs().format('MMMM YYYY'));
     const [appointmentsCount, setAppointmentsCount] = useState({});
+    const [selected, setSelected] = useState('');
+    const todays = moment().format('YYYY-MM-DD');
+
 
     const handleDateSelection = (date) => {
         const formattedDate = dayjs(date).format('MM/DD/YYYY');
@@ -148,10 +154,48 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
         );
     };
     
+    const Calender = ()=>{
+        return(
+            <Calendar
+            onDayPress={day => {
+              setSelected(day.dateString);
+            }}
+            markedDates={{
+              [selected]: {selected: true, disableTouchEvent: true, selectedDotColor: 'orange'},
+              [todays]: { selected: true, selectedColor: '#354764' },
+            }}
+
+            theme={{
+                textSectionTitleColor: 'black',
+                selectedDayBackgroundColor: '#87ABC9',
+                selectedDayTextColor: '#ffffff',
+                todayTextColor: '#fffff',
+                dayTextColor: 'black',
+               textDisabledColor: '#87ABC9' ,
+               monthTextColor: 'black', 
+               textMonthFontSize: 19,
+               textMonthFontWeight: '500',  
+               textDayFontWeight: '600',    
+               textDayHeaderFontWeight: '600',
+               arrowColor: 'black',
+              }}
+          />
+        )
+    }
 
     return (
         <View style={styles.container}>
+            <View style={styles.row}>
             <Text style={styles.headerText}>{currentMonth}</Text>
+            <TouchableOpacity style={{marginTop:responsiveHeight(0.2),marginLeft:responsiveWidth(1)}}>
+            <Icon name="chevron-down" size={15} color={Colors.black} />
+            </TouchableOpacity>
+            </View>
+            <View style={styles.calenderContainer}>
+            <Calender
+
+            />
+            </View>
             <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -286,4 +330,22 @@ const styles = StyleSheet.create({
     todayMoreAppointmentsText: {
         color: Colors.blue,
     },
+    row:{
+        flexDirection:'row'
+    },
+    calenderContainer:{
+        paddingHorizontal: responsiveWidth(1),
+        backgroundColor: Colors.white,
+        shadowColor: Platform.OS === 'ios' ? Colors.grey : Colors.black,
+        shadowOffset: {
+            width: 0.5,
+            height: 0.5,
+        },
+        shadowOpacity: 3,
+        shadowRadius: 3,
+        elevation: 5,
+        borderRadius: 15,
+        width:'75%',
+       marginLeft:responsiveWidth(4)
+    }
 });
