@@ -288,7 +288,44 @@ const styles = StyleSheet.create({
         fontSize: responsiveFontSize(1.1),
         width: responsiveWidth(45),
         fontWeight: '600',
-    }
+    },
+    newContainer: {
+        flexDirection: 'row',
+        marginLeft: responsiveWidth(0.5),
+        marginTop: responsiveHeight(0.5)
+    },
+    phase: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        transform: [{ skewX: '-20deg' }],
+        height: responsiveHeight(9),
+        width: responsiveWidth(11),
+        borderWidth: 0.5,
+        borderColor: Colors.lightgrey,
+
+
+    },
+    text: {
+        transform: [{ rotate: '280deg' }],
+        fontWeight: '400',
+        fontSize: responsiveFontSize(1.1),
+        color: Colors.white,
+        marginBottom: responsiveHeight(0),
+        alignSelf: 'center',
+        width: responsiveWidth(16),
+
+    },
+    firstPhase: {
+        transform: [{ rotate: '280deg' }],
+        fontWeight: '400',
+        fontSize: responsiveFontSize(1.1),
+        color: Colors.white,
+        marginBottom: responsiveHeight(0),
+        alignSelf: 'center',
+        width: responsiveWidth(10),
+
+    },
+
 });
 
 export default styles;

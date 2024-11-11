@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback,useEffect,useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { View, Text, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import Swiper from 'react-native-swiper';
@@ -19,6 +19,17 @@ const HomeScreen = () => {
     const dispatch = useDispatch();
     const { data, fetchLoading } = useSelector(state => state.profile);
 
+    const phases = [
+        { label: 'Intake', active: true },
+        { label: 'Preparation', active: true },
+        { label: 'Treatment 1', active: false },
+        { label: 'Integration 1', active: false },
+        { label: 'Treatment 2', active: false },
+        { label: 'Integration 2', active: false },
+        { label: 'Treatment 3', active: false },
+        { label: 'Integration 3', active: false },
+      ];
+    
     useFocusEffect(
         useCallback(() => {
             dispatch(fetchProfile());
@@ -279,13 +290,37 @@ const HomeScreen = () => {
         )
     }
 
+
+    const processContainer =()=> {
+        return (
+            <View style={styles.newContainer}>
+              {phases.map((phase, index) => (
+                <View
+                  key={index}
+                  style={[
+                    styles.phase,
+                    { backgroundColor: phase.active ? '#354764' : '#ECECEC' },
+                   
+                    
+                  ]}
+                >
+                    <Text style={[styles.text,
+                         index === 0 ? styles.firstPhase : '' ]}>
+            {phase.label}
+          </Text>
+                </View>
+              ))}
+            </View>
+          )
+        }
+
     return (
         <View style={styles.container}>
             {renderHeader()}
             {SwiperCode()}
             <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollContent}>
-                <Text style={styles.reportsTitle}>Recent Reports</Text>
-                {reportSection()}
+                <Text style={styles.reportsTitle}>Process</Text>
+                {processContainer()}
                 <Text style={styles.careTeamTitle}>My Care Team</Text>
                 {flatlistView()}
                 <Text style={styles.actionsTitle}>Other Action</Text>

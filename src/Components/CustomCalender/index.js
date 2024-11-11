@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, View, Text, StyleSheet, TouchableOpacity,Platform } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import dayjs from 'dayjs';
 import Colors from '../../Themes/Colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {Calendar, LocaleConfig} from 'react-native-calendars';
+import { Calendar, LocaleConfig } from 'react-native-calendars';
 import moment from 'moment';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 
@@ -37,7 +37,7 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
             for (let day = 1; day <= daysInMonth; day++) {
                 const date = currentMonth.date(day).format('YYYY-MM-DD');
                 dates.push(date);
-            }
+            } 
         }
         return dates;
     };
@@ -46,7 +46,7 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
 
     const handleScroll = (event) => {
         const scrollPosition = event.nativeEvent.contentOffset.x;
-        const itemWidth = responsiveWidth(17 + 2); // Adjust this based on your layout
+        const itemWidth = responsiveWidth(17 + 2); 
         const currentIndex = Math.round(scrollPosition / itemWidth);
 
         if (dates[currentIndex]) {
@@ -69,25 +69,25 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
                         },
                     }
                 );
-    
+
                 if (!response.ok) {
                     throw new Error('Failed to fetch appointments');
                 }
-    
+
                 const data = await response.json();
-    
+
                 // Log the appointment date format
                 data.forEach(appointment => {
-          
+
                 });
-    
+
                 setFetchAppointments(data);
-    
+
                 const countMap = {};
                 data.forEach(appointment => {
                     // First, check the raw format of appointment.appointmentDate
                     const rawDate = appointment.appointmentDate;
-    
+
                     // Try to parse the date if it's in an unusual format, e.g., if it’s a timestamp or different string format
                     let formattedDate;
                     if (dayjs(rawDate).isValid()) {
@@ -96,36 +96,36 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
                         // Fallback for invalid date parsing (modify this based on the actual format)
                         formattedDate = new Date(rawDate).toISOString().split('T')[0]; // Try ISO format fallback
                     }
-    
 
-    
+
+
                     // If valid, add to count map
                     if (formattedDate) {
                         countMap[formattedDate] = (countMap[formattedDate] || 0) + 1;
                     }
                 });
-    
+
                 // Log the countMap to ensure it’s populated correctly
 
-    
+
                 setAppointmentsCount(countMap);
-    
+
             } catch (error) {
                 console.error(error.message);
             }
         };
-    
+
         fetchAppointmentsData();
     }, []);
-    
-    
+
+
     const renderDots = (appointmentCount, isSelected, isToday) => {
 
-        
+
         if (appointmentCount === 0) {
-            return null; 
+            return null;
         }
-    
+
         if (appointmentCount > 3) {
             return (
                 <Text style={[
@@ -137,7 +137,7 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
                 </Text>
             );
         }
-    
+
         return (
             <View style={styles.dotsContainer}>
                 {Array.from({ length: appointmentCount }).map((_, dotIndex) => (
@@ -153,48 +153,47 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
             </View>
         );
     };
-    
-    const Calender = ()=>{
-        return(
-            <Calendar
-            onDayPress={day => {
-              setSelected(day.dateString);
-            }}
-            markedDates={{
-              [selected]: {selected: true, disableTouchEvent: true, selectedDotColor: 'orange'},
-              [todays]: { selected: true, selectedColor: '#354764' },
-            }}
 
-            theme={{
-                textSectionTitleColor: 'black',
-                selectedDayBackgroundColor: '#87ABC9',
-                selectedDayTextColor: '#ffffff',
-                todayTextColor: '#fffff',
-                dayTextColor: 'black',
-               textDisabledColor: '#87ABC9' ,
-               monthTextColor: 'black', 
-               textMonthFontSize: 19,
-               textMonthFontWeight: '500',  
-               textDayFontWeight: '600',    
-               textDayHeaderFontWeight: '600',
-               arrowColor: 'black',
-              }}
-          />
+    const Calender = () => {
+        return (
+            <Calendar
+                onDayPress={day => {
+                    setSelected(day.dateString);
+                }}
+                markedDates={{
+                    [selected]: { selected: true, disableTouchEvent: true, selectedDotColor: 'orange' },
+                    [todays]: { selected: true, selectedColor: '#354764' },
+                }}
+                theme={{
+                    textSectionTitleColor: 'black',
+                    selectedDayBackgroundColor: '#87ABC9',
+                    selectedDayTextColor: '#ffffff',
+                    todayTextColor: '#fffff',
+                    dayTextColor: 'black',
+                    textDisabledColor: '#87ABC9',
+                    monthTextColor: 'black',
+                    textMonthFontSize: 19,
+                    textMonthFontWeight: '500',
+                    textDayFontWeight: '600',
+                    textDayHeaderFontWeight: '600',
+                    arrowColor: 'black'
+                }}
+            />
         )
     }
 
     return (
         <View style={styles.container}>
             <View style={styles.row}>
-            <Text style={styles.headerText}>{currentMonth}</Text>
-            <TouchableOpacity style={{marginTop:responsiveHeight(0.2),marginLeft:responsiveWidth(1)}}>
-            <Icon name="chevron-down" size={15} color={Colors.black} />
-            </TouchableOpacity>
+                <Text style={styles.headerText}>{currentMonth}</Text>
+                <TouchableOpacity style={{ marginTop: responsiveHeight(0.2), marginLeft: responsiveWidth(1) }}>
+                    <Icon name="chevron-down" size={15} color={Colors.black} />
+                </TouchableOpacity>
             </View>
             <View style={styles.calenderContainer}>
-            <Calender
+                <Calender
 
-            />
+                />
             </View>
             <ScrollView
                 horizontal
@@ -232,7 +231,7 @@ export default function HorizontalCalendar({ availableDates, setFilteredAppointm
                                 isSelected && styles.selectedDayText,
                                 isToday && !isSelected && styles.todayDayText
                             ]}>{dayOfWeek}</Text>
-                            
+
                             {renderDots(appointmentCount, isSelected, isToday)}
                         </TouchableOpacity>
                     );
@@ -330,10 +329,10 @@ const styles = StyleSheet.create({
     todayMoreAppointmentsText: {
         color: Colors.blue,
     },
-    row:{
-        flexDirection:'row'
+    row: {
+        flexDirection: 'row'
     },
-    calenderContainer:{
+    calenderContainer: {
         paddingHorizontal: responsiveWidth(1),
         backgroundColor: Colors.white,
         shadowColor: Platform.OS === 'ios' ? Colors.grey : Colors.black,
@@ -345,7 +344,7 @@ const styles = StyleSheet.create({
         shadowRadius: 3,
         elevation: 5,
         borderRadius: 15,
-        width:'75%',
-       marginLeft:responsiveWidth(4)
+        width: '75%',
+        marginLeft: responsiveWidth(4)
     }
 });
