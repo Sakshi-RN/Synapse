@@ -8,6 +8,8 @@ import CustomHeader from '../../Components/CustomHeader';
 import { Chat, MeetIcon, MapView } from '../../Assets/svg';
 import Loader from '../../Components/Loader';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import images from '../../Themes/Images'
+
 
 const PrescriberProfile = () => {
   const [activeTab, setActiveTab] = useState('About Me');
@@ -53,8 +55,8 @@ const PrescriberProfile = () => {
       {providerData?.profilePicture ? (
         <Image source={{ uri: providerData.profilePicture }} style={styles.icon} />
       ) : (
-        <Icon name="user" size={responsiveWidth(15)} color={Colors.grey} style={styles.icon} />
-      )}
+        <Image source={images.user} style={styles.icon} />
+              )}
       <View style={styles.textContainer}>
         <Text style={styles.name}>{providerData?.firstName} {providerData?.lastName}</Text>
         <Text style={styles.mdText}>{providerData?.designation}</Text>

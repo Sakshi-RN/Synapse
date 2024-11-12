@@ -42,7 +42,7 @@ export default function HorizontalCalendar({ setFilteredAppointments }) {
         const fetchAppointmentsData = async () => {
             try {
                 const response = await fetch(
-                    'https://eb1.taramind.com/getAllClientAppointments/5dbbe704-9aab-11ef-83e8-02f35b8058b3',
+                    'https://eb1.taramind.com/getAllClientAppointments/32169136-9c4f-11ef-83e8-02f35b8058b3',
                     {
                         method: 'GET',
                         headers: {
@@ -164,6 +164,7 @@ export default function HorizontalCalendar({ setFilteredAppointments }) {
                     );
                 })}
             </View>
+            <Text style={[styles.headerText,{marginTop:responsiveHeight(2.5)}]}>Today</Text>
         </View>
     );
 }
@@ -285,6 +286,7 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
         elevation: 5,
     },
+
 });
 
 

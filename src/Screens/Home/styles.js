@@ -172,10 +172,8 @@ const styles = StyleSheet.create({
     careTeamName: {
         fontSize: responsiveFontSize(1.2),
         fontWeight: '600',
-        marginTop: responsiveHeight(1),
-        width: responsiveWidth(20),
-        marginTop: responsiveFontSize(1),
         textAlign: 'center',
+        marginTop: responsiveHeight(1),
     },
     samuelName: {
         fontSize: responsiveFontSize(1.2),
@@ -194,11 +192,10 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     careTeamRole: {
-        fontSize: responsiveFontSize(1),
+        fontSize: responsiveFontSize(0.8),
         color: Colors.black,
         fontWeight: '700',
-        width: responsiveWidth(22),
-        textAlign: 'center',
+        textAlign: 'center'
     },
     actionsContainer: {
         padding: responsiveWidth(4)
@@ -264,9 +261,8 @@ const styles = StyleSheet.create({
     careTeamRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        width: responsiveWidth(65),
-        marginTop: responsiveFontSize(2)
+        justifyContent: 'space-around',
+        marginTop: responsiveFontSize(1)
     },
 
     therapistRoleText: {
@@ -284,7 +280,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         transform: [{ skewX: '-20deg' }],
-        height: responsiveHeight(9),
+        height: responsiveHeight(9.5),
         width: responsiveWidth(11),
         borderWidth: 0.5,
         borderColor: Colors.lightgrey,
@@ -296,9 +292,10 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         fontSize: responsiveFontSize(1.1),
         color: Colors.white,
-        marginBottom: responsiveHeight(0),
+        marginBottom: responsiveHeight(0.5),
         alignSelf: 'center',
         width: responsiveWidth(17),
+       top:(-0.5)
 
     },
     firstPhase: {
@@ -314,7 +311,13 @@ const styles = StyleSheet.create({
         width: 60,
         height:60,
         borderRadius:30,
-        marginLeft:responsiveWidth(2)
+        alignSelf:'center'
+        
+      },
+      iconContainer: {
+        width: 63,
+        height:63,
+         alignSelf:'center'
       },
 
 });

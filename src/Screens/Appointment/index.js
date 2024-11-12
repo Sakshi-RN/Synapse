@@ -6,8 +6,7 @@ import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
 import CustomCalender from '../../Components/CustomCalender';
 import Loader from '../../Components/Loader';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 const Appointment = () => {
     const navigation = useNavigation();
@@ -26,7 +25,7 @@ const Appointment = () => {
         const fetchAppointments = async () => {
             try {
                 const response = await fetch(
-                    'https://eb1.taramind.com/getAllClientAppointments/5dbbe704-9aab-11ef-83e8-02f35b8058b3',
+                    'https://eb1.taramind.com/getAllClientAppointments/32169136-9c4f-11ef-83e8-02f35b8058b3',
                     {
                         method: 'GET',
                         headers: {
@@ -77,7 +76,6 @@ const Appointment = () => {
         <View style={styles.container}>
             <CustomHeader title={'Appointments'} />
             <CustomCalender availableDates={availableDates} setFilteredAppointments={setFilteredAppointments} filteredAppointments={filteredAppointments} />
-                <Text style={styles.appointmentsText}>{getAppointmentsText()}</Text>
             <FlatList
                 data={filteredAppointments}
                 renderItem={renderAppointmentCard}
@@ -104,12 +102,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    appointmentsText: {
-        fontSize: responsiveFontSize(1.8),
-        fontWeight: 'bold',
-        color: Colors.blue,
-        marginLeft: responsiveWidth(3),
-    },
+
     flatListStyle: {
         height: '100%',
     },

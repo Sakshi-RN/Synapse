@@ -1,17 +1,15 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { View, Text, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import Swiper from 'react-native-swiper';
-import { Circle, Bell, Logo, MeetIcon, Location, Arrowdown, Device, ConsentForm, TreatmentSummary, AppointmentImg, SurveyHistory, Download, Concierge } from '../../Assets/svg';
+import { Circle, Bell, Logo, MeetIcon, Location, Arrowdown, Device, ConsentForm, TreatmentSummary, AppointmentImg, SurveyHistory, Download } from '../../Assets/svg';
 import images from '../../Themes/Images'
 import { ScrollView } from 'react-native-gesture-handler';
 import styles from './styles';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { fetchProfile } from '../../redux/Reducers/profileReducer';
 import Loader from '../../Components/Loader';
-import { responsiveWidth } from 'react-native-responsive-dimensions';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Colors from '../../Themes/Colors';
+import { responsiveWidth,responsiveHeight } from 'react-native-responsive-dimensions';
 
 
 
@@ -148,8 +146,10 @@ const HomeScreen = () => {
             <View style={styles.swiperView}>
                 <Swiper showsButtons={false} autoplay={false}
                     dot={<View style={styles.dot} />}
-                    activeDot={<View style={styles.activeDot} />}
+                    activeDot={<View style={styles.activeDot}/>}
                 >
+                    {profile?.nextAppointment?.appointmentDate?
+                    
                     <View style={styles.slide}>
                         <View>
                             <Text style={styles.slideText}>
@@ -165,6 +165,8 @@ const HomeScreen = () => {
                             <MeetIcon />
                         </View>
                     </View>
+                    :null}
+                    {profile?.nextAppointment?.appointmentDate ?
                     <View style={styles.slide}>
                         <View>
                             <Text style={styles.slideText}>
@@ -179,8 +181,9 @@ const HomeScreen = () => {
                             </Text>
                             <Location />
                         </View>
-                    </View>
-                    <View style={styles.slide}>
+                    </View>:null
+                    }
+                         <View style={styles.slide}>
                         <Text style={styles.slideText}><Text>You have made 20% improvement since last KAT session.</Text><Text style={styles.seemoreText}> See more...</Text></Text>
                         <View style={styles.line} />
                         <View style={styles.blueviewContainer}>
@@ -259,35 +262,33 @@ const HomeScreen = () => {
         return (
             <>
                 <View style={styles.careTeamRow}>
-                    <TouchableOpacity onPress={handlePrescriberProfile}>
-                        {profile?.therapist?.profilePicture ? (
-                            <Image source={{ uri: profile?.therapist?.profilePicture }} style={styles.icon} />
-                        ) : (
-                         <Icon name="user" size={responsiveWidth(15)} color={Colors.grey} style={styles.icon} />
-                        )}
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={handlePrescriberProfile}>
-                        {profile?.prescriber?.profilePicture ? (
-                            <Image source={{ uri: profile?.prescriber?.profilePicture }} style={styles.icon} />
-                        ) : (
-                            <Icon name="user" size={responsiveWidth(15)} color={Colors.grey} style={styles.icon} />
-                        )}
-                    </TouchableOpacity >
-                    <Concierge />
-                </View>
-                <View style={styles.rowNew}>
-                    <TouchableOpacity onPress={handlePrescriberProfile}>
+                    <View style={{ width: responsiveWidth(20),marginTop: responsiveHeight(1),}}>
+                        <TouchableOpacity onPress={handlePrescriberProfile}>
+                            {profile?.therapist?.profilePicture ? (
+                                <Image source={{ uri: profile?.therapist?.profilePicture }} style={styles.icon} />
+                            ) : (
+                                <Image source={images.user} style={styles.icon} />
+                            )}
+                        </TouchableOpacity>
                         <Text style={styles.careTeamName}>{profile?.therapist?.providerName || 'Therapist'}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={handlePrescriberProfile}>
-                        <Text style={[styles.careTeamName, { width: responsiveWidth(24) }]}>{profile?.prescriber?.providerName || 'Prescriber'}</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.careTeamName}>Concierge</Text>
-                </View>
-                <View style={styles.rowNew}>
-                    <Text style={[styles.careTeamRole, { width: responsiveWidth(23) }]}>{profile?.therapist?.designation?.join(', ')}</Text>
-                    <Text style={styles.careTeamRole}>{profile?.prescriber?.designation?.join(', ')}</Text>
-                    <Text style={styles.ConcergeName}></Text>
+                        <Text style={[styles.careTeamRole]}>{profile?.therapist?.designation?.join(', ')}</Text>
+                    </View>
+                    <View style={{ width: responsiveWidth(20) }}>
+                        <TouchableOpacity onPress={handlePrescriberProfile}>
+                            {profile?.prescriber?.profilePicture ? (
+                                <Image source={{ uri: profile?.prescriber?.profilePicture }} style={styles.icon} />
+                            ) : (
+                                <Image source={images.user} style={styles.icon} />
+                            )}
+                        </TouchableOpacity >
+                        <Text style={styles.careTeamName}>{profile?.prescriber?.providerName || 'Prescriber'}</Text>
+                        <Text style={[styles.careTeamRole]}>{profile?.prescriber?.designation?.join(', ')}</Text>
+                    </View>
+                    <View style={{ width: responsiveWidth(20)}}>
+                        <Image source={images.conceirge} style={styles.iconContainer} />
+                        <Text style={styles.careTeamName}>Concierge</Text>
+                        <Text></Text>
+                    </View>
                 </View>
             </>
         )
@@ -305,7 +306,7 @@ const HomeScreen = () => {
                         ]}
                     >
                         <Text style={[styles.text,
-                        index === 0 ? styles.firstPhase : '']}>
+                          index === 0 ? styles.firstPhase : '']}>
                             {phase.label}
                         </Text>
                     </View>
@@ -318,7 +319,7 @@ const HomeScreen = () => {
         <View style={styles.container}>
             {renderHeader()}
             {SwiperCode()}
-            <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollContent}>
+              <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollContent}>
                 <Text style={styles.reportsTitle}>Process</Text>
                 {processContainer()}
                 <Text style={styles.careTeamTitle}>My Care Team</Text>

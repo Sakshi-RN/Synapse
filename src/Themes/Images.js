@@ -5,6 +5,8 @@ const images = {
   headerBgImg: require(`${BASEURL}headerBgImg.png`),
   PrescriberImg: require(`${BASEURL}PrescriberImg.png`),
   TherapistImg: require(`${BASEURL}LCSW.png`),
+  conceirge: require(`${BASEURL}conceirge.png`),
+  user: require(`${BASEURL}user.png`),
 }
 
 export default images;

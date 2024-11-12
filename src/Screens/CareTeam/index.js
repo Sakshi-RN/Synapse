@@ -9,7 +9,7 @@ import { ThreeDots } from '../../Assets/svg';
 import CustomButton from '../../Components/CustomButton';
 import { fetchProfile } from '../../redux/Reducers/profileReducer';
 import Loader from '../../Components/Loader';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import images from '../../Themes/Images'
 
 const CareTeam = () => {
   const navigation = useNavigation();
@@ -67,7 +67,7 @@ const CareTeam = () => {
         {profile?.therapist?.profilePicture ? (
           <Image source={{ uri: profile?.therapist?.profilePicture }} style={styles.icon} />
         ) : (
-          <Icon name="user" size={responsiveWidth(15)} color={Colors.grey} style={styles.icon} />
+             <Image source={images.user} style={styles.icon} />
         )}
         <View style={styles.textContainer}>
           <Text style={styles.title}>{profile?.therapist?.providerName||'Therapist'}</Text>
@@ -95,7 +95,7 @@ const CareTeam = () => {
         (
           <Image source={{ uri: profile?.prescriber?.profilePicture }} style={styles.icon} />
         ) : (
-          <Icon name="user" size={responsiveWidth(15)} color={Colors.grey} style={styles.icon} />
+             <Image source={images.user} style={styles.icon} />
         )}
         <View style={styles.textContainer}>
           <Text style={styles.title}>{profile?.prescriber?.providerName||'Prescriber'}</Text>
@@ -191,9 +191,9 @@ const styles = StyleSheet.create({
 
   },
   icon: {
-    width: responsiveWidth(20),
-    height: responsiveWidth(20),
-    borderRadius: 6
+    width: responsiveWidth(18),
+    height: responsiveWidth(18),
+    borderRadius: 5
   },
   textContainer: {
     marginLeft: responsiveWidth(3),
