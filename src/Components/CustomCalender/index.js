@@ -5,8 +5,10 @@ import Colors from '../../Themes/Colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Calendar } from 'react-native-calendars';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+import moment from "moment";
 
-export default function HorizontalCalendar({ setFilteredAppointments }) {
+
+export default function HorizontalCalendar({ setFilteredAppointments ,appointments }) {
     const [selectedDate, setSelectedDate] = useState(dayjs().format('YYYY-MM-DD'));
     const [fetchAppointments, setFetchAppointments] = useState([]);
     const [currentMonth, setCurrentMonth] = useState(dayjs().format('MMMM YYYY'));
@@ -31,81 +33,79 @@ export default function HorizontalCalendar({ setFilteredAppointments }) {
         const filterData = fetchAppointments.filter(appointment => appointment.appointmentDate === formattedDate);
         setFilteredAppointments(filterData);
         setSelectedDate(date);
-        setDates(generateNextFourDays(date)); // Update dates array to the next four days from selected date
+        setDates(generateNextFourDays(date));
+        const newMonth = dayjs(date).format('MMMM YYYY');
+        setCurrentMonth(newMonth);
+    };
 
+    const handleDateCardSelection = (date) => {
+        const formattedDate = dayjs(date).format('MM/DD/YYYY');
+        const filterData = fetchAppointments.filter(appointment => appointment.appointmentDate === formattedDate);
+        setFilteredAppointments(filterData);
+        setSelectedDate(date);
         // Update the current month when a date is selected
         const newMonth = dayjs(date).format('MMMM YYYY');
         setCurrentMonth(newMonth);
     };
 
-    
     // Toggle calendar modal visibility
     const toggleModalVisibility = () => {
         setCalendarModalVisible(prev => !prev);
     };
-    useEffect(() => {
-        const fetchAppointmentsData = async () => {
-            console.log("Fetching appointments..."); // Check if this is logged
-        
-            try {
-                const response = await fetch(
-                    'https://eb1.taramind.com/getAllClientAppointments/32169136-9c4f-11ef-83e8-02f35b8058b3',
-                    {
-                        method: 'GET',
-                        headers: {
-                            'X-Api-Key': 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b',
-                        },
-                    }
-                );
-        
-                if (!response.ok) {
-                    throw new Error('Failed to fetch appointments');
+
+    const fetchAppointmentsData = async () => {
+        console.log("Fetching appointments...");
+        try {
+            const response = await fetch(
+                'https://eb1.taramind.com/getAllClientAppointments/32169136-9c4f-11ef-83e8-02f35b8058b3',
+                {
+                    method: 'GET',
+                    headers: {
+                        'X-Api-Key': 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b',
+                    },
                 }
-        
-                const data = await response.json();
-                setFetchAppointments(data);
-        
-                // Generate appointment counts based on appointmentDate
-                const countMap = {};
-                data.forEach(appointment => {
-                    const rawDate = appointment.appointmentDate;
-                    let formattedDate;
-        
-                    // Check if rawDate is a valid date string
-                    if (dayjs(rawDate).isValid()) {
-                        formattedDate = dayjs(rawDate).format('YYYY-MM-DD');
-                    } else {
-                        // If not valid, log the value and skip it
-                        console.log('Invalid date:', rawDate);
-                        return;  // Skip this item if the date is invalid
-                    }
-        
-                    // Proceed if the date is valid
-                    if (formattedDate) {
-                        countMap[formattedDate] = (countMap[formattedDate] || 0) + 1;
-                    }
-                });
-        
-                // Set appointment counts
-                setAppointmentsCount(countMap);
-        
-                // Check today's date (log to console)
-                const todaysDate = dayjs().format('YYYY-MM-DD');
-                console.log('Today\'s Date:', todaysDate);  // Log to check today's date
-        
-                // Call handleDateSelection with today's date to filter today's appointments
-                handleDateSelection(todaysDate);  // Ensure today's appointments are displayed
-        
-            } catch (error) {
-                console.error('Error fetching appointments:', error.message);  // More detailed error message
+            );
+            if (!response.ok) {
+                throw new Error('Failed to fetch appointments');
             }
-        };
-        
+            const data = await response.json();
+            setFetchAppointments(data);
+
+            // Generate appointment counts based on appointmentDate
+            const countMap = {};
+
+            data.forEach(appointment => {
+                const rawDate = appointment.appointmentDate;
+                const parsedDate = moment(rawDate, 'MM/DD/YYYY', true);  // Strict parsing with moment
+
+                // Log each date parsed
+                console.log('Raw Date:', rawDate, '| Parsed Date:', parsedDate.format('YYYY-MM-DD'), '| Valid:', parsedDate.isValid());
+
+                if (parsedDate.isValid()) {
+                    const formattedDate = parsedDate.format('YYYY-MM-DD');  // Format to 'YYYY-MM-DD'
+                    countMap[formattedDate] = (countMap[formattedDate] || 0) + 1;
+                } else {
+                    console.log('Invalid date detected:', rawDate); // Log if parsing fails
+                }
+            });
+
+            setAppointmentsCount(countMap);
+            console.log('Appointments Count Map:', countMap);
+
+            // Set filter for today’s appointments
+            handleDateSelection(todaysDate);
+
+        } catch (error) {
+            console.error('Error fetching appointments:', error.message);
+        }
+    };
+
+    useEffect(() => {
         fetchAppointmentsData();
     }, []);
-    
-    
-    
+
+
+
     const CalendarComponent = () => (
         <Calendar
         onDayPress={day => {
@@ -132,6 +132,10 @@ export default function HorizontalCalendar({ setFilteredAppointments }) {
             }}
         />
     );
+
+    useEffect(() => {
+        console.log("Appointment counts:", appointmentsCount);
+    }, [appointmentsCount]);
 
     return (
         <View style={styles.container}>
@@ -163,17 +167,18 @@ export default function HorizontalCalendar({ setFilteredAppointments }) {
         const dayOfWeek = dayjs(date).format('ddd');
         const isSelected = date === selectedDate;
         const isToday = dayjs().isSame(date, 'day');
-        const hasAppointments = appointmentsCount[date];
+        const hasAppointments = !!appointmentsCount[date];
+
 
         return (
             <TouchableOpacity
                 key={index}
                 style={[
                     styles.dateContainer,
-                    isSelected && styles.selectedDateContainer, // Apply selectedDateContainer if the date is selected
-                    isToday && !isSelected && styles.todayDateContainer, // Apply todayDateContainer only if it's today and not selected
+                    isSelected && styles.selectedDateContainer,
+                    isToday && !isSelected && styles.todayDateContainer,
                 ]}
-                onPress={() => handleDateSelection(date)} // Ensure the selected date is updated
+                onPress={() => handleDateCardSelection(date)}
             >
                 <Text style={[
                     styles.dateText,
@@ -185,11 +190,13 @@ export default function HorizontalCalendar({ setFilteredAppointments }) {
                     isSelected && styles.selectedDayText,
                     isToday && !isSelected && styles.todayDayText
                 ]}>{dayOfWeek}</Text>
-                {hasAppointments && <Text style={styles.dot}>•</Text>}
+                {hasAppointments && <Text style={[styles.dot,styles.dayText,
+                    isSelected && styles.selectedDayText,
+                    isToday && !isSelected && styles.todayDayText]}>•••</Text>}
             </TouchableOpacity>
         );
     })}
-</View>
+                </View>
 
             <TouchableOpacity
                 onPress={() => handleDateSelection(todaysDate)}
@@ -258,7 +265,6 @@ export default function HorizontalCalendar({ setFilteredAppointments }) {
     todayDayText: {
         color: Colors.white,
     },
-
     dot: {
         fontSize: 20,
         color: Colors.grey,

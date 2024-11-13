@@ -7,6 +7,7 @@ import CustomHeader from '../../Components/CustomHeader';
 import CustomCalender from '../../Components/CustomCalender';
 import Loader from '../../Components/Loader';
 import { useNavigation } from '@react-navigation/native';
+import moment from 'moment';
 
 const Appointment = () => {
     const navigation = useNavigation();
@@ -17,40 +18,37 @@ const Appointment = () => {
     const [activeTab, setActiveTab] = useState('All');
     const [availableDates, setAvailableDates] = useState([]);
 
-    const handleViewAllAppointment = () => {
-        navigation.navigate('ViewAllAppointments');
-    }
+    // const handleViewAllAppointment = () => {
+    //     navigation.navigate('ViewAllAppointments');
+    // }
+    const fetchAppointments = async () => {
+        try {
+            const response = await fetch(
+                'https://eb1.taramind.com/getAllClientAppointments/32169136-9c4f-11ef-83e8-02f35b8058b3',
+                {
+                    method: 'GET',
+                    headers: {
+                        'X-Api-Key': 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b',
+                    },
+                }
+            );
+            if (!response.ok) {
+                throw new Error('Failed to fetch appointments');
+            }
+            const data = await response.json();
+            console.log("Sakshii Babes", data);
+            setAppointments((prev) => data);
+            const dates = data.map(appointment => appointment.appointmentDate);
+            setAvailableDates(dates);
+        } catch (error) {
+            setError(error.message);
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchAppointments = async () => {
-            try {
-                const response = await fetch(
-                    'https://eb1.taramind.com/getAllClientAppointments/32169136-9c4f-11ef-83e8-02f35b8058b3',
-                    {
-                        method: 'GET',
-                        headers: {
-                            'X-Api-Key': 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b',
-                        },
-                    }
-                );
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch appointments');
-                }
-
-                const data = await response.json();
-                setAppointments(data);
-
-                const dates = data.map(appointment => appointment.appointmentDate);
-                setAvailableDates(dates);
-
-            } catch (error) {
-                setError(error.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
         fetchAppointments();
     }, []);
 
@@ -59,32 +57,30 @@ const Appointment = () => {
         return `${filteredAppointments.length} Appointments`;
     };
 
-    const renderAppointmentCard = ({ item }) =><AppointmentCard appointment={item}/>;
+    const renderAppointmentCard = ({ item }) => <AppointmentCard appointment={item} />;
 
-    if (loading) {
-        return (
-            <View style={styles.centeredContainer}>
-                <Loader />
-            </View>
-        );
-    }
     if (error) {
         return <Text>Error: {error}</Text>;
     }
 
     return (
-        <View style={styles.container}>
-            <CustomHeader title={'Appointments'} />
-            <CustomCalender availableDates={availableDates} setFilteredAppointments={setFilteredAppointments} filteredAppointments={filteredAppointments} />
-            <FlatList
-                data={filteredAppointments}
-                renderItem={renderAppointmentCard}
-                keyExtractor={item => item.id}
-                ListEmptyComponent={<Text style={styles.noData}>No Appointments</Text>}
-                showsVerticalScrollIndicator={false}
-                style={styles.flatListStyle}
-            />
-        </View>
+        loading ? (
+            <View style={styles.centeredContainer}>
+                <Loader />
+            </View>
+        ) :
+            <View style={styles.container}>
+                <CustomHeader title={'Appointments'} />
+                <CustomCalender availableDates={availableDates} setFilteredAppointments={setFilteredAppointments} filteredAppointments={filteredAppointments} />
+                <FlatList
+                    data={filteredAppointments}
+                    renderItem={renderAppointmentCard}
+                    keyExtractor={item => item.id}
+                    ListEmptyComponent={<Text style={styles.noData}>No Appointments</Text>}
+                    showsVerticalScrollIndicator={false}
+                    style={styles.flatListStyle}
+                />
+            </View>
     );
 };
 
@@ -96,7 +92,7 @@ const styles = StyleSheet.create({
         paddingBottom: responsiveHeight(12),
         backgroundColor: Colors.white
     },
-    
+
     centeredContainer: {
         flex: 1,
         justifyContent: 'center',
