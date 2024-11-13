@@ -4,42 +4,49 @@ import dayjs from 'dayjs';
 import Colors from '../../Themes/Colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Calendar } from 'react-native-calendars';
-import moment from 'moment';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 
 export default function HorizontalCalendar({ setFilteredAppointments }) {
-    const [selectedDate, setSelectedDate] = useState('');
+    const [selectedDate, setSelectedDate] = useState(dayjs().format('YYYY-MM-DD'));
     const [fetchAppointments, setFetchAppointments] = useState([]);
     const [currentMonth, setCurrentMonth] = useState(dayjs().format('MMMM YYYY'));
     const [appointmentsCount, setAppointmentsCount] = useState({});
     const [isCalendarModalVisible, setCalendarModalVisible] = useState(false);
-    const [selected, setSelected] = useState('');
-    const todays = moment().format('YYYY-MM-DD');
+    const [dates, setDates] = useState([]);
+
+    // Set today's date
+    const todaysDate = dayjs().format('YYYY-MM-DD');
+
+    // Function to generate dates based on a start date
+    const generateNextFourDays = (startDate) => {
+        const datesArray = [];
+        for (let i = 0; i < 4; i++) {
+            datesArray.push(dayjs(startDate).add(i, 'day').format('YYYY-MM-DD'));
+        }
+        return datesArray;
+    };
 
     const handleDateSelection = (date) => {
         const formattedDate = dayjs(date).format('MM/DD/YYYY');
         const filterData = fetchAppointments.filter(appointment => appointment.appointmentDate === formattedDate);
         setFilteredAppointments(filterData);
-        setSelectedDate(date); // Update selectedDate directly here
+        setSelectedDate(date);
+        setDates(generateNextFourDays(date)); // Update dates array to the next four days from selected date
+
+        // Update the current month when a date is selected
+        const newMonth = dayjs(date).format('MMMM YYYY');
+        setCurrentMonth(newMonth);
     };
 
-
-
-    const generateNextFourDays = () => {
-        const dates = [];
-        for (let i = 0; i < 4; i++) {
-            dates.push(dayjs().add(i, 'day').format('YYYY-MM-DD'));
-        }
-        return dates;
-    };
-    const dates = generateNextFourDays();
-
+    
+    // Toggle calendar modal visibility
     const toggleModalVisibility = () => {
         setCalendarModalVisible(prev => !prev);
     };
-
     useEffect(() => {
         const fetchAppointmentsData = async () => {
+            console.log("Fetching appointments..."); // Check if this is logged
+        
             try {
                 const response = await fetch(
                     'https://eb1.taramind.com/getAllClientAppointments/32169136-9c4f-11ef-83e8-02f35b8058b3',
@@ -50,70 +57,90 @@ export default function HorizontalCalendar({ setFilteredAppointments }) {
                         },
                     }
                 );
-
+        
                 if (!response.ok) {
                     throw new Error('Failed to fetch appointments');
                 }
-
+        
                 const data = await response.json();
                 setFetchAppointments(data);
-
+        
+                // Generate appointment counts based on appointmentDate
                 const countMap = {};
                 data.forEach(appointment => {
                     const rawDate = appointment.appointmentDate;
-                    const formattedDate = dayjs(rawDate).isValid()
-                        ? dayjs(rawDate).format('YYYY-MM-DD')
-                        : new Date(rawDate).toISOString().split('T')[0];
+                    let formattedDate;
+        
+                    // Check if rawDate is a valid date string
+                    if (dayjs(rawDate).isValid()) {
+                        formattedDate = dayjs(rawDate).format('YYYY-MM-DD');
+                    } else {
+                        // If not valid, log the value and skip it
+                        console.log('Invalid date:', rawDate);
+                        return;  // Skip this item if the date is invalid
+                    }
+        
+                    // Proceed if the date is valid
                     if (formattedDate) {
                         countMap[formattedDate] = (countMap[formattedDate] || 0) + 1;
                     }
                 });
-
+        
+                // Set appointment counts
                 setAppointmentsCount(countMap);
+        
+                // Check today's date (log to console)
+                const todaysDate = dayjs().format('YYYY-MM-DD');
+                console.log('Today\'s Date:', todaysDate);  // Log to check today's date
+        
+                // Call handleDateSelection with today's date to filter today's appointments
+                handleDateSelection(todaysDate);  // Ensure today's appointments are displayed
+        
             } catch (error) {
-                console.error(error.message);
+                console.error('Error fetching appointments:', error.message);  // More detailed error message
             }
         };
-
+        
         fetchAppointmentsData();
     }, []);
-
-    const Calender = () => {
-        return (
-            <Calendar
-                onDayPress={day => {
-                    setSelected(day.dateString);
-                    handleDateSelection(day.dateString);
-                    toggleModalVisibility();
-                }}
-                markedDates={{
-                    [selected]: { selected: true, disableTouchEvent: true, selectedDotColor: 'orange' },
-                    [todays]: { selected: true, selectedColor: '#354764' },
-                }}
-                theme={{
-                    textSectionTitleColor: 'black',
-                    selectedDayBackgroundColor: '#87ABC9',
-                    selectedDayTextColor: '#ffffff',
-                    todayTextColor: '#fffff',
-                    dayTextColor: 'black',
-                    textDisabledColor: '#87ABC9',
-                    monthTextColor: 'black',
-                    textMonthFontSize: 19,
-                    textMonthFontWeight: '500',
-                    textDayFontWeight: '600',
-                    textDayHeaderFontWeight: '600',
-                    arrowColor: 'black'
-                }}
-            />
-        )
-    }
+    
+    
+    
+    const CalendarComponent = () => (
+        <Calendar
+        onDayPress={day => {
+            handleDateSelection(day.dateString);
+            toggleModalVisibility();
+        }}
+            markedDates={{
+                [selectedDate]: { selected: true, disableTouchEvent: true, selectedDotColor: 'orange' },
+                [todaysDate]: { selected: true, selectedColor: '#354764' },
+            }}
+            theme={{
+                textSectionTitleColor: 'black',
+                selectedDayBackgroundColor: '#87ABC9',
+                selectedDayTextColor: '#ffffff',
+                todayTextColor: '#fffff',
+                dayTextColor: 'black',
+                textDisabledColor: '#87ABC9',
+                monthTextColor: 'black',
+                textMonthFontSize: 19,
+                textMonthFontWeight: '500',
+                textDayFontWeight: '600',
+                textDayHeaderFontWeight: '600',
+                arrowColor: 'black'
+            }}
+        />
+    );
 
     return (
         <View style={styles.container}>
             <View style={styles.row}>
                 <Text style={styles.headerText}>{currentMonth}</Text>
-                <TouchableOpacity style={{ marginTop: responsiveHeight(0.2), marginLeft: responsiveWidth(1) }}
-                    onPress={toggleModalVisibility} >
+                <TouchableOpacity
+                    style={{ marginTop: responsiveHeight(0.2), marginLeft: responsiveWidth(1) }}
+                    onPress={toggleModalVisibility}
+                >
                     <Icon name="chevron-down" size={15} color={Colors.black} />
                 </TouchableOpacity>
             </View>
@@ -125,51 +152,55 @@ export default function HorizontalCalendar({ setFilteredAppointments }) {
                 >
                     <View style={styles.modalOverlay}>
                         <View style={styles.modalContent}>
-                            <Calender />
+                            <CalendarComponent />
                         </View>
                     </View>
                 </Modal>
             </View>
             <View style={styles.scrollContainer}>
-                {dates.map((date, index) => {
-                    const day = dayjs(date).format('D');
-                    const dayOfWeek = dayjs(date).format('ddd');
-                    const isSelected = date === selectedDate;
-                    const isToday = dayjs().isSame(date, 'day');
-                    const hasAppointments = appointmentsCount[date];
-                    return (
-                        <TouchableOpacity
-                            key={index}
-                            style={[
-                                styles.dateContainer,
+    {dates.map((date, index) => {
+        const day = dayjs(date).format('D');
+        const dayOfWeek = dayjs(date).format('ddd');
+        const isSelected = date === selectedDate;
+        const isToday = dayjs().isSame(date, 'day');
+        const hasAppointments = appointmentsCount[date];
 
-                                isSelected && styles.selectedDateContainer,
-                                isToday && styles.todayDateContainer,  // Do not apply background change for today's date
-                            ]}
-                            onPress={() => handleDateSelection(date)}
-                        >
-                            <Text style={[
-                                styles.dateText,
-                                isSelected && styles.selectedDateText,
-                                isToday && !isSelected && styles.todayDateText
-                            ]}>{day}</Text>
-                            <Text style={[
-                                styles.dayText,
-                                isSelected && styles.selectedDayText,
-                                isToday && !isSelected && styles.todayDayText
-                            ]}>{dayOfWeek}</Text>
-                            {hasAppointments && <Text style={styles.dot}>•</Text>}
+        return (
+            <TouchableOpacity
+                key={index}
+                style={[
+                    styles.dateContainer,
+                    isSelected && styles.selectedDateContainer, // Apply selectedDateContainer if the date is selected
+                    isToday && !isSelected && styles.todayDateContainer, // Apply todayDateContainer only if it's today and not selected
+                ]}
+                onPress={() => handleDateSelection(date)} // Ensure the selected date is updated
+            >
+                <Text style={[
+                    styles.dateText,
+                    isSelected && styles.selectedDateText,
+                    isToday && !isSelected && styles.todayDateText
+                ]}>{day}</Text>
+                <Text style={[
+                    styles.dayText,
+                    isSelected && styles.selectedDayText,
+                    isToday && !isSelected && styles.todayDayText
+                ]}>{dayOfWeek}</Text>
+                {hasAppointments && <Text style={styles.dot}>•</Text>}
+            </TouchableOpacity>
+        );
+    })}
+</View>
 
-                        </TouchableOpacity>
-                    );
-                })}
-            </View>
-            <Text style={[styles.headerText,{marginTop:responsiveHeight(2.5)}]}>Today</Text>
+            <TouchableOpacity
+                onPress={() => handleDateSelection(todaysDate)}
+            >
+                <Text style={[styles.headerText, { marginTop: responsiveHeight(2.5) }]}>Today</Text>
+            </TouchableOpacity>
         </View>
     );
 }
 
-const styles = StyleSheet.create({
+ const styles = StyleSheet.create({
     container: {
         paddingVertical: responsiveHeight(2),
         backgroundColor: Colors.white,
