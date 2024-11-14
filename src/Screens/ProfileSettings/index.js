@@ -116,10 +116,9 @@ const ProfileSettings = () => {
                         <Text style={{ width: 20 }}></Text>
                     </TouchableOpacity>
                 </View>
-            </ScrollView>
-            <View>
                 <Text style={styles.versionText}>© 2024 TARA Mind. v0.19.0.</Text>
-            </View>
+
+            </ScrollView>
         </View>
     );
 };
@@ -211,7 +210,9 @@ const styles = StyleSheet.create({
     versionText: {
         color: Colors.blue,
         alignSelf: 'center',
-        marginTop: responsiveHeight(3)
+        marginTop: responsiveHeight(3),
+        fontSize: responsiveFontSize(1),
+
     },
     line: {
         backgroundColor: Colors.light_skyblue,

@@ -4,7 +4,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const fetchProfile = createAsyncThunk('profile/fetchProfile', async (clientID, { rejectWithValue }) => {
     try {
         const apiKey = 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b';
-        const clientId = '5dbbe704-9aab-11ef-83e8-02f35b8058b3';
+        const clientId = '32169136-9c4f-11ef-83e8-02f35b8058b3';
         const response = await fetch('https://eb1.taramind.com/getuserData', {
             method: 'POST',
             headers: {
@@ -30,13 +30,13 @@ export const updateProfile = createAsyncThunk('profile/updateProfile', async (pr
     try {
         const apiKey = 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b';
 
-        const response = await fetch('https://eb1.taramind.com/updateUserInfo/5dbbe704-9aab-11ef-83e8-02f35b8058b3', {
+        const response = await fetch('https://eb1.taramind.com/updateUserInfo/32169136-9c4f-11ef-83e8-02f35b8058b3', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-API-KEY': apiKey,
             },
-            body: JSON.stringify(profileData),
+            body: JSON.stringify(profileData), 
         });
 
         if (!response.ok) {

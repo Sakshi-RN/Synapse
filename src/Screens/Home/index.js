@@ -9,7 +9,7 @@ import styles from './styles';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { fetchProfile } from '../../redux/Reducers/profileReducer';
 import Loader from '../../Components/Loader';
-import { responsiveWidth,responsiveHeight } from 'react-native-responsive-dimensions';
+import { responsiveWidth, responsiveHeight } from 'react-native-responsive-dimensions';
 
 
 
@@ -43,7 +43,7 @@ const HomeScreen = () => {
     }
 
     const profile = data && data[0];
-
+    console.log("@@@@@hjsdhd", profile)
 
     function formatAppointmentDate(dateString) {
         if (!dateString) return '';
@@ -137,73 +137,59 @@ const HomeScreen = () => {
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.patientName}>Hello {profile?.firstName || ''} </Text>
+                {profile?.nextAppointment?.appointmentDate ?
+                    <View style={styles.slide}>
+                        <View>
+                            <Text style={styles.slideText}>
+                                <Text>{profile?.nextAppointment?.appointmentType} ({profile?.nextAppointment?.visitType})</Text></Text>
+                            <Text style={styles.slideText}>{profile?.therapist?.providerName}</Text>
+                            <Text style={styles.therapistRoleText}>{profile?.therapist?.designation?.join(', ')}</Text>
+                        </View>
+                        <View style={styles.line} />
+                        <View style={styles.blueContainer}>
+                            <Text style={styles.slideTextSecondary}>
+                                {formatAppointmentDate(profile?.nextAppointment?.appointmentDate)} {formatAppointmentTime(profile?.nextAppointment?.appointmentStartTime)}
+                            </Text>
+                            {profile?.nextAppointment?.visitType === "Virtual" ? <MeetIcon /> : <Location />}
+                        </View>
+                    </View>
+                    : null}
             </ImageBackground>
         );
     };
 
     const SwiperCode = () => {
         return (
-            <View style={styles.swiperView}>
-                <Swiper showsButtons={false} autoplay={false}
-                    dot={<View style={styles.dot} />}
-                    activeDot={<View style={styles.activeDot}/>}
-                >
-                    {profile?.nextAppointment?.appointmentDate?
-                    
-                    <View style={styles.slide}>
-                        <View>
-                            <Text style={styles.slideText}>
-                                <Text>{profile?.nextAppointment?.appointmentType} ({profile?.nextAppointment?.visitType})</Text></Text>
-                            <Text style={styles.slideText}>{profile?.therapist?.providerName}</Text>
-                            <Text style={styles.therapistRoleText}>{profile?.therapist?.designation?.join(', ')}</Text>
-                        </View>
-                        <View style={styles.line} />
-                        <View style={styles.blueContainer}>
-                            <Text style={styles.slideTextSecondary}>
-                                {formatAppointmentDate(profile?.nextAppointment?.appointmentDate)} {formatAppointmentTime(profile?.nextAppointment?.appointmentStartTime)}
-                            </Text>
-                            <MeetIcon />
-                        </View>
-                    </View>
-                    :null}
-                    {profile?.nextAppointment?.appointmentDate ?
-                    <View style={styles.slide}>
-                        <View>
-                            <Text style={styles.slideText}>
-                                <Text>{profile?.nextAppointment?.appointmentType} ({profile?.nextAppointment?.visitType})</Text></Text>
-                            <Text style={styles.slideText}>{profile?.therapist?.providerName}</Text>
-                            <Text style={styles.therapistRoleText}>{profile?.therapist?.designation?.join(', ')}</Text>
-                        </View>
-                        <View style={styles.line} />
-                        <View style={styles.blueContainer}>
-                            <Text style={styles.slideTextSecondary}>
-                                {formatAppointmentDate(profile?.nextAppointment?.appointmentDate)} {formatAppointmentTime(profile?.nextAppointment?.appointmentStartTime)}
-                            </Text>
-                            <Location />
-                        </View>
-                    </View>:null
-                    }
-                         <View style={styles.slide}>
-                        <Text style={styles.slideText}><Text>You have made 20% improvement since last KAT session.</Text><Text style={styles.seemoreText}> See more...</Text></Text>
-                        <View style={styles.line} />
-                        <View style={styles.blueviewContainer}>
-                            <Text style={styles.slideTextHighlight}>20%</Text>
-                        </View>
-                        <Arrowdown />
-                    </View>
-                    <View style={styles.slide}>
-                        <Text style={styles.slideText}><Text>Your provider,</Text>
-                            <Text>{profile?.therapist?.providerName},{' '}</Text>
-                            <Text style={styles.therapistRoleText}>{profile?.therapist?.designation?.join(', ')}{' '}</Text>
-                            <Text>has requested the survey to be completed.</Text>
-                        </Text>
-                        <View style={styles.line} />
-                        <View style={styles.blueviewContainer}>
-                            <Text style={styles.startsurveytext}>Start Survey</Text>
-                        </View>
-                    </View>
-                </Swiper>
-            </View>
+            <>
+            </>
+            // <View style={styles.swiperView}>
+            //     {/* <Swiper showsButtons={false} autoplay={false}
+            //         dot={<View style={styles.dot} />}
+            //         activeDot={<View style={styles.activeDot}/>}
+            //     > */}
+
+
+            //              {/* <View style={styles.slide}>
+            //             <Text style={styles.slideText}><Text>You have made 20% improvement since last KAT session.</Text><Text style={styles.seemoreText}> See more...</Text></Text>
+            //             <View style={styles.line} />
+            //             <View style={styles.blueviewContainer}>
+            //                 <Text style={styles.slideTextHighlight}>20%</Text>
+            //             </View>
+            //             <Arrowdown />
+            //         </View>
+            //         <View style={styles.slide}>
+            //             <Text style={styles.slideText}><Text>Your provider,</Text>
+            //                 <Text>{profile?.therapist?.providerName},{' '}</Text>
+            //                 <Text style={styles.therapistRoleText}>{profile?.therapist?.designation?.join(', ')}{' '}</Text>
+            //                 <Text>has requested the survey to be completed.</Text>
+            //             </Text>
+            //             <View style={styles.line} />
+            //             <View style={styles.blueviewContainer}>
+            //                 <Text style={styles.startsurveytext}>Start Survey</Text>
+            //             </View>
+            //         </View> */}
+            //     {/* </Swiper> */}
+            // </View>
         );
     };
 
@@ -262,7 +248,7 @@ const HomeScreen = () => {
         return (
             <>
                 <View style={styles.careTeamRow}>
-                    <View style={{ width: responsiveWidth(20),marginTop: responsiveHeight(1),}}>
+                    <View style={{ width: responsiveWidth(20)}}>
                         <TouchableOpacity onPress={handlePrescriberProfile}>
                             {profile?.therapist?.profilePicture ? (
                                 <Image source={{ uri: profile?.therapist?.profilePicture }} style={styles.icon} />
@@ -273,7 +259,7 @@ const HomeScreen = () => {
                         <Text style={styles.careTeamName}>{profile?.therapist?.providerName || 'Therapist'}</Text>
                         <Text style={[styles.careTeamRole]}>{profile?.therapist?.designation?.join(', ')}</Text>
                     </View>
-                    <View style={{ width: responsiveWidth(20) }}>
+                    <View style={{ width: responsiveWidth(20)}}>
                         <TouchableOpacity onPress={handlePrescriberProfile}>
                             {profile?.prescriber?.profilePicture ? (
                                 <Image source={{ uri: profile?.prescriber?.profilePicture }} style={styles.icon} />
@@ -284,7 +270,7 @@ const HomeScreen = () => {
                         <Text style={styles.careTeamName}>{profile?.prescriber?.providerName || 'Prescriber'}</Text>
                         <Text style={[styles.careTeamRole]}>{profile?.prescriber?.designation?.join(', ')}</Text>
                     </View>
-                    <View style={{ width: responsiveWidth(20)}}>
+                    <View style={{ width: responsiveWidth(20),marginTop:responsiveHeight(1) }}>
                         <Image source={images.conceirge} style={styles.iconContainer} />
                         <Text style={styles.careTeamName}>Concierge</Text>
                         <Text></Text>
@@ -306,7 +292,7 @@ const HomeScreen = () => {
                         ]}
                     >
                         <Text style={[styles.text,
-                          index === 0 ? styles.firstPhase : '']}>
+                        index === 0 ? styles.firstPhase : '']}>
                             {phase.label}
                         </Text>
                     </View>
@@ -319,7 +305,9 @@ const HomeScreen = () => {
         <View style={styles.container}>
             {renderHeader()}
             {SwiperCode()}
-              <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollContent}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                style={styles.scrollContent}>
                 <Text style={styles.reportsTitle}>Process</Text>
                 {processContainer()}
                 <Text style={styles.careTeamTitle}>My Care Team</Text>

@@ -9,10 +9,10 @@ import moment from 'moment';
 
 const AppointmentCard = ({ appointment }) => {
     const navigation = useNavigation();
-    const formattedDate = moment(appointment.appointmentDate, 'MM/DD/YYYY').format('MMMM Do, YYYY');
     const formattedStartTime = moment(appointment.appointmentStartTime, 'HH:mm:ss').format('h:mm A');
     const formattedEndTime = moment(appointment.appointmentEndTime, 'HH:mm:ss').format('h:mm A');
     const formattedTime = `${formattedStartTime} - ${formattedEndTime}`;
+    const formattedDate = moment(appointment.appointmentDate, 'MM/DD').format('MMMM Do');
 
     return (
 
@@ -22,7 +22,7 @@ const AppointmentCard = ({ appointment }) => {
                 <View style={styles.rowStyle}>
                     <Text style={styles.name}>{appointment?.providerName}</Text>
                     <Text style={styles.type}>{appointment?.appointmentType}</Text>
-                    <Text style={styles.type}>{formattedTime}</Text>
+                    <Text style={styles.type}>{formattedDate}{' , '}{formattedTime}</Text>
                     <TouchableOpacity
                         style={
                             appointment.appointmentStatus === 'scheduled' ? styles.pendingButton :

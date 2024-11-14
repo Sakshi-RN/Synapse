@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: Colors.white
     },
-    scrollContent: { paddingHorizontal: responsiveHeight(3), marginTop: responsiveHeight(-2) },
+    scrollContent: { paddingHorizontal: responsiveHeight(3), paddingTop: responsiveHeight(4) },
     headerContainer: {
         paddingTop: responsiveHeight(5),
         paddingHorizontal: responsiveWidth(8),
@@ -52,8 +52,8 @@ const styles = StyleSheet.create({
         elevation: 5,
         alignSelf: 'center',
         borderRadius: 8,
-        marginHorizontal: responsiveWidth(5),
-        width: '90%'
+        width: '100%',
+        marginTop: responsiveHeight(2)
     },
     slideText: {
         color: Colors.blue,
@@ -119,7 +119,8 @@ const styles = StyleSheet.create({
     reportsTitle: {
         fontSize: responsiveFontSize(2),
         fontWeight: '600',
-        color: Colors.blue
+        color: Colors.blue,
+        marginTop:responsiveHeight(1.5)
     },
     reportItem: {
         backgroundColor: Colors.paleblue,
@@ -243,7 +244,7 @@ const styles = StyleSheet.create({
     },
     reportContainer: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
     actionView: { marginTop: responsiveHeight(1), paddingBottom: responsiveHeight(15) },
-    swiperView: { top: responsiveHeight(-4), height: responsiveHeight(12) },
+    swiperView: { top: responsiveHeight(-4), height: responsiveHeight(12),backgroundColor:'red' },
     surveyBtnStyle: { marginBottom: responsiveHeight(1) },
     actionStyle: { flexDirection: 'row', alignItems: 'center' },
     appointmentStyle: { marginHorizontal: responsiveWidth(3) },
@@ -315,8 +316,8 @@ const styles = StyleSheet.create({
         
       },
       iconContainer: {
-        width: 63,
-        height:63,
+        width: 60,
+        height:60,
          alignSelf:'center'
       },
 
