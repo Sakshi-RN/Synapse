@@ -18,43 +18,43 @@ const Appointment = () => {
     const [error, setError] = useState(null);
     const [activeTab, setActiveTab] = useState('All');
     const [availableDates, setAvailableDates] = useState([]);
-    
-
     const fetchAppointments = async () => {
-        try {
-            const clientId =await AsyncStorage.getItem('authclientID')
-            if (!clientId) {
-                Alert.alert('Error', 'No clientID found');
-                setLoading(false);
-                return;
-            }
-    
-            setLoading(true);
-            setError(null);
-    
-            const url = `https://eb1.taramind.com/getAllClientAppointments/${clientId}`;
-            const response = await axios.get(url, {
-                headers: {
-                    'X-Api-Key': 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b',
-                },
-            });
-    
-            const { data } = response;
-            if (data && data.appointments) {
-                setAppointments(data.appointments);
-                setAvailableDates(data.appointments.map(appointment => appointment.date));
-                setFilteredAppointments(data.appointments);
-            } else {
-                console.warn('No appointments found for the client.');
-                setError('No appointments found for the client.');
-            }
-        } catch (error) {
-            console.error('Error fetching appointments:', error.response?.data || error.message);
-            setError(error.response?.data?.message || 'Error fetching appointments');
-        } finally {
-            setLoading(false);
-        }
-    };
+      try {
+          const clientId = await AsyncStorage.getItem('authclientID')
+          if (!clientId) {
+              Alert.alert('Error', 'No clientID found');
+              setLoading(false);
+              return;
+          }
+  
+          setLoading(true);
+          setError(null);
+  
+          const url = `https://eb1.taramind.com/getAllClientAppointments/${clientId}`;
+          const response = await axios.get(url, {
+              headers: {
+                  'X-Api-Key': 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b',
+              },
+          });
+  
+          const { data } = response;
+          if (data && data.appointments && data.appointments.length > 0) {
+              setAppointments(data.appointments);
+              setAvailableDates(data.appointments.map(appointment => appointment.date));
+              setFilteredAppointments(data.appointments);
+          } else {
+              console.warn('No appointments found for the client.');
+              setAppointments([]);  // No appointments, but no error
+              setFilteredAppointments([]); // Ensure no filtered appointments to display
+          }
+      } catch (error) {
+          console.error('Error fetching appointments:', error.response?.data || error.message);
+          setError(error.response?.data?.message || 'Error fetching appointments');
+      } finally {
+          setLoading(false);
+      }
+  };
+  
     
     useEffect(() => {
         fetchAppointments();
