@@ -1,5 +1,6 @@
-import React, { useCallback } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, Platform } from 'react-native';
+
+import React, { useState, useCallback } from 'react';
+import { View, StyleSheet, Text, TouchableOpacity, Platform, Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -9,12 +10,14 @@ import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useFocusEffect } from '@react-navigation/native';
 import { fetchProfile } from '../../redux/Reducers/profileReducer';
-import { Advice, CommunicationPreferences, PhoneBook, Policy, Starred, TaraMind, TermsOfUse, Video } from '../../Assets/svg';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ProfileSettings = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const { data, fetchLoading, fetchError } = useSelector(state => state.profile);
+    const [loading, setLoading] = useState(false);
+
 
     useFocusEffect(
         useCallback(() => {
@@ -23,15 +26,52 @@ const ProfileSettings = () => {
     );
 
 
+    const handleLogout = async () => {
+        Alert.alert(
+            "Logout",
+            "Are you sure you want to logout?",
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel",
+                },
+                {
+                    text: "Yes",
+                    onPress: async () => {
+                        setLoading(true);
+                        try {
+                            await AsyncStorage.removeItem('authclientID');
+
+                            navigation.reset({
+                                index: 0,
+                                routes: [{ name: 'SignIn' }],
+                            });
+                        } catch (error) {
+                            console.error("Error clearing AsyncStorage:", error);
+                            Alert.alert("Error", "An error occurred while logging out. Please try again.");
+                        } finally {
+                            setLoading(false);
+                        }
+                    },
+                },
+            ]
+        );
+    };
+
+
     const handlePreferences = () => {
         navigation.navigate('Preferences');
-    }
+    };
+
     const handleEmergencycontacts = () => {
         navigation.navigate('Emergencycontacts');
-    }
+    };
+
     const handleMyProfileScreen = () => {
         navigation.navigate('MyProfileScreen');
-    }
+    };
+
+
     const profile = data && data[0];
 
     return (
@@ -52,79 +92,46 @@ const ProfileSettings = () => {
             <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
                 <Text style={styles.sectionTitle}>Preferences</Text>
                 <View style={styles.section}>
-                    <TouchableOpacity onPress={handlePreferences} style={styles.row} >
-                        <CommunicationPreferences />
+                    <TouchableOpacity onPress={handlePreferences} style={styles.row}>
                         <Text style={styles.rowText}>Preferences</Text>
                         <Icon name="chevron-right" size={20} color={Colors.black} />
                     </TouchableOpacity>
                     <View style={styles.line} />
-                    <TouchableOpacity style={styles.row} onPress={handleEmergencycontacts}>
-                        <PhoneBook />
+                    <TouchableOpacity onPress={handleEmergencycontacts} style={styles.row}>
                         <Text style={styles.rowText}>Emergency Contacts</Text>
                         <Icon name="chevron-right" size={20} color={Colors.black} />
-                    </TouchableOpacity>
-                </View>
-                <Text style={styles.sectionTitle}>Therapy Tools</Text>
-                <View style={styles.section}>
-                    <TouchableOpacity style={styles.row} >
-                        <Starred />
-                        <Text style={styles.rowText}>Starred Messages</Text>
-                        <Text style={{ width: 20 }}></Text>
-                    </TouchableOpacity>
-
-                    <View style={styles.line} />
-                    <TouchableOpacity style={styles.row}>
-                        <Video />
-                        <Text style={styles.rowText}>Video Session Test</Text>
-                        <Text style={{ width: 20 }}></Text>
-                    </TouchableOpacity>
-
-                    <View style={styles.line} />
-                    <TouchableOpacity style={styles.row}>
-                        <Advice />
-                        <Text style={styles.rowText}>Advice</Text>
-                        <Text style={{ width: 20 }}></Text>
                     </TouchableOpacity>
                 </View>
 
                 <Text style={styles.sectionTitle}>Support</Text>
                 <View style={styles.section}>
                     <TouchableOpacity style={styles.row}>
-                        <Policy />
                         <Text style={styles.rowText}>Privacy Policy</Text>
                         <Icon name="external-link" size={20} color={Colors.black} />
-                        <Text style={{ width: 20 }}></Text>
                     </TouchableOpacity>
                     <View style={styles.line} />
                     <TouchableOpacity style={styles.row}>
-                        <TermsOfUse />
                         <Text style={styles.rowText}>Terms Of Use</Text>
                         <Icon name="external-link" size={20} color={Colors.black} />
-                        <Text style={{ width: 20 }}></Text>
                     </TouchableOpacity>
                     <View style={styles.line} />
                     <TouchableOpacity style={styles.row}>
-                        <Icon name="question-circle" size={20} color={Colors.black} />
                         <Text style={styles.rowText}>FAQ</Text>
                         <Icon name="external-link" size={20} color={Colors.black} />
-                        <Text style={{ width: 20 }}></Text>
                     </TouchableOpacity>
                     <View style={styles.line} />
-                    <TouchableOpacity style={styles.row}>
+                    <TouchableOpacity onPress={handleLogout} style={styles.row}>
                         <Icon name="sign-out" size={20} color={Colors.red} />
                         <Text style={[styles.rowText, { color: Colors.red }]}>Logout</Text>
-                        <Text style={{ width: 20 }}></Text>
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.versionText}>© 2024 TARA Mind. v0.19.0.</Text>
-
             </ScrollView>
         </View>
     );
 };
 
 export default ProfileSettings;
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -147,7 +154,7 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
         elevation: 5,
         marginHorizontal: responsiveWidth(5),
-        marginTop: responsiveHeight(4)
+        marginTop: responsiveHeight(4),
     },
     avatarBox: {
         width: responsiveHeight(8),
@@ -169,10 +176,6 @@ const styles = StyleSheet.create({
     profileName: {
         fontSize: responsiveFontSize(2),
         fontWeight: 'bold',
-        color: Colors.blue,
-    },
-    profilePhone: {
-        fontSize: responsiveFontSize(1.8),
         color: Colors.blue,
     },
     section: {
@@ -199,24 +202,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingVertical: responsiveHeight(2),
-
     },
     rowText: {
-        fontSize: responsiveFontSize(1.8),
+        fontSize: responsiveFontSize(2),
         color: Colors.black,
-        marginLeft: responsiveWidth(3),
-        width: responsiveWidth(65)
-    },
-    versionText: {
-        color: Colors.blue,
-        alignSelf: 'center',
-        marginTop: responsiveHeight(3),
-        fontSize: responsiveFontSize(1),
-
+        flex: 1,
+        paddingLeft: responsiveWidth(3),
     },
     line: {
-        backgroundColor: Colors.light_skyblue,
+        width: '100%',
         height: 1,
-
-    }
+        backgroundColor: Colors.grey_light,
+    },
+    versionText: {
+        textAlign: 'center',
+        color: Colors.grey,
+        fontSize: responsiveFontSize(1.5),
+        marginTop: responsiveHeight(2),
+    },
 });

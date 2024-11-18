@@ -43,7 +43,6 @@ const HomeScreen = () => {
     }
 
     const profile = data && data[0];
-    console.log("@@@@@hjsdhd", profile)
 
     function formatAppointmentDate(dateString) {
         if (!dateString) return '';

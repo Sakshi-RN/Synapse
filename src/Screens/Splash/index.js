@@ -1,15 +1,17 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import { View, StyleSheet, ImageBackground } from 'react-native';
+import { responsiveHeight } from 'react-native-responsive-dimensions';
 import { SplashIcon, Logo } from '../../Assets/svg';
 import images from '../../Themes/Images';
-import { responsiveHeight } from 'react-native-responsive-dimensions';
 
-const Splash = () => {
+const Splash = ({  }) => {
+
+
   return (
     <ImageBackground source={images.Splashbg} style={styles.container}>
-      <SplashIcon/>
+      <SplashIcon />
       <View style={styles.marginStyle}>
-      <Logo/>
+        <Logo />
       </View>
     </ImageBackground>
   );
@@ -21,9 +23,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  marginStyle:{
-    marginTop:responsiveHeight(2)
-  }
+  marginStyle: {
+    marginTop: responsiveHeight(2),
+  },
 });
 
 export default Splash;

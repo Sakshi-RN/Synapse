@@ -1,77 +1,67 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
-// import ProductsDescription from '../Screens/ProductsDescription/ProductsDescription';
-// import BTabNavigation from './BTabNavigation';
-// import Cart from '../Screens/Cart/Cart';
-// import Categories from '../Screens/Categories';
-// import SavedAddresses from '../Screens/SavedAddresses';
-// import SetLocationMap from '../Screens/SetLocationMap';
-// import AboutUs from '../Screens/AboutUs';
-// import EditProfile from '../Screens/EditProfile';
-
+import BTabNavigation from './BTabNavigation';
+import SignIn from '../Screens/SignIn';
+import OtpVerify from '../Screens/OtpVerify';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createStackNavigator();
 
 export default function AppNavigation() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const clientID = await AsyncStorage.getItem('authclientID');
+        console.log(clientID, '@GGYUUU');
+        if (clientID) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      } catch (error) {
+        console.error('Error checking login status:', error);
+        setIsLoggedIn(false); // Default to false in case of an error
+      } finally {
+        setLoading(false); // Stop loading once we have checked the status
+      }
+    };
+
+    checkLoginStatus();
+  }, []);
+
+  // Show a loading screen or splash screen if the app is still loading
+  if (loading) {
+    return null; // You can show a loading indicator here
+  }
+
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="BTabNavigation"
-        screenOptions={{
-          headerShown: false
-        }}>
-        {/* <Stack.Screen
+      <Stack.Navigator initialRouteName={isLoggedIn ? "BTabNavigation" : "SignIn"}>
+        <Stack.Screen
           name="BTabNavigation"
           component={BTabNavigation}
-        />
-        <Stack.Screen
-          name="ProductsDescription"
-          component={ProductsDescription}
-        />
-        <Stack.Screen
-          name="Cart"
-          component={Cart}
-        />
-        <Stack.Screen
-          name="Categories"
-          component={Categories}
           options={{
-            headerShown:true
+            headerShown: false,
           }}
         />
         <Stack.Screen
-          name="SavedAddresses"
-          component={SavedAddresses}
+          name="SignIn"
+          component={SignIn}
           options={{
-            title: 'Saved Addresses',
-            headerShown:true
+            headerShown: false,
           }}
         />
         <Stack.Screen
-          name="SetLocationMap"
-          component={SetLocationMap}
+          name="OtpVerify"
+          component={OtpVerify}
           options={{
-            title: 'Set Location in Map',
-            headerShown:true
+            headerShown: false,
           }}
         />
-            <Stack.Screen
-          name="AboutUs"
-          component={AboutUs}
-          options={{
-            headerShown:false
-          }}
-        />
-            <Stack.Screen
-          name="EditProfile"
-          component={EditProfile}
-          options={{
-            headerShown:false
-          }}
-        /> */}
-       
       </Stack.Navigator>
     </NavigationContainer>
   );

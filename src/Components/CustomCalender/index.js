@@ -54,7 +54,6 @@ export default function HorizontalCalendar({ setFilteredAppointments ,appointmen
     };
 
     const fetchAppointmentsData = async () => {
-        console.log("Fetching appointments...");
         try {
             const response = await fetch(
                 'https://eb1.taramind.com/getAllClientAppointments/32169136-9c4f-11ef-83e8-02f35b8058b3',
@@ -79,18 +78,15 @@ export default function HorizontalCalendar({ setFilteredAppointments ,appointmen
                 const parsedDate = moment(rawDate, 'MM/DD/YYYY', true);  // Strict parsing with moment
 
                 // Log each date parsed
-                console.log('Raw Date:', rawDate, '| Parsed Date:', parsedDate.format('YYYY-MM-DD'), '| Valid:', parsedDate.isValid());
 
                 if (parsedDate.isValid()) {
                     const formattedDate = parsedDate.format('YYYY-MM-DD');  // Format to 'YYYY-MM-DD'
                     countMap[formattedDate] = (countMap[formattedDate] || 0) + 1;
                 } else {
-                    console.log('Invalid date detected:', rawDate); // Log if parsing fails
                 }
             });
 
             setAppointmentsCount(countMap);
-            console.log('Appointments Count Map:', countMap);
 
             // Set filter for today’s appointments
             handleDateSelection(todaysDate);
@@ -134,7 +130,6 @@ export default function HorizontalCalendar({ setFilteredAppointments ,appointmen
     );
 
     useEffect(() => {
-        console.log("Appointment counts:", appointmentsCount);
     }, [appointmentsCount]);
 
     return (

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import {
     View, Text, StyleSheet, ImageBackground,
-    TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, ScrollView, ActivityIndicator
+    TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, ScrollView, Alert
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, CommonActions } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
 import { Logo } from '../../Assets/svg';
 import images from '../../Themes/Images';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
@@ -12,12 +13,14 @@ import CustomTextInput from '../../Components/CustomTextInput';
 import CustomButton from '../../Components/CustomButton';
 import axios from 'axios';
 import Loader from '../../Components/Loader';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignIn = () => {
     const navigation = useNavigation();
     const [email, setEmail] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const dispatch = useDispatch();
 
     const handleVerifyPress = async () => {
         if (!email.trim()) {
@@ -43,8 +46,20 @@ const SignIn = () => {
             setIsLoading(false);
 
             if (response.data.message === "Email exists") {
+                const clientID = response.data.data.clientID;        
 
-                navigation.navigate('BTabNavigation');
+                if (clientID) {
+                    await AsyncStorage.setItem('authclientID', clientID);
+                    Alert.alert('Success', 'Logged in Successfully');
+                    navigation.dispatch(
+                        CommonActions.reset({
+                            index: 0,
+                            routes: [{ name: 'BTabNavigation' }],
+                        })
+                    );
+                } else {
+                    setErrorMessage('Failed to retrieve clientID.');
+                }
             } else {
                 setErrorMessage('Email does not exist');
             }
@@ -74,21 +89,20 @@ const SignIn = () => {
                         <CustomTextInput
                             placeholder="Enter your Email Id"
                             value={email}
-                            onChangeText={setEmail}
+                            onChangeText={(text) => {
+                                setEmail(text);
+                                setErrorMessage(''); 
+                            }}
                             inputStyle={styles.centerStyle}
                         />
                         {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
-                        {isLoading ? (
-                            <Loader />
-                        ) : null}
+                        {isLoading && <Loader />}
                         <CustomButton
                             title={'Verify'}
                             buttonStyle={styles.btnStyle}
                             onPress={handleVerifyPress}
                             disabled={isLoading}
-                        >
-
-                        </CustomButton>
+                        />
                     </View>
                 </ScrollView>
             </TouchableWithoutFeedback>
@@ -111,30 +125,30 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontWeight: 'bold',
         fontSize: responsiveFontSize(3),
-        color: Colors.black
+        color: Colors.black,
     },
     centerText: {
         marginTop: responsiveHeight(1.5),
         fontSize: responsiveFontSize(2),
         textAlign: 'center',
         marginHorizontal: responsiveWidth(7),
-        color: Colors.grey
+        color: Colors.grey,
     },
     centerStyle: {
         marginHorizontal: responsiveWidth(5),
-        bottom: responsiveHeight(1)
+        bottom: responsiveHeight(1),
     },
     btnStyle: {
         alignSelf: 'center',
         marginTop: responsiveHeight(4),
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     errorText: {
         color: 'red',
         marginTop: responsiveHeight(1),
-        marginLeft: responsiveWidth(6)
+        marginLeft: responsiveWidth(6),
     },
 });
 
