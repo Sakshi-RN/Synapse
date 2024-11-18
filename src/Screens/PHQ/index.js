@@ -6,9 +6,8 @@ import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
 import CustomButton from '../../Components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
-import Loader from '../../Components/Loader';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSurveyData, selectSurveyData, selectLoading } from '../../redux/Reducers/PHQReducer';
+import { fetchSurveyData, selectSurveyData } from '../../redux/Reducers/PHQReducer';
 import GraphContainer from '../../Container/GraphContainer';
 
 const PHQ = () => {
@@ -74,7 +73,7 @@ const PHQ = () => {
                             style={{ paddingHorizontal: responsiveWidth(5) }}
                         />
                     ) : (
-                        <Text style={styles.noDataText}>No survey data available.</Text>
+                        <Text></Text>
                     )}
     
             </ScrollView>

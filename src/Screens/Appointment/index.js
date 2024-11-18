@@ -22,40 +22,40 @@ const Appointment = () => {
 
     const fetchAppointments = async () => {
         try {
-            const clientID = await AsyncStorage.getItem('authclientID');
-            console.log("@@hhejw",clientID)
-            if (!clientID) {
+            const clientId =await AsyncStorage.getItem('authclientID')
+            if (!clientId) {
                 Alert.alert('Error', 'No clientID found');
                 setLoading(false);
                 return;
             }
+    
             setLoading(true);
-            setError(null); 
-
-            const response = await axios.get(
-                `https://eb1.taramind.com/getAllClientAppointments/${clientID}`, {
-                    headers: {
-                        'X-Api-Key': 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b'
-                    }
-                }
-            );
+            setError(null);
+    
+            const url = `https://eb1.taramind.com/getAllClientAppointments/${clientId}`;
+            const response = await axios.get(url, {
+                headers: {
+                    'X-Api-Key': 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b',
+                },
+            });
+    
             const { data } = response;
             if (data && data.appointments) {
                 setAppointments(data.appointments);
-                const dates = data.appointments.map(appointment => appointment.date); 
-                setAvailableDates(dates);
+                setAvailableDates(data.appointments.map(appointment => appointment.date));
                 setFilteredAppointments(data.appointments);
             } else {
-                setError('No appointments found.');
+                console.warn('No appointments found for the client.');
+                setError('No appointments found for the client.');
             }
         } catch (error) {
-            console.error(error);
-            setError('Failed to fetch appointments. Please try again.');
+            console.error('Error fetching appointments:', error.response?.data || error.message);
+            setError(error.response?.data?.message || 'Error fetching appointments');
         } finally {
             setLoading(false);
         }
     };
-
+    
     useEffect(() => {
         fetchAppointments();
     }, []);

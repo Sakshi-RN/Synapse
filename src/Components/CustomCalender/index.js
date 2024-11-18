@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { Calendar } from 'react-native-calendars';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import moment from "moment";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function HorizontalCalendar({ setFilteredAppointments ,appointments }) {
@@ -43,7 +44,6 @@ export default function HorizontalCalendar({ setFilteredAppointments ,appointmen
         const filterData = fetchAppointments.filter(appointment => appointment.appointmentDate === formattedDate);
         setFilteredAppointments(filterData);
         setSelectedDate(date);
-        // Update the current month when a date is selected
         const newMonth = dayjs(date).format('MMMM YYYY');
         setCurrentMonth(newMonth);
     };
@@ -55,8 +55,15 @@ export default function HorizontalCalendar({ setFilteredAppointments ,appointmen
 
     const fetchAppointmentsData = async () => {
         try {
+            const clientId =await AsyncStorage.getItem('authclientID')
+            if (!clientId) {
+                Alert.alert('Error', 'No clientID found');
+                setLoading(false);
+                return;
+            }
+    
             const response = await fetch(
-                'https://eb1.taramind.com/getAllClientAppointments/32169136-9c4f-11ef-83e8-02f35b8058b3',
+                `https://eb1.taramind.com/getAllClientAppointments/${clientId}`,
                 {
                     method: 'GET',
                     headers: {

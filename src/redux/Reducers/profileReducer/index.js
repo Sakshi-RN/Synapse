@@ -4,10 +4,9 @@ import { Alert } from 'react-native';
 
 export const fetchProfile = createAsyncThunk('profile/fetchProfile', async (_, { rejectWithValue }) => {
     try {
-        const clientID = await AsyncStorage.getItem('authclientID');
-        console.log(clientID, "@fetchProfile");
 
-        if (!clientID) {
+        const clientId =await AsyncStorage.getItem('authclientID')
+        if (!clientId) {
             Alert.alert('Error', 'No clientID found');
             return rejectWithValue('No clientID found');
         }
@@ -19,7 +18,7 @@ export const fetchProfile = createAsyncThunk('profile/fetchProfile', async (_, {
                 'Content-Type': 'application/json',
                 'X-API-KEY': apiKey,
             },
-            body: JSON.stringify({ clientID }),
+            body: JSON.stringify({ clientId }),
         });
 
         if (!response.ok) {
@@ -37,10 +36,9 @@ export const fetchProfile = createAsyncThunk('profile/fetchProfile', async (_, {
 
 export const updateProfile = createAsyncThunk('profile/updateProfile', async (profileData, { rejectWithValue }) => {
     try {
-        const clientID = await AsyncStorage.getItem('authclientID');
-        console.log(clientID, "@updateProfile");
+        const clientId = await AsyncStorage.getItem('authclientID');
 
-        if (!clientID) {
+        if (!clientId) {
             Alert.alert('Error', 'No clientID found');
             return rejectWithValue('No clientID found');
         }

@@ -16,7 +16,6 @@ export default function AppNavigation() {
     const checkLoginStatus = async () => {
       try {
         const clientID = await AsyncStorage.getItem('authclientID');
-        console.log(clientID, '@GGYUUU');
         if (clientID) {
           setIsLoggedIn(true);
         } else {
