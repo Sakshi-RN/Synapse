@@ -35,7 +35,7 @@ const EditPreferences = () => {
     useEffect(() => {
         if (profile) {
             setSelectedCommunicationMethod(profile.commChannel[0] || '');
-            setSelectedGender(profile.genderProviderPreference || '');
+            setSelectedGender(profile.genderProviderPreference[0] || '');
             setSelectedLanguage(profile.preferredLanguage || '');
         }
     }, [profile]);
@@ -69,9 +69,10 @@ const EditPreferences = () => {
     const handlePreferences = () => {
         const updatedProfile = {
             clientId: profile.clientID,
-            genderProviderPreference: selectedGender || profile.genderProviderPreference,
             preferredLanguage: selectedLanguage || profile.preferredLanguage,
             commChannel: [selectedCommunicationMethod || profile.commChannel[0]],
+            genderProviderPreference: [selectedGender || profile.genderProviderPreference[0]],
+         
         };
 
         setLoading(true);
@@ -143,7 +144,6 @@ const EditPreferences = () => {
                     onPress={() => openModal('Gender')}
                     value={selectedGender}
                 />
-
                 <View style={styles.row}>
                     <CustomButton
                         buttonStyle={styles.Button}
@@ -157,14 +157,12 @@ const EditPreferences = () => {
                         onPress={handlePreferences}
                     />
                 </View>
-
                 {loading && (
                     <View style={styles.centeredContainer}>
                         <Loader />
                     </View>
                 )}
             </View>
-
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -206,7 +204,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', 
     },
     modalContent: {
         width: responsiveWidth(90),

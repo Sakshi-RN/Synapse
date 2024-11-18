@@ -307,9 +307,9 @@ const HomeScreen = () => {
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 style={styles.scrollContent}>
-                <Text style={styles.reportsTitle}>Process</Text>
-                {processContainer()}
-                <Text style={styles.careTeamTitle}>My Care Team</Text>
+                {/* <Text style={styles.reportsTitle}>Process</Text>
+                {processContainer()} */}
+                <Text style={styles.reportsTitle}>My Care Team</Text>
                 {flatlistView()}
                 <Text style={styles.actionsTitle}>Other Action</Text>
                 {actionConatiner()}

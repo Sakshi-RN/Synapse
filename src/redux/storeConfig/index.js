@@ -1,14 +1,14 @@
 import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "../Reducers/authReducer";
 import profileReducer from "../Reducers/profileReducer";
 import phqReducer from '../Reducers/PHQReducer';
 import logger from "redux-logger";
-import AppointmentReducer from '../Reducers/AppointmentReducer';
+import appointmentsReducer from '../Reducers/AppointmentReducer';
+
 
 const reducer = combineReducers({
    profile: profileReducer,
-   Appointment:AppointmentReducer,
+   appointments: appointmentsReducer,
    phq: phqReducer,
 });
 

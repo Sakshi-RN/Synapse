@@ -7,6 +7,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import Loader from '../../Components/Loader';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Fonts } from '../../Themes/fonts';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const TreatmentSummary = () => {
@@ -49,13 +50,18 @@ const TreatmentSummary = () => {
         setError(null);
 
         try {
+            const clientId =await AsyncStorage.getItem('authclientID')
+            if (!clientId) {
+                Alert.alert('Error', 'No clientID found');
+                return rejectWithValue('No clientID found');
+            }
             const response = await fetch('https://eb1.taramind.com/getTreatmentPlan', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-Api-Key': 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b'
                 },
-                body: JSON.stringify({ clientId: "5dbbe704-9aab-11ef-83e8-02f35b8058b3" })
+                body: JSON.stringify({ clientId }),
             });
 
             const result = await response.json();

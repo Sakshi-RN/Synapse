@@ -44,7 +44,7 @@ export const updateProfile = createAsyncThunk('profile/updateProfile', async (pr
         }
 
         const apiKey = 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b';
-        const response = await fetch(`https://eb1.taramind.com/updateUserInfo/${clientID}`, {
+        const response = await fetch(`https://eb1.taramind.com/updateUserInfo/${clientId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

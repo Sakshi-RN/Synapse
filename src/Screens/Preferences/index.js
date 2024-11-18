@@ -36,10 +36,6 @@ const Preferences = () => {
     const handleGoBack = () => {
         navigation.goBack();
     };
-    function capitalizeFirstLetter(value) {
-        if (typeof value !== 'string') return '';
-        return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
-    }
     return (
         <View style={styles.container}>
             <CustomHeader title={'Preferences'} />
@@ -55,7 +51,7 @@ const Preferences = () => {
                     </View>
                     <View style={commonStyles.bottomView}>
                         <Text style={CommonStyle.titleText}>Preferred gender for therapist</Text>
-                        <Text style={commonStyles.bodyText}>{capitalizeFirstLetter(profile?.genderProviderPreference)}</Text>
+                        <Text style={commonStyles.bodyText}>{profile?.genderProviderPreference}</Text>
                     </View>
                 </View>
                 <View style={styles.row}>
