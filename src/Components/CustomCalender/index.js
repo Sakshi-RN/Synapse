@@ -9,13 +9,14 @@ import moment from "moment";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-export default function HorizontalCalendar({ setFilteredAppointments ,appointments }) {
+export default function HorizontalCalendar({ setFilteredAppointments, appointments }) {
     const [selectedDate, setSelectedDate] = useState(dayjs().format('YYYY-MM-DD'));
     const [fetchAppointments, setFetchAppointments] = useState([]);
     const [currentMonth, setCurrentMonth] = useState(dayjs().format('MMMM YYYY'));
     const [appointmentsCount, setAppointmentsCount] = useState({});
     const [isCalendarModalVisible, setCalendarModalVisible] = useState(false);
     const [dates, setDates] = useState([]);
+    const [activeButton, setActiveButton] = useState('today');
 
     // Set today's date
     const todaysDate = dayjs().format('YYYY-MM-DD');
@@ -55,13 +56,13 @@ export default function HorizontalCalendar({ setFilteredAppointments ,appointmen
 
     const fetchAppointmentsData = async () => {
         try {
-            const clientId =await AsyncStorage.getItem('authclientID')
+            const clientId = await AsyncStorage.getItem('authclientID')
             if (!clientId) {
                 Alert.alert('Error', 'No clientID found');
                 setLoading(false);
                 return;
             }
-    
+
             const response = await fetch(
                 `https://eb1.taramind.com/getAllClientAppointments/${clientId}`,
                 {
@@ -108,13 +109,20 @@ export default function HorizontalCalendar({ setFilteredAppointments ,appointmen
     }, []);
 
 
-
+    const handleButtonPress = (button) => {
+        setActiveButton(button);
+        if (button === 'today') {
+            handleDateSelection(todaysDate);
+        } else {
+            setFilteredAppointments(fetchAppointments); // Show all appointments
+        }
+    };
     const CalendarComponent = () => (
         <Calendar
-        onDayPress={day => {
-            handleDateSelection(day.dateString);
-            toggleModalVisibility();
-        }}
+            onDayPress={day => {
+                handleDateSelection(day.dateString);
+                toggleModalVisibility();
+            }}
             markedDates={{
                 [selectedDate]: { selected: true, disableTouchEvent: true, selectedDotColor: 'orange' },
                 [todaysDate]: { selected: true, selectedColor: '#354764' },
@@ -141,14 +149,26 @@ export default function HorizontalCalendar({ setFilteredAppointments ,appointmen
 
     return (
         <View style={styles.container}>
-            <View style={styles.row}>
-                <Text style={styles.headerText}>{currentMonth}</Text>
-                <TouchableOpacity
-                    style={{ marginTop: responsiveHeight(0.2), marginLeft: responsiveWidth(1) }}
-                    onPress={toggleModalVisibility}
-                >
-                    <Icon name="chevron-down" size={15} color={Colors.black} />
-                </TouchableOpacity>
+            <View style={styles.calenderRow}>
+                <View style={styles.row}>
+                    <Text style={styles.headerText}>{currentMonth}</Text>
+                    <TouchableOpacity
+                        style={{ marginTop: responsiveHeight(0.2), marginLeft: responsiveWidth(1) }}
+                        onPress={toggleModalVisibility}
+                    >
+                        <Icon name="chevron-down" size={15} color={Colors.black} />
+                    </TouchableOpacity>
+                </View>
+                <Text  style={[
+                        styles.todayText,
+                        activeButton === 'today' && styles.activeButton
+                    ]}
+                    onPress={() => handleButtonPress('today')}>Today</Text>
+                <Text   style={[
+                        styles.todayText,
+                        activeButton === 'all' && styles.activeButton
+                    ]}
+                    onPress={() => handleButtonPress('all')}>All</Text>
             </View>
             <View style={styles.calenderContainer}>
                 <Modal
@@ -164,62 +184,55 @@ export default function HorizontalCalendar({ setFilteredAppointments ,appointmen
                 </Modal>
             </View>
             <View style={styles.scrollContainer}>
-    {dates.map((date, index) => {
-        const day = dayjs(date).format('D');
-        const dayOfWeek = dayjs(date).format('ddd');
-        const isSelected = date === selectedDate;
-        const isToday = dayjs().isSame(date, 'day');
-        const hasAppointments = !!appointmentsCount[date];
+                {dates.map((date, index) => {
+                    const day = dayjs(date).format('D');
+                    const dayOfWeek = dayjs(date).format('ddd');
+                    const isSelected = date === selectedDate;
+                    const isToday = dayjs().isSame(date, 'day');
+                    const hasAppointments = !!appointmentsCount[date];
 
 
-        return (
-            <TouchableOpacity
-                key={index}
-                style={[
-                    styles.dateContainer,
-                    isSelected && styles.selectedDateContainer,
-                    isToday && !isSelected && styles.todayDateContainer,
-                ]}
-                onPress={() => handleDateCardSelection(date)}
-            >
-                <Text style={[
-                    styles.dateText,
-                    isSelected && styles.selectedDateText,
-                    isToday && !isSelected && styles.todayDateText
-                ]}>{day}</Text>
-                <Text style={[
-                    styles.dayText,
-                    isSelected && styles.selectedDayText,
-                    isToday && !isSelected && styles.todayDayText
-                ]}>{dayOfWeek}</Text>
-                {hasAppointments && <Text style={[styles.dot,styles.dayText,
-                    isSelected && styles.selectedDayText,
-                    isToday && !isSelected && styles.todayDayText]}>•••</Text>}
-            </TouchableOpacity>
-        );
-    })}
-                </View>
-
-            <TouchableOpacity
-                onPress={() => handleDateSelection(todaysDate)}
-            >
-                <Text style={[styles.headerText, { marginTop: responsiveHeight(2.5) }]}>Today</Text>
-            </TouchableOpacity>
+                    return (
+                        <TouchableOpacity
+                            key={index}
+                            style={[
+                                styles.dateContainer,
+                                isSelected && styles.selectedDateContainer,
+                                isToday && !isSelected && styles.todayDateContainer,
+                            ]}
+                            onPress={() => handleDateCardSelection(date)}
+                        >
+                            <Text style={[
+                                styles.dateText,
+                                isSelected && styles.selectedDateText,
+                                isToday && !isSelected && styles.todayDateText
+                            ]}>{day}</Text>
+                            <Text style={[
+                                styles.dayText,
+                                isSelected && styles.selectedDayText,
+                                isToday && !isSelected && styles.todayDayText
+                            ]}>{dayOfWeek}</Text>
+                            {hasAppointments && <Text style={[styles.dot, styles.dayText,
+                            isSelected && styles.selectedDayText,
+                            isToday && !isSelected && styles.todayDayText]}>•••</Text>}
+                        </TouchableOpacity>
+                    );
+                })}
+            </View>
         </View>
     );
 }
 
- const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         paddingVertical: responsiveHeight(2),
         backgroundColor: Colors.white,
     },
     headerText: {
-        fontSize: responsiveFontSize(2),
-        fontWeight: 'bold',
+        fontSize: responsiveFontSize(1.8),
+        fontWeight: '700',
         color: Colors.blue,
-        marginBottom: responsiveHeight(1),
-        marginLeft: responsiveWidth(3)
+
     },
     scrollContainer: {
         flexDirection: 'row',
@@ -325,6 +338,27 @@ export default function HorizontalCalendar({ setFilteredAppointments ,appointmen
         shadowRadius: 2,
         elevation: 5,
     },
+    calenderRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: responsiveHeight(3),
+        marginHorizontal: responsiveWidth(5),
+        width: responsiveWidth(85)
+    },
+    todayText: {
+        fontSize: responsiveFontSize(1.8),
+        fontWeight: '700',
+        color: Colors.blue,
+        textDecorationLine: 'underline'
+    },
+    activeButton: {
+        backgroundColor: Colors.blue,
+        color: Colors.white,
+        paddingHorizontal:responsiveWidth(4),
+        paddingVertical:responsiveHeight(0.5),
+        borderRadius:12,
+    }
 
 });
 

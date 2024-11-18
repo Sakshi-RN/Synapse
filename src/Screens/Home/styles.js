@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
         fontSize: responsiveFontSize(2),
         fontWeight: '600',
         color: Colors.blue,
-        marginTop:responsiveHeight(1.5)
+        marginTop: responsiveHeight(1.5)
     },
     reportItem: {
         backgroundColor: Colors.paleblue,
@@ -164,17 +164,13 @@ const styles = StyleSheet.create({
     careTeamContainer: {
         padding: responsiveWidth(4)
     },
-    careTeamTitle: {
-        fontSize: responsiveFontSize(2),
-        fontWeight: '600',
-        marginTop: responsiveHeight(2),
-        color: Colors.blue
-    },
+
     careTeamName: {
-        fontSize: responsiveFontSize(1.2),
-        fontWeight: '600',
+        fontSize: responsiveFontSize(1.5),
+        fontWeight: '500',
         textAlign: 'center',
-        marginTop: responsiveHeight(1),
+        lineHeight: responsiveHeight(1.5),
+        color: Colors.white
     },
     samuelName: {
         fontSize: responsiveFontSize(1.2),
@@ -193,10 +189,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     careTeamRole: {
-        fontSize: responsiveFontSize(0.8),
-        color: Colors.black,
-        fontWeight: '700',
-        textAlign: 'center'
+        fontSize: responsiveFontSize(1),
+        color: Colors.white,
+        fontWeight: '500',
+        textAlign: 'center',
+        marginTop: responsiveHeight(0.5)
     },
     actionsContainer: {
         padding: responsiveWidth(4)
@@ -213,7 +210,7 @@ const styles = StyleSheet.create({
         margin: responsiveWidth(2),
         backgroundColor: Colors.blue
     },
-    actionIcon: {  
+    actionIcon: {
         width: 40,
         height: 40,
         marginBottom: responsiveHeight(1)
@@ -244,7 +241,7 @@ const styles = StyleSheet.create({
     },
     reportContainer: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
     actionView: { marginTop: responsiveHeight(1), paddingBottom: responsiveHeight(15) },
-    swiperView: { top: responsiveHeight(-4), height: responsiveHeight(12),backgroundColor:'red' },
+    swiperView: { top: responsiveHeight(-4), height: responsiveHeight(12), backgroundColor: 'red' },
     surveyBtnStyle: { marginBottom: responsiveHeight(1) },
     actionStyle: { flexDirection: 'row', alignItems: 'center' },
     appointmentStyle: { marginHorizontal: responsiveWidth(3) },
@@ -262,10 +259,17 @@ const styles = StyleSheet.create({
     careTeamRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-around',
-        marginTop: responsiveFontSize(1)
+        justifyContent: 'space-between',
+        marginTop: responsiveFontSize(1.5)
     },
-
+    careTeamBox: {
+        height: responsiveHeight(9),
+        width: responsiveWidth(26),
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: Colors.blue,
+        borderRadius: 12
+    },
     therapistRoleText: {
         color: Colors.blue,
         fontSize: responsiveFontSize(1.1),
@@ -296,7 +300,7 @@ const styles = StyleSheet.create({
         marginBottom: responsiveHeight(0.5),
         alignSelf: 'center',
         width: responsiveWidth(17),
-       top:(-0.5)
+        top: (-0.5)
 
     },
     firstPhase: {
@@ -310,16 +314,16 @@ const styles = StyleSheet.create({
     },
     icon: {
         width: 60,
-        height:60,
-        borderRadius:30,
-        alignSelf:'center'
-        
-      },
-      iconContainer: {
+        height: 60,
+        borderRadius: 30,
+        alignSelf: 'center'
+
+    },
+    iconContainer: {
         width: 60,
-        height:60,
-         alignSelf:'center'
-      },
+        height: 60,
+        alignSelf: 'center'
+    },
 
 });
 

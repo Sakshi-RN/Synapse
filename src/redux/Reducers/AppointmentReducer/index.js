@@ -10,7 +10,6 @@ export const fetchAppointments = createAsyncThunk(
 
       
       const clientId = await AsyncStorage.getItem('authclientID');
-      console.log('@@@ fetchAppointments: Retrieved clientId:', clientId);
       
       if (!clientId) {
         console.error('@@@ fetchAppointments: No clientID found in AsyncStorage');
@@ -18,21 +17,15 @@ export const fetchAppointments = createAsyncThunk(
       }
 
       const url = `https://eb1.taramind.com/getAllClientAppointments/${clientId}`;
-      console.log('@@@ fetchAppointments: Fetching from URL:', url);
 
-      // Make API request
       const response = await axios.get(url, {
         headers: {
           'X-Api-Key': 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b',
         },
       });
 
-      console.log('@@@ fetchAppointments: API Response:', response.data);
-
-      // Check if response contains appointments (adapted to match array structure)
       if (Array.isArray(response.data) && response.data.length > 0) {
-        console.log('@@@ fetchAppointments: Appointments found:', response.data);
-        return response.data; // Return the array directly
+        return response.data; 
       } else {
         console.error('@@@ fetchAppointments: No appointments found in response');
         throw new Error('No appointments found');
@@ -58,22 +51,18 @@ const appointmentsSlice = createSlice({
   reducers: {
     filterAppointments: (state, action) => {
       const selectedDate = action.payload;
-      console.log('@@@ filterAppointments: Filtering for date:', selectedDate);
       state.filteredAppointments = state.appointments.filter(
         (appointment) => appointment.date === selectedDate
       );
-      console.log('@@@ filterAppointments: Filtered appointments:', state.filteredAppointments);
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchAppointments.pending, (state) => {
-        console.log('@@@ fetchAppointments.pending: Fetching appointments started');
         state.loading = true;
         state.error = null;
       })
       .addCase(fetchAppointments.fulfilled, (state, action) => {
-        console.log('@@@ fetchAppointments.fulfilled: Fetching appointments successful');
         state.loading = false;
         state.appointments = action.payload;
         state.filteredAppointments = action.payload;

@@ -44,8 +44,8 @@ const Appointment = () => {
               setFilteredAppointments(data.appointments);
           } else {
               console.warn('No appointments found for the client.');
-              setAppointments([]);  // No appointments, but no error
-              setFilteredAppointments([]); // Ensure no filtered appointments to display
+              setAppointments([]); 
+              setFilteredAppointments([]);
           }
       } catch (error) {
           console.error('Error fetching appointments:', error.response?.data || error.message);

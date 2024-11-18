@@ -245,37 +245,24 @@ const HomeScreen = () => {
     }
     const flatlistView = () => {
         return (
-            <>
-                <View style={styles.careTeamRow}>
-                    <View style={{ width: responsiveWidth(20)}}>
-                        <TouchableOpacity onPress={handlePrescriberProfile}>
-                            {profile?.therapist?.profilePicture ? (
-                                <Image source={{ uri: profile?.therapist?.profilePicture }} style={styles.icon} />
-                            ) : (
-                                <Image source={images.user} style={styles.icon} />
-                            )}
-                        </TouchableOpacity>
-                        <Text style={styles.careTeamName}>{profile?.therapist?.providerName || 'Therapist'}</Text>
-                        <Text style={[styles.careTeamRole]}>{profile?.therapist?.designation?.join(', ')}</Text>
-                    </View>
-                    <View style={{ width: responsiveWidth(20)}}>
-                        <TouchableOpacity onPress={handlePrescriberProfile}>
-                            {profile?.prescriber?.profilePicture ? (
-                                <Image source={{ uri: profile?.prescriber?.profilePicture }} style={styles.icon} />
-                            ) : (
-                                <Image source={images.user} style={styles.icon} />
-                            )}
-                        </TouchableOpacity >
-                        <Text style={styles.careTeamName}>{profile?.prescriber?.providerName || 'Prescriber'}</Text>
-                        <Text style={[styles.careTeamRole]}>{profile?.prescriber?.designation?.join(', ')}</Text>
-                    </View>
-                    <View style={{ width: responsiveWidth(20),marginTop:responsiveHeight(1) }}>
-                        <Image source={images.conceirge} style={styles.iconContainer} />
-                        <Text style={styles.careTeamName}>Concierge</Text>
-                        <Text></Text>
-                    </View>
-                </View>
-            </>
+
+            <View style={styles.careTeamRow}>
+                <TouchableOpacity style={[styles.careTeamBox, { backgroundColor: '#749fe8' }]} onPress={handlePrescriberProfile}>
+                    <Text style={styles.careTeamName}>Therapist:</Text>
+                    <Text style={styles.careTeamName}>{profile?.therapist?.providerName}</Text>
+                    <Text style={[styles.careTeamRole]}>{profile?.therapist?.designation?.join(', ')}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.careTeamBox, { backgroundColor: '#74a84f' }]} onPress={handlePrescriberProfile}>
+                    <Text style={styles.careTeamName}>Prescriber:</Text>
+                    <Text style={styles.careTeamName}>{profile?.prescriber?.providerName}</Text>
+                    <Text style={[styles.careTeamRole]}>{profile?.prescriber?.designation?.join(', ')}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.careTeamBox, { backgroundColor: '#787a77' }]}>
+                    <Text style={styles.careTeamName}>TARA Mind</Text>
+                    <Text style={styles.careTeamName}>Concierge</Text>
+                </TouchableOpacity>
+            </View>
+
         )
     }
 
@@ -304,8 +291,8 @@ const HomeScreen = () => {
         <View style={styles.container}>
             {renderHeader()}
             {SwiperCode()}
-            <ScrollView
-                showsVerticalScrollIndicator={false}
+            <View
+                // showsVerticalScrollIndicator={false}
                 style={styles.scrollContent}>
                 {/* <Text style={styles.reportsTitle}>Process</Text>
                 {processContainer()} */}
@@ -313,7 +300,7 @@ const HomeScreen = () => {
                 {flatlistView()}
                 <Text style={styles.actionsTitle}>Other Action</Text>
                 {actionConatiner()}
-            </ScrollView>
+            </View>
         </View>
     );
 };
