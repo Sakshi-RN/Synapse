@@ -84,8 +84,8 @@ const ProfileSettings = () => {
                     </Text>
                 </View>
                 <View style={styles.profileInfo}>
-                    <Text style={styles.profileName}>{`${profile?.firstName} ${profile?.lastName}`}</Text>
-                    <Text style={styles.profileName}>{profile?.phone}</Text>
+                    <Text style={styles.profileName}>{`${profile?.firstName || ''} ${profile?.lastName || ''}`}</Text>
+                    <Text style={styles.profileName}>{profile?.phone || ''}</Text>
                 </View>
                 <Icon name="chevron-right" size={20} color={Colors.black} />
             </TouchableOpacity>

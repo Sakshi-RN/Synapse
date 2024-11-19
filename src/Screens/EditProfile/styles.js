@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     },
     content: {
         paddingHorizontal: responsiveWidth(5),
+        flex: 1,
     },
     Button: {
         backgroundColor: Colors.light_skyblue,
@@ -35,10 +36,10 @@ const styles = StyleSheet.create({
         fontWeight: '500',
     },
     name: {
-        fontSize: responsiveFontSize(1.6),
+        fontSize: responsiveFontSize(1.8),
         fontWeight: 'bold',
-        color: Colors.black,
-        marginTop: responsiveHeight(1),
+        color: Colors.blue,
+        marginTop: responsiveHeight(2),
     },
     titleStyle: {
         fontSize: responsiveFontSize(1.6),
@@ -59,42 +60,42 @@ const styles = StyleSheet.create({
         fontWeight: '400',
         fontSize: responsiveFontSize(2.5)
     },
-    nametitleStyle: {
-        width: responsiveWidth(20.5),
-    },
-    emailTitle: {
-        width: responsiveWidth(26.5),
-    },
-    phoneTitle: {
-        width: responsiveWidth(27),
-    },
-    genderStyle: {
-        width: responsiveWidth(16),
-    },
-    dobStyle: {
-        width: responsiveWidth(30),
-    },
-    weightStyle: {
-        width: responsiveWidth(33),
-    },
-    heightStyle: {
-        width: responsiveWidth(28),
-    },
-    streetsStyle: {
-        width: responsiveWidth(27),
-    },
-    addressStyle: {
-        width: responsiveWidth(20),
-    },
-    cityStyle: {
-        width: responsiveWidth(10.5),
-    },
-    stateStyle: {
-        width: responsiveWidth(12.5),
-    },
-    zipCodeStyle: {
-        width: responsiveWidth(18),
-    },
+    // nametitleStyle: {
+    //     width: responsiveWidth(20.5),
+    // },
+    // emailTitle: {
+    //     width: responsiveWidth(26.5),
+    // },
+    // phoneTitle: {
+    //     width: responsiveWidth(27),
+    // },
+    // genderStyle: {
+    //     width: responsiveWidth(16),
+    // },
+    // dobStyle: {
+    //     width: responsiveWidth(30),
+    // },
+    // weightStyle: {
+    //     width: responsiveWidth(33),
+    // },
+    // heightStyle: {
+    //     width: responsiveWidth(28),
+    // },
+    // streetsStyle: {
+    //     width: responsiveWidth(27),
+    // },
+    // addressStyle: {
+    //     width: responsiveWidth(20),
+    // },
+    // cityStyle: {
+    //     width: responsiveWidth(10.5),
+    // },
+    // stateStyle: {
+    //     width: responsiveWidth(12.5),
+    // },
+    // zipCodeStyle: {
+    //     width: responsiveWidth(18),
+    // },
     widthStyle: {
         width: responsiveWidth(45),
     },

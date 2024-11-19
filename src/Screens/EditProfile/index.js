@@ -25,6 +25,24 @@ import Loader from '../../Components/Loader';
 const EditProfile = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
+    const [isEditable, setIsEditable] = useState({
+        firstName: false,
+        lastName: false,
+        email: false,
+        phone: false,
+        address1: false,
+        address2: false,
+        city: false,
+        zip: false,
+    });
+    const toggleEditable = (field) => {
+        console.log('Toggling edit for:', field); // Log the field being toggled
+        setIsEditable((prev) => {
+            const updated = { ...prev, [field]: !prev[field] };
+            console.log('Updated isEditable:', updated); // Log the updated state
+            return updated;
+        });
+    };
 
 
     const [selectedGender, setSelectedGender] = useState('');
@@ -127,7 +145,7 @@ const EditProfile = () => {
         dispatch(updateProfile(updatedProfile))
             .then(() => {
                 setLoading(false);
-                navigation.navigate('MyProfileScreen');
+                handleGoBack();
             })
             .catch((error) => {
                 setLoading(false);
@@ -164,42 +182,46 @@ const EditProfile = () => {
                         <InputContainer
                             placeholder="First Name"
                             title={'First Name'}
-                            titleColor={styles.nametitleStyle}
                             value={firstName}
                             onChangeText={setFirstName}
                             keyboardType="default"
                             autoCapitalize="words"
                             iconName={"edit"}
+                            editable={isEditable.firstName}
+                            onPress={() => toggleEditable('firstName')}
 
                         />
                         <InputContainer
                             placeholder="Last Name"
                             title={'Last Name'}
-                            titleColor={styles.nametitleStyle}
                             value={lastName}
                             onChangeText={setLastName}
                             keyboardType="default"
                             autoCapitalize="words"
                             iconName={"edit"}
+                            editable={isEditable.lastName}
+                            onPress={() => toggleEditable('lastName')}
                         />
                         <InputContainer
                             placeholder="Email Address"
                             title={'Email Address'}
-                            titleColor={styles.emailTitle}
                             value={email}
                             onChangeText={setEmail}
                             keyboardType="email-address"
                             autoCapitalize="none"
                             iconName={"edit"}
+                            editable={isEditable.email}
+                            onPress={() => toggleEditable('email')}
                         />
                         <InputContainer
                             placeholder="(XXX) XXX-XXXX"
                             title={'Phone Number'}
-                            titleColor={styles.phoneTitle}
                             value={phone}
                             onChangeText={setPhone}
                             keyboardType="phone-pad"
                             iconName={"edit"}
+                            editable={isEditable.phone}
+                            onPress={() => toggleEditable('phone')}
 
                         />
                         {phoneError ? (
@@ -208,7 +230,6 @@ const EditProfile = () => {
                         <InputContainer
                             placeholder="Select Gender"
                             title={'Gender'}
-                            titleColor={styles.genderStyle}
                             iconName={"chevron-down"}
                             value={selectedGender}
                             onPress={() => toggleModal('gender')}
@@ -219,12 +240,10 @@ const EditProfile = () => {
                             title={'Date Of Birth'}
                             titleColor={styles.dobStyle}
                             editable={false}
-                            iconName={"chevron-down"}
                         />
                         <InputContainer
                             placeholder="Select Weight"
                             title={'Weight (in pounds)'}
-                            titleColor={styles.weightStyle}
                             iconName={"chevron-down"}
                             value={selectedWeight}
                             onPress={() => toggleModal('weight')}
@@ -233,7 +252,6 @@ const EditProfile = () => {
                         <InputContainer
                             placeholder="Select Height"
                             title={'Height (in feet)'}
-                            titleColor={styles.heightStyle}
                             iconName={"chevron-down"}
                             value={selectedHeight}
                             onPress={() => toggleModal('height')}
@@ -243,38 +261,40 @@ const EditProfile = () => {
                         <InputContainer
                             placeholder="Street Address"
                             title={'Street Address'}
-                            titleColor={styles.streetsStyle}
                             value={address1}
                             onChangeText={setAddress1}
                             keyboardType="default"
                             autoCapitalize="sentences"
                             iconName={"edit"}
+                            editable={isEditable.address1}
+                            onPress={() => toggleEditable('address1')}
                         />
                         <InputContainer
                             placeholder="Street Address 2"
                             title={'Street Address 2'}
-                            titleColor={styles.streetsStyle}
                             value={address2}
                             onChangeText={setAddress2}
                             keyboardType="default"
                             autoCapitalize="sentences"
                             iconName={"edit"}
+                            editable={isEditable.address2}
+                            onPress={() => toggleEditable('address2')}
                         />
                         <InputContainer
                             placeholder="City"
                             title={'City'}
-                            titleColor={styles.cityStyle}
                             value={city}
                             onChangeText={setCity}
                             keyboardType="default"
                             autoCapitalize="words"
                             iconName={"edit"}
+                            editable={isEditable.city}
+                            onPress={() => toggleEditable('city')}
                         />
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <InputContainer
                                 placeholder="Select State"
                                 title={'State'}
-                                titleColor={styles.stateStyle}
                                 inputStyle={styles.stateWidth}
                                 iconName={"chevron-down"}
                                 value={selectedState}
@@ -284,12 +304,14 @@ const EditProfile = () => {
                             <InputContainer
                                 placeholder="Zip Code"
                                 title={'Zip Code'}
-                                titleColor={styles.zipCodeStyle}
                                 inputStyle={styles.widthStyle}
                                 value={zip}
                                 onChangeText={setZip}
                                 keyboardType="numeric"
                                 iconName={"edit"}
+                                editable={isEditable.zip}
+                                onPress={() => toggleEditable('zip')}
+
                             />
                         </View>
                     </ScrollView>

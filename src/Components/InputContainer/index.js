@@ -9,28 +9,25 @@ const InputContainer = ({
     placeholder,
     title,
     iconName,
-    titleColor,
-    showAsterisk = true,
     inputStyle,
-    dynamicStyle,
     placeholderTextColor = Colors.OFFBLACK,
-    onPress,
     value,
     editable,
-    onChangeText
+    onChangeText,
+    onPress,
 }) => {
     return (
         <View style={styles.container}>
-            <View style={styles.reasonContainer} />
-            <Text style={[styles.label, titleColor]}>
+            <Text style={styles.label}>{title}</Text> 
+            {/* <Text style={[styles.label, titleColor]}>
                 <Text>{title}</Text>
                 {showAsterisk && <Text style={styles.startStyle}>{' '}*</Text>}
-            </Text>
+            </Text> */}
             <View style={[styles.textInput, inputStyle]}>
                 <TextInput
                     placeholder={placeholder}
                     placeholderTextColor={placeholderTextColor}
-                    style={dynamicStyle}
+                    style={[styles.input, !editable && styles.disabledInput]}
                     value={value}
                     editable={editable}
                     onChangeText={onChangeText}
@@ -62,37 +59,39 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     label: {
-        left: responsiveWidth(6),
-        backgroundColor: Colors.white,
-        paddingHorizontal: responsiveWidth(1),
-        fontSize: responsiveFontSize(1.4),
-        color: Colors.darkgrey,
-        fontWeight: '500',
-        width: responsiveWidth(33),
-        position: 'absolute',
-        zIndex: 1,
-        top: responsiveHeight(1),
-        height: responsiveHeight(3)
+        fontSize: responsiveFontSize(1.6),
+        color: Colors.black,
+        fontWeight: 'bold',
+        marginTop: responsiveHeight(1)
     },
     textInput: {
-        borderColor: Colors.darkgrey,
+        borderColor: Colors.grey,
         borderWidth: 1.2,
         borderRadius: 2,
         height: responsiveHeight(6),
-        fontSize: responsiveFontSize(1.8),
-        color: Colors.black,
-        fontWeight: '400',
         backgroundColor: Colors.white,
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: responsiveWidth(3),
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: responsiveHeight(1),
+        
     },
     startStyle: {
         color: Colors.red,
         fontWeight: '500',
         fontSize: responsiveFontSize(1.6),
-    }
+    },
+    disabledInput: {
+        color:Colors.darkgrey,
+        fontWeight:'600',
+        fontSize: responsiveFontSize(1.5),
+    },
+    input: {
+      fontWeight:'400',
+        color: Colors.black,
+        fontSize: responsiveFontSize(1.6),
+    },
 });
 
 
