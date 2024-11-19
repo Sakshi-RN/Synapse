@@ -9,7 +9,7 @@ import moment from "moment";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-export default function HorizontalCalendar({ setFilteredAppointments, appointments }) {
+export default function HorizontalCalendar({ setFilteredAppointments }) {
     const [selectedDate, setSelectedDate] = useState(dayjs().format('YYYY-MM-DD'));
     const [fetchAppointments, setFetchAppointments] = useState([]);
     const [currentMonth, setCurrentMonth] = useState(dayjs().format('MMMM YYYY'));
@@ -18,10 +18,8 @@ export default function HorizontalCalendar({ setFilteredAppointments, appointmen
     const [dates, setDates] = useState([]);
     const [activeButton, setActiveButton] = useState('today');
 
-    // Set today's date
     const todaysDate = dayjs().format('YYYY-MM-DD');
 
-    // Function to generate dates based on a start date
     const generateNextFourDays = (startDate) => {
         const datesArray = [];
         for (let i = 0; i < 4; i++) {
@@ -36,8 +34,7 @@ export default function HorizontalCalendar({ setFilteredAppointments, appointmen
         setFilteredAppointments(filterData);
         setSelectedDate(date);
         setDates(generateNextFourDays(date));
-        const newMonth = dayjs(date).format('MMMM YYYY');
-        setCurrentMonth(newMonth);
+        setCurrentMonth(dayjs(date).format('MMMM YYYY'));
     };
 
     const handleDateCardSelection = (date) => {
@@ -49,20 +46,18 @@ export default function HorizontalCalendar({ setFilteredAppointments, appointmen
         setCurrentMonth(newMonth);
     };
 
-    // Toggle calendar modal visibility
     const toggleModalVisibility = () => {
         setCalendarModalVisible(prev => !prev);
     };
 
     const fetchAppointmentsData = async () => {
         try {
-            const clientId = await AsyncStorage.getItem('authclientID')
+            const clientId = await AsyncStorage.getItem('authclientID');
             if (!clientId) {
                 Alert.alert('Error', 'No clientID found');
-                setLoading(false);
                 return;
             }
-
+    
             const response = await fetch(
                 `https://eb1.taramind.com/getAllClientAppointments/${clientId}`,
                 {
@@ -75,35 +70,27 @@ export default function HorizontalCalendar({ setFilteredAppointments, appointmen
             if (!response.ok) {
                 throw new Error('Failed to fetch appointments');
             }
+    
             const data = await response.json();
             setFetchAppointments(data);
-
-            // Generate appointment counts based on appointmentDate
+    
             const countMap = {};
-
             data.forEach(appointment => {
                 const rawDate = appointment.appointmentDate;
-                const parsedDate = moment(rawDate, 'MM/DD/YYYY', true);  // Strict parsing with moment
-
-                // Log each date parsed
-
+                const parsedDate = moment(rawDate, 'MM/DD/YYYY', true);
                 if (parsedDate.isValid()) {
-                    const formattedDate = parsedDate.format('YYYY-MM-DD');  // Format to 'YYYY-MM-DD'
+                    const formattedDate = parsedDate.format('YYYY-MM-DD');
                     countMap[formattedDate] = (countMap[formattedDate] || 0) + 1;
-                } else {
                 }
             });
-
             setAppointmentsCount(countMap);
-
-            // Set filter for today’s appointments
-            handleDateSelection(todaysDate);
-
+            const todayFormatted = dayjs().format('MM/DD/YYYY');
+            const todayAppointments = data.filter(appointment => appointment.appointmentDate === todayFormatted);
+            setFilteredAppointments(todayAppointments);
         } catch (error) {
             console.error('Error fetching appointments:', error.message);
         }
     };
-
     useEffect(() => {
         fetchAppointmentsData();
     }, []);
@@ -114,7 +101,7 @@ export default function HorizontalCalendar({ setFilteredAppointments, appointmen
         if (button === 'today') {
             handleDateSelection(todaysDate);
         } else {
-            setFilteredAppointments(fetchAppointments); // Show all appointments
+            setFilteredAppointments(fetchAppointments);
         }
     };
     const CalendarComponent = () => (
@@ -145,8 +132,9 @@ export default function HorizontalCalendar({ setFilteredAppointments, appointmen
     );
 
     useEffect(() => {
-    }, [appointmentsCount]);
-
+        fetchAppointmentsData();
+        setActiveButton('today'); // Default active button
+    }, []);
     return (
         <View style={styles.container}>
             <View style={styles.calenderRow}>
