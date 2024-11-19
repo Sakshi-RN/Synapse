@@ -120,13 +120,13 @@ const EditProfile = () => {
             zip,
             clientCurrentWeight: selectedWeight || clientCurrentWeight,
             gender: selectedGender || capitalizeFirstLetter(profile.gender),
-            clientCurrentHeight: selectedHeight || profile.clientCurrentHeight, // Updated
+            clientCurrentHeight: selectedHeight || profile.clientCurrentHeight,
         };
-        
+
         setLoading(true);
         dispatch(updateProfile(updatedProfile))
             .then(() => {
-                setLoading(false); 
+                setLoading(false);
                 navigation.navigate('MyProfileScreen');
             })
             .catch((error) => {
@@ -161,7 +161,6 @@ const EditProfile = () => {
                                 <Loader />
                             </View>
                         )}
-
                         <InputContainer
                             placeholder="First Name"
                             title={'First Name'}
@@ -170,9 +169,9 @@ const EditProfile = () => {
                             onChangeText={setFirstName}
                             keyboardType="default"
                             autoCapitalize="words"
+                            iconName={"edit"}
+
                         />
-
-
                         <InputContainer
                             placeholder="Last Name"
                             title={'Last Name'}
@@ -181,9 +180,8 @@ const EditProfile = () => {
                             onChangeText={setLastName}
                             keyboardType="default"
                             autoCapitalize="words"
+                            iconName={"edit"}
                         />
-
-
                         <InputContainer
                             placeholder="Email Address"
                             title={'Email Address'}
@@ -192,9 +190,8 @@ const EditProfile = () => {
                             onChangeText={setEmail}
                             keyboardType="email-address"
                             autoCapitalize="none"
+                            iconName={"edit"}
                         />
-
-
                         <InputContainer
                             placeholder="(XXX) XXX-XXXX"
                             title={'Phone Number'}
@@ -202,12 +199,12 @@ const EditProfile = () => {
                             value={phone}
                             onChangeText={setPhone}
                             keyboardType="phone-pad"
+                            iconName={"edit"}
+
                         />
                         {phoneError ? (
                             <Text style={styles.errorText}>{phoneError}</Text>
                         ) : null}
-
-
                         <InputContainer
                             placeholder="Select Gender"
                             title={'Gender'}
@@ -217,16 +214,13 @@ const EditProfile = () => {
                             onPress={() => toggleModal('gender')}
                             editable={false}
                         />
-
-
                         <InputContainer
                             placeholder={profile?.dob || 'MM/DD/YYYY'}
                             title={'Date Of Birth'}
                             titleColor={styles.dobStyle}
                             editable={false}
+                            iconName={"chevron-down"}
                         />
-
-
                         <InputContainer
                             placeholder="Select Weight"
                             title={'Weight (in pounds)'}
@@ -236,8 +230,6 @@ const EditProfile = () => {
                             onPress={() => toggleModal('weight')}
                             editable={false}
                         />
-
-
                         <InputContainer
                             placeholder="Select Height"
                             title={'Height (in feet)'}
@@ -247,10 +239,7 @@ const EditProfile = () => {
                             onPress={() => toggleModal('height')}
                             editable={false}
                         />
-
                         <Text style={styles.name}>Address</Text>
-
-
                         <InputContainer
                             placeholder="Street Address"
                             title={'Street Address'}
@@ -259,8 +248,8 @@ const EditProfile = () => {
                             onChangeText={setAddress1}
                             keyboardType="default"
                             autoCapitalize="sentences"
+                            iconName={"edit"}
                         />
-
                         <InputContainer
                             placeholder="Street Address 2"
                             title={'Street Address 2'}
@@ -269,9 +258,8 @@ const EditProfile = () => {
                             onChangeText={setAddress2}
                             keyboardType="default"
                             autoCapitalize="sentences"
+                            iconName={"edit"}
                         />
-
-
                         <InputContainer
                             placeholder="City"
                             title={'City'}
@@ -280,10 +268,9 @@ const EditProfile = () => {
                             onChangeText={setCity}
                             keyboardType="default"
                             autoCapitalize="words"
+                            iconName={"edit"}
                         />
-
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-
                             <InputContainer
                                 placeholder="Select State"
                                 title={'State'}
@@ -294,8 +281,6 @@ const EditProfile = () => {
                                 onPress={() => toggleModal('state')}
                                 editable={false}
                             />
-
-
                             <InputContainer
                                 placeholder="Zip Code"
                                 title={'Zip Code'}
@@ -304,10 +289,10 @@ const EditProfile = () => {
                                 value={zip}
                                 onChangeText={setZip}
                                 keyboardType="numeric"
+                                iconName={"edit"}
                             />
                         </View>
                     </ScrollView>
-
                     <View style={styles.row}>
                         <CustomButton
                             buttonStyle={styles.Button}
@@ -323,8 +308,6 @@ const EditProfile = () => {
                             loading={loading}
                         />
                     </View>
-
-
                     <Modal
                         animationType="slide"
                         transparent={true}
@@ -345,7 +328,6 @@ const EditProfile = () => {
                             </View>
                         </View>
                     </Modal>
-
                     <Modal
                         animationType="slide"
                         transparent={true}
@@ -366,7 +348,6 @@ const EditProfile = () => {
                             </View>
                         </View>
                     </Modal>
-
                     <Modal
                         animationType="slide"
                         transparent={true}
@@ -387,7 +368,6 @@ const EditProfile = () => {
                             </View>
                         </View>
                     </Modal>
-
                     <Modal
                         animationType="slide"
                         transparent={true}

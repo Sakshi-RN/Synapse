@@ -68,7 +68,7 @@ const ProfileSettings = () => {
     };
 
     const handleMyProfileScreen = () => {
-        navigation.navigate('MyProfileScreen');
+        navigation.navigate('EditProfile');
     };
 
 
