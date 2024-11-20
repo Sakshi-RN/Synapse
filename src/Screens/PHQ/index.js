@@ -1,6 +1,6 @@
 
 import React, { useEffect } from 'react';
-import { View, StyleSheet, Text, FlatList, ScrollView } from 'react-native';
+import { View, StyleSheet, Text, FlatList } from 'react-native';
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
@@ -8,21 +8,15 @@ import CustomButton from '../../Components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSurveyData, selectSurveyData } from '../../redux/Reducers/PHQReducer';
-import GraphContainer from '../../Container/GraphContainer';
 
 const PHQ = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const surveyData = useSelector(selectSurveyData);
 
-
     useEffect(() => {
         dispatch(fetchSurveyData());
     }, [dispatch]);
-
-    const handleStartSurvey = () => {
-        navigation.navigate('Survey');
-    };
 
     const handleViewSurvey = (item) => {
         navigation.navigate('PHQDetails', {
@@ -31,7 +25,6 @@ const PHQ = () => {
             date: item.assessmentStartedDate
         });
     };
-    
 
     const renderSurveyItem = ({ item }) => (
         <View style={styles.containerBox}>
@@ -39,17 +32,14 @@ const PHQ = () => {
                 <Text style={styles.nameTitleText}>Survey Date</Text>
                 <Text style={styles.bodyText}>{item.assessmentStartedDate}</Text>
             </View>
-
             <View style={styles.containerView}>
                 <Text style={styles.nameTitleText}>Ordered by</Text>
                 <Text style={styles.bodyText}>{item.providerName}</Text>
             </View>
-
             <View style={styles.containerView}>
                 <Text style={styles.nameTitleText}>Score</Text>
                 <Text style={styles.bodyText}>{item.assessmentScore}</Text>
             </View>
-
             <CustomButton
                 buttonStyle={styles.surveyButton}
                 textStyle={styles.joinText}
@@ -62,22 +52,17 @@ const PHQ = () => {
     return (
         <View style={styles.container}>
             <CustomHeader title={'Survey History'} />
-            <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-                <GraphContainer />
-                    {surveyData.length > 0 ? (
-                        <FlatList
-                            data={surveyData}
-                            keyExtractor={item => item.ID}
-                            renderItem={renderSurveyItem}
-                            showsVerticalScrollIndicator={false}
-                            style={{ paddingHorizontal: responsiveWidth(5) }}
-                        />
-                    ) : (
-                        <Text></Text>
-                    )}
-    
-            </ScrollView>
-                    
+            {surveyData.length > 0 ? (
+                <FlatList
+                    data={surveyData}
+                    keyExtractor={item => item.ID}
+                    renderItem={renderSurveyItem}
+                    showsVerticalScrollIndicator={false}
+                    style={styles.content}
+                />
+            ) : (
+                <Text></Text>
+            )}
             {/* <CustomButton
                 buttonStyle={styles.joinButton}
                 textStyle={styles.joinText}
@@ -97,8 +82,8 @@ const styles = StyleSheet.create({
     },
     content: {
         flex: 1,
-
-
+        paddingHorizontal: responsiveWidth(5),
+        paddingTop: responsiveHeight(3)
     },
     surveyButton: {
         alignSelf: 'flex-end',
