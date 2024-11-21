@@ -38,14 +38,16 @@ const CareTeam = () => {
     setModalVisible(false);
     navigation.navigate('ReasonforChange');
   }
-  const handlePrescriberProfile = () => {
-    setModalVisible(false);
-    navigation.navigate('PrescriberProfile');
-  }
   const handleTherapistProfile = () => {
     setModalVisible(false);
-    navigation.navigate('PrescriberProfile');
-  }
+    navigation.navigate('PrescriberProfile', { providerID: profile?.therapist?.providerID });
+  };
+  
+  const handlePrescriberProfile = () => {
+    setModalVisible(false);
+    navigation.navigate('PrescriberProfile', { providerID: profile?.prescriber?.providerID });
+  };
+  
 
 
   useFocusEffect(

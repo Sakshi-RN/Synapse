@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { View, StyleSheet, Text, FlatList } from 'react-native';
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
@@ -11,7 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const TreatmentSummary = () => {
-    const { data, fetchLoading, fetchError } = useSelector(state => state.profile);
+    const { fetchLoading, fetchError } = useSelector(state => state.profile);
     const [additionalData, setAdditionalData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -33,17 +33,6 @@ const TreatmentSummary = () => {
         );
     }
 
-
-
-    const xdata = [
-        { id: '1', text: 'Based on this evaluation, this individual IS deemed appropriate for ketamine-assisted therapy treatment at this time.' },
-        { id: '2', text: 'Based on this evaluation and the client\'s ACE score, it is recommended that this client receive the standard protocol.' },
-        { id: '3', text: 'Checking this box is my request to have diagnosis-specific rating scales sent electronically by synapse to the patient automatically, at predetermined intervals.' },
-        { id: '4', text: 'The critical role of these rating scales in their treatment was discussed with the client, and they were instructed to promptly fill out all rating scales sent to them throughout and after their treatment course. The client has been informed that the first set will be sent for completion before the first preparation therapy session.' },
-        { id: '5', text: 'Client will schedule a preparation therapy session with this therapist.' },
-        { id: '6', text: 'Client has been instructed to contact this therapist with any pressing concerns between therapy sessions.' },
-        { id: '7', text: 'Document any additional recommendations, instructions, or concerns.' }
-    ];
 
     const fetchAdditionalData = useCallback(async () => {
         setLoading(true);
@@ -153,25 +142,20 @@ const styles = StyleSheet.create({
     content: {
         flex: 1,
         paddingHorizontal: responsiveWidth(5),
-        paddingTop: responsiveHeight(3),
-
+        paddingTop: responsiveHeight(3)
     },
-
 
     nameTitleText: {
         fontSize: responsiveFontSize(1.8),
         fontWeight: '400',
         color: Colors.black,
         marginTop: responsiveHeight(2),
-        bottom: responsiveHeight(-1),
-
-
+        bottom: responsiveHeight(-1)
     },
 
     line: {
         backgroundColor: Colors.light_skyblue,
-        height: 1,
-
+        height: 1
     },
     headingText: {
         fontSize: responsiveFontSize(2),
@@ -204,9 +188,7 @@ const styles = StyleSheet.create({
         marginTop: responsiveHeight(2),
         fontSize: responsiveFontSize(3.2),
         color: '#457EA3',
-        fontFamily: Fonts.regular,
-        
-
+        fontFamily: Fonts.regular
     },
     flatlistContent: {
         paddingBottom: responsiveWidth(13)
@@ -218,16 +200,15 @@ const styles = StyleSheet.create({
     centeredContainer: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     newText: {
         fontWeight: '600',
-        fontSize: responsiveFontSize(1.3),
+        fontSize: responsiveFontSize(1.3)
     },
     row: {
         flexDirection: 'row',
-        marginTop: responsiveHeight(1),
+        marginTop: responsiveHeight(1)
     }
-
 });
 

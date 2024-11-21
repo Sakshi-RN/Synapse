@@ -7,7 +7,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Colors.white,
-        paddingBottom: Platform.OS === 'ios' ? responsiveHeight(14) : responsiveHeight(7)
+        paddingBottom: Platform.OS === 'ios' ? responsiveHeight(14) : responsiveHeight(7),// check bottom  in amdorid 
+        backgroundColor:'red'
     },
     content: {
         paddingHorizontal: responsiveWidth(5),

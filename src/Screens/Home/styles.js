@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
         fontSize: responsiveFontSize(1.5),
         fontWeight: '500',
         textAlign: 'center',
-        lineHeight: responsiveHeight(1.5),
+        lineHeight: responsiveHeight(2),
         color: Colors.white
     },
     samuelName: {

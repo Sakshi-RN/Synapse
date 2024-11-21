@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { View, StyleSheet, Text, FlatList } from 'react-native';
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
@@ -7,12 +6,20 @@ import CustomHeader from '../../Components/CustomHeader';
 import CustomButton from '../../Components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSurveyData, selectSurveyData } from '../../redux/Reducers/PHQReducer';
+import { fetchSurveyData, selectSurveyData, selectSurveyLoading } from '../../redux/Reducers/PHQReducer';
+import Loader from '../../Components/Loader';
 
 const PHQ = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
-    const surveyData = useSelector(selectSurveyData);
+const selectSurveyData = (state) => state.phq.surveyData;
+ const selectSurveyLoading = (state) => state.phq.fetchLoading;
+ const selectSurveyError = (state) => state.phq.fetchError;
+ const surveyData = useSelector(selectSurveyData);
+ const loading = useSelector(selectSurveyLoading);
+ const error = useSelector(selectSurveyError);
+ 
+
 
     useEffect(() => {
         dispatch(fetchSurveyData());
@@ -22,7 +29,7 @@ const PHQ = () => {
         navigation.navigate('PHQDetails', {
             therapistName: item.providerName,
             score: item.assessmentScore,
-            date: item.assessmentStartedDate
+            date: item.assessmentStartedDate,
         });
     };
 
@@ -52,46 +59,41 @@ const PHQ = () => {
     return (
         <View style={styles.container}>
             <CustomHeader title={'Survey History'} />
-            {surveyData.length > 0 ? (
+            {loading ? (
+                <View style={styles.centeredContainer}>
+                    <Loader />
+                </View>
+            ) : surveyData.length > 0 ? (
                 <FlatList
                     data={surveyData}
-                    keyExtractor={item => item.ID}
+                    keyExtractor={(item) => item.ID}
                     renderItem={renderSurveyItem}
                     showsVerticalScrollIndicator={false}
                     style={styles.content}
                 />
             ) : (
-                <Text></Text>
+                <Text style={styles.noDataText}>No survey data available.</Text>
             )}
-            {/* <CustomButton
-                buttonStyle={styles.joinButton}
-                textStyle={styles.joinText}
-                title={'Start Survey'}
-                onPress={handleStartSurvey}
-            /> */}
         </View>
     );
 };
 
 export default PHQ;
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Colors.white,
-        paddingBottom: responsiveHeight(14)
+        paddingBottom: responsiveHeight(14),
     },
     content: {
         flex: 1,
         paddingHorizontal: responsiveWidth(5),
-        paddingTop: responsiveHeight(3)
+        paddingTop: responsiveHeight(3),
     },
     surveyButton: {
         alignSelf: 'flex-end',
         paddingHorizontal: responsiveWidth(12),
-    },
-    joinButton: {
-        paddingHorizontal: responsiveWidth(5),
-        alignSelf: 'center'
     },
     joinText: {
         fontWeight: '500',
@@ -107,7 +109,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: Colors.white,
         marginBottom: responsiveHeight(2),
-
     },
     containerView: {
         flexDirection: 'row',
@@ -132,5 +133,10 @@ const styles = StyleSheet.create({
         fontSize: responsiveFontSize(1.6),
         color: Colors.gray,
         marginTop: responsiveHeight(2),
+    },
+    centeredContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });

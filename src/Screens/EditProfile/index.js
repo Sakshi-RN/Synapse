@@ -8,6 +8,7 @@ import {
     KeyboardAvoidingView,
     Platform,
     Modal,
+    FlatList
 } from 'react-native';
 import CustomHeader from '../../Components/CustomHeader';
 import CustomButton from '../../Components/CustomButton';
@@ -36,10 +37,8 @@ const EditProfile = () => {
         zip: false,
     });
     const toggleEditable = (field) => {
-        console.log('Toggling edit for:', field); // Log the field being toggled
         setIsEditable((prev) => {
             const updated = { ...prev, [field]: !prev[field] };
-            console.log('Updated isEditable:', updated); // Log the updated state
             return updated;
         });
     };
@@ -160,11 +159,11 @@ const EditProfile = () => {
     }
 
     return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={styles.container}
-        >
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        // <KeyboardAvoidingView
+        //     behavior={Platform.OS === "ios" ? "padding" : "height"}
+        //     style={styles.container}
+        // >
+        //     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.container}>
                     <CustomHeader title={'Edit Profile'} />
                     <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
@@ -189,7 +188,6 @@ const EditProfile = () => {
                             iconName={"edit"}
                             editable={isEditable.firstName}
                             onPress={() => toggleEditable('firstName')}
-
                         />
                         <InputContainer
                             placeholder="Last Name"
@@ -411,9 +409,10 @@ const EditProfile = () => {
                         </View>
                     </Modal>
                 </View>
-            </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
+           //</TouchableWithoutFeedback>
+       // </KeyboardAvoidingView>
     );
 };
 
 export default EditProfile;
+

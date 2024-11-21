@@ -1,28 +1,29 @@
 
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, FlatList, Text, Image, TouchableOpacity, ScrollView, Platform } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useRoute} from '@react-navigation/native';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
 import { Chat, MeetIcon, MapView } from '../../Assets/svg';
 import Loader from '../../Components/Loader';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import images from '../../Themes/Images'
+import images from '../../Themes/Images';
+
 
 
 const PrescriberProfile = () => {
   const [activeTab, setActiveTab] = useState('About Me');
   const [providerData, setProviderData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const navigation = useNavigation();
   const tabs = ['About Me', 'Location'];
+  const route = useRoute();
+  const { providerID } = route.params;
 
   useEffect(() => {
     const fetchProviderData = async () => {
       try {
         const response = await fetch(
-          'https://eb1.taramind.com/provider/publicProfile?providerId=cd71e5f2-c73d-4e30-9fbf-f20adf54de0e&facilityId=64149d0a-c9e6-4761-b31a-d553d76ef6eb',
+          `https://eb1.taramind.com/provider/details?providerId=${providerID}`,
           {
             method: 'GET',
             headers: {
@@ -56,11 +57,11 @@ const PrescriberProfile = () => {
         <Image source={{ uri: providerData.profilePicture }} style={styles.icon} />
       ) : (
         <Image source={images.user} style={styles.icon} />
-              )}
+      )}
       <View style={styles.textContainer}>
         <Text style={styles.name}>{providerData?.firstName} {providerData?.lastName}</Text>
         <Text style={styles.mdText}>{providerData?.designation}</Text>
-        <Text style={styles.newdescription}>{providerData?.speciality}</Text>
+        <Text style={styles.newdescription}>{providerData?.speciality?.join(' ')}</Text>
       </View>
       <TouchableOpacity>
         <Chat />
@@ -112,7 +113,7 @@ const PrescriberProfile = () => {
 
 const AboutmeTab = ({ providerData }) => (
   <>
-      <View style={styles.careTeamnCardNew}>
+    <View style={styles.careTeamnCardNew}>
       <Text style={styles.abTname}>
         {providerData?.firstName} {providerData?.lastName}
       </Text>
@@ -121,9 +122,28 @@ const AboutmeTab = ({ providerData }) => (
     </View>
     <Text style={styles.mdText}>{providerData?.designation}</Text>
     <Text style={styles.specialitiesText}>Specialties</Text>
-    <Text style={styles.description}>{providerData?.speciality}</Text>
+    <Text style={styles.description}>{providerData?.speciality?.join(' ')}</Text>
     <Text style={styles.specialitiesText}>Background</Text>
-    {/* <Text style={styles.description}>{providerData?.firstName}</Text> */}
+    <Text style={styles.description}>
+      {providerData?.firstName} {providerData?.lastName}
+      is a licensed psychotherapist practicing in
+      {providerData?.State}, who has {providerData?.yrsAsTherapist}
+      years of experience treating depression, anxiety,
+      PTSD and other trauma-related issues. issues.
+      {providerData?.firstName} {providerData?.lastName}
+      successfully passed the thorough screening process
+      required to join our network, has the training and experience
+      needed to deliver safe and effective psychedelic-assisted therapy
+      and comes recommended by multiple professional colleagues to do so.
+      {providerData?.firstName} {providerData?.lastName}
+      has special interest in treating
+      {providerData?.speciality?.join(' ')} issues, and is accepting new clients for ongoing traditional
+      therapy beyond the ketamine-assisted therapy treatment.
+      {providerData?.firstName} {providerData?.lastName}
+      is experienced at performing preparation and integration
+      therapy sessions via videoconferencing to clients after they
+      have received ketamine but also practices in person at the locations listed on this page.
+    </Text>
   </>
 );
 
@@ -139,7 +159,7 @@ const LocationTab = ({ providerData }) => (
 export default PrescriberProfile;
 
 const styles = StyleSheet.create({
-    container: {
+  container: {
     flex: 1,
     paddingBottom: responsiveHeight(14),
     backgroundColor: Colors.white,
@@ -239,55 +259,55 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-},
-careTeamnCardNew: {
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-},
-abTname: {
-  fontSize: responsiveFontSize(1.8),
-  fontWeight: '700',
-  color: Colors.blue,
-  width: responsiveWidth(70),
-},
-specialitiesText: {
-  fontSize: responsiveFontSize(1.8),
-  fontWeight: '700',
-  color: Colors.blue,
-  marginTop: responsiveHeight(1.5),
-},
-mdText: {
-  fontSize: responsiveFontSize(1.3),
-  color: Colors.darkgrey,
-  marginTop: responsiveHeight(0.5),
-  fontWeight: '500',
-},
-description: {
-  fontSize: responsiveFontSize(1.4),
-  color: Colors.darkgrey,
-  marginTop: responsiveHeight(0.5),
-  fontWeight: '500',
-},
-virtualTYext: {
-  fontSize: responsiveFontSize(1.4),
-  color: Colors.black,
-  fontWeight: '800',
-},
-loader: {
-  flex: 1,
-  justifyContent: 'center',
-  alignItems: 'center',
-},
-map: {
-  marginTop: responsiveHeight(2),
-},
-specialitiesText: {
-  fontSize: responsiveFontSize(1.8),
-  fontWeight: '700',
-  color: Colors.blue,
-  marginTop: responsiveHeight(1.5),
-},
+  },
+  careTeamnCardNew: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  abTname: {
+    fontSize: responsiveFontSize(1.8),
+    fontWeight: '700',
+    color: Colors.blue,
+    width: responsiveWidth(70),
+  },
+  specialitiesText: {
+    fontSize: responsiveFontSize(1.8),
+    fontWeight: '700',
+    color: Colors.blue,
+    marginTop: responsiveHeight(1.5),
+  },
+  mdText: {
+    fontSize: responsiveFontSize(1.3),
+    color: Colors.darkgrey,
+    marginTop: responsiveHeight(0.5),
+    fontWeight: '500',
+  },
+  description: {
+    fontSize: responsiveFontSize(1.4),
+    color: Colors.darkgrey,
+    marginTop: responsiveHeight(0.5),
+    fontWeight: '500',
+  },
+  virtualTYext: {
+    fontSize: responsiveFontSize(1.4),
+    color: Colors.black,
+    fontWeight: '800',
+  },
+  loader: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  map: {
+    marginTop: responsiveHeight(2),
+  },
+  specialitiesText: {
+    fontSize: responsiveFontSize(1.8),
+    fontWeight: '700',
+    color: Colors.blue,
+    marginTop: responsiveHeight(1.5),
+  },
 
 
 });

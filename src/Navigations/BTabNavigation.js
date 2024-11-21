@@ -3,8 +3,8 @@ import { StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HomeIcon, AppointmentIcon, CareTeamIcon, MyProfileIcon } from '../Assets/svg';
-import HomeStack from '../Navigations/HomeStack';
-import AppoitnmentStack from './AppoitnmentStack';
+import HomeStack from './HomeStack';
+import AppointmentStack from './AppointmentStack';
 import CareTeamStack from '../Navigations/CareTeamStack'
 import ProfileStack from '../Navigations/ProfileStack';
 import Colors from '../Themes/Colors';
@@ -35,7 +35,7 @@ export default function BTabNavigation() {
       />
       <Tab.Screen
         name="Appointment"
-        component={AppoitnmentStack}
+        component={AppointmentStack}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (

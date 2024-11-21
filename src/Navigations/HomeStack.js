@@ -15,7 +15,9 @@ import TreatmentSummary from '../Screens/TreatmentSummary';
 import ConsentForm from '../Screens/ConsentForm';
 import ConsentForTelehealth from '../Screens/ConsentForTelehealth';
 import Connect from '../Screens/Connect';
-import  PrescriberProfile from '../Screens/PrescriberProfile'
+import  PrescriberProfile from '../Screens/PrescriberProfile';
+import AppointmentStack from '../Navigations/AppointmentStack'
+
 
 const HomeStackNav = createStackNavigator();
 
@@ -43,7 +45,7 @@ export const HomeStack = (props) => {
         <HomeStackNav.Screen name="ConsentForTelehealth" component={ConsentForTelehealth} /> 
         <HomeStackNav.Screen name="Connect" component={Connect} /> 
         <HomeStackNav.Screen name="PrescriberProfile" component={PrescriberProfile} /> 
-        
+        <HomeStackNav.Screen name="AppointmentStack" component={AppointmentStack} /> 
     </HomeStackNav.Navigator>
 );
 }

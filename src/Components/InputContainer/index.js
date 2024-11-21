@@ -37,7 +37,7 @@ const InputContainer = ({
                         <Icon
                             name={iconName}
                             size={17}
-                            color={Colors.blue}
+                            color={Colors.OFFBLACK}
                         />
                     )}
                 </TouchableOpacity>

@@ -1,15 +1,12 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { View, Text, Image, TouchableOpacity, ImageBackground } from 'react-native';
-import Swiper from 'react-native-swiper';
-import { Circle, Bell, Logo, MeetIcon, Location, Arrowdown, Device, ConsentForm, TreatmentSummary, AppointmentImg, SurveyHistory, Download } from '../../Assets/svg';
+import { View, Text, TouchableOpacity, ImageBackground } from 'react-native';
+import { Circle, Bell, Logo, MeetIcon, Location, Device, ConsentForm, TreatmentSummary, AppointmentImg, SurveyHistory } from '../../Assets/svg';
 import images from '../../Themes/Images'
-import { ScrollView } from 'react-native-gesture-handler';
 import styles from './styles';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { fetchProfile } from '../../redux/Reducers/profileReducer';
 import Loader from '../../Components/Loader';
-import { responsiveWidth, responsiveHeight } from 'react-native-responsive-dimensions';
 
 
 
@@ -97,7 +94,7 @@ const HomeScreen = () => {
 
 
     const handleAppointment = () => {
-        navigation.navigate('Appointment');
+        navigation.navigate('AppointmentStack');
     }
 
     const handlNotification = () => {
@@ -115,14 +112,14 @@ const HomeScreen = () => {
     const handleConsentForm = () => {
         navigation.navigate('ConsentForm');
     }
-
-    const handleConnect = () => {
-        navigation.navigate('Connect');
-    }
-
-    const handlePrescriberProfile = () => {
-        navigation.navigate('PrescriberProfile');
-    }
+    const handleTherapistProfile = () => {
+        navigation.navigate('PrescriberProfile', { providerID: profile?.therapist?.providerID });
+      };
+      
+      const handlePrescriberProfile = () => {
+        navigation.navigate('PrescriberProfile', { providerID: profile?.prescriber?.providerID });
+      };
+      
     const renderHeader = () => {
         return (
             <ImageBackground source={images.headerBgImg} style={styles.headerContainer}>
@@ -217,43 +214,17 @@ const HomeScreen = () => {
             </View>
         )
     }
-    const reportSection = () => {
-        return (
-            <View style={styles.reportItem}>
-                <Text style={styles.reportDate}>{formatDateTime(profile?.lastPHQCompletedDate)}</Text>
-                <Text style={styles.reportTitle}>A Comprehensive Mental Health Report</Text>
-                <View style={styles.rowNew}>
-                    <Text style={styles.leenatext}>{profile?.therapist?.providerName}{','} {profile?.therapist?.designation?.join(', ')}</Text>
-                </View>
-                <View style={styles.reportContainer}>
-                    <View style={styles.phqConatiner}>
-                        <View>
-                            <Text style={styles.reportStats}>PHQ-9</Text>
-                            <Text style={styles.countText}>{profile?.lastPHQScore}</Text>
-                        </View>
-                        <View >
-                            <Text style={styles.reportStats}>ACE</Text>
-                            <Text style={styles.countText}>{profile?.aceScore}</Text>
-                        </View>
-                    </View>
-                    <TouchableOpacity style={styles.downloadBtnStyle}>
-                        <Download />
-                    </TouchableOpacity>
-                </View>
-            </View>
-        )
-    }
     const flatlistView = () => {
         return (
 
             <View style={styles.careTeamRow}>
-                <TouchableOpacity style={[styles.careTeamBox, { backgroundColor: '#749fe8' }]} onPress={handlePrescriberProfile}>
-                    <Text style={styles.careTeamName}>Therapist:</Text>
+                <TouchableOpacity style={[styles.careTeamBox, { backgroundColor: '#749fe8' }]} onPress={handleTherapistProfile}>
+                    <Text style={styles.careTeamName}>THERAPIST</Text>
                     <Text style={styles.careTeamName}>{profile?.therapist?.providerName}</Text>
                     <Text style={[styles.careTeamRole]}>{profile?.therapist?.designation?.join(', ')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.careTeamBox, { backgroundColor: '#74a84f' }]} onPress={handlePrescriberProfile}>
-                    <Text style={styles.careTeamName}>Prescriber:</Text>
+                    <Text style={styles.careTeamName}>PRESCRIBER</Text>
                     <Text style={styles.careTeamName}>{profile?.prescriber?.providerName}</Text>
                     <Text style={[styles.careTeamRole]}>{profile?.prescriber?.designation?.join(', ')}</Text>
                 </TouchableOpacity>
@@ -266,26 +237,6 @@ const HomeScreen = () => {
         )
     }
 
-    const processContainer = () => {
-        return (
-            <View style={styles.newContainer}>
-                {phases.map((phase, index) => (
-                    <View
-                        key={index}
-                        style={[
-                            styles.phase,
-                            { backgroundColor: phase.active ? '#354764' : '#ECECEC' }
-                        ]}
-                    >
-                        <Text style={[styles.text,
-                        index === 0 ? styles.firstPhase : '']}>
-                            {phase.label}
-                        </Text>
-                    </View>
-                ))}
-            </View>
-        )
-    }
 
     return (
         <View style={styles.container}>
