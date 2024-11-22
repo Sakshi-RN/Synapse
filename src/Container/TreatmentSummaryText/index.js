@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { View, StyleSheet, Text, FlatList } from 'react-native';
+import { View, StyleSheet, Text, FlatList,Platform } from 'react-native';
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 import { useFocusEffect } from '@react-navigation/native';
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
         fontWeight: '400',
         color: Colors.black,
         marginTop: responsiveHeight(2),
-        bottom: responsiveHeight(-1)
+        bottom: Platform.OS === 'ios' ?responsiveHeight(-0.5) : responsiveHeight(-2)
     },
 
     line: {

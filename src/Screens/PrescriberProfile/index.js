@@ -60,7 +60,7 @@ const PrescriberProfile = () => {
       )}
       <View style={styles.textContainer}>
         <Text style={styles.name}>{providerData?.firstName} {providerData?.lastName}</Text>
-        <Text style={styles.mdText}>{providerData?.designation}</Text>
+        <Text style={styles.mdText}>{providerData?.designation?.join(', ')}</Text>
         <Text style={styles.newdescription}>{providerData?.speciality?.join(' ')}</Text>
       </View>
       <TouchableOpacity>
@@ -120,7 +120,7 @@ const AboutmeTab = ({ providerData }) => (
       <MeetIcon />
       <Text style={styles.virtualTYext}>Virtual</Text>
     </View>
-    <Text style={styles.mdText}>{providerData?.designation}</Text>
+    <Text style={styles.mdText}>{providerData?.designation?.join(', ')}</Text>
     <Text style={styles.specialitiesText}>Specialties</Text>
     <Text style={styles.description}>{providerData?.speciality?.join(' ')}</Text>
     <Text style={styles.specialitiesText}>Background</Text>

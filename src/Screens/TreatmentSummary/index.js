@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         color: Colors.black,
         top: responsiveHeight(-11),
-        marginTop: responsiveHeight(1.5)
+        marginTop: responsiveHeight(0.6)
 
     },
 

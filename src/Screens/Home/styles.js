@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
 
     careTeamName: {
         fontSize: responsiveFontSize(1.5),
-        fontWeight: '500',
+        fontWeight: '600',
         textAlign: 'center',
         lineHeight: responsiveHeight(2),
         color: Colors.white
@@ -267,8 +267,13 @@ const styles = StyleSheet.create({
         width: responsiveWidth(26),
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: Colors.blue,
-        borderRadius: 12
+        backgroundColor:'#87ABC9',
+        borderRadius: 12,
+        shadowColor: Platform.OS === 'ios' ? Colors.OFFWHITE : Colors.black,
+        shadowOffset: { width: 3, height: 5 },
+        shadowOpacity: 1,
+        shadowRadius: 2,
+        elevation: 5,
     },
     therapistRoleText: {
         color: Colors.blue,

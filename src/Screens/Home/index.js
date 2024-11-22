@@ -218,17 +218,17 @@ const HomeScreen = () => {
         return (
 
             <View style={styles.careTeamRow}>
-                <TouchableOpacity style={[styles.careTeamBox, { backgroundColor: '#749fe8' }]} onPress={handleTherapistProfile}>
+                <TouchableOpacity style={styles.careTeamBox} onPress={handleTherapistProfile}>
                     <Text style={styles.careTeamName}>THERAPIST</Text>
                     <Text style={styles.careTeamName}>{profile?.therapist?.providerName}</Text>
                     <Text style={[styles.careTeamRole]}>{profile?.therapist?.designation?.join(', ')}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.careTeamBox, { backgroundColor: '#74a84f' }]} onPress={handlePrescriberProfile}>
+                <TouchableOpacity style={styles.careTeamBox} onPress={handlePrescriberProfile}>
                     <Text style={styles.careTeamName}>PRESCRIBER</Text>
                     <Text style={styles.careTeamName}>{profile?.prescriber?.providerName}</Text>
                     <Text style={[styles.careTeamRole]}>{profile?.prescriber?.designation?.join(', ')}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.careTeamBox, { backgroundColor: '#787a77' }]}>
+                <TouchableOpacity style={styles.careTeamBox}>
                     <Text style={styles.careTeamName}>TARA Mind</Text>
                     <Text style={styles.careTeamName}>Concierge</Text>
                 </TouchableOpacity>
