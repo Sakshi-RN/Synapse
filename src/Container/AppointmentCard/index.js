@@ -11,26 +11,41 @@ const AppointmentCard = ({ appointment }) => {
     const formattedStartTime = moment(appointment.appointmentStartTime, 'HH:mm:ss').format('h:mm A');
     const formattedEndTime = moment(appointment.appointmentEndTime, 'HH:mm:ss').format('h:mm A');
     const formattedTime = `${formattedStartTime} - ${formattedEndTime}`;
-    const formattedDate = moment(appointment.appointmentDate, 'MM/DD').format('MMMM Do');
+    const formattedDate = moment(appointment.appointmentDate, 'MM/DD').format('MMMM DD');
 
     return (
         <View style={styles.detailsContainer}>
             <View style={styles.cardRow}>
-                <Text style={styles.name}>Provider</Text>
-                <Text style={styles.name}>Session</Text>
+                <View>
+                    <Text style={styles.name}>Provider Details</Text>
+                    <Text style={styles.name}>Therapist</Text>
+                    <Text style={styles.type}>{appointment?.providerName}{' '}</Text>
+                    <Text style={styles.type}>{appointment?.designation.join(', ')}</Text>
+                </View>
+                <View style={{ bottom: responsiveHeight(1) }}>
+                    <Text style={[styles.nameNewText]}>Appointment Details</Text>
+                    <Text style={styles.nameNewText}>Session</Text>
+                    <Text style={styles.secondText}>{appointment?.appointmentType}</Text>
+                </View>
             </View>
-            <View style={styles.cardRow}>
-                <Text style={styles.type}>{appointment?.providerName}{' '}{appointment?.designation}</Text>
-                <Text style={styles.secondText}>{appointment?.appointmentType}</Text>
+            <View style={[styles.cardRow, { bottom: responsiveHeight(3) }]}>
+                <View>
+                    <Text style={styles.name}>Facility Details</Text>
+                    <Text style={styles.type}>Facility Name</Text>
+                    <Text style={styles.type}>Address 1</Text>
+                    <Text style={styles.type}>City,</Text>
+                    <Text style={styles.type}>State,Zip</Text>
+                </View>
+                <View style={{ marginTop: responsiveHeight(5) }}>
+                    <Text style={[styles.nameNewText]}>Date</Text>
+                    <Text style={[styles.secondText]}>{formattedDate}{' '}</Text>
+                    <Text style={styles.nameNewText}>Time</Text>
+                    <Text style={[styles.secondText]}>{formattedTime}</Text>
+                    <Text style={styles.nameNewText}>Type</Text>
+                    <Text style={styles.secondText}>Virtual</Text>
+                </View>
             </View>
-            <View style={styles.cardRow}>
-                <Text style={styles.name}>Facility</Text>
-                <Text style={styles.name}>Schedule</Text>
-            </View>
-            <View style={styles.cardRow}>
-                <Text style={styles.type}>Facility Name Address 1 city,state,zip</Text>
-                <Text style={styles.secondText}>{formattedDate}{' , '}{formattedTime}</Text>
-            </View>
+
             <TouchableOpacity
                 style={
                     appointment.appointmentStatus === 'scheduled' ? styles.pendingButton :
@@ -48,7 +63,9 @@ const AppointmentCard = ({ appointment }) => {
                                     appointment.appointmentStatus === 'cancelled' ? styles.cancelledButtonText :
                                         styles.buttonText
                     }
-                >{appointment?.appointmentStatus}</Text>
+                >{appointment?.appointmentStatus
+                    ? appointment.appointmentStatus.charAt(0).toUpperCase() + appointment.appointmentStatus.slice(1)
+                    : ''}</Text>
             </TouchableOpacity>
             <>
                 {appointment.appointmentStatus === 'completed' || appointment.appointmentStatus === 'upcoming' ?
@@ -113,7 +130,7 @@ const styles = StyleSheet.create({
     },
     detailsContainer: {
         paddingHorizontal: responsiveWidth(5),
-        paddingBottom: responsiveHeight(2),
+        paddingVertical: responsiveHeight(2),
         backgroundColor: Colors.white,
         shadowColor: Platform.OS === 'ios' ? Colors.grey : Colors.black,
         shadowOffset: {
@@ -127,31 +144,37 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         marginHorizontal: responsiveWidth(5),
         borderWidth: 1,
-        borderColor: Colors.lightgrey
+        borderColor: Colors.lightgrey,
 
     },
     name: {
-        fontSize: responsiveFontSize(1.8),
+        fontSize: responsiveFontSize(1.7),
         fontWeight: 'bold',
         color: Colors.black,
-        marginTop: responsiveHeight(2.5),
-        width: responsiveWidth(45)
+        marginTop: responsiveHeight(1),
+        width: responsiveWidth(38),
+
+    },
+    nameNewText: {
+        fontSize: responsiveFontSize(1.7),
+        fontWeight: 'bold',
+        color: Colors.black,
+        marginTop: responsiveHeight(1),
+        width: responsiveWidth(40),
+
     },
     type: {
         fontSize: responsiveFontSize(1.5),
         color: Colors.darkgrey,
         fontWeight: '600',
-        width: responsiveWidth(35),
-        marginTop: responsiveHeight(0.5),
+        width: responsiveWidth(38),
 
     },
     secondText: {
         fontSize: responsiveFontSize(1.5),
         color: Colors.darkgrey,
         fontWeight: '600',
-        width: responsiveWidth(36),
-        marginBottom: responsiveHeight(2)
-
+        width: responsiveWidth(40),
     },
     txetWidth: {
         width: responsiveHeight(60),

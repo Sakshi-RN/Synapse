@@ -14,7 +14,6 @@ const Appointment = () => {
     const [filteredAppointments, setFilteredAppointments] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
     const fetchAppointments = async () => {
         try {
             const clientId = await AsyncStorage.getItem('authclientID');
@@ -23,22 +22,23 @@ const Appointment = () => {
                 setLoading(false);
                 return;
             }
-
+    
             setLoading(true);
             setError(null);
-
+    
             const url = `https://eb1.taramind.com/getAllClientAppointments/${clientId}`;
             const response = await axios.get(url, {
                 headers: {
                     'X-Api-Key': 'e1693d9245c57be86afc22ad06eda84c9cdb74dae6d56a8a7f71a93facb1f42b',
                 },
             });
-
+    
             const { data } = response;
-
+    
             if (data?.appointments?.length > 0) {
-                setAppointments(data.appointments);
-                setFilteredAppointments(data.appointments);
+                const validAppointments = data.appointments.filter((appointment) => appointment.id);
+                setAppointments(validAppointments);
+                setFilteredAppointments(validAppointments);
             } else {
                 setAppointments([]);
                 setFilteredAppointments([]);
@@ -53,6 +53,7 @@ const Appointment = () => {
 
     useEffect(() => {
         fetchAppointments();
+
     }, []);
 
     const renderAppointmentCard = ({ item }) => <AppointmentCard appointment={item} />;
@@ -80,7 +81,7 @@ const Appointment = () => {
             <FlatList
                 data={filteredAppointments}
                 renderItem={renderAppointmentCard}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item, index) => (item.id ? item.id.toString() : `key-${index}`)}
                 ListEmptyComponent={<Text style={styles.noData}>No Appointments</Text>}
                 showsVerticalScrollIndicator={false}
                 style={styles.flatListStyle}
