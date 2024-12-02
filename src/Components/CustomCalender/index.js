@@ -7,6 +7,7 @@ import { Calendar } from 'react-native-calendars';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import moment from "moment";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Fonts } from '../../Themes/fonts';
 
 
 export default function HorizontalCalendar({ setFilteredAppointments }) {
@@ -219,8 +220,8 @@ const styles = StyleSheet.create({
     },
     headerText: {
         fontSize: responsiveFontSize(1.8),
-        fontWeight: '700',
         color: Colors.blue,
+        fontFamily: Fonts.Bold800
 
     },
     scrollContainer: {
@@ -250,7 +251,7 @@ const styles = StyleSheet.create({
     dateText: {
         color: Colors.darkgrey,
         fontSize: responsiveFontSize(2.3),
-        fontWeight: '500',
+        fontFamily: Fonts.Semibold700
     },
     selectedDateText: {
         color: Colors.white,
@@ -261,7 +262,7 @@ const styles = StyleSheet.create({
     dayText: {
         color: Colors.grey,
         fontSize: responsiveFontSize(1.7),
-        fontWeight: '700',
+        fontFamily: Fonts.Bold800
     },
     selectedDayText: {
         color: Colors.white,
@@ -273,7 +274,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: Colors.grey,
         marginHorizontal: responsiveWidth(3),
-        fontWeight: '500'
+        fontFamily: Fonts.Semibold700
     },
     selectedDot: {
         backgroundColor: Colors.white,
@@ -337,9 +338,9 @@ const styles = StyleSheet.create({
     },
     todayText: {
         fontSize: responsiveFontSize(1.8),
-        fontWeight: '700',
         color: Colors.blue,
-        textDecorationLine: 'underline'
+        textDecorationLine: 'underline',
+        fontFamily: Fonts.Bold800
     },
     activeButton: {
         backgroundColor: Colors.blue,

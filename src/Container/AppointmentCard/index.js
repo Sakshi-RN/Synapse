@@ -4,6 +4,7 @@ import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-nat
 import Colors from '../../Themes/Colors';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
+import { Fonts } from '../../Themes/fonts';
 
 
 const AppointmentCard = ({ appointment }) => {
@@ -148,16 +149,16 @@ const styles = StyleSheet.create({
 
     },
     name: {
-        fontSize: responsiveFontSize(1.7),
-        fontWeight: 'bold',
+        fontSize: responsiveFontSize(1.8),
+        fontFamily: Fonts.Bold800,
         color: Colors.black,
         marginTop: responsiveHeight(1),
         width: responsiveWidth(38),
 
     },
     nameNewText: {
-        fontSize: responsiveFontSize(1.7),
-        fontWeight: 'bold',
+        fontSize: responsiveFontSize(1.8),
+        fontFamily: Fonts.Bold800,
         color: Colors.black,
         marginTop: responsiveHeight(1),
         width: responsiveWidth(40),
@@ -166,14 +167,14 @@ const styles = StyleSheet.create({
     type: {
         fontSize: responsiveFontSize(1.5),
         color: Colors.darkgrey,
-        fontWeight: '600',
+       fontFamily: Fonts.Semibold700,
         width: responsiveWidth(38),
 
     },
     secondText: {
         fontSize: responsiveFontSize(1.5),
         color: Colors.darkgrey,
-        fontWeight: '600',
+       fontFamily: Fonts.Semibold700,
         width: responsiveWidth(40),
     },
     txetWidth: {
@@ -226,27 +227,27 @@ const styles = StyleSheet.create({
     buttonText: {
         color: Colors.white,
         fontSize: responsiveFontSize(1.5),
-        fontWeight: '600',
+       fontFamily: Fonts.Semibold700,
     },
     pendingButtonText: {
         color: Colors.Dark_Purple,
         fontSize: responsiveFontSize(1.3),
-        fontWeight: '600',
+       fontFamily: Fonts.Semibold700,
     },
     upcomingButtonText: {
         color: Colors.Dark_Orange,
         fontSize: responsiveFontSize(1.3),
-        fontWeight: '600',
+       fontFamily: Fonts.Semibold700,
     },
     completedButtonText: {
         color: Colors.Dark_Green,
         fontSize: responsiveFontSize(1.3),
-        fontWeight: '600',
+       fontFamily: Fonts.Semibold700,
     },
     cancelledButtonText: {
         color: Colors.red,
         fontSize: responsiveFontSize(1.3),
-        fontWeight: '600',
+       fontFamily: Fonts.Semibold700,
     },
     careTeamImage: {
         width: 60,

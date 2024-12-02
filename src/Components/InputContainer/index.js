@@ -4,6 +4,7 @@ import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-nativ
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Fonts } from '../../Themes/fonts';
 
 const InputContainer = ({
     placeholder,
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
     },
     disabledInput: {
         color:Colors.darkgrey,
-        fontWeight:'600',
+     fontFamily: Fonts.Semibold700,
         fontSize: responsiveFontSize(1.5),
     },
     input: {

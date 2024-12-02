@@ -17,11 +17,15 @@
         "expo-font",
         {
           "fonts": [
-            "./src/Assets/fonts/WorkSans-Regular.ttf"
+            "./src/Assets/fonts/WorkSans-Regular.ttf",
+            "./src/Assets/fonts/Figtree-Bold.ttf",
+            "./src/Assets/fonts/Figtree-Light.ttf",
+            "./src/Assets/fonts/Figtree-Medium.ttf.ttf",
+            "./src/Assets/fonts/Figtree-Regular.ttf",
+            "./src/Assets/fonts/Figtree-SemiBold.ttf"
           ]
         }
       ]
-    
     ],
     "ios": {
       "supportsTablet": true,

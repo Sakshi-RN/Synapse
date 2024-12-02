@@ -8,6 +8,8 @@ import Loader from '../../Components/Loader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import CustomCalender from '../../Components/CustomCalender';
+import { Fonts } from '../../Themes/fonts';
+
 
 const Appointment = () => {
     const [appointments, setAppointments] = useState([]);
@@ -105,11 +107,7 @@ const styles = StyleSheet.create({
         fontSize: responsiveFontSize(2),
         fontWeight: 'bold',
         color: Colors.blue,
+        fontFamily: Fonts.Bold800
     },
-    errorText: {
-        alignSelf: 'center',
-        fontSize: responsiveFontSize(1.8),
-        fontWeight: '600',
-        color: Colors.blue,
-    },
+
 });

@@ -14,6 +14,12 @@ export default function App() {
   const [loading, setLoading] = useState(true);  
   const [fontsLoaded, fontError] = useFonts({
     "WorkSans-Regular": require("./src/Assets/fonts/WorkSans-Regular.ttf"),
+    "Figtree-bold": require("./src/Assets/fonts/Figtree-Bold.ttf"),
+    "Figtree-light": require("./src/Assets/fonts/Figtree-Light.ttf"),
+    "Figtree-Medium": require("./src/Assets/fonts/Figtree-Medium.ttf"),
+    "Figtree-Semibold": require("./src/Assets/fonts/Figtree-SemiBold.ttf"),
+    "Figtree-RegularFigtree": require("./src/Assets/fonts/Figtree-Regular.ttf"),
+
   });
 
   useEffect(() => {

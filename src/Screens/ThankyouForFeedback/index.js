@@ -1,12 +1,13 @@
 
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 import CustomButton from '../../Components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import { ThankyouChecked } from '../../Assets/svg';
 import LottieAutoplay from '../../Components/LottieViewComponent';
+import { Fonts } from '../../Themes/fonts';
 
 const ThankyouForFeedback = () => {
   const navigation = useNavigation();
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: responsiveFontSize(1.7),
     color: Colors.darkgrey,
-    fontWeight:'600',
+ fontFamily: Fonts.Semibold700,
     marginTop: responsiveHeight(1),
 
   },
