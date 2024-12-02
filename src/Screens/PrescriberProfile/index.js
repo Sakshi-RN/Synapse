@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, FlatList, Text, Image, TouchableOpacity, ScrollView, Platform } from 'react-native';
-import { useRoute} from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
@@ -124,26 +124,7 @@ const AboutmeTab = ({ providerData }) => (
     <Text style={styles.specialitiesText}>Specialties</Text>
     <Text style={styles.description}>{providerData?.speciality?.join(' ')}</Text>
     <Text style={styles.specialitiesText}>Background</Text>
-    <Text style={styles.description}>
-      {providerData?.firstName} {providerData?.lastName}
-      is a licensed psychotherapist practicing in
-      {providerData?.State}, who has {providerData?.yrsAsTherapist}
-      years of experience treating depression, anxiety,
-      PTSD and other trauma-related issues. issues.
-      {providerData?.firstName} {providerData?.lastName}
-      successfully passed the thorough screening process
-      required to join our network, has the training and experience
-      needed to deliver safe and effective psychedelic-assisted therapy
-      and comes recommended by multiple professional colleagues to do so.
-      {providerData?.firstName} {providerData?.lastName}
-      has special interest in treating
-      {providerData?.speciality?.join(' ')} issues, and is accepting new clients for ongoing traditional
-      therapy beyond the ketamine-assisted therapy treatment.
-      {providerData?.firstName} {providerData?.lastName}
-      is experienced at performing preparation and integration
-      therapy sessions via videoconferencing to clients after they
-      have received ketamine but also practices in person at the locations listed on this page.
-    </Text>
+    <Text style={styles.description}>{providerData?.background}</Text>
   </>
 );
 
@@ -250,10 +231,11 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   errorText: {
-    fontSize: responsiveFontSize(1.6),
-    color: Colors.red,
+    fontSize: responsiveFontSize(2),
+    color: Colors.blue,
     textAlign: 'center',
-    marginTop: responsiveHeight(2),
+    marginTop: responsiveHeight(40),
+    fontWeight:'bold'
   },
   centeredContainer: {
     flex: 1,
