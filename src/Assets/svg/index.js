@@ -8,6 +8,10 @@ import HomeIcon from './Home.svg';
 import AppointmentIcon from './Appointment.svg';
 import CareTeamIcon from './CareTeam.svg';
 import MyProfileIcon from './MyProfile.svg';
+import LightHome from './LightHome.svg';
+import LightMyProfile from './LightMyProfile.svg';
+import LightCareTeam from './LightCareTeam.svg';
+import LightAppointment from './LightAppointment.svg';
 import Arrowdown from './Arrowdown.svg';
 import Location from './Location.svg';
 import MeetIcon from './meetIcon.svg';
@@ -49,4 +53,4 @@ import ThankyouChecked from './ThankyouChecked.svg';
 import Concierge from './Concierge.svg';
 
 
-export{Concierge,ThankyouChecked,Calling,Mic,Camera,DownloadSave,HealthApp,AppleWatch,CheckboxIcon,Ace,Intake,PHQ,Diagonstic,TaraMind,Starred,PhoneBook,Video,CommunicationPreferences,Policy,Advice,TermsOfUse,Logout,EditIcon,Calendar,Time,UpArrow,Star,MapView,Chat,ThreeDots,SplashIcon,Download,Logo,BackIcon,Bell,Circle,HomeIcon,AppointmentIcon,CareTeamIcon,MyProfileIcon,Arrowdown,Location,MeetIcon,Device,ConsentForm,TreatmentSummary,AppointmentImg,SurveyHistory}
+export{LightAppointment,LightCareTeam,LightHome,LightMyProfile,Concierge,ThankyouChecked,Calling,Mic,Camera,DownloadSave,HealthApp,AppleWatch,CheckboxIcon,Ace,Intake,PHQ,Diagonstic,TaraMind,Starred,PhoneBook,Video,CommunicationPreferences,Policy,Advice,TermsOfUse,Logout,EditIcon,Calendar,Time,UpArrow,Star,MapView,Chat,ThreeDots,SplashIcon,Download,Logo,BackIcon,Bell,Circle,HomeIcon,AppointmentIcon,CareTeamIcon,MyProfileIcon,Arrowdown,Location,MeetIcon,Device,ConsentForm,TreatmentSummary,AppointmentImg,SurveyHistory}

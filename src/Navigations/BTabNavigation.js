@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { HomeIcon, AppointmentIcon, CareTeamIcon, MyProfileIcon } from '../Assets/svg';
+import { HomeIcon, AppointmentIcon, CareTeamIcon, MyProfileIcon,LightAppointment,LightCareTeam,LightHome,LightMyProfile, } from '../Assets/svg';
 import HomeStack from './HomeStack';
 import AppointmentStack from './AppointmentStack';
 import CareTeamStack from '../Navigations/CareTeamStack'
@@ -28,9 +28,9 @@ export default function BTabNavigation() {
         component={HomeStack}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }) => (
-            <HomeIcon color={color} />
-          ),
+          tabBarIcon: ({ focused }) =>
+            focused ? <HomeIcon />: <LightHome /> 
+
         }}
       />
       <Tab.Screen
@@ -38,9 +38,9 @@ export default function BTabNavigation() {
         component={AppointmentStack}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }) => (
-            <AppointmentIcon color={color} />
-          ),
+          tabBarIcon: ({ focused }) =>
+            focused ? <AppointmentIcon />: <LightAppointment /> 
+
         }}
       />
       <Tab.Screen
@@ -48,9 +48,9 @@ export default function BTabNavigation() {
         component={CareTeamStack}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }) => (
-            <CareTeamIcon color={color} />
-          ),
+          tabBarIcon: ({ focused }) =>
+            focused ? <CareTeamIcon />: <LightCareTeam /> 
+
         }}
       />
       <Tab.Screen
@@ -58,10 +58,11 @@ export default function BTabNavigation() {
         component={ProfileStack}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }) => (
-            <MyProfileIcon color={color} />
-          ),
+          tabBarIcon: ({ focused }) =>
+            focused ? <MyProfileIcon />: <LightMyProfile /> 
+
         }}
+
       />
     </Tab.Navigator>
   );
