@@ -40,12 +40,12 @@ const CareTeam = () => {
   }
   const handleTherapistProfile = () => {
     setModalVisible(false);
-    navigation.navigate('PrescriberProfile', { providerID: profile?.therapist?.providerID });
+    navigation.navigate('PrescriberProfile', { providerID: profile?.therapist?.providerID,facilityId:profile?.therapist?.facilityId });
   };
   
   const handlePrescriberProfile = () => {
     setModalVisible(false);
-    navigation.navigate('PrescriberProfile', { providerID: profile?.prescriber?.providerID });
+    navigation.navigate('PrescriberProfile', { providerID: profile?.prescriber?.providerID,facilityId :profile?.prescriber?.facilityId});
   };
   
 
@@ -55,6 +55,7 @@ const CareTeam = () => {
       dispatch(fetchProfile());
     }, [dispatch])
   );
+
   if (fetchLoading) {
     return (
       <View style={styles.centeredContainer}>

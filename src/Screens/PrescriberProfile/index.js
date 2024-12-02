@@ -17,13 +17,14 @@ const PrescriberProfile = () => {
   const [loading, setLoading] = useState(true);
   const tabs = ['About Me', 'Location'];
   const route = useRoute();
-  const { providerID } = route.params;
+  const { providerID,facilityId } = route.params;
 
   useEffect(() => {
     const fetchProviderData = async () => {
       try {
         const response = await fetch(
-          `https://eb1.taramind.com/provider/details?providerId=${providerID}`,
+          // `https://eb1.taramind.com/provider/details?providerId=${providerID}&facilityId=${facilityId}`,
+         'https://eb1.taramind.com/provider/publicProfile?providerId=cd71e5f2-c73d-4e30-9fbf-f20adf54de0e&facilityId=64149d0a-c9e6-4761-b31a-d553d76ef6eb',
           {
             method: 'GET',
             headers: {

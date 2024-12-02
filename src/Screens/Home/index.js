@@ -113,12 +113,12 @@ const HomeScreen = () => {
         navigation.navigate('ConsentForm');
     }
     const handleTherapistProfile = () => {
-        navigation.navigate('PrescriberProfile', { providerID: profile?.therapist?.providerID });
-      };
+        navigation.navigate('PrescriberProfile', { providerID: profile?.therapist?.providerID,facilityId:profile?.therapist?.facilityId });
+    };
       
       const handlePrescriberProfile = () => {
-        navigation.navigate('PrescriberProfile', { providerID: profile?.prescriber?.providerID });
-      };
+        navigation.navigate('PrescriberProfile', { providerID: profile?.prescriber?.providerID,facilityId :profile?.prescriber?.facilityId});
+    };
       
     const renderHeader = () => {
         return (
@@ -219,17 +219,17 @@ const HomeScreen = () => {
 
             <View style={styles.careTeamRow}>
                 <TouchableOpacity style={styles.careTeamBox} onPress={handleTherapistProfile}>
-                    <Text style={styles.careTeamName}>THERAPIST</Text>
+                    <Text style={[styles.careTeamName,styles.nameNewStyle]}>THERAPIST</Text>
                     <Text style={styles.careTeamName}>{profile?.therapist?.providerName}</Text>
                     <Text style={[styles.careTeamRole]}>{profile?.therapist?.designation?.join(', ')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.careTeamBox} onPress={handlePrescriberProfile}>
-                    <Text style={styles.careTeamName}>PRESCRIBER</Text>
+                <Text style={[styles.careTeamName,styles.nameNewStyle]}>PRESCRIBER</Text>
                     <Text style={styles.careTeamName}>{profile?.prescriber?.providerName}</Text>
                     <Text style={[styles.careTeamRole]}>{profile?.prescriber?.designation?.join(', ')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.careTeamBox}>
-                    <Text style={styles.careTeamName}>TARA Mind</Text>
+                <Text style={[styles.careTeamName,styles.nameNewStyle]}>TARA Mind</Text>
                     <Text style={styles.careTeamName}>Concierge</Text>
                 </TouchableOpacity>
             </View>

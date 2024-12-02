@@ -166,12 +166,15 @@ const styles = StyleSheet.create({
     },
 
     careTeamName: {
-        fontSize: responsiveFontSize(1.5),
+        fontSize: responsiveFontSize(1.8),
         fontWeight: '600',
         textAlign: 'center',
         lineHeight: responsiveHeight(2),
         color: Colors.white
     },
+    nameNewStyle:{
+    fontSize: responsiveFontSize(1.5)
+   } ,
     samuelName: {
         fontSize: responsiveFontSize(1.2),
         color: Colors.black,
