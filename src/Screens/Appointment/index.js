@@ -66,13 +66,6 @@ const Appointment = () => {
         );
     }
 
-    if (error) {
-        return (
-            <View style={styles.centeredContainer}>
-                <Text style={styles.errorText}>{error}</Text>
-            </View>
-        );
-    }
 
     return (
         <View style={styles.container}>
@@ -82,7 +75,7 @@ const Appointment = () => {
                 data={filteredAppointments}
                 renderItem={renderAppointmentCard}
                 keyExtractor={(item, index) => (item.id ? item.id.toString() : `key-${index}`)}
-                ListEmptyComponent={<Text style={styles.noData}>No Appointments</Text>}
+                ListEmptyComponent={<Text style={styles.noData}>No appointments found for the client.</Text>}
                 showsVerticalScrollIndicator={false}
                 style={styles.flatListStyle}
             />

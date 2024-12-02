@@ -18,6 +18,7 @@ export default function HorizontalCalendar({ setFilteredAppointments }) {
     const [dates, setDates] = useState([]);
     const [activeButton, setActiveButton] = useState('today');
 
+
     const todaysDate = dayjs().format('YYYY-MM-DD');
 
     const generateNextFourDays = (startDate) => {
@@ -133,7 +134,8 @@ export default function HorizontalCalendar({ setFilteredAppointments }) {
 
     useEffect(() => {
         fetchAppointmentsData();
-        setActiveButton('today'); // Default active button
+        setActiveButton('today'); 
+        handleButtonPress('today')
     }, []);
     return (
         <View style={styles.container}>
@@ -178,7 +180,6 @@ export default function HorizontalCalendar({ setFilteredAppointments }) {
                     const isSelected = date === selectedDate;
                     const isToday = dayjs().isSame(date, 'day');
                     const hasAppointments = !!appointmentsCount[date];
-
 
                     return (
                         <TouchableOpacity
