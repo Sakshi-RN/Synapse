@@ -11,6 +11,7 @@ import CommonStyle from '../../Components/CommonStyle';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { fetchProfile } from '../../redux/Reducers/profileReducer'; 
 import Loader from '../../Components/Loader';
+import { Fonts } from '../../Themes/fonts';
 
 
 const MyProfileScreen = () => {
@@ -239,10 +240,10 @@ const styles = StyleSheet.create({
     },
     btnText: {
         color: Colors.blue,
-        fontWeight: '500',
+        ontFamily: Fonts.Medium600,
     },
     joinText: {
-        fontWeight: '500',
+        ontFamily: Fonts.Medium600,
     },
     containerBox: {
         elevation: 5,
@@ -265,13 +266,13 @@ const styles = StyleSheet.create({
     },
     nameTitleText: {
         fontSize: responsiveFontSize(1.8),
-        fontWeight: '400',
+        fontFamily: Fonts.Light400,
         color: Colors.black,
     },
     bodyText: {
         fontSize: responsiveFontSize(1.6),
         color: Colors.blue,
-        fontWeight: 'bold',
+        fontFamily: Fonts.Bold800,
       
     },
     line: {

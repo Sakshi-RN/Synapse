@@ -9,7 +9,8 @@ import { ThreeDots } from '../../Assets/svg';
 import CustomButton from '../../Components/CustomButton';
 import { fetchProfile } from '../../redux/Reducers/profileReducer';
 import Loader from '../../Components/Loader';
-import images from '../../Themes/Images'
+import images from '../../Themes/Images';
+import { Fonts } from '../../Themes/fonts';
 
 const CareTeam = () => {
   const navigation = useNavigation();
@@ -205,14 +206,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: responsiveFontSize(1.8),
-    fontWeight: '600',
+  fontFamily: Fonts.Semibold700,
     color: Colors.DARKBLUE,
   },
   description: {
     fontSize: responsiveFontSize(1.3),
     color: Colors.darkgrey,
     marginTop: responsiveHeight(0.5),
-    fontWeight: '600',
+  fontFamily: Fonts.Semibold700,
     width: responsiveWidth(75)
   },
   lineStyle: {
@@ -225,7 +226,7 @@ const styles = StyleSheet.create({
   questionText: {
     color: Colors.DARKBLUE,
     fontSize: responsiveFontSize(1.8),
-    fontWeight: 'bold',
+    fontFamily: Fonts.Bold800, 
     alignSelf: 'center',
     marginTop: responsiveHeight(2),
   },
@@ -243,7 +244,7 @@ const styles = StyleSheet.create({
   ButtonText: {
     color: Colors.blue,
     fontSize: responsiveFontSize(1.4),
-    fontWeight: 'bold',
+    fontFamily: Fonts.Bold800, 
   },
 
   cancelbtnRow: {
@@ -267,7 +268,7 @@ const styles = StyleSheet.create({
   connectButtonText: {
     color: Colors.black,
     fontSize: responsiveFontSize(1.5),
-    fontWeight: 'bold',
+    fontFamily: Fonts.Bold800, 
   },
   flatlistContent: {
     marginBottom: responsiveHeight(5),
@@ -288,14 +289,12 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(2),
     marginVertical: responsiveHeight(1.5),
     color: Colors.DARKBLUE,
-    fontWeight: '600',
+    fontFamily: Fonts.Semibold700,
     marginLeft: responsiveWidth(5)
   },
   bordrline: {
     borderBottomWidth: 1,
     borderBottomColor: Colors.skyblue,
-
-
   },
   centeredContainer: {
     flex: 1,

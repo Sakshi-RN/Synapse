@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
 import CustomButton from '../../Components/CustomButton';
-
+import { Fonts } from '../../Themes/fonts';
 import commonStyles from '../../Components/CommonStyle';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { fetchProfile } from '../../redux/Reducers/profileReducer';
@@ -108,10 +108,10 @@ const styles = StyleSheet.create({
 
     btnText: {
         color: Colors.blue,
-        fontWeight: '500',
+        fontFamily: Fonts.Medium600,
     },
     joinText: {
-        fontWeight: '500',
+        fontFamily: Fonts.Semibold700,
     },
     centeredContainer: {
         flex: 1,
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
  
       nameTitleText: {
         fontSize: responsiveFontSize(1.8),
-        fontWeight: '500',
+        fontFamily: Fonts.Medium600,
         color:Colors.black,
         marginVertical:responsiveHeight(1.3),
         width:responsiveWidth(50)
@@ -130,10 +130,8 @@ const styles = StyleSheet.create({
       bodyText: {
         fontSize: responsiveFontSize(1.5),
         color:Colors.blue,
-        fontWeight:'bold',
+        fontFamily: Fonts.Bold800,
         marginVertical:responsiveHeight(1.5),
-        // width:responsiveWidth(20),
-            // backgroundColor:'red',
     
       },
 });

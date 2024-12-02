@@ -11,6 +11,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { useFocusEffect } from '@react-navigation/native';
 import { fetchProfile } from '../../redux/Reducers/profileReducer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Fonts } from '../../Themes/fonts';
 
 const ProfileSettings = () => {
     const navigation = useNavigation();
@@ -167,7 +168,7 @@ const styles = StyleSheet.create({
     avatarText: {
         fontSize: responsiveFontSize(2.5),
         color: Colors.white,
-        fontWeight: '500',
+        fontFamily: Fonts.Medium600
     },
     profileInfo: {
         width: responsiveWidth(52),
@@ -175,7 +176,7 @@ const styles = StyleSheet.create({
     },
     profileName: {
         fontSize: responsiveFontSize(2),
-        fontWeight: 'bold',
+    fontFamily: Fonts.Bold800,
         color: Colors.blue,
     },
     section: {
@@ -193,7 +194,7 @@ const styles = StyleSheet.create({
     },
     sectionTitle: {
         fontSize: responsiveFontSize(2),
-        fontWeight: 'bold',
+      fontFamily: Fonts.Bold800,
         color: Colors.black,
         marginTop: responsiveHeight(2),
     },
@@ -208,6 +209,7 @@ const styles = StyleSheet.create({
         color: Colors.black,
         flex: 1,
         paddingLeft: responsiveWidth(3),
+        fontFamily: Fonts.Medium600,
     },
     line: {
         width: '100%',

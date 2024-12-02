@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     },
     startStyle: {
         color: Colors.red,
-        fontWeight: '500',
+        fontFamily: Fonts.Medium600,
         fontSize: responsiveFontSize(1.6),
     },
     disabledInput: {
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
         fontSize: responsiveFontSize(1.5),
     },
     input: {
-      fontWeight:'400',
+        fontFamily: Fonts.Light400,
         color: Colors.black,
         fontSize: responsiveFontSize(1.6),
     },

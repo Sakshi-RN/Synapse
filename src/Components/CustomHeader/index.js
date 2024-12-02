@@ -1,7 +1,6 @@
-// CustomHeader.js
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-
+import { Fonts } from '../../Themes/fonts';
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import {Circle,Bell} from '../../Assets/svg'
 import images from '../../Themes/Images';
@@ -39,7 +38,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: responsiveFontSize(2.2),
     color:Colors.white,
-    fontWeight:'500',
+    fontFamily: Fonts.Medium600,
     alignSelf:'center'
   },
 });

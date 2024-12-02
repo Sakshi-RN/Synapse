@@ -11,6 +11,7 @@ import commonStyles from '../../Components/CommonStyle';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { fetchProfile } from '../../redux/Reducers/profileReducer';
 import Loader from '../../Components/Loader';
+import { Fonts } from '../../Themes/fonts';
 
 const Preferences = () => {
     const navigation = useNavigation();
@@ -104,10 +105,10 @@ const styles = StyleSheet.create({
 
     btnText: {
         color: Colors.blue,
-        fontWeight: '500',
+        fontFamily: Fonts.Medium600,
     },
     joinText: {
-        fontWeight: '500',
+        fontFamily: Fonts.Semibold700,
     },
     centeredContainer: {
         flex: 1,

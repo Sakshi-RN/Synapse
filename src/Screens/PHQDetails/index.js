@@ -6,7 +6,8 @@ import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
 import CustomButton from '../../Components/CustomButton';
 import ScoreContainer from '../../Container/ScoreContainer';
-import Loader from '../../Components/Loader'
+import Loader from '../../Components/Loader';
+import { Fonts } from '../../Themes/fonts';
 
 const PHQDetails = ({ navigation }) => {
   const [assessmentData, setAssessmentData] = useState(null);
@@ -197,7 +198,7 @@ const styles = StyleSheet.create({
   questionText: {
     color: Colors.black,
     width: responsiveWidth(70),
-    fontWeight: '500',
+    fontFamily: Fonts.Medium600,
     fontSize: responsiveFontSize(1.6),
   },
   answerBox: {
@@ -210,7 +211,7 @@ const styles = StyleSheet.create({
   },
   answerText: {
     fontSize: responsiveFontSize(1.5),
-    fontWeight: '400',
+    fontFamily: Fonts.Light400,
   },
   joinButton: {
     paddingHorizontal: responsiveWidth(7),
@@ -219,7 +220,7 @@ const styles = StyleSheet.create({
     marginBottom: responsiveHeight(2),
   },
   joinText: {
-    fontWeight: '500',
+    fontFamily: Fonts.Semibold700,
   },
   containerView: {
     flexDirection: 'row',
@@ -230,7 +231,7 @@ const styles = StyleSheet.create({
   },
   dateText: {
     color: Colors.black,
-    fontWeight: '600',
+    fontFamily: Fonts.Semibold700,
     fontSize: responsiveFontSize(1.6),
   },
   errorText: {

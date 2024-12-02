@@ -9,6 +9,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { updateProfile, fetchProfile } from '../../redux/Reducers/profileReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../Components/Loader';
+import { Fonts } from '../../Themes/fonts';
 
 const EditPreferences = () => {
     const navigation = useNavigation();
@@ -215,7 +216,7 @@ const styles = StyleSheet.create({
     },
     modalTitle: {
         fontSize: responsiveFontSize(2),
-        fontWeight: '700',
+        fontFamily: Fonts.Semibold700,
         marginBottom: 10,
     },
     closeButton: {
@@ -236,13 +237,13 @@ const styles = StyleSheet.create({
     },
     btnText: {
         color: Colors.blue,
-        fontWeight: '500',
+       fontFamily: Fonts.Medium600,
     },
     joinText: {
-        fontWeight: '500',
+        fontFamily: Fonts.Semibold700,
     },
     textStyle: {
-        fontWeight: '400',
+        fontFamily: Fonts.Light400,
         color: Colors.black,
     },
     centeredContainer: {

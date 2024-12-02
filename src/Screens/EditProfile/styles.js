@@ -1,6 +1,7 @@
 import { StyleSheet, Platform } from 'react-native';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
+import { Fonts } from '../../Themes/fonts';
 
 
 const styles = StyleSheet.create({
@@ -30,14 +31,14 @@ const styles = StyleSheet.create({
     },
     btnText: {
         color: Colors.blue,
-        fontWeight: '500',
+      fontFamily: Fonts.Medium600,
     },
     joinText: {
-        fontWeight: '500',
+      fontFamily: Fonts.Medium600,
     },
     name: {
         fontSize: responsiveFontSize(1.8),
-        fontWeight: 'bold',
+        fontFamily: Fonts.Bold800,
         color: Colors.blue,
         marginTop: responsiveHeight(2),
     },
@@ -57,45 +58,10 @@ const styles = StyleSheet.create({
     },
     profileName: {
         color: Colors.white,
-        fontWeight: '400',
+        fontFamily: Fonts.Light400,
         fontSize: responsiveFontSize(2.5)
     },
-    // nametitleStyle: {
-    //     width: responsiveWidth(20.5),
-    // },
-    // emailTitle: {
-    //     width: responsiveWidth(26.5),
-    // },
-    // phoneTitle: {
-    //     width: responsiveWidth(27),
-    // },
-    // genderStyle: {
-    //     width: responsiveWidth(16),
-    // },
-    // dobStyle: {
-    //     width: responsiveWidth(30),
-    // },
-    // weightStyle: {
-    //     width: responsiveWidth(33),
-    // },
-    // heightStyle: {
-    //     width: responsiveWidth(28),
-    // },
-    // streetsStyle: {
-    //     width: responsiveWidth(27),
-    // },
-    // addressStyle: {
-    //     width: responsiveWidth(20),
-    // },
-    // cityStyle: {
-    //     width: responsiveWidth(10.5),
-    // },
-    // stateStyle: {
-    //     width: responsiveWidth(12.5),
-    // },
-    // zipCodeStyle: {
-    //     width: responsiveWidth(18),
-    // },
+   
     widthStyle: {
         width: responsiveWidth(45),
     },
@@ -119,7 +85,7 @@ const styles = StyleSheet.create({
     },
     modalText: {
         fontSize: responsiveFontSize(2),
-        fontWeight: '700',
+        fontFamily: Fonts.Semibold700,
         marginTop: responsiveHeight(3),
         textAlign: 'center',
         color: Colors.blue
@@ -130,14 +96,14 @@ const styles = StyleSheet.create({
     },
     itemText: {
         fontSize: responsiveFontSize(2),
-        fontWeight: '600',
+        fontFamily: Fonts.Semibold700,
         marginTop: responsiveHeight(3),
         textAlign: 'center',
         color: Colors.black
     },
     errorText: {
         fontSize: responsiveFontSize(1.6),
-        fontWeight: '500',
+      fontFamily: Fonts.Medium600,
         marginTop: responsiveHeight(1),
         color: Colors.red
     },

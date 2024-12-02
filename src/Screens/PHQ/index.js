@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSurveyData, selectSurveyData, selectSurveyLoading } from '../../redux/Reducers/PHQReducer';
 import Loader from '../../Components/Loader';
+import { Fonts } from '../../Themes/fonts';
 
 const PHQ = () => {
     const navigation = useNavigation();
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: responsiveWidth(12),
     },
     joinText: {
-        fontWeight: '500',
+        fontFamily: Fonts.Semibold700,
     },
     containerBox: {
         elevation: 5,
@@ -119,13 +120,13 @@ const styles = StyleSheet.create({
     },
     nameTitleText: {
         fontSize: responsiveFontSize(1.8),
-        fontWeight: 'bold',
+        fontFamily: Fonts.Bold800,
         color: Colors.black,
     },
     bodyText: {
         fontSize: responsiveFontSize(1.6),
         color: Colors.blue,
-        fontWeight: 'bold',
+        fontFamily: Fonts.Bold800,
         width: responsiveWidth(43),
     },
     noDataText: {

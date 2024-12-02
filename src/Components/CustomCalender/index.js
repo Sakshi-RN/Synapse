@@ -125,9 +125,9 @@ export default function HorizontalCalendar({ setFilteredAppointments }) {
                 textDisabledColor: '#87ABC9',
                 monthTextColor: 'black',
                 textMonthFontSize: 19,
-                textMonthFontWeight: '500',
-                textDayFontWeight: '600',
-                textDayHeaderFontWeight: '600',
+                textMonthFontFamily:Fonts.Semibold700 ,
+                textDayFontFamily: Fonts.Semibold700,
+                textDayHeaderFontFamily: Fonts.Semibold700,
                 arrowColor: 'black'
             }}
         />

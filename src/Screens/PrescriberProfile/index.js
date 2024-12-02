@@ -8,6 +8,7 @@ import CustomHeader from '../../Components/CustomHeader';
 import { Chat, MeetIcon, MapView } from '../../Assets/svg';
 import Loader from '../../Components/Loader';
 import images from '../../Themes/Images';
+import { Fonts } from '../../Themes/fonts';
 
 
 
@@ -177,20 +178,20 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: responsiveFontSize(1.8),
-    fontWeight: '700',
+   fontFamily: Fonts.Semibold700,
     color: Colors.blue,
   },
   mdText: {
     fontSize: responsiveFontSize(1.3),
     color: Colors.darkgrey,
     marginTop: responsiveHeight(0.5),
-    fontWeight: '700',
+   fontFamily: Fonts.Semibold700,
   },
   newdescription: {
     fontSize: responsiveFontSize(1.1),
     color: Colors.darkgrey,
     marginTop: responsiveHeight(0.5),
-    fontWeight: '500',
+    fontFamily: Fonts.Medium600,
     width: responsiveWidth(60),
 
   },
@@ -213,7 +214,7 @@ const styles = StyleSheet.create({
   tabText: {
     fontSize: responsiveFontSize(1.3),
     color: Colors.darkgrey,
-    fontWeight: '700',
+   fontFamily: Fonts.Semibold700,
   },
   activeTab: {
     backgroundColor: Colors.skyblue,
@@ -226,7 +227,7 @@ const styles = StyleSheet.create({
   activeTabText: {
     color: Colors.blue,
     fontSize: responsiveFontSize(1.5),
-    fontWeight: '700',
+   fontFamily: Fonts.Semibold700,
   },
   flatListStyle: {
     height: '100%',
@@ -236,7 +237,7 @@ const styles = StyleSheet.create({
     color: Colors.blue,
     textAlign: 'center',
     marginTop: responsiveHeight(40),
-    fontWeight:'bold'
+    fontFamily: Fonts.Bold800
   },
   centeredContainer: {
     flex: 1,
@@ -250,13 +251,13 @@ const styles = StyleSheet.create({
   },
   abTname: {
     fontSize: responsiveFontSize(1.8),
-    fontWeight: '700',
+   fontFamily: Fonts.Semibold700,
     color: Colors.blue,
     width: responsiveWidth(70),
   },
   specialitiesText: {
     fontSize: responsiveFontSize(1.8),
-    fontWeight: '700',
+   fontFamily: Fonts.Semibold700,
     color: Colors.blue,
     marginTop: responsiveHeight(1.5),
   },
@@ -264,18 +265,18 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(1.3),
     color: Colors.darkgrey,
     marginTop: responsiveHeight(0.5),
-    fontWeight: '500',
+    fontFamily: Fonts.Medium600,
   },
   description: {
     fontSize: responsiveFontSize(1.4),
     color: Colors.darkgrey,
     marginTop: responsiveHeight(0.5),
-    fontWeight: '500',
+    fontFamily: Fonts.Medium600,
   },
   virtualTYext: {
-    fontSize: responsiveFontSize(1.4),
+    fontSize: responsiveFontSize(1.5),
     color: Colors.black,
-    fontWeight: '800',
+    fontFamily: Fonts.Bold800,
   },
   loader: {
     flex: 1,
@@ -287,7 +288,7 @@ const styles = StyleSheet.create({
   },
   specialitiesText: {
     fontSize: responsiveFontSize(1.8),
-    fontWeight: '700',
+   fontFamily: Fonts.Semibold700,
     color: Colors.blue,
     marginTop: responsiveHeight(1.5),
   },

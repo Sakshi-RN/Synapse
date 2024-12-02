@@ -251,8 +251,7 @@ const HomeScreen = () => {
                 <Text style={styles.reportsTitle}>My Care Team</Text>
                 {flatlistView()}
                 <Text style={styles.actionsTitle}>Other Action</Text>
-                {/* {actionConatiner()} */}
-               
+                {actionConatiner()}
                     <Text>{('Figtree texts')}</Text>
                     <View style={{marginTop:20,alignSelf:'center'}}>
                 <Text style={{  fontFamily: Fonts.RegularFigtree500 }}>regular</Text>

@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 import Colors from '../../Themes/Colors';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+import { Fonts } from '../../Themes/fonts';
 
 const commonStyles = StyleSheet.create({
 
@@ -26,7 +27,7 @@ const commonStyles = StyleSheet.create({
   },
   titleText: {
     fontSize: responsiveFontSize(1.8),
-    fontWeight: '500',
+    fontFamily: Fonts.Medium600,
     color:Colors.black,
     width:responsiveWidth(60),
     marginVertical:responsiveHeight(1),
@@ -34,7 +35,7 @@ const commonStyles = StyleSheet.create({
   },
   nameTitleText: {
     fontSize: responsiveFontSize(1.8),
-    fontWeight: '400',
+    fontFamily: Fonts.Light400,
     color:Colors.black,
     marginVertical:responsiveHeight(1.5),
 
@@ -42,7 +43,7 @@ const commonStyles = StyleSheet.create({
   bodyText: {
     fontSize: responsiveFontSize(1.6),
     color:Colors.blue,
-    fontWeight:'bold',
+    fontFamily: Fonts.Bold800,
     marginVertical:responsiveHeight(1.5),
 
   },

@@ -22,6 +22,8 @@ import StateList from '../../Components/StateList';
 import WeightList from '../../Components/WeightList';
 import GenderList from '../../Components/GenderList';
 import Loader from '../../Components/Loader';
+import { Fonts } from '../../Themes/fonts';
+
 
 const EditProfile = () => {
     const navigation = useNavigation();

@@ -4,6 +4,7 @@ import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-nativ
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Fonts } from '../../Themes/fonts';
 
 const CommonInput = ({
     placeholder,
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.white,
         fontSize: responsiveFontSize(1.8),
         color: Colors.black,
-        fontWeight: 'bold',
+        fontFamily: Fonts.Bold800 ,
         marginTop: responsiveHeight(3)
     },
     textInput: {
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
         height: responsiveHeight(6),
         fontSize: responsiveFontSize(1.8),
         color: Colors.black,
-        fontWeight: '400',
+        fontFamily: Fonts.Light400,
         backgroundColor: Colors.white,
         flexDirection: 'row',
         justifyContent: 'space-between',
