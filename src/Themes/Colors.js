@@ -28,19 +28,20 @@ const Colors = {
   ORANGE: '#FFE2B3',
   Dark_Orange: '#FF7900',
   GREEN: '#E2F8E3',
- Dark_Green: '#04AD01',
+  Dark_Green: '#04AD01',
   PINK: '#FFEAE5',
   Dark_Pink: '#F23A00',
-  Light_gray:"#D8DADF",
-  DARKBLUE:'#263257',
-  light_skyblue:'#D9F4FA',
-  OFFBLACK:'#3E3E3E',
-  green:'#008000',
-  newOrange:'#FFA500',
-  fade_Yellow:'#CDCD06',
-  fade_red:'#FF0505',
-  RED:'#F23A00',
-bg_Color:'#E4EEF1'
+  Light_gray: "#D8DADF",
+  DARKBLUE: '#263257',
+  light_skyblue: '#D9F4FA',
+  OFFBLACK: '#3E3E3E',
+  green: '#008000',
+  newOrange: '#FFA500',
+  fade_Yellow: '#CDCD06',
+  fade_red: '#FF0505',
+  RED: '#F23A00',
+  bg_Color:'#E4EEF1',
+  newgrey:'#838A93'
 
 
 

@@ -111,7 +111,8 @@ const SignIn = () => {
 };
 
 const styles = StyleSheet.create({
-    content: { flex: 1, backgroundColor: Colors.white },
+    content: { flex: 1, backgroundColor: Colors.bg_Color
+     },
     container: {
         height: Platform.OS === 'ios' ? responsiveHeight(50) : responsiveHeight(54),
         alignItems: 'center',
@@ -119,6 +120,7 @@ const styles = StyleSheet.create({
     },
     formContainer: {
         flex: 1,
+        backgroundColor: Colors.bg_Color 
     },
     title: {
         marginTop: responsiveHeight(2),

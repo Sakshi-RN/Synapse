@@ -72,20 +72,14 @@ const styles = StyleSheet.create({
   tabBarStyle: {
     backgroundColor: Colors.white,
     paddingVertical: responsiveHeight(3),
-    shadowColor: Colors.black,
-    shadowOffset: {
-      width: 3,
-      height: 4,
-    },
-    shadowOpacity: 4,
-    shadowRadius: 5,
-    elevation: 5,
     position: 'absolute',
     left: 0,
     right: 0,
     bottom: 0,
     height: responsiveHeight(10),
     borderWidth: 1,
-    borderColor: Colors.grey
+    borderColor: Colors.grey,
+    borderTopColor:Colors.Dark_Orange,
+    borderTopWidth:1.5
   },
 });
