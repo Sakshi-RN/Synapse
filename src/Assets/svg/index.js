@@ -51,6 +51,8 @@ import Mic from './mic.svg';
 import Calling from './Calling.svg';
 import ThankyouChecked from './ThankyouChecked.svg';
 import Concierge from './Concierge.svg';
+import ConceirgeIcn from './ConceirgeIcn.svg';
+import PrescriberIcn from './PrescriberIcn.svg';
+import TherapistIcn from './TherapistIcn.svg';
 
-
-export{LightAppointment,LightCareTeam,LightHome,LightMyProfile,Concierge,ThankyouChecked,Calling,Mic,Camera,DownloadSave,HealthApp,AppleWatch,CheckboxIcon,Ace,Intake,PHQ,Diagonstic,TaraMind,Starred,PhoneBook,Video,CommunicationPreferences,Policy,Advice,TermsOfUse,Logout,EditIcon,Calendar,Time,UpArrow,Star,MapView,Chat,ThreeDots,SplashIcon,Download,Logo,BackIcon,Bell,Circle,HomeIcon,AppointmentIcon,CareTeamIcon,MyProfileIcon,Arrowdown,Location,MeetIcon,Device,ConsentForm,TreatmentSummary,AppointmentImg,SurveyHistory}
+export{TherapistIcn,PrescriberIcn,ConceirgeIcn,LightAppointment,LightCareTeam,LightHome,LightMyProfile,Concierge,ThankyouChecked,Calling,Mic,Camera,DownloadSave,HealthApp,AppleWatch,CheckboxIcon,Ace,Intake,PHQ,Diagonstic,TaraMind,Starred,PhoneBook,Video,CommunicationPreferences,Policy,Advice,TermsOfUse,Logout,EditIcon,Calendar,Time,UpArrow,Star,MapView,Chat,ThreeDots,SplashIcon,Download,Logo,BackIcon,Bell,Circle,HomeIcon,AppointmentIcon,CareTeamIcon,MyProfileIcon,Arrowdown,Location,MeetIcon,Device,ConsentForm,TreatmentSummary,AppointmentImg,SurveyHistory}

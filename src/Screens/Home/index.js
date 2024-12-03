@@ -1,13 +1,12 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { View, Text, TouchableOpacity, ImageBackground } from 'react-native';
-import { Circle, Bell, Logo, MeetIcon, Location, Device, ConsentForm, TreatmentSummary, AppointmentImg, SurveyHistory } from '../../Assets/svg';
+import { Circle, Bell, Logo, MeetIcon, Location, Device, ConsentForm, TreatmentSummary, AppointmentImg, SurveyHistory, TherapistIcn, PrescriberIcn, ConceirgeIcn } from '../../Assets/svg';
 import images from '../../Themes/Images'
 import styles from './styles';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { fetchProfile } from '../../redux/Reducers/profileReducer';
 import Loader from '../../Components/Loader';
-import { Fonts } from '../../Themes/fonts';
 
 
 
@@ -194,7 +193,7 @@ const HomeScreen = () => {
         return (
             <View style={styles.actionView}>
                 <View style={styles.actionStyle}>
-                    <TouchableOpacity style={styles.surveyBtnStyle} onPress={handleSurveyHistory}>
+                    <TouchableOpacity onPress={handleSurveyHistory}>
                         <SurveyHistory />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.appointmentStyle} onPress={handleAppointment}>
@@ -220,19 +219,21 @@ const HomeScreen = () => {
 
             <View style={styles.careTeamRow}>
                 <TouchableOpacity style={styles.careTeamBox} onPress={handleTherapistProfile}>
-                    <Text style={[styles.careTeamName, styles.nameNewStyle]}>THERAPIST</Text>
+                    <TherapistIcn />
+                    <Text style={styles.nameNewStyle}>THERAPIST</Text>
                     <Text style={styles.careTeamName}>{profile?.therapist?.providerName}</Text>
                     <Text style={[styles.careTeamRole]}>{profile?.therapist?.designation?.join(', ')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.careTeamBox} onPress={handlePrescriberProfile}>
-                    <Text style={[styles.careTeamName, styles.nameNewStyle]}>PRESCRIBER</Text>
+                    <PrescriberIcn />
+                    <Text style={styles.nameNewStyle}>PRESCRIBER</Text>
                     <Text style={styles.careTeamName}>{profile?.prescriber?.providerName}</Text>
                     <Text style={[styles.careTeamRole]}>{profile?.prescriber?.designation?.join(', ')}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.careTeamBox}>
-                    <Text style={[styles.careTeamName, styles.nameNewStyle]}>TARA Mind</Text>
-                    <Text style={styles.careTeamName}>Concierge</Text>
-                </TouchableOpacity>
+                <View style={styles.conciregeView}>
+                    <ConceirgeIcn />
+                </View>
+
             </View>
 
         )
@@ -242,16 +243,17 @@ const HomeScreen = () => {
     return (
         <View style={styles.container}>
             {renderHeader()}
-            {SwiperCode()}
-            <View
-                // showsVerticalScrollIndicator={false}
-                style={styles.scrollContent}>
+            <View style={styles.scrollContent}>
                 {/* <Text style={styles.reportsTitle}>Process</Text>
                 {processContainer()} */}
-                <Text style={styles.reportsTitle}>My Care Team</Text>
-                {flatlistView()}
-                <Text style={styles.actionsTitle}>Other Action</Text>
-                {actionConatiner()}
+                <View style={styles.commonContainer}>
+                    <Text style={styles.reportsTitle}>My Care Team</Text>
+                    {flatlistView()}
+                </View>
+                <View style={styles.commonContainer}>
+                    <Text style={styles.reportsTitle}>Other Action</Text>
+                    {actionConatiner()}
+                </View>
                 {/* <Text style={{  fontFamily: Fonts.RegularFigtree500 }}>regular</Text>
             <Text style={{  fontFamily: Fonts.Light400 }}>light</Text>
             <Text style={{  fontFamily: Fonts.Bold800 }}>bold</Text>

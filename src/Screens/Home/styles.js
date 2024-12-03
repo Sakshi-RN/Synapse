@@ -1,18 +1,23 @@
 import { StyleSheet, Platform } from 'react-native';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
+import { Fonts } from '../../Themes/fonts';
 
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.white
+        backgroundColor: Colors.bg_Color
     },
-    scrollContent: { paddingHorizontal: responsiveHeight(3), paddingTop: responsiveHeight(4) },
+    scrollContent: {
+        paddingHorizontal: responsiveHeight(2),
+        paddingTop: responsiveHeight(1),
+        backgroundColor: Colors.bg_Color
+    },
     headerContainer: {
-        paddingTop: responsiveHeight(5),
+        paddingTop: responsiveHeight(6),
         paddingHorizontal: responsiveWidth(8),
-        height: responsiveHeight(21)
+        height: responsiveHeight(19),
     },
     headerContent: {
         flexDirection: 'row',
@@ -23,7 +28,8 @@ const styles = StyleSheet.create({
     patientName: {
         color: Colors.white,
         fontSize: responsiveFontSize(2.1),
-        marginTop: responsiveHeight(1),
+        marginTop: responsiveHeight(1.6),
+        fontFamily: Fonts.Medium600
     },
     patientDetails: {
         flexDirection: 'row',
@@ -118,15 +124,8 @@ const styles = StyleSheet.create({
     },
     reportsTitle: {
         fontSize: responsiveFontSize(2),
-        fontWeight: '600',
+        fontFamily: Fonts.Bold800,
         color: Colors.blue,
-        marginTop: responsiveHeight(1.5)
-    },
-    reportItem: {
-        backgroundColor: Colors.paleblue,
-        borderRadius: 10,
-        padding: responsiveWidth(4),
-        marginTop: responsiveHeight(1)
     },
     reportDate: {
         fontSize: responsiveFontSize(1.5),
@@ -166,15 +165,18 @@ const styles = StyleSheet.create({
     },
 
     careTeamName: {
-        fontSize: responsiveFontSize(1.8),
-        fontWeight: '600',
+        fontSize: responsiveFontSize(1.2),
+        fontFamily: Fonts.Medium600,
         textAlign: 'center',
-        lineHeight: responsiveHeight(2),
         color: Colors.white
     },
-    nameNewStyle:{
-    fontSize: responsiveFontSize(1.5)
-   } ,
+    nameNewStyle: {
+        fontSize: responsiveFontSize(0.7),
+        marginTop: responsiveHeight(0.7),
+        fontFamily: Fonts.Bold800,
+        textAlign: 'center',
+        color: Colors.white
+    },
     samuelName: {
         fontSize: responsiveFontSize(1.2),
         color: Colors.black,
@@ -192,11 +194,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     careTeamRole: {
-        fontSize: responsiveFontSize(1),
+        fontSize: responsiveFontSize(0.6),
         color: Colors.white,
         fontWeight: '500',
         textAlign: 'center',
-        marginTop: responsiveHeight(0.5)
+        marginTop: responsiveHeight(0.2)
     },
     actionsContainer: {
         padding: responsiveWidth(4)
@@ -242,13 +244,21 @@ const styles = StyleSheet.create({
         top: Platform.OS === 'ios' ? responsiveHeight(3) : responsiveHeight(4)
 
     },
-    reportContainer: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-    actionView: { marginTop: responsiveHeight(1), paddingBottom: responsiveHeight(15) },
+    reportContainer:
+    {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    actionView:
+    {
+        marginTop: responsiveHeight(1)
+    },
     swiperView: { top: responsiveHeight(-4), height: responsiveHeight(12), backgroundColor: 'red' },
     surveyBtnStyle: { marginBottom: responsiveHeight(1) },
     actionStyle: { flexDirection: 'row', alignItems: 'center' },
     appointmentStyle: { marginHorizontal: responsiveWidth(3) },
-    consentRow: { flexDirection: 'row', alignItems: 'center', marginTop: responsiveHeight(1) },
+    consentRow: { flexDirection: 'row', alignItems: 'center', },
     devicebtnStyle:
         { marginLeft: responsiveWidth(3) },
     phqConatiner: { flexDirection: 'row', marginTop: responsiveHeight(1), width: '40%', justifyContent: 'space-between' },
@@ -262,21 +272,26 @@ const styles = StyleSheet.create({
     careTeamRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        marginTop: responsiveFontSize(1.5)
+        // justifyContent: 'space-evenly',
+        marginTop: responsiveFontSize(1.2)
     },
     careTeamBox: {
-        height: responsiveHeight(9),
-        width: responsiveWidth(26),
+        paddingTop: responsiveHeight(1),
+        paddingBottom: responsiveHeight(0.8),
+        width: responsiveWidth(23),
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor:'#87ABC9',
-        borderRadius: 12,
+        backgroundColor: '#274E6D',
+        borderRadius: 9,
         shadowColor: Platform.OS === 'ios' ? Colors.OFFWHITE : Colors.black,
         shadowOffset: { width: 3, height: 5 },
         shadowOpacity: 1,
         shadowRadius: 2,
         elevation: 5,
+        marginHorizontal:responsiveWidth(2.5)
+    },
+    conciregeView:{
+        marginHorizontal:responsiveWidth(2)
     },
     therapistRoleText: {
         color: Colors.blue,
@@ -332,6 +347,18 @@ const styles = StyleSheet.create({
         height: 60,
         alignSelf: 'center'
     },
+    commonContainer: {
+        backgroundColor: Colors.white,
+        paddingVertical: responsiveHeight(1.2),
+        paddingHorizontal: responsiveWidth(2.9),
+        borderRadius: 10,
+        marginTop: responsiveHeight(1.5),
+        shadowColor: Platform.OS === 'ios' ? Colors.OFFWHITE : Colors.black,
+        shadowOffset: { width: 2, height: 2 },
+        shadowOpacity: 1,
+        shadowRadius: 2,
+        elevation: 5,
+    }
 
 });
 

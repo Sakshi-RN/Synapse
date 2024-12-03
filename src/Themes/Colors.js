@@ -1,3 +1,5 @@
+import { ImageBackground } from "react-native";
+
 const Colors = {
 
   black: '#000000',
@@ -37,7 +39,8 @@ const Colors = {
   newOrange:'#FFA500',
   fade_Yellow:'#CDCD06',
   fade_red:'#FF0505',
-  RED:'#F23A00'
+  RED:'#F23A00',
+bg_Color:'#E4EEF1'
 
 
 
