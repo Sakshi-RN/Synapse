@@ -114,13 +114,13 @@ const HomeScreen = () => {
         navigation.navigate('ConsentForm');
     }
     const handleTherapistProfile = () => {
-        navigation.navigate('PrescriberProfile', { providerID: profile?.therapist?.providerID,facilityId:profile?.therapist?.facilityId });
+        navigation.navigate('PrescriberProfile', { providerID: profile?.therapist?.providerID, facilityId: profile?.therapist?.facilityId });
     };
-      
-      const handlePrescriberProfile = () => {
-        navigation.navigate('PrescriberProfile', { providerID: profile?.prescriber?.providerID,facilityId :profile?.prescriber?.facilityId});
+
+    const handlePrescriberProfile = () => {
+        navigation.navigate('PrescriberProfile', { providerID: profile?.prescriber?.providerID, facilityId: profile?.prescriber?.facilityId });
     };
-      
+
     const renderHeader = () => {
         return (
             <ImageBackground source={images.headerBgImg} style={styles.headerContainer}>
@@ -220,17 +220,17 @@ const HomeScreen = () => {
 
             <View style={styles.careTeamRow}>
                 <TouchableOpacity style={styles.careTeamBox} onPress={handleTherapistProfile}>
-                    <Text style={[styles.careTeamName,styles.nameNewStyle]}>THERAPIST</Text>
+                    <Text style={[styles.careTeamName, styles.nameNewStyle]}>THERAPIST</Text>
                     <Text style={styles.careTeamName}>{profile?.therapist?.providerName}</Text>
                     <Text style={[styles.careTeamRole]}>{profile?.therapist?.designation?.join(', ')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.careTeamBox} onPress={handlePrescriberProfile}>
-                <Text style={[styles.careTeamName,styles.nameNewStyle]}>PRESCRIBER</Text>
+                    <Text style={[styles.careTeamName, styles.nameNewStyle]}>PRESCRIBER</Text>
                     <Text style={styles.careTeamName}>{profile?.prescriber?.providerName}</Text>
                     <Text style={[styles.careTeamRole]}>{profile?.prescriber?.designation?.join(', ')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.careTeamBox}>
-                <Text style={[styles.careTeamName,styles.nameNewStyle]}>TARA Mind</Text>
+                    <Text style={[styles.careTeamName, styles.nameNewStyle]}>TARA Mind</Text>
                     <Text style={styles.careTeamName}>Concierge</Text>
                 </TouchableOpacity>
             </View>
@@ -252,14 +252,11 @@ const HomeScreen = () => {
                 {flatlistView()}
                 <Text style={styles.actionsTitle}>Other Action</Text>
                 {actionConatiner()}
-                    <Text>{('Figtree texts')}</Text>
-                    <View style={{marginTop:20,alignSelf:'center'}}>
-                <Text style={{  fontFamily: Fonts.RegularFigtree500 }}>regular</Text>
+                {/* <Text style={{  fontFamily: Fonts.RegularFigtree500 }}>regular</Text>
             <Text style={{  fontFamily: Fonts.Light400 }}>light</Text>
             <Text style={{  fontFamily: Fonts.Bold800 }}>bold</Text>
             <Text style={{  fontFamily: Fonts.Medium600 }}>medium</Text>
-            <Text style={{  fontFamily: Fonts.Semibold700 }}>semibold</Text>
-            </View>
+            <Text style={{  fontFamily: Fonts.Semibold700 }}>semibold</Text> */}
             </View>
         </View>
     );

@@ -32,10 +32,10 @@ const AppointmentCard = ({ appointment }) => {
             <View style={[styles.cardRow, { bottom: responsiveHeight(3) }]}>
                 <View>
                     <Text style={styles.name}>Facility Details</Text>
-                    <Text style={styles.type}>Facility Name</Text>
-                    <Text style={styles.type}>Address 1</Text>
-                    <Text style={styles.type}>City,</Text>
-                    <Text style={styles.type}>State,Zip</Text>
+                    <Text style={styles.type}>{appointment?.facility?.facilityName}</Text>
+                    <Text style={styles.type}>{appointment?.facility?.facilityAddress1}Address 1</Text>
+                    <Text style={styles.type}>{appointment?.facility?.facilityCity}</Text>
+                    <Text style={styles.type}>{appointment?.facility?.facilityState}{appointment?.facility?.facilityZip}</Text>
                 </View>
                 <View style={{ marginTop: responsiveHeight(5) }}>
                     <Text style={[styles.nameNewText]}>Date</Text>
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
         color: Colors.darkgrey,
        fontFamily: Fonts.Semibold700,
         width: responsiveWidth(38),
-
+        marginTop:responsiveHeight(0.2)
     },
     secondText: {
         fontSize: responsiveFontSize(1.5),
