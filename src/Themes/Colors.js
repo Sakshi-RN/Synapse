@@ -17,7 +17,7 @@ const Colors = {
   bgColor: '#F8F8FA',
   bgGreen: '#038A1126',
   green: '#038A11',
-  blue: '#354764',
+  blue: '#274E6D',
   lightblue: '#F2FDFF',
   newColor: '#F5F5F5',
   paleblue: '#87ABC9',

@@ -65,7 +65,7 @@ const HomeScreen = () => {
 
     const renderHeader = () => {
         return (
-            <ImageBackground source={images.headerBgImg} style={styles.headerContainer}>
+            <View source={images.headerBgImg} style={styles.headerContainer}>
                 <View style={styles.headerContent}>
                     <TouchableOpacity>
                         <Circle height={25} width={25} />
@@ -76,7 +76,7 @@ const HomeScreen = () => {
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.patientName}>Hello {profile?.firstName || ''} </Text>
-            </ImageBackground>
+            </View>
         );
     };
 

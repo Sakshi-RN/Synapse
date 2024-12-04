@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet,Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HomeIcon, AppointmentIcon, CareTeamIcon, MyProfileIcon,LightAppointment,LightCareTeam,LightHome,LightMyProfile, } from '../Assets/svg';
@@ -77,9 +77,12 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     height: responsiveHeight(10),
-    borderWidth: 1,
-    borderColor: Colors.grey,
     borderTopColor:Colors.Dark_Orange,
-    borderTopWidth:1.5
+    borderTopWidth:2,
+    shadowColor:Colors.black,
+    shadowOffset: { width: 5, height: 5 },
+    shadowOpacity: 3,
+    shadowRadius: 2,
+    elevation: 5,
   },
 });

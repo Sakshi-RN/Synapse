@@ -17,9 +17,14 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.bg_Color,
     },
     headerContainer: {
-        paddingTop: responsiveHeight(6),
+        paddingTop:  Platform.OS === 'ios' ? responsiveHeight(5):responsiveHeight(1),
         paddingHorizontal: responsiveWidth(8),
-        height: responsiveHeight(19),
+        height:  Platform.OS === 'ios' ? responsiveHeight(16):responsiveHeight(13),
+        borderBottomWidth:2,
+        borderBottomColor:Colors.Dark_Orange,
+backgroundColor:Colors.blue,
+borderBottomLeftRadius:18,
+borderBottomRightRadius:18
     },
     headerContent: {
         flexDirection: 'row',
@@ -30,7 +35,7 @@ const styles = StyleSheet.create({
     patientName: {
         color: Colors.white,
         fontSize: responsiveFontSize(2.1),
-        marginTop: responsiveHeight(1.6),
+        marginTop: responsiveHeight(0.5),
         fontFamily: Fonts.Medium600
     },
 

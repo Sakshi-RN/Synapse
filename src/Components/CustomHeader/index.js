@@ -14,13 +14,13 @@ const CustomHeader = ({ title }) => {
     navigation.navigate('Notification');
 }
   return (
-    <ImageBackground source={images.headerBgImg} style={styles.headerContainer}>
+    <View source={images.headerBgImg} style={styles.headerContainer}>
       <Circle/>
       <Text style={styles.title}>{title}</Text>
       <TouchableOpacity onPress={handlNotification}>
        <Bell/>
       </TouchableOpacity>
-    </ImageBackground>
+    </View>
   );
 };
 
@@ -29,9 +29,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingTop: responsiveHeight(5),
+    paddingTop: responsiveHeight(4),
     paddingHorizontal: responsiveWidth(8),
-    height:responsiveHeight(13)
+    height: responsiveHeight(12),
+        borderBottomWidth:2,
+        borderBottomColor:Colors.Dark_Orange,
+backgroundColor:Colors.blue
     
   },
 
