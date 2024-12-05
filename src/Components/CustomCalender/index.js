@@ -216,7 +216,7 @@ export default function HorizontalCalendar({ setFilteredAppointments }) {
 const styles = StyleSheet.create({
     container: {
         paddingVertical: responsiveHeight(2),
-        backgroundColor: Colors.white,
+
     },
     headerText: {
         fontSize: responsiveFontSize(1.8),

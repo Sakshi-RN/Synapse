@@ -7,19 +7,25 @@ import { Fonts } from '../../Themes/fonts';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.bg_Color ,
         paddingBottom: responsiveHeight(14)  
     },
     content: {
-        paddingHorizontal: responsiveWidth(5),
+        paddingHorizontal: responsiveWidth(3),
         flex: 1,
     },
     Button: {
-        backgroundColor: Colors.light_skyblue,
-        paddingHorizontal: responsiveWidth(16),
+        borderColor: Colors.blue,
+        paddingHorizontal: responsiveWidth(14),
+        borderWidth:1,
+        backgroundColor:Colors.white
+    },
+    btnText: {
+        color: Colors.blue,
+      fontFamily: Fonts.Medium600,
     },
     joinButton: {
-        paddingHorizontal: responsiveWidth(16),
+        paddingHorizontal: responsiveWidth(15),
     },
     row: {
         flexDirection: 'row',
@@ -27,12 +33,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         width: '100%',
         paddingHorizontal: responsiveWidth(5),
-        marginTop: responsiveHeight(2)
+        marginVertical: responsiveHeight(2)
     },
-    btnText: {
-        color: Colors.blue,
-      fontFamily: Fonts.Medium600,
-    },
+
     joinText: {
       fontFamily: Fonts.Medium600,
     },
@@ -54,7 +57,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: responsiveHeight(3)
+        marginVertical: responsiveHeight(2)
     },
     profileName: {
         color: Colors.white,
@@ -111,7 +114,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-    },
+    }
 
 });
 

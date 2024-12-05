@@ -8,6 +8,7 @@ import CustomButton from '../../Components/CustomButton';
 import ScoreContainer from '../../Container/ScoreContainer';
 import Loader from '../../Components/Loader';
 import { Fonts } from '../../Themes/fonts';
+import commonStyles from '../../Components/CommonStyle';
 
 const PHQDetails = ({ navigation }) => {
   const [assessmentData, setAssessmentData] = useState(null);
@@ -106,7 +107,7 @@ const PHQDetails = ({ navigation }) => {
 
   const renderOptions = () => {
     return (
-      <View style={{ paddingHorizontal: responsiveWidth(7) }}>
+      <View style={{ paddingHorizontal: responsiveWidth(4) }}>
         <View style={styles.row}>
           <View style={[styles.answerBox, { borderColor: Colors.green }]}>
             <Text style={[styles.answerText, { color: Colors.green }]}>0</Text>
@@ -146,6 +147,7 @@ const PHQDetails = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <CustomHeader title={'PHQ - 9'} />
+      <View style={commonStyles.newConatiner}>
       <ScoreContainer score={assessmentData ? assessmentData.phqScore : "N/A"} />
       {renderOptions()}
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
@@ -157,6 +159,7 @@ const PHQDetails = ({ navigation }) => {
         title={'Back'}
         onPress={handleGoBack}
       />
+      </View>
     </View>
   );
 };
@@ -166,12 +169,11 @@ export default PHQDetails;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bg_Color,
     paddingBottom: responsiveHeight(11),
   },
   content: {
-    paddingHorizontal: responsiveWidth(7),
-    paddingTop: responsiveHeight(3),
+    paddingTop: responsiveHeight(2.5),
     paddingBottom: responsiveHeight(5),
   },
   row: {
@@ -185,15 +187,9 @@ const styles = StyleSheet.create({
     width: responsiveWidth(34)
   },
   questionContainer: {
-    elevation: 5,
-    shadowColor: Colors.blue,
-    shadowOffset: { width: 1, height: 3 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
     borderColor: Colors.light_skyblue,
-    borderWidth: 0.5,
-    borderRadius: 2,
-    backgroundColor: Colors.white,
+    borderWidth:0.8,
+    paddingHorizontal:responsiveWidth(2)
   },
   questionText: {
     color: Colors.black,

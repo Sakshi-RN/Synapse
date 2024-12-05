@@ -5,19 +5,14 @@ import { Fonts } from '../../Themes/fonts';
 
 const commonStyles = StyleSheet.create({
 
-  container: {
-    borderColor:Colors.light_skyblue,
-   borderWidth:1,
-   borderRadius:10
-  },
-
   containerView:{
     flexDirection:'row',
     alignItems:'center',
     justifyContent:'space-between',
     borderBottomColor:Colors.light_skyblue,
     borderBottomWidth:1,
-    paddingHorizontal:responsiveWidth(3)
+    paddingHorizontal:responsiveWidth(3),
+    paddingVertical:responsiveHeight(1)
   },
  bottomView:{
     flexDirection:'row',
@@ -48,7 +43,13 @@ const commonStyles = StyleSheet.create({
 
   },
 
+  newConatiner:  {flex:1, 
+    backgroundColor:Colors.white ,
+   marginTop:responsiveHeight(2.8),
+   marginHorizontal:responsiveWidth(3),
+   borderRadius:9
 
+}
 
  
 });

@@ -9,7 +9,7 @@ import { Chat, MeetIcon, MapView } from '../../Assets/svg';
 import Loader from '../../Components/Loader';
 import images from '../../Themes/Images';
 import { Fonts } from '../../Themes/fonts';
-
+import commonStyles from '../../Components/CommonStyle';
 
 
 const PrescriberProfile = () => {
@@ -18,14 +18,14 @@ const PrescriberProfile = () => {
   const [loading, setLoading] = useState(true);
   const tabs = ['About Me', 'Location'];
   const route = useRoute();
-  const { providerID,facilityId } = route.params;
+  const { providerID, facilityId } = route.params;
 
   useEffect(() => {
     const fetchProviderData = async () => {
       try {
         const response = await fetch(
           // `https://eb1.taramind.com/provider/details?providerId=${providerID}&facilityId=${facilityId}`,
-         'https://eb1.taramind.com/provider/publicProfile?providerId=cd71e5f2-c73d-4e30-9fbf-f20adf54de0e&facilityId=64149d0a-c9e6-4761-b31a-d553d76ef6eb',
+          'https://eb1.taramind.com/provider/publicProfile?providerId=cd71e5f2-c73d-4e30-9fbf-f20adf54de0e&facilityId=64149d0a-c9e6-4761-b31a-d553d76ef6eb',
           {
             method: 'GET',
             headers: {
@@ -53,23 +53,6 @@ const PrescriberProfile = () => {
     return null;
   };
 
-  const renderProfileCard = () => (
-    <View style={styles.careTeamnCard}>
-      {providerData?.profilePicture ? (
-        <Image source={{ uri: providerData.profilePicture }} style={styles.icon} />
-      ) : (
-        <Image source={images.user} style={styles.icon} />
-      )}
-      <View style={styles.textContainer}>
-        <Text style={styles.name}>{providerData?.firstName} {providerData?.lastName}</Text>
-        <Text style={styles.mdText}>{providerData?.designation?.join(', ')}</Text>
-        <Text style={styles.newdescription}>{providerData?.speciality?.join(' ')}</Text>
-      </View>
-      <TouchableOpacity>
-        <Chat />
-      </TouchableOpacity>
-    </View>
-  );
 
   const renderTab = ({ item: tab }) => (
     <TouchableOpacity
@@ -95,8 +78,14 @@ const PrescriberProfile = () => {
   return (
     <View style={styles.container}>
       <CustomHeader title="Prescriber Profile" />
-      <View style={styles.contentPadding}>
-        {renderProfileCard()}
+      <ScrollView showsVerticalScrollIndicator={false} style={[commonStyles.newConatiner, { paddingHorizontal: responsiveWidth(4) }]}>
+        <View style={styles.newRow}>
+          <Text style={styles.name}>{providerData?.firstName} {providerData?.lastName}</Text>
+          <Chat />
+        </View>
+        <Text style={styles.mdText}>{providerData?.designation?.join(', ')}</Text>
+        <Text style={styles.newdescription}>{providerData?.speciality?.join(' ')}</Text>
+        <View style={styles.lineStyle} />
         <FlatList
           data={tabs}
           renderItem={renderTab}
@@ -105,10 +94,8 @@ const PrescriberProfile = () => {
           showsHorizontalScrollIndicator={false}
           style={styles.tabsContainer}
         />
-        <ScrollView showsVerticalScrollIndicator={false} style={styles.flatListStyle}>
-          {renderContent()}
-        </ScrollView>
-      </View>
+        {renderContent()}
+      </ScrollView>
     </View>
   );
 };
@@ -144,54 +131,33 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingBottom: responsiveHeight(14),
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bg_Color
   },
-  contentPadding: {
-    marginHorizontal: responsiveWidth(5),
-    flex: 1,
-  },
-  careTeamnCard: {
-    paddingHorizontal: responsiveWidth(3),
-    paddingVertical: responsiveHeight(1.5),
-    backgroundColor: Colors.white,
-    shadowColor: Platform.OS === 'ios' ? Colors.grey : Colors.black,
-    shadowOffset: { width: 4, height: 5 },
-    shadowOpacity: 5,
-    shadowRadius: 10,
-    elevation: 5,
-    marginTop: responsiveHeight(2.5),
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: Colors.skyblue,
-    flexDirection: 'row',
-  },
-  icon: {
-    width: responsiveWidth(18),
-    height: responsiveWidth(18),
-    borderRadius: 8,
+
+  lineStyle: {
+    marginTop: responsiveHeight(1),
+    height: 1,
+    backgroundColor: Colors.lightgrey,
 
   },
-  textContainer: {
-    marginLeft: responsiveWidth(3),
-    width: responsiveWidth(55),
-  },
+
   name: {
     fontSize: responsiveFontSize(1.8),
-   fontFamily: Fonts.Semibold700,
+    fontFamily: Fonts.Semibold700,
     color: Colors.blue,
   },
   mdText: {
     fontSize: responsiveFontSize(1.3),
-    color: Colors.darkgrey,
+    color: Colors.newgrey,
     marginTop: responsiveHeight(0.5),
-   fontFamily: Fonts.Semibold700,
+    fontFamily: Fonts.Semibold700,
   },
   newdescription: {
-    fontSize: responsiveFontSize(1.1),
-    color: Colors.darkgrey,
-    marginTop: responsiveHeight(0.5),
+    fontSize: responsiveFontSize(1.2),
+    color: Colors.newgrey,
+    marginTop: responsiveHeight(0.8),
     fontFamily: Fonts.Medium600,
-    width: responsiveWidth(60),
+    width: responsiveWidth(72),
 
   },
   Button: {
@@ -200,7 +166,7 @@ const styles = StyleSheet.create({
   },
   tabsContainer: {
     marginTop: responsiveHeight(3),
-    height: responsiveHeight(10),
+    height: responsiveHeight(7),
     alignSelf: 'center',
   },
   tabButton: {
@@ -212,11 +178,11 @@ const styles = StyleSheet.create({
   },
   tabText: {
     fontSize: responsiveFontSize(1.3),
-    color: Colors.darkgrey,
-   fontFamily: Fonts.Semibold700,
+    color: Colors.newgrey,
+    fontFamily: Fonts.Semibold700,
   },
   activeTab: {
-    backgroundColor: Colors.skyblue,
+    backgroundColor: Colors.blue,
     paddingHorizontal: responsiveWidth(8),
     height: responsiveHeight(3),
     justifyContent: 'center',
@@ -224,12 +190,9 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   activeTabText: {
-    color: Colors.blue,
+    color: Colors.white,
     fontSize: responsiveFontSize(1.5),
-   fontFamily: Fonts.Semibold700,
-  },
-  flatListStyle: {
-    height: '100%',
+    fontFamily: Fonts.Semibold700,
   },
   errorText: {
     fontSize: responsiveFontSize(2),
@@ -250,28 +213,28 @@ const styles = StyleSheet.create({
   },
   abTname: {
     fontSize: responsiveFontSize(1.8),
-   fontFamily: Fonts.Semibold700,
+    fontFamily: Fonts.Semibold700,
     color: Colors.blue,
-    width: responsiveWidth(70),
+    width: responsiveWidth(65),
   },
   specialitiesText: {
     fontSize: responsiveFontSize(1.8),
-   fontFamily: Fonts.Semibold700,
+    fontFamily: Fonts.Semibold700,
     color: Colors.blue,
     marginTop: responsiveHeight(1.5),
   },
   mdText: {
     fontSize: responsiveFontSize(1.3),
-    color: Colors.darkgrey,
+    color: Colors.newgrey,
     marginTop: responsiveHeight(0.5),
     fontFamily: Fonts.Medium600,
   },
   description: {
     fontSize: responsiveFontSize(1.4),
-    color: Colors.darkgrey,
+    color: Colors.newgrey,
     marginTop: responsiveHeight(0.5),
     fontFamily: Fonts.Medium600,
-    width:responsiveWidth(87)
+    width: responsiveWidth(87)
   },
   virtualTYext: {
     fontSize: responsiveFontSize(1.5),
@@ -288,10 +251,15 @@ const styles = StyleSheet.create({
   },
   specialitiesText: {
     fontSize: responsiveFontSize(1.8),
-   fontFamily: Fonts.Semibold700,
+    fontFamily: Fonts.Semibold700,
     color: Colors.blue,
     marginTop: responsiveHeight(1.5),
   },
-
+  newRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: responsiveHeight(2)
+  }
 
 });

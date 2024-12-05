@@ -136,7 +136,7 @@ export default ProfileSettings;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.bg_Color,
         paddingBottom: responsiveHeight(13),
     },
     content: {
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: responsiveWidth(5),
-        backgroundColor: Colors.light_skyblue,
+        backgroundColor: Colors.white,
         paddingVertical: responsiveHeight(1.5),
         borderRadius: 10,
         shadowColor: Platform.OS === 'ios' ? Colors.OFFWHITE : Colors.black,

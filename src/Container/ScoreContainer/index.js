@@ -43,7 +43,7 @@ const ScoreContainer = () => {
 const styles = StyleSheet.create({
 
     headerInfo: {
-        paddingHorizontal: responsiveWidth(5),
+        paddingHorizontal: responsiveWidth(4),
         paddingVertical: responsiveHeight(2),
     },
     therapistText: {

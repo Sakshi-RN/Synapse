@@ -81,11 +81,7 @@ const CareTeam = () => {
                   textStyle={styles.ButtonText}
                   title={'View Profile'}
                 />
-                <CustomButton
-                  buttonStyle={styles.Button}
-                  textStyle={styles.ButtonText}
-                  title={'Appt'}
-                />
+
               </View>
             </View>
             {/* <TouchableOpacity onPress={() => openModal()}>

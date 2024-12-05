@@ -41,7 +41,6 @@ export default CommonInput;
 
 const styles = StyleSheet.create({
     label: {
-        backgroundColor: Colors.white,
         fontSize: responsiveFontSize(1.8),
         color: Colors.black,
         fontFamily: Fonts.Bold800 ,

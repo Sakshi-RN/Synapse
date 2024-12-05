@@ -11,6 +11,7 @@ import { updateProfile, fetchProfile } from '../../redux/Reducers/profileReducer
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../Components/Loader';
 import { Fonts } from '../../Themes/fonts';
+import commonStyles from '../../Components/CommonStyle';
 
 const EditEmergencyContacts = () => {
     const navigation = useNavigation();
@@ -116,6 +117,8 @@ const EditEmergencyContacts = () => {
     return (
         <View style={styles.container}>
             <CustomHeader title={'Edit Emergency Contacts'} />
+            <View style={commonStyles.newConatiner}>
+
             <View style={styles.content}>
                 <CommonInput
                     placeholder={'First Name'}
@@ -147,6 +150,7 @@ const EditEmergencyContacts = () => {
                     onPress={openModal} 
                     value={selectedRelation}
                 />
+                            </View>
                 <View style={styles.row}>
                     <CustomButton
                         buttonStyle={styles.Button}
@@ -159,7 +163,8 @@ const EditEmergencyContacts = () => {
                         title={'Save'}
                         onPress={handleSave} />
                 </View>
-            </View>
+                </View>
+
             {loading && (
                 <View style={styles.centeredContainer}>
                     <Loader />
@@ -192,15 +197,15 @@ export default EditEmergencyContacts;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.bg_Color,
+        paddingBottom:responsiveHeight(13)
     },
     content: {
-        flex: 1,
-        paddingHorizontal: responsiveWidth(5),
+        paddingHorizontal: responsiveWidth(4),
     },
     dropdownItem: {
-        padding:6,
-        alignItems:'center'
+        padding: 6,
+        alignItems: 'center',
     },
     modalContainer: {
         flex: 1,
@@ -216,47 +221,45 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     modalTitle: {
-        fontSize:responsiveFontSize(2),
+        fontSize: responsiveFontSize(2),
         fontFamily: Fonts.Semibold700,
         marginBottom: 10,
     },
     closeButton: {
-
-        marginTop:responsiveHeight(3),
-    },
-
-    Button: {
-        backgroundColor: Colors.light_skyblue,
-        paddingHorizontal: responsiveWidth(15),
-    },
-    joinButton: {
-        paddingHorizontal: responsiveWidth(17),
+        marginTop: responsiveHeight(2),
     },
     row: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginTop: responsiveHeight(3),
+        width: '100%',
+        paddingHorizontal: responsiveWidth(5),
+        marginTop: responsiveHeight(3.5)
+
+    },
+    Button: {
+        borderColor: Colors.blue,
+        paddingHorizontal: responsiveWidth(13),
+        borderWidth:1,
+        backgroundColor:Colors.white
     },
     btnText: {
         color: Colors.blue,
-        fontFamily: Fonts.Medium600,
+      fontFamily: Fonts.Medium600,
     },
+    joinButton: {
+        paddingHorizontal: responsiveWidth(15),
+    },
+
     joinText: {
         fontFamily: Fonts.Semibold700,
     },
-    textStyle:{
+    textStyle: {
         fontFamily: Fonts.Light400,
-        color:Colors.black
+        color: Colors.black,
     },
     centeredContainer: {
         flex: 1,
         marginTop: responsiveHeight(5)
-    },
-    errorText: {
-        fontSize: responsiveFontSize(1.6),
-        fontFamily: Fonts.Medium600,
-        marginTop: responsiveHeight(1),
-        color: Colors.red
     },
 });

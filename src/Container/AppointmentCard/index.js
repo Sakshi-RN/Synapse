@@ -143,7 +143,6 @@ const styles = StyleSheet.create({
         elevation: 5,
         marginVertical: responsiveHeight(1.5),
         borderRadius: 12,
-        marginHorizontal: responsiveWidth(5),
         borderWidth: 1,
         borderColor: Colors.lightgrey,
 

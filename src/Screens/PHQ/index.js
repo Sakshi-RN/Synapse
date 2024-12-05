@@ -6,9 +6,10 @@ import CustomHeader from '../../Components/CustomHeader';
 import CustomButton from '../../Components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSurveyData, selectSurveyData, selectSurveyLoading } from '../../redux/Reducers/PHQReducer';
+import { fetchSurveyData } from '../../redux/Reducers/PHQReducer';
 import Loader from '../../Components/Loader';
 import { Fonts } from '../../Themes/fonts';
+import commonStyles from '../../Components/CommonStyle';
 
 const PHQ = () => {
     const navigation = useNavigation();
@@ -60,6 +61,7 @@ const selectSurveyData = (state) => state.phq.surveyData;
     return (
         <View style={styles.container}>
             <CustomHeader title={'Survey History'} />
+           
             {loading ? (
                 <View style={styles.centeredContainer}>
                     <Loader />
@@ -70,11 +72,12 @@ const selectSurveyData = (state) => state.phq.surveyData;
                     keyExtractor={(item) => item.ID}
                     renderItem={renderSurveyItem}
                     showsVerticalScrollIndicator={false}
-                    style={styles.content}
+                    style={commonStyles.newConatiner}
                 />
             ) : (
                 <Text style={styles.noDataText}>No survey data available.</Text>
             )}
+            
         </View>
     );
 };
@@ -84,7 +87,7 @@ export default PHQ;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.bg_Color,
         paddingBottom: responsiveHeight(14),
     },
     content: {
@@ -100,16 +103,9 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.Semibold700,
     },
     containerBox: {
-        elevation: 5,
-        shadowColor: Colors.black,
-        shadowOffset: { width: 2, height: 2 },
-        shadowOpacity: 0.3,
-        shadowRadius: 5,
-        borderColor: Colors.light_skyblue,
-        borderWidth: 1,
-        borderRadius: 10,
-        backgroundColor: Colors.white,
-        marginBottom: responsiveHeight(2),
+        borderBottomColor: Colors.lightgrey,
+        borderBottomWidth: 1,
+        paddingTop: responsiveHeight(1.3),
     },
     containerView: {
         flexDirection: 'row',

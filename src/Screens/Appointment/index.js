@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import CustomCalender from '../../Components/CustomCalender';
 import { Fonts } from '../../Themes/fonts';
+import commonStyles from '../../Components/CommonStyle';
 
 
 const Appointment = () => {
@@ -73,6 +74,7 @@ const Appointment = () => {
         <View style={styles.container}>
             <CustomHeader title="Appointments" />
             <CustomCalender setFilteredAppointments={setFilteredAppointments} appointments={appointments} />
+            <View style={commonStyles.newConatiner}>
             <FlatList
                 data={filteredAppointments}
                 renderItem={renderAppointmentCard}
@@ -81,6 +83,7 @@ const Appointment = () => {
                 showsVerticalScrollIndicator={false}
                 style={styles.flatListStyle}
             />
+            </View>
         </View>
     );
 };
@@ -90,7 +93,7 @@ export default Appointment;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.bg_Color,
         paddingBottom: responsiveHeight(12),
     },
     centeredContainer: {

@@ -39,8 +39,7 @@ const Emergencycontacts = () => {
     return (
         <View style={styles.container}>
             <CustomHeader title={'Emergency Contacts'} />
-            <View style={styles.content}>
-                <View style={commonStyles.container}>
+            <View style={commonStyles.newConatiner}>
                     <View style={commonStyles.containerView}>
                         <Text style={styles.nameTitleText}>First Name</Text>
                         <Text style={styles.bodyText}>{profile?.emergencyContactFirstName}</Text>
@@ -53,11 +52,11 @@ const Emergencycontacts = () => {
                         <Text style={styles.nameTitleText}>Phone Number</Text>
                         <Text style={styles.bodyText}>{profile?.emergencyContactPhone}</Text>
                     </View>
-                    <View style={commonStyles.bottomView}>
+                    <View style={commonStyles.containerView}>
                     <Text style={styles.nameTitleText}>What is your relation with that person?</Text>
                     <Text style={styles.bodyText}>{profile?.emergencyContactRelation}</Text>
                     </View>
-                </View>
+ 
                 <View style={styles.row}>
                     <CustomButton
                         buttonStyle={styles.Button}
@@ -83,33 +82,37 @@ export default Emergencycontacts;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.bg_Color,
+        paddingBottom:responsiveHeight(13)
     },
     content: {
         flex: 1,
         paddingHorizontal: responsiveWidth(5),
         paddingTop: responsiveHeight(3)
     },
-
-    Button: {
-        backgroundColor: Colors.light_skyblue,
-        paddingHorizontal: responsiveWidth(15),
-    },
-    joinButton: {
-        paddingHorizontal: responsiveWidth(15),
-    },
     row: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginTop: responsiveHeight(3)
+        width: '100%',
+        paddingHorizontal: responsiveWidth(5),
+        marginTop: responsiveHeight(3.5)
 
     },
-
+    Button: {
+        borderColor: Colors.blue,
+        paddingHorizontal: responsiveWidth(14),
+        borderWidth:1,
+        backgroundColor:Colors.white
+    },
     btnText: {
         color: Colors.blue,
-        fontFamily: Fonts.Medium600,
+      fontFamily: Fonts.Medium600,
     },
+    joinButton: {
+        paddingHorizontal: responsiveWidth(13),
+    },
+
     joinText: {
         fontFamily: Fonts.Semibold700,
     },

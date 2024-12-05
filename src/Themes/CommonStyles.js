@@ -27,4 +27,12 @@ export const CommonStyles = StyleSheet.create({
     alignItems: 'center',
    justifyContent:'space-between'
 },
+newConatiner:  {flex:1, 
+  backgroundColor:Colors.white ,
+ marginTop:responsiveHeight(2),
+ marginHorizontal:responsiveWidth(3),
+ paddingVertical:responsiveHeight(3),
+ borderRadius:8
+
+}
 });

@@ -23,6 +23,7 @@ import WeightList from '../../Components/WeightList';
 import GenderList from '../../Components/GenderList';
 import Loader from '../../Components/Loader';
 import { Fonts } from '../../Themes/fonts';
+import commonStyles from '../../Components/CommonStyle';
 
 
 const EditProfile = () => {
@@ -161,13 +162,9 @@ const EditProfile = () => {
     }
 
     return (
-        // <KeyboardAvoidingView
-        //     behavior={Platform.OS === "ios" ? "padding" : "height"}
-        //     style={styles.container}
-        // >
-        //     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.container}>
                     <CustomHeader title={'Edit Profile'} />
+                    <View style={commonStyles.newConatiner}>
                     <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
                         <View style={styles.profileContainer}>
                             <Text style={styles.profileName}>
@@ -410,9 +407,9 @@ const EditProfile = () => {
                             </View>
                         </View>
                     </Modal>
+                    </View>
                 </View>
-           //</TouchableWithoutFeedback>
-       // </KeyboardAvoidingView>
+
     );
 };
 

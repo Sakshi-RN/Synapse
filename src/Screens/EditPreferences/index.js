@@ -10,6 +10,7 @@ import { updateProfile, fetchProfile } from '../../redux/Reducers/profileReducer
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../Components/Loader';
 import { Fonts } from '../../Themes/fonts';
+import commonStyles from '../../Components/CommonStyle';
 
 const EditPreferences = () => {
     const navigation = useNavigation();
@@ -123,7 +124,8 @@ const EditPreferences = () => {
     return (
         <View style={styles.container}>
             <CustomHeader title={'Edit Preferences'} />
-            <View style={styles.content}>
+            <View style={commonStyles.newConatiner}>
+                <View style={styles.content}>
                 <CommonInput
                     placeholder={'Select Language'}
                     title={'What language would you prefer your therapist to speak?'}
@@ -145,6 +147,7 @@ const EditPreferences = () => {
                     onPress={() => openModal('Gender')}
                     value={selectedGender}
                 />
+                </View>
                 <View style={styles.row}>
                     <CustomButton
                         buttonStyle={styles.Button}
@@ -191,11 +194,11 @@ export default EditPreferences;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.bg_Color,
+        paddingBottom:responsiveHeight(13)
     },
     content: {
-        flex: 1,
-        paddingHorizontal: responsiveWidth(5),
+        paddingHorizontal: responsiveWidth(4),
     },
     dropdownItem: {
         padding: 6,
@@ -222,23 +225,29 @@ const styles = StyleSheet.create({
     closeButton: {
         marginTop: responsiveHeight(2),
     },
-    Button: {
-        backgroundColor: Colors.light_skyblue,
-        paddingHorizontal: responsiveWidth(15),
-    },
-    joinButton: {
-        paddingHorizontal: responsiveWidth(17),
-    },
     row: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginTop: responsiveHeight(3),
+        width: '100%',
+        paddingHorizontal: responsiveWidth(5),
+        marginTop: responsiveHeight(3.5)
+
+    },
+    Button: {
+        borderColor: Colors.blue,
+        paddingHorizontal: responsiveWidth(13),
+        borderWidth:1,
+        backgroundColor:Colors.white
     },
     btnText: {
         color: Colors.blue,
-       fontFamily: Fonts.Medium600,
+      fontFamily: Fonts.Medium600,
     },
+    joinButton: {
+        paddingHorizontal: responsiveWidth(15),
+    },
+
     joinText: {
         fontFamily: Fonts.Semibold700,
     },
