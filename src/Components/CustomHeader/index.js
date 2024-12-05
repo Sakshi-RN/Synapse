@@ -32,9 +32,9 @@ const styles = StyleSheet.create({
     paddingTop: responsiveHeight(4),
     paddingHorizontal: responsiveWidth(8),
     height: responsiveHeight(12),
-        borderBottomWidth:2,
-        borderBottomColor:Colors.Dark_Orange,
-backgroundColor:Colors.blue
+     borderBottomWidth:2,
+     borderBottomColor:Colors.Dark_Orange,
+    backgroundColor:Colors.blue
     
   },
 

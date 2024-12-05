@@ -109,19 +109,20 @@ const HomeScreen = () => {
         return (
 
             <View style={styles.careTeamRow}>
+              {profile?.therapist === null ?<></>:
                 <TouchableOpacity style={styles.careTeamBox} onPress={handleTherapistProfile}>
                     <TherapistIcn />
                     <Text style={styles.nameNewStyle}>THERAPIST</Text>
                     <Text style={styles.careTeamName}>{profile?.therapist?.providerName}</Text>
                     <Text style={[styles.careTeamRole]}>{profile?.therapist?.designation?.join(', ')}</Text>
-                </TouchableOpacity>
-                {profile?.nextAppointment?.appointmentDate ?
+                </TouchableOpacity>}
+                {profile?.prescriber === null ?<></>:
                 <TouchableOpacity style={styles.careTeamBox} onPress={handlePrescriberProfile}>
                     <PrescriberIcn />
                     <Text style={styles.nameNewStyle}>PRESCRIBER</Text>
                     <Text style={styles.careTeamName}>{profile?.prescriber?.providerName}</Text>
                     <Text style={[styles.careTeamRole]}>{profile?.prescriber?.designation?.join(', ')}</Text>
-                </TouchableOpacity>:null}
+                </TouchableOpacity>}
                 <View style={styles.conciregeView}>
                     <ConceirgeIcn />
                 </View>

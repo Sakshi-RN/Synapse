@@ -133,8 +133,7 @@ const AboutmeTab = ({ providerData }) => (
 const LocationTab = ({ providerData }) => (
   <>
     <Text style={[styles.specialitiesText, { marginTop: 0 }]}>Practice Place</Text>
-    <Text style={styles.description}>{providerData?.address1}</Text>
-    <Text style={styles.description}>{providerData?.address2}</Text>
+    <Text style={styles.description}>{providerData?.address1} {providerData?.address2} {providerData?.facilityCity} {providerData?.facilityState} {providerData?.facilityZip} {providerData?.facilityCountry}</Text>
     <MapView style={styles.map} />
   </>
 );
@@ -272,6 +271,7 @@ const styles = StyleSheet.create({
     color: Colors.darkgrey,
     marginTop: responsiveHeight(0.5),
     fontFamily: Fonts.Medium600,
+    width:responsiveWidth(87)
   },
   virtualTYext: {
     fontSize: responsiveFontSize(1.5),

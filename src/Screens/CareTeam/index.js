@@ -68,11 +68,11 @@ const CareTeam = () => {
   const renderItem = () => (
     <>
       <View style={styles.careTeamnCard}>
-        {profile?.therapist?.profilePicture ? (
+        {/* {profile?.therapist?.profilePicture ? (
           <Image source={{ uri: profile?.therapist?.profilePicture }} style={styles.icon} />
         ) : (
              <Image source={images.user} style={styles.icon} />
-        )}
+        )} */}
         <View style={styles.textContainer}>
           <Text style={styles.title}>{profile?.therapist?.providerName||'Therapist'}</Text>
           <Text style={styles.description}>{profile?.therapist?.designation?.join(', ')}</Text>
@@ -95,12 +95,12 @@ const CareTeam = () => {
           </TouchableOpacity> */}
       </View>
       <View style={styles.careTeamnCard}>
-         {profile?.prescriber?.profilePicture ?
+         {/* {profile?.prescriber?.profilePicture ?
         (
           <Image source={{ uri: profile?.prescriber?.profilePicture }} style={styles.icon} />
         ) : (
              <Image source={images.user} style={styles.icon} />
-        )}
+        )} */}
         <View style={styles.textContainer}>
           <Text style={styles.title}>{profile?.prescriber?.providerName||'Prescriber'}</Text>
           <Text style={styles.description}>{profile?.prescriber?.designation?.join(', ')}</Text>

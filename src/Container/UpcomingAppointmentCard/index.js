@@ -2,13 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
-import { useNavigation } from '@react-navigation/native';
 import { Location, MeetIcon } from '../../Assets/svg';
 import { Fonts } from '../../Themes/fonts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const UpcomingAppointmentCard = () => {
-    const navigation = useNavigation();
     const [appointments, setAppointments] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -20,13 +18,12 @@ const UpcomingAppointmentCard = () => {
     const fetchAppointments = async () => {
         try {
             const clientId = await AsyncStorage.getItem('authclientID');
-            console.log('Client ID:', clientId);
-        
+
             if (!clientId) {
                 Alert.alert('Error', 'No client ID found');
                 return;
             }
-        
+
             const response = await fetch('https://eb1.taramind.com/getAppointment', {
                 method: 'POST',
                 headers: {
@@ -35,11 +32,8 @@ const UpcomingAppointmentCard = () => {
                 },
                 body: JSON.stringify({ status: 'scheduled', clientId }),
             });
-    
-            console.log('Response Status:', response.status);  // Log status code
+
             const data = await response.json();
-            console.log('Full API Response:', data);
-        
             if (response.ok && Array.isArray(data)) {
                 if (data.length > 0) {
                     setAppointments(data);
@@ -56,73 +50,108 @@ const UpcomingAppointmentCard = () => {
             setLoading(false);
         }
     };
-    
-    
-    const formatDate = (date) => {
-        const [month, day, year] = date.split('/');
-        const formattedDate = `${year}-${month}-${day}`;
-        const options = { month: 'short', day: 'numeric', timeZone: 'America/New_York' }; // Example timezone
-        return new Date(formattedDate).toLocaleDateString('en-US', options);
-    };
 
+    const formatDateAndTime = (appointmentDate, startTime, endTime) => {
+        const [month, day, year] = appointmentDate.split('/');
+        const date = new Date(`${year}-${month}-${day}`);
 
-    const formatTime = (time) => {
-        const [hour, minute] = time.split(':');
-        const date = new Date();
-        date.setHours(hour, minute);
-        return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' });
-    };
+        const formattedDate = date.toLocaleDateString('en-US', {
+            weekday: 'short',
+            month: 'short',
+            day: 'numeric',
+        });
 
-    const formatDateAndTime = (dateString, startTime, endTime) => {
-        const date = new Date(dateString);
-        const options = { weekday: 'short', month: 'short', day: 'numeric' };
-        const formattedDate = date.toLocaleDateString('en-US', options);
+        const ordinalDay = (d) => {
+            if (d > 3 && d < 21) return `${d}th`; // Handle 11th-13th
+            switch (d % 10) {
+                case 1:
+                    return `${d}st`;
+                case 2:
+                    return `${d}nd`;
+                case 3:
+                    return `${d}rd`;
+                default:
+                    return `${d}th`;
+            }
+        };
 
-        const day = date.getDate();
-        const daySuffix =
-            day % 10 === 1 && day !== 11
-                ? 'st'
-                : day % 10 === 2 && day !== 12
-                    ? 'nd'
-                    : day % 10 === 3 && day !== 13
-                        ? 'rd'
-                        : 'th';
+        const formattedDay = ordinalDay(date.getDate());
+
+        const formatTime = (time) => {
+            const [hour, minute] = time.split(':');
+            const date = new Date();
+            date.setHours(hour, minute);
+            return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+        };
 
         const formattedStartTime = formatTime(startTime);
         const formattedEndTime = formatTime(endTime);
 
-        return `${formattedDate}${daySuffix}, ${formattedStartTime} - ${formattedEndTime}`;
+        return `${formattedDate.replace(/ \d+/, ` ${formattedDay}`)}, ${formattedStartTime} - ${formattedEndTime}`;
     };
-    const isToday = (dateString) => {
+    const formatShortDateAndTime = (appointmentDate, startTime, endTime) => {
+        const [month, day, year] = appointmentDate.split('/');
+        const date = new Date(`${year}-${month}-${day}`);
+
+        const ordinalDay = (d) => {
+            if (d > 3 && d < 21) return `${d}th`; 
+            switch (d % 10) {
+                case 1:
+                    return `${d}st`;
+                case 2:
+                    return `${d}nd`;
+                case 3:
+                    return `${d}rd`;
+                default:
+                    return `${d}th`;
+            }
+        };
+
+        const monthName = date.toLocaleDateString('en-US', { month: 'short' });
+        const formattedDay = ordinalDay(date.getDate());
+
+        const formatTime = (time) => {
+            const [hour, minute] = time.split(':');
+            const date = new Date();
+            date.setHours(hour, minute);
+            return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+        };
+
+        const formattedStartTime = formatTime(startTime);
+        const formattedEndTime = formatTime(endTime);
+
+        return `${monthName} ${formattedDay} . ${formattedStartTime} - ${formattedEndTime}`;
+    };
+
+
+    const isToday = (appointmentDate) => {
+        const [month, day, year] = appointmentDate.split('/');
+        const appointment = new Date(`${year}-${month}-${day}`);
         const today = new Date();
-        const appointmentDate = new Date(dateString); // YYYY-MM-DD format
 
         return (
-            today.getFullYear() === appointmentDate.getFullYear() &&
-            today.getMonth() === appointmentDate.getMonth() &&
-            today.getDate() === appointmentDate.getDate()
+            appointment.getFullYear() === today.getFullYear() &&
+            appointment.getMonth() === today.getMonth() &&
+            appointment.getDate() === today.getDate()
         );
     };
 
-
-    const isFutureDate = (dateString) => {
-        const today = new Date();
-        const date = new Date(dateString);
-        return date > today;
+    const isFutureDate = (appointmentDate) => {
+        const [month, day, year] = appointmentDate.split('/');
+        const appointment = new Date(`${year}-${month}-${day}`);
+        return appointment > new Date();
     };
 
-
-
     return (
+
         <View>
             <Text style={styles.name}>Upcoming Appointment</Text>
             {!loading && appointments.length > 0 ? (
                 appointments.map((appointment, index) => {
-                    const formattedDate = appointment.appointmentDate
-                        .split('/')
-                        .reverse()
-                        .join('-');
-    
+                    const { appointmentDate, appointmentStartTime, appointmentEndTime } = appointment;
+
+
+
                     return (
                         <View key={index}>
                             <View style={styles.rowStyle}>
@@ -132,36 +161,29 @@ const UpcomingAppointmentCard = () => {
                             <Text style={styles.type}>
                                 {`${appointment.appointmentType} . ${appointment.visitType}`}
                             </Text>
-                            {isToday(formattedDate) && (
+                            {isToday(appointmentDate) && (
                                 <Text style={[styles.type, { marginTop: responsiveHeight(1) }]}>
-                                    {`${formatDate(appointment.appointmentDate)} . ${formatTime(
-                                        appointment.appointmentStartTime
-                                    )} - ${formatTime(appointment.appointmentEndTime)}`}
+                                    {formatShortDateAndTime(appointmentDate, appointmentStartTime, appointmentEndTime)}
                                 </Text>
-                            )}
-    
+                     )}
+
                             <TouchableOpacity style={styles.upcomingButton}>
                                 <Text style={styles.upcomingButtonText}>Upcoming</Text>
                             </TouchableOpacity>
-                            {isFutureDate(formattedDate) && (
+                            {isFutureDate(appointmentDate) && (
                                 <View style={styles.calenderView}>
                                     <Text style={styles.calenderViewText}>
-                                        {formatDateAndTime(
-                                            formattedDate,
-                                            appointment.appointmentStartTime,
-                                            appointment.appointmentEndTime
-                                        )}
+                                        {formatDateAndTime(appointmentDate, appointmentStartTime, appointmentEndTime)}
                                     </Text>
-                                </View>
-                            )}
-                            {isToday(formattedDate) && (
+                                </View>   )}
+                     
+                                {isToday(appointmentDate) && (
                                 <TouchableOpacity style={styles.JoinButton}>
                                     <Text style={styles.JoinButtonText}>
                                         {appointment.visitType === 'Virtual' ? 'Join Session' : 'View Map'}
                                     </Text>
                                 </TouchableOpacity>
-                            )}
-    
+                                    )}
                         </View>
                     );
                 })
@@ -172,7 +194,7 @@ const UpcomingAppointmentCard = () => {
             )}
         </View>
     );
-    
+
 };
 
 

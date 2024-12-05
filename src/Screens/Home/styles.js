@@ -46,7 +46,7 @@ borderBottomRightRadius:18
     },
 
     careTeamName: {
-        fontSize: responsiveFontSize(1.2),
+        fontSize: responsiveFontSize(1.1),
         fontFamily: Fonts.Medium600,
         textAlign: 'center',
         color: Colors.white
@@ -86,6 +86,7 @@ borderBottomRightRadius:18
     careTeamBox: {
         paddingTop: responsiveHeight(1),
         paddingBottom: responsiveHeight(0.8),
+        height:responsiveHeight(10.4),
         width: responsiveWidth(23),
         justifyContent: 'center',
         alignItems: 'center',

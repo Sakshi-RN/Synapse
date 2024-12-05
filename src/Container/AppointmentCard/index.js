@@ -33,7 +33,7 @@ const AppointmentCard = ({ appointment }) => {
                 <View>
                     <Text style={styles.name}>Facility Details</Text>
                     <Text style={styles.type}>{appointment?.facility?.facilityName}</Text>
-                    <Text style={styles.type}>{appointment?.facility?.facilityAddress1}Address 1</Text>
+                    <Text style={styles.type}>{appointment?.facility?.facilityAddress1}</Text>
                     <Text style={styles.type}>{appointment?.facility?.facilityCity}</Text>
                     <Text style={styles.type}>{appointment?.facility?.facilityState}{appointment?.facility?.facilityZip}</Text>
                 </View>
