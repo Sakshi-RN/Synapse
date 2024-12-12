@@ -79,7 +79,7 @@ const AppointmentCard = ({ appointment }) => {
                             if (appointment.appointmentStatus === 'upcoming') {
                                 navigation.navigate('JoinSession');
                             } else if (appointment.appointmentStatus === 'completed') {
-                                navigation.navigate('ViewDetails');
+                                navigation.navigate('ViewDetails', { appointment }); 
                             }
                         }}>
                         <Text

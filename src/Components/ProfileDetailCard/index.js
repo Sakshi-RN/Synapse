@@ -4,30 +4,17 @@ import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-nat
 import Colors from '../../Themes/Colors';
 import { Calendar, Time, UpArrow } from '../../Assets/svg';
 
-const ViewDetails = ({
-    name,
-    sessionInfo,
-    status,
-    date,
-    time,
-    details,
-    description,
-    address,
-    addressTitle,
-    image,
-    btnStyle,
-    btnTextColor
-}) => {
+const ViewDetails = ({ route }) => {
+    const { appointment } = route.params; 
     return (
         <View style={styles.careTeamnCard}>
             <View style={styles.row}>
-                <Image source={image} style={styles.icon} />
                 <View style={styles.textContainer}>
-                    <Text style={styles.name}>{name}</Text>
+                    <Text style={styles.name}>Dr. {name}</Text>
                     <Text style={styles.mdText}>{sessionInfo}</Text>
                 </View>
-                <TouchableOpacity style={[styles.btn,btnStyle]}>
-                    <Text style={[styles.btnText,btnTextColor]}>{status}</Text>
+                <TouchableOpacity style={[styles.btn, btnStyle]}>
+                    <Text style={[styles.btnText, btnTextColor]}>{status}</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.blueRow}>
@@ -36,14 +23,9 @@ const ViewDetails = ({
                 <Time />
                 <Text style={styles.timeText}>{time}</Text>
             </View>
-            <View style={styles.timeRow}>
-                <Text style={styles.details}>{details}</Text>
-                <UpArrow />
-            </View>
-            <Text style={styles.description}>{description}</Text>
             {address && (
                 <>
-                    <Text style={[styles.details, { marginVertical: responsiveHeight(0.5) }]}>{addressTitle}</Text>
+                    <Text style={[styles.details]}>{addressTitle}</Text>
                     <Text style={styles.description}>{address}</Text>
                 </>
             )}
@@ -55,33 +37,13 @@ export default ViewDetails;
 
 
 const styles = StyleSheet.create({
-
-    careTeamnCard: {
-        paddingHorizontal: responsiveWidth(3),
-        paddingVertical: responsiveHeight(2),
-        backgroundColor: Colors.white,
-        shadowColor: Platform.OS === 'ios' ? Colors.OFFWHITE : Colors.grey,
-        shadowOffset: {
-            width: 1,
-            height: 1,
-        },
-        shadowOpacity: 3,
-        shadowRadius: 4,
-        elevation: 5,
-        borderRadius: 8,
-        borderWidth: 0.2,
-        borderColor: Colors.OFFWHITE,
-
-
-    },
     icon: {
         width: 50,
         height: 50,
         borderRadius: 25
     },
     textContainer: {
-        marginLeft: responsiveWidth(3),
-        width: responsiveWidth(47),
+        width: responsiveWidth(65)
     },
     name: {
         fontSize: responsiveFontSize(1.8),
@@ -92,14 +54,15 @@ const styles = StyleSheet.create({
         fontSize: responsiveFontSize(1.6),
         fontWeight: '700',
         color: Colors.black,
+        marginTop: responsiveHeight(1.5)
     },
 
     mdText: {
         fontSize: responsiveFontSize(1.2),
         color: Colors.darkgrey,
         fontWeight: '600',
-        width:responsiveWidth(47),
-        marginTop:responsiveHeight(0.5)
+        width: responsiveWidth(47),
+        marginTop: responsiveHeight(0.5)
 
     },
     description: {
@@ -135,12 +98,11 @@ const styles = StyleSheet.create({
     blueRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: Colors.skyblue,
+        backgroundColor: '#E4EEF1',
         paddingVertical: responsiveHeight(1),
         paddingHorizontal: responsiveWidth(3),
         marginTop: responsiveHeight(1.5),
-        borderRadius: 6,
-
+        borderRadius: 6
     },
     timeText: {
         fontSize: responsiveFontSize(1.2),

@@ -59,6 +59,8 @@ const Appointment = () => {
 
     }, []);
 
+   
+
     const renderAppointmentCard = ({ item }) => <AppointmentCard appointment={item} />;
 
     if (loading) {

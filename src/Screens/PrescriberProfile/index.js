@@ -18,14 +18,13 @@ const PrescriberProfile = () => {
   const [loading, setLoading] = useState(true);
   const tabs = ['About Me', 'Location'];
   const route = useRoute();
-  const { providerID, facilityId } = route.params;
+  const { providerID, facilityID } = route.params;
 
   useEffect(() => {
     const fetchProviderData = async () => {
       try {
         const response = await fetch(
-          // `https://eb1.taramind.com/provider/details?providerId=${providerID}&facilityId=${facilityId}`,
-          'https://eb1.taramind.com/provider/publicProfile?providerId=cd71e5f2-c73d-4e30-9fbf-f20adf54de0e&facilityId=64149d0a-c9e6-4761-b31a-d553d76ef6eb',
+          `https://eb1.taramind.com/provider/publicProfile?providerId=${providerID}&facilityId=${facilityID}`,
           {
             method: 'GET',
             headers: {
@@ -120,7 +119,7 @@ const AboutmeTab = ({ providerData }) => (
 const LocationTab = ({ providerData }) => (
   <>
     <Text style={[styles.specialitiesText, { marginTop: 0 }]}>Practice Place</Text>
-    <Text style={styles.description}>{providerData?.address1} {providerData?.address2} {providerData?.facilityCity} {providerData?.facilityState} {providerData?.facilityZip} {providerData?.facilityCountry}</Text>
+    <Text style={styles.description}>{providerData?.address1}{' '}{providerData?.address2}{' '}{providerData?.facilityCity}{' '}{providerData?.facilityState}{' '}{providerData?.facilityZip}{' '}{providerData?.facilityCountry}</Text>
     <MapView style={styles.map} />
   </>
 );
@@ -234,7 +233,8 @@ const styles = StyleSheet.create({
     color: Colors.newgrey,
     marginTop: responsiveHeight(0.5),
     fontFamily: Fonts.Medium600,
-    width: responsiveWidth(87)
+    width: responsiveWidth(87),
+
   },
   virtualTYext: {
     fontSize: responsiveFontSize(1.5),

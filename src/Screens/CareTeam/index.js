@@ -41,12 +41,12 @@ const CareTeam = () => {
   }
   const handleTherapistProfile = () => {
     setModalVisible(false);
-    navigation.navigate('PrescriberProfile', { providerID: profile?.therapist?.providerID, facilityId: profile?.therapist?.facilityId });
+    navigation.navigate('PrescriberProfile', { providerID: profile?.therapist?.providerID, facilityID: profile?.therapist?.facilityID });
   };
 
   const handlePrescriberProfile = () => {
     setModalVisible(false);
-    navigation.navigate('PrescriberProfile', { providerID: profile?.prescriber?.providerID, facilityId: profile?.prescriber?.facilityId });
+    navigation.navigate('PrescriberProfile', { providerID: profile?.prescriber?.providerID, facilityID: profile?.prescriber?.facilityID });
   };
 
 

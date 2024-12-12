@@ -56,11 +56,11 @@ const HomeScreen = () => {
         navigation.navigate('ConsentForm');
     }
     const handleTherapistProfile = () => {
-        navigation.navigate('PrescriberProfile', { providerID: profile?.therapist?.providerID, facilityId: profile?.therapist?.facilityId });
+        navigation.navigate('PrescriberProfile', { providerID: profile?.therapist?.providerID, facilityID: profile?.therapist?.facilityID });
     };
 
     const handlePrescriberProfile = () => {
-        navigation.navigate('PrescriberProfile', { providerID: profile?.prescriber?.providerID, facilityId: profile?.prescriber?.facilityId });
+        navigation.navigate('PrescriberProfile', { providerID: profile?.prescriber?.providerID, facilityID: profile?.prescriber?.facilityID });
     };
 
     const renderHeader = () => {

@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
@@ -29,7 +29,7 @@ const PHQDetails = ({ navigation }) => {
         },
         body: JSON.stringify({
           clientId: 'a3ed224c-48d9-11ef-9c86-02f35b8058b3',
-        clientAssessmentDetailsPrimaryId: "8045a3c4-7ca6-11ef-9c86-02f35b8058b3"
+          clientAssessmentDetailsPrimaryId: "8045a3c4-7ca6-11ef-9c86-02f35b8058b3"
         }),
       });
       if (!response.ok) {
