@@ -5,16 +5,18 @@ import { useRoute } from '@react-navigation/native';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
-import { Chat, MeetIcon, MapView } from '../../Assets/svg';
+import { Chat, MeetIcon } from '../../Assets/svg';
 import Loader from '../../Components/Loader';
 import images from '../../Themes/Images';
 import { Fonts } from '../../Themes/fonts';
 import commonStyles from '../../Components/CommonStyle';
-import MapComponent from '../../Components/MapComponent'
+import MapView, { Marker } from 'react-native-maps';
+import * as Location from 'expo-location';
 
 const PrescriberProfile = () => {
   const [activeTab, setActiveTab] = useState('About Me');
   const [providerData, setProviderData] = useState(null);
+  const [currentLocation, setCurrentLocation] = useState(null);
   const [loading, setLoading] = useState(true);
   const tabs = ['About Me', 'Location'];
   const route = useRoute();
@@ -33,6 +35,7 @@ const PrescriberProfile = () => {
           }
         );
         const data = await response.json();
+  
         setProviderData(data[0]);
       } catch (error) {
         console.error('Error fetching provider data:', error);
@@ -43,6 +46,23 @@ const PrescriberProfile = () => {
     fetchProviderData();
   }, []);
 
+
+  useEffect(() => {
+    const requestLocationPermission = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setCurrentLocation({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      });
+    };
+
+    requestLocationPermission();
+  }, []);
   const renderContent = () => {
     if (activeTab === 'About Me') {
       return <AboutmeTab providerData={providerData} />;
@@ -118,13 +138,65 @@ const AboutmeTab = ({ providerData }) => (
   </>
 );
 
-const LocationTab = ({ providerData }) => (
-  <View style={{ bottom: responsiveHeight(2) }}>
-    <Text style={[styles.specialitiesText, { marginTop: 0, }]}>Practice Place</Text>
-    <Text style={styles.description}>{providerData?.address1}{' '}{providerData?.address2}{' '}{providerData?.facilityCity}{' '}{providerData?.facilityState}{' '}{providerData?.facilityZip}{' '}{providerData?.facilityCountry}</Text>
-    <MapComponent />
-  </View>
-);
+const LocationTab = ({ providerData, currentLocation }) => {
+  const parseGeoPoint = (geoPoint) => {
+    if (!geoPoint) return null;
+    const match = geoPoint.match(/POINT\s*\(([-\d.]+)\s+([-\d.]+)\)/);
+    if (match) {
+        return {
+            longitude: parseFloat(match[1]),
+            latitude: parseFloat(match[2]),
+        };
+    }
+    return null;
+};
+
+const coordinates = parseGeoPoint(providerData?.geo_point);
+
+  return (
+    <View style={{ bottom: responsiveHeight(2) }}>
+      <Text style={[styles.specialitiesText, { marginTop: 0 }]}>Practice Place</Text>
+      <Text style={styles.description}>
+        {providerData?.address1}{' '}
+        {providerData?.address2}{' '}
+        {providerData?.facilityCity}{' '}
+        {providerData?.facilityState}{' '}
+        {providerData?.facilityZip}{' '}
+        {providerData?.facilityCountry}
+      </Text>
+      {coordinates || currentLocation ? (
+                <MapView
+                    style={styles.map}
+                    initialRegion={{
+                        latitude: coordinates?.latitude || currentLocation?.latitude || 0,
+                        longitude: coordinates?.longitude || currentLocation?.longitude || 0,
+                        latitudeDelta: 0.01,
+                        longitudeDelta: 0.01,
+                    }}
+                >
+                    {coordinates && (
+                        <Marker
+                            coordinate={coordinates}
+                            title={providerData?.facilityName || "Facility Location"}
+                            description={providerData?.facilityCity || "City"}
+                            pinColor="red"
+                        />
+                    )}
+                    {currentLocation && (
+                        <Marker
+                            coordinate={currentLocation}
+                            title="Your Location"
+                            description="This is where you are"
+                            pinColor="blue"
+                        />
+                    )}
+                </MapView>
+            ) : (
+                <Text style={styles.errorText}>Location data not available</Text>
+            )}
+        </View>
+  );
+};
 
 export default PrescriberProfile;
 
@@ -139,7 +211,6 @@ const styles = StyleSheet.create({
     marginTop: responsiveHeight(1),
     height: 1,
     backgroundColor: Colors.lightgrey,
-
   },
 
   name: {
@@ -262,6 +333,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: responsiveHeight(2)
-  }
+  },
+  map: {
+    width: '100%',
+    height: responsiveWidth(90),
+    marginTop: responsiveHeight(2),
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 
 });
