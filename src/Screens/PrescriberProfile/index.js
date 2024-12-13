@@ -10,7 +10,7 @@ import Loader from '../../Components/Loader';
 import images from '../../Themes/Images';
 import { Fonts } from '../../Themes/fonts';
 import commonStyles from '../../Components/CommonStyle';
-
+import MapComponent from '../../Components/MapComponent'
 
 const PrescriberProfile = () => {
   const [activeTab, setActiveTab] = useState('About Me');
@@ -77,7 +77,9 @@ const PrescriberProfile = () => {
   return (
     <View style={styles.container}>
       <CustomHeader title="Prescriber Profile" />
-      <ScrollView showsVerticalScrollIndicator={false} style={[commonStyles.newConatiner, { paddingHorizontal: responsiveWidth(4) }]}>
+      <ScrollView showsVerticalScrollIndicator={false} style={[commonStyles.newConatiner, {
+        paddingHorizontal: responsiveWidth(4),
+      }]}>
         <View style={styles.newRow}>
           <Text style={styles.name}>{providerData?.firstName} {providerData?.lastName}</Text>
           <Chat />
@@ -117,11 +119,11 @@ const AboutmeTab = ({ providerData }) => (
 );
 
 const LocationTab = ({ providerData }) => (
-  <>
-    <Text style={[styles.specialitiesText, { marginTop: 0 }]}>Practice Place</Text>
+  <View style={{ bottom: responsiveHeight(2) }}>
+    <Text style={[styles.specialitiesText, { marginTop: 0, }]}>Practice Place</Text>
     <Text style={styles.description}>{providerData?.address1}{' '}{providerData?.address2}{' '}{providerData?.facilityCity}{' '}{providerData?.facilityState}{' '}{providerData?.facilityZip}{' '}{providerData?.facilityCountry}</Text>
-    <MapView style={styles.map} />
-  </>
+    <MapComponent />
+  </View>
 );
 
 export default PrescriberProfile;

@@ -7,6 +7,7 @@ import { Calendar, Time } from '../../Assets/svg';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import { useRoute } from '@react-navigation/native';
 import moment from 'moment';
+import MapComponent from '../../Components/MapComponent'
 
 const ViewDetails = () => {
   const route = useRoute();
@@ -43,7 +44,7 @@ const ViewDetails = () => {
           <Text style={[styles.details]}>Address</Text>
           <Text style={styles.description}>{appointment?.facility?.facilityAddress1} {appointment?.facility?.facilityCity} {appointment?.facility?.facilityState} {appointment?.facility?.facilityZip}</Text>
         </View>
-        <MapView style={styles.map} />
+        <MapComponent />
         {/* <CustomButton
         buttonStyle={styles.Button}
         title={'Do you need a ride?'} /> */}
@@ -67,9 +68,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: responsiveWidth(8)
   },
 
-  map: {
-    marginTop: responsiveHeight(2),
-  },
+
 
   contentPadding: {
     paddingHorizontal: responsiveWidth(4),

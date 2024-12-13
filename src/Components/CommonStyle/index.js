@@ -43,11 +43,13 @@ const commonStyles = StyleSheet.create({
 
   },
 
-  newConatiner:  {flex:1, 
+  newConatiner:  {
+    flex:1, 
     backgroundColor:Colors.white ,
    marginTop:responsiveHeight(2.8),
    marginHorizontal:responsiveWidth(3),
-   borderRadius:9
+   borderRadius:9,
+
 
 }
 

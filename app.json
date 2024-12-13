@@ -28,9 +28,13 @@
       ]
     ],
     "ios": {
+      "bundleIdentifier": "com.shertechinfo.synapse",
       "supportsTablet": true,
       "infoPlist": {
         "NSFaceIDUsageDescription": "This app uses Face ID for authentication to enhance security."
+      },
+      "config": {
+        "googleMapsApiKey": "AIzaSyDHyIjrBQeMHueccXbdOK2gX3XYGmEo6N4"
       }
     },
     "android": {
@@ -41,10 +45,20 @@
       "permissions": [
         "USE_BIOMETRIC"
       ],
-      "package": "com.sakshi_rn_dev.Synapse"
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDHyIjrBQeMHueccXbdOK2gX3XYGmEo6N4"
+        }
+       
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "4dd3cb60-30b5-444b-b91a-b4e98badf5d7"
+      }
     }
   }
 }
