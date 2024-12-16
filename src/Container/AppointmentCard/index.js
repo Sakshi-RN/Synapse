@@ -43,7 +43,7 @@ const AppointmentCard = ({ appointment }) => {
                     <Text style={styles.nameNewText}>Time</Text>
                     <Text style={[styles.secondText]}>{formattedTime}</Text>
                     <Text style={styles.nameNewText}>Type</Text>
-                    <Text style={styles.secondText}>Virtual</Text>
+                    <Text style={styles.secondText}>{appointment?.visitType}</Text>
                 </View>
             </View>
 

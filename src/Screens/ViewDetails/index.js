@@ -1,22 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView, Platform, Text, TouchableOpacity } from 'react-native';
 import Colors from '../../Themes/Colors';
 import CustomHeader from '../../Components/CustomHeader';
-import { MapView } from '../../Assets/svg';
 import { Calendar, Time } from '../../Assets/svg';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import { useRoute } from '@react-navigation/native';
 import moment from 'moment';
-import MapComponent from '../../Components/MapComponent'
+import MapView, { Marker } from 'react-native-maps';
+import * as Location from 'expo-location';
 
 const ViewDetails = () => {
   const route = useRoute();
   const { appointment } = route.params; 
-
+  const [currentLocation, setCurrentLocation] = useState(null);
   const formattedStartTime = moment(appointment.appointmentStartTime, 'HH:mm:ss').format('h:mm A');
   const formattedEndTime = moment(appointment.appointmentEndTime, 'HH:mm:ss').format('h:mm A');
   const formattedTime = `${formattedStartTime} - ${formattedEndTime}`;
   const formattedDate = moment(appointment.appointmentDate, 'MM/DD/YYYY', true).format('dddd, MMMM DD');
+
+  const parseGeoPoint = (geoPoint) => {
+    if (!geoPoint) return null;
+    const match = geoPoint.match(/POINT\s*\(([-\d.]+)\s+([-\d.]+)\)/);
+    if (match) {
+        return {
+            longitude: parseFloat(match[1]),
+            latitude: parseFloat(match[2]),
+        };
+    }
+    return null;
+};
+
+const coordinates = parseGeoPoint(appointment?.facility?.facilityGeoPoint);
 
 
   return (
@@ -44,7 +58,37 @@ const ViewDetails = () => {
           <Text style={[styles.details]}>Address</Text>
           <Text style={styles.description}>{appointment?.facility?.facilityAddress1} {appointment?.facility?.facilityCity} {appointment?.facility?.facilityState} {appointment?.facility?.facilityZip}</Text>
         </View>
-        <MapComponent />
+
+        {coordinates || currentLocation ? (
+                <MapView
+                    style={styles.map}
+                    initialRegion={{
+                        latitude: coordinates?.latitude || currentLocation?.latitude || 0,
+                        longitude: coordinates?.longitude || currentLocation?.longitude || 0,
+                        latitudeDelta: 0.01,
+                        longitudeDelta: 0.01,
+                    }}
+                >
+                    {coordinates && (
+                        <Marker
+                            coordinate={coordinates}
+                            title={appointment?.facility?.facilityName || "Facility Location"}
+                            description={appointment?.facility?.facilityCity || "City"}
+                            pinColor="red"
+                        />
+                    )}
+                    {currentLocation && (
+                        <Marker
+                            coordinate={currentLocation}
+                            title="Your Location"
+                            description="This is where you are"
+                            pinColor="blue"
+                        />
+                    )}
+                </MapView>
+            ) : (
+                <Text style={styles.errorText}>Location data not available</Text>
+            )}
         {/* <CustomButton
         buttonStyle={styles.Button}
         title={'Do you need a ride?'} /> */}
@@ -163,7 +207,16 @@ const styles = StyleSheet.create({
     width: responsiveWidth(38),
     marginLeft: responsiveWidth(2),
 
-  }
-
+  },
+  map: {
+    width: '100%',
+    height: responsiveWidth(90),
+    marginTop: responsiveHeight(2),
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 
 });

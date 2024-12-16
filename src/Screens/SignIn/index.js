@@ -50,7 +50,7 @@ const SignIn = () => {
                 if (clientID) {
                     await AsyncStorage.setItem('authclientID', clientID);
                     const id =await AsyncStorage.getItem('authclientID')
-                    Alert.alert('Success', 'Logged in Successfully');
+                    Alert.alert('Success', 'Logged in Successfully.');
                     navigation.dispatch(
                         CommonActions.reset({
                             index: 0,

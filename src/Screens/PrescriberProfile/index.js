@@ -35,7 +35,7 @@ const PrescriberProfile = () => {
           }
         );
         const data = await response.json();
-  
+
         setProviderData(data[0]);
       } catch (error) {
         console.error('Error fetching provider data:', error);
@@ -96,7 +96,7 @@ const PrescriberProfile = () => {
 
   return (
     <View style={styles.container}>
-      <CustomHeader title="Prescriber Profile" />
+      <CustomHeader title={providerData?.providerType === 'therapist' ? 'Therapist Profile' : 'Prescriber Profile'} />
       <ScrollView showsVerticalScrollIndicator={false} style={[commonStyles.newConatiner, {
         paddingHorizontal: responsiveWidth(4),
       }]}>
@@ -143,15 +143,15 @@ const LocationTab = ({ providerData, currentLocation }) => {
     if (!geoPoint) return null;
     const match = geoPoint.match(/POINT\s*\(([-\d.]+)\s+([-\d.]+)\)/);
     if (match) {
-        return {
-            longitude: parseFloat(match[1]),
-            latitude: parseFloat(match[2]),
-        };
+      return {
+        longitude: parseFloat(match[1]),
+        latitude: parseFloat(match[2]),
+      };
     }
     return null;
-};
+  };
 
-const coordinates = parseGeoPoint(providerData?.geo_point);
+  const coordinates = parseGeoPoint(providerData?.geo_point);
 
   return (
     <View style={{ bottom: responsiveHeight(2) }}>
@@ -165,36 +165,36 @@ const coordinates = parseGeoPoint(providerData?.geo_point);
         {providerData?.facilityCountry}
       </Text>
       {coordinates || currentLocation ? (
-                <MapView
-                    style={styles.map}
-                    initialRegion={{
-                        latitude: coordinates?.latitude || currentLocation?.latitude || 0,
-                        longitude: coordinates?.longitude || currentLocation?.longitude || 0,
-                        latitudeDelta: 0.01,
-                        longitudeDelta: 0.01,
-                    }}
-                >
-                    {coordinates && (
-                        <Marker
-                            coordinate={coordinates}
-                            title={providerData?.facilityName || "Facility Location"}
-                            description={providerData?.facilityCity || "City"}
-                            pinColor="red"
-                        />
-                    )}
-                    {currentLocation && (
-                        <Marker
-                            coordinate={currentLocation}
-                            title="Your Location"
-                            description="This is where you are"
-                            pinColor="blue"
-                        />
-                    )}
-                </MapView>
-            ) : (
-                <Text style={styles.errorText}>Location data not available</Text>
-            )}
-        </View>
+        <MapView
+          style={styles.map}
+          initialRegion={{
+            latitude: coordinates?.latitude || currentLocation?.latitude || 0,
+            longitude: coordinates?.longitude || currentLocation?.longitude || 0,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
+          }}
+        >
+          {coordinates && (
+            <Marker
+              coordinate={coordinates}
+              title={providerData?.facilityName || "Facility Location"}
+              description={providerData?.facilityCity || "City"}
+              pinColor="red"
+            />
+          )}
+          {currentLocation && (
+            <Marker
+              coordinate={currentLocation}
+              title="Your Location"
+              description="This is where you are"
+              pinColor="blue"
+            />
+          )}
+        </MapView>
+      ) : (
+        <Text style={styles.errorText}>Location data not available</Text>
+      )}
+    </View>
   );
 };
 

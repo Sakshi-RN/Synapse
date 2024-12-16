@@ -21,6 +21,8 @@ const CareTeam = () => {
 
 
   const profile = data && data[0];
+console.log("@@@respinsse",profile)
+
   const openModal = (item) => {
     setSelectedItem(item);
     setModalVisible(true);
@@ -74,6 +76,7 @@ const CareTeam = () => {
             <View style={styles.textContainer}>
               <Text style={styles.title}>{profile?.therapist?.providerName || 'Therapist'}</Text>
               <Text style={styles.description}>{profile?.therapist?.designation?.join(', ')}</Text>
+              <Text style={styles.description}>{profile?.therapist?.speciality?.join(', ')}</Text>
               <View style={styles.cancelbtnRow}>
                 <CustomButton
                   onPress={handleTherapistProfile}
