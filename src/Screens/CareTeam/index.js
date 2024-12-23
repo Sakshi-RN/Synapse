@@ -21,7 +21,6 @@ const CareTeam = () => {
 
 
   const profile = data && data[0];
-console.log("@@@respinsse",profile)
 
   const openModal = (item) => {
     setSelectedItem(item);

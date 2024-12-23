@@ -34,8 +34,6 @@ const HomeScreen = () => {
 
 
 
-
-
     const handleAppointment = () => {
         navigation.navigate('AppointmentStack');
     }
