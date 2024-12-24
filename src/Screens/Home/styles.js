@@ -97,10 +97,12 @@ borderBottomRightRadius:18
         shadowOpacity: 1,
         shadowRadius: 2,
         elevation: 5,
-        marginHorizontal:responsiveWidth(2.5)
+        marginHorizontal:responsiveWidth(2.5),
+        borderBottomColor:Colors.Dark_Orange,
+        borderBottomWidth:2
     },
     conciregeView:{
-        marginHorizontal:responsiveWidth(2)
+        marginHorizontal:responsiveWidth(2),
     },
 
     commonContainer: {

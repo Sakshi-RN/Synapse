@@ -1,5 +1,5 @@
 
-import { StyleSheet } from 'react-native';
+import { StyleSheet,Platform} from 'react-native';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import Colors from '../../Themes/Colors';
 import { Fonts } from '../../Themes/fonts';
@@ -68,6 +68,18 @@ const styles = StyleSheet.create({
         color: Colors.blue,
         alignSelf: 'center',
         marginVertical: responsiveHeight(2)
+    },
+    commonContainer: {
+        backgroundColor: Colors.white,
+        paddingVertical: responsiveHeight(1.2),
+        paddingHorizontal: responsiveWidth(2.9),
+        borderRadius: 10,
+        marginTop: responsiveHeight(1.5),
+        shadowColor: Platform.OS === 'ios' ? Colors.OFFWHITE : Colors.black,
+        shadowOffset: { width: 2, height: 2 },
+        shadowOpacity: 1,
+        shadowRadius: 2,
+        elevation: 5,
     }
 
 });

@@ -107,22 +107,22 @@ const HomeScreen = () => {
         return (
 
             <View style={styles.careTeamRow}>
- {profile?.therapist && (
-                <TouchableOpacity style={styles.careTeamBox} onPress={handleTherapistProfile}>
-                    <TherapistIcn />
-                    <Text style={styles.nameNewStyle}>THERAPIST</Text>
-                    <Text style={styles.careTeamName}>{profile?.therapist?.providerName}</Text>
-                    <Text style={[styles.careTeamRole]}>{profile?.therapist?.designation?.join(', ')}</Text>
-                </TouchableOpacity> )}
+                {profile?.therapist && (
+                    <TouchableOpacity style={styles.careTeamBox} onPress={handleTherapistProfile}>
+                        <TherapistIcn />
+                        <Text style={styles.nameNewStyle}>THERAPIST</Text>
+                        <Text style={styles.careTeamName}>{profile?.therapist?.providerName}</Text>
+                        <Text style={[styles.careTeamRole]}>{profile?.therapist?.designation?.join(', ')}</Text>
+                    </TouchableOpacity>)}
                 {profile?.prescriber && (
-                <TouchableOpacity style={styles.careTeamBox} onPress={handlePrescriberProfile}>
-                    <PrescriberIcn />
-                    <Text style={styles.nameNewStyle}>PRESCRIBER</Text>
-                    <Text style={styles.careTeamName}>{profile?.prescriber?.providerName}</Text>
-                    <Text style={[styles.careTeamRole]}>{profile?.prescriber?.designation?.join(', ')}</Text>
-                </TouchableOpacity>)}
+                    <TouchableOpacity style={styles.careTeamBox} onPress={handlePrescriberProfile}>
+                        <PrescriberIcn />
+                        <Text style={styles.nameNewStyle}>PRESCRIBER</Text>
+                        <Text style={styles.careTeamName}>{profile?.prescriber?.providerName}</Text>
+                        <Text style={[styles.careTeamRole]}>{profile?.prescriber?.designation?.join(', ')}</Text>
+                    </TouchableOpacity>)}
                 <View style={styles.conciregeView}>
-                    <ConceirgeIcn />
+                    <ConceirgeIcn/>
                 </View>
 
             </View>
@@ -137,9 +137,7 @@ const HomeScreen = () => {
             <ScrollView style={styles.scrollContent} showsVerticalScrollIndicator={false}>
                 {/* <Text style={styles.reportsTitle}>Process</Text>
                 {processContainer()} */}
-                   <View style={styles.commonContainer}>
-                    <UpcomingAppointmentCard/>
-                   </View>
+                    <UpcomingAppointmentCard />
                 <View style={styles.commonContainer}>
                     <Text style={styles.reportsTitle}>My Care Team</Text>
                     {flatlistView()}
@@ -148,13 +146,13 @@ const HomeScreen = () => {
                     <Text style={styles.reportsTitle}>Other Action</Text>
                     {actionConatiner()}
                 </View>
-                </ScrollView>
-                {/* <Text style={{  fontFamily: Fonts.RegularFigtree500 }}>regular</Text>
+            </ScrollView>
+            {/* <Text style={{  fontFamily: Fonts.RegularFigtree500 }}>regular</Text>
             <Text style={{  fontFamily: Fonts.Light400 }}>light</Text>
             <Text style={{  fontFamily: Fonts.Bold800 }}>bold</Text>
             <Text style={{  fontFamily: Fonts.Medium600 }}>medium</Text>
             <Text style={{  fontFamily: Fonts.Semibold700 }}>semibold</Text> */}
-   
+
         </View>
     );
 };

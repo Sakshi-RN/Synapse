@@ -4,6 +4,7 @@ import { responsiveHeight } from 'react-native-responsive-dimensions';
 import { Location, MeetIcon } from '../../Assets/svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './styles';
+import { DateTime } from 'luxon';
 
 const UpcomingAppointmentCard = () => {
     const [appointments, setAppointments] = useState([]);
@@ -49,22 +50,36 @@ const UpcomingAppointmentCard = () => {
             setLoading(false);
         }
     };
+    const getAppointmentStatus = (appointmentDate, timezone) => {
+        const now = new Date();
+        const currentDate = new Intl.DateTimeFormat('en-US', {
+            timeZone: timezone,
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+        }).format(now);
 
-    const getAppointmentStatus = (appointmentDate) => {
-        const currentDate = new Date();
-        currentDate.setHours(0, 0, 0, 0);
+        console.log(`Current date in timezone (${timezone}): ${currentDate}`);
 
         const [month, day, year] = appointmentDate.split('/');
-        const appointmentDateTime = new Date(year, month - 1, day);
-        appointmentDateTime.setHours(0, 0, 0, 0);
+        const appointmentDateTime = new Date(`${year}-${month}-${day}`);
+        console.log(`Appointment date: ${appointmentDateTime}`);
 
-        if (appointmentDateTime.getTime() === currentDate.getTime()) {
+        const [currentMonth, currentDay, currentYear] = currentDate.split('/');
+        const currentDateTime = new Date(`${currentYear}-${currentMonth}-${currentDay}`);
+        console.log(`Current datetime object: ${currentDateTime}`);
+
+        if (appointmentDateTime.getTime() === currentDateTime.getTime()) {
+            console.log('Status: today');
             return 'today';
-        } else if (appointmentDateTime > currentDate) {
+        } else if (appointmentDateTime > currentDateTime) {
+            console.log('Status: future');
             return 'future';
         }
+        console.log('Status: past');
         return 'past';
     };
+
 
     const ordinalDay = (d) => {
         if (d > 3 && d < 21) return `${d}th`;
@@ -80,112 +95,91 @@ const UpcomingAppointmentCard = () => {
         }
     };
 
-    const formatDateAndTime = (appointmentDate, startTime, endTime) => {
-        const [month, day, year] = appointmentDate.split('/');
-        const date = new Date(year, month - 1, day);
+    const formatDateAndTime = (appointmentDate, startTime, endTime, timezone) => {
+        // Combine date and time to create Luxon DateTime objects
+        const appointmentStart = DateTime.fromFormat(
+            `${appointmentDate} ${startTime}`,
+            'MM/dd/yyyy HH:mm',
+            { zone: timezone }
+        );
+        const appointmentEnd = DateTime.fromFormat(
+            `${appointmentDate} ${endTime}`,
+            'MM/dd/yyyy HH:mm',
+            { zone: timezone }
+        );
 
-        const formattedDate = date.toLocaleDateString('en-US', {
+        const formattedDate = appointmentStart.toLocaleString({
             weekday: 'short',
             month: 'short',
             day: 'numeric',
         });
 
-        const formattedDay = ordinalDay(date.getDate());
+        const formattedDay = ordinalDay(appointmentStart.day);
 
-        const formatTime = (time) => {
-            const [hour, minute] = time.split(':');
-            const timeDate = new Date();
-            timeDate.setHours(parseInt(hour), parseInt(minute));
-            return timeDate.toLocaleTimeString('en-US', { 
-                hour: 'numeric', 
-                minute: 'numeric', 
-                hour12: true 
-            });
-        };
-
-        const formattedStartTime = formatTime(startTime);
-        const formattedEndTime = formatTime(endTime);
+        const formattedStartTime = appointmentStart.toLocaleString(DateTime.TIME_SIMPLE);
+        const formattedEndTime = appointmentEnd.toLocaleString(DateTime.TIME_SIMPLE);
 
         return `${formattedDate.replace(/ \d+/, ` ${formattedDay}`)}, ${formattedStartTime} - ${formattedEndTime}`;
     };
 
-    const formatShortDateAndTime = (appointmentDate, startTime, endTime) => {
-        const [month, day, year] = appointmentDate.split('/');
-        const date = new Date(year, month - 1, day);
-
-        const monthName = date.toLocaleDateString('en-US', { month: 'short' });
-        const formattedDay = ordinalDay(date.getDate());
-
-        const formatTime = (time) => {
-            const [hour, minute] = time.split(':');
-            const timeDate = new Date();
-            timeDate.setHours(parseInt(hour), parseInt(minute));
-            return timeDate.toLocaleTimeString('en-US', { 
-                hour: 'numeric', 
-                minute: 'numeric', 
-                hour12: true 
-            });
-        };
-
-        const formattedStartTime = formatTime(startTime);
-        const formattedEndTime = formatTime(endTime);
-
-        return `${monthName} ${formattedDay} · ${formattedStartTime} - ${formattedEndTime}`;
-    };
 
     return (
         <View>
-            <Text style={styles.name}>Upcoming Appointment</Text>
-            {loading ? (
-                <Text>Loading...</Text>
-            ) : error ? (
-                <Text style={styles.noAppointmenets}>{error}</Text>
-            ) : (
-                appointments.map((appointment, index) => {
-                    const status = getAppointmentStatus(appointment.appointmentDate);
-                    const { appointmentDate, appointmentStartTime, appointmentEndTime } = appointment;
+        {appointments.length === 0 ? null : (
+   <View style={styles.commonContainer}>
+                <Text style={styles.name}>Upcoming Appointment</Text>
+                {loading ? (
+                    <Text>Loading...</Text>
+                ) : error ? (
+                    <Text style={styles.noAppointmenets}>{error}</Text>
+                ) : (
+                    appointments.map((appointment, index) => {
+                        const status = getAppointmentStatus(appointment.appointmentDate, appointment.timezone);
+                        const { appointmentDate, appointmentStartTime, appointmentEndTime, timezone, providerTimezoneAbbr } = appointment;
 
-                    return (
-                        <View key={index}>
-                            <View style={styles.rowStyle}>
-                                <Text style={styles.name}>{appointment.providerName}</Text>
-                                {appointment.visitType === 'Virtual' ? <MeetIcon /> : <Location />}
-                            </View>
-
-                            <Text style={styles.type}>
-                                {`${appointment.appointmentType} · ${appointment.visitType}`}
-                            </Text>
-
-                            {status === 'today' && (
-                                <Text style={[styles.type, { marginTop: responsiveHeight(1) }]}>
-                                    {formatShortDateAndTime(appointmentDate, appointmentStartTime, appointmentEndTime)}
-                                </Text>
-                            )}
-
-                            <TouchableOpacity style={styles.upcomingButton}>
-                                <Text style={styles.upcomingButtonText}>Upcoming</Text>
-                            </TouchableOpacity>
-
-                            {status === 'future' && (
-                                <View style={styles.calenderView}>
-                                    <Text style={styles.calenderViewText}>
-                                        {formatDateAndTime(appointmentDate, appointmentStartTime, appointmentEndTime)}
-                                    </Text>
+                        return (
+                            <View key={index}>
+                                <View style={styles.rowStyle}>
+                                    <Text style={styles.name}>{appointment.providerName}</Text>
+                                    {appointment.visitType === 'Virtual' ? <MeetIcon /> : <Location />}
                                 </View>
-                            )}
 
-                            {status === 'today' && (
-                                <TouchableOpacity style={styles.JoinButton}>
-                                    <Text style={styles.JoinButtonText}>
-                                        {appointment.visitType === 'Virtual' ? 'Join Session' : 'View Map'}
+                                <Text style={styles.type}>
+                                    {`${appointment.appointmentType} · ${appointment.visitType}`}
+                                </Text>
+
+                                {status === 'today' && (
+                                    <Text style={[styles.type, { marginTop: responsiveHeight(1) }]}>
+                                        {formatDateAndTime(appointmentDate, appointmentStartTime, appointmentEndTime, timezone)}{' '}({appointment.providerTimezoneAbbr})
                                     </Text>
+                                )}
+
+                                <TouchableOpacity style={styles.upcomingButton}>
+                                    <Text style={styles.upcomingButtonText}>Upcoming</Text>
                                 </TouchableOpacity>
-                            )}
-                        </View>
-                    );
-                })
-            )}
-        </View>
+
+                                {status === 'future' && (
+                                    <View style={styles.calenderView}>
+                                        <Text style={styles.calenderViewText}>
+                                            {formatDateAndTime(appointmentDate, appointmentStartTime, appointmentEndTime, timezone)}{' '}({appointment.providerTimezoneAbbr})
+                                        </Text>
+                                    </View>
+                                )}
+
+                                {status === 'today' && (
+                                    <TouchableOpacity style={styles.JoinButton}>
+                                        <Text style={styles.JoinButtonText}>
+                                            {appointment.visitType === 'Virtual' ? 'Join Session' : 'View Map'}
+                                        </Text>
+                                    </TouchableOpacity>
+                                )}
+                            </View>
+                        );
+                    })
+                )}
+           </View>
+        )}
+    </View>
     );
 };
 
