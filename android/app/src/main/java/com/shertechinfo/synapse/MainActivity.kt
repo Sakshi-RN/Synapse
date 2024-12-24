@@ -1,4 +1,4 @@
-package com.sakshi_rn_dev.Synapse
+package com.shertechinfo.synapse
 
 import android.os.Build
 import android.os.Bundle

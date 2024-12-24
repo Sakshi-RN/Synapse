@@ -86,9 +86,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.sakshi_rn_dev.Synapse'
+    namespace 'com.shertechinfo.synapse'
     defaultConfig {
-        applicationId 'com.sakshi_rn_dev.Synapse'
+        applicationId 'com.shertechinfo.synapse'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

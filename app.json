@@ -43,14 +43,15 @@
         "backgroundColor": "#ffffff"
       },
       "permissions": [
+        "USE_BIOMETRIC",
         "USE_BIOMETRIC"
       ],
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyDHyIjrBQeMHueccXbdOK2gX3XYGmEo6N4"
         }
-       
-      }
+      },
+      "package": "com.shertechinfo.synapse"
     },
     "web": {
       "favicon": "./assets/favicon.png"
