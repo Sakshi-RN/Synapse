@@ -59,24 +59,21 @@ const UpcomingAppointmentCard = () => {
             day: '2-digit',
         }).format(now);
 
-        console.log(`Current date in timezone (${timezone}): ${currentDate}`);
 
         const [month, day, year] = appointmentDate.split('/');
         const appointmentDateTime = new Date(`${year}-${month}-${day}`);
-        console.log(`Appointment date: ${appointmentDateTime}`);
 
         const [currentMonth, currentDay, currentYear] = currentDate.split('/');
         const currentDateTime = new Date(`${currentYear}-${currentMonth}-${currentDay}`);
-        console.log(`Current datetime object: ${currentDateTime}`);
-
+            
         if (appointmentDateTime.getTime() === currentDateTime.getTime()) {
-            console.log('Status: today');
+
             return 'today';
         } else if (appointmentDateTime > currentDateTime) {
-            console.log('Status: future');
+
             return 'future';
         }
-        console.log('Status: past');
+
         return 'past';
     };
 
