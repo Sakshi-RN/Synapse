@@ -12,7 +12,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { fetchProfile } from '../../redux/Reducers/profileReducer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Fonts } from '../../Themes/fonts';
-
+import * as WebBrowser from 'expo-web-browser';
 const ProfileSettings = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
@@ -106,12 +106,12 @@ const ProfileSettings = () => {
 
                 <Text style={styles.sectionTitle}>Support</Text>
                 <View style={styles.section}>
-                    <TouchableOpacity style={styles.row}>
+                    <TouchableOpacity style={styles.row}  onPress={() => WebBrowser.openBrowserAsync('https://www.taramind.com/privacy')}>
                         <Text style={styles.rowText}>Privacy Policy</Text>
                         <Icon name="external-link" size={20} color={Colors.black} />
                     </TouchableOpacity>
                     <View style={styles.line} />
-                    <TouchableOpacity style={styles.row}>
+                    <TouchableOpacity style={styles.row}  onPress={() => WebBrowser.openBrowserAsync('https://www.taramind.com/participant-terms-of-service')}>
                         <Text style={styles.rowText}>Terms Of Use</Text>
                         <Icon name="external-link" size={20} color={Colors.black} />
                     </TouchableOpacity>
