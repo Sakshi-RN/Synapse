@@ -123,12 +123,11 @@ const UpcomingAppointmentCard = () => {
     return (
         <View>
         {appointments.length === 0 ? null : (
-   <View style={styles.commonContainer}>
-                <Text style={styles.name}>Upcoming Appointment</Text>
+            <View style={styles.commonContainer}>
                 {loading ? (
                     <Text>Loading...</Text>
                 ) : error ? (
-                    <Text style={styles.noAppointmenets}>{error}</Text>
+                    <Text style={styles.noAppointments}>{error}</Text>
                 ) : (
                     appointments.map((appointment, index) => {
                         const status = getAppointmentStatus(appointment.appointmentDate, appointment.timezone);
@@ -136,7 +135,10 @@ const UpcomingAppointmentCard = () => {
 
                         return (
                             <View key={index}>
-                                <View style={styles.rowStyle}>
+                                    <Text style={styles.name}>
+                                        {status === 'future' ? 'Upcoming Appointment' : 'Today’s Appointment'}
+                                    </Text>
+                                    <View style={styles.rowStyle}>
                                     <Text style={styles.name}>{appointment.providerName}</Text>
                                     {appointment.visitType === 'Virtual' ? <MeetIcon /> : <Location />}
                                 </View>
@@ -145,15 +147,9 @@ const UpcomingAppointmentCard = () => {
                                     {`${appointment.appointmentType} · ${appointment.visitType}`}
                                 </Text>
 
-                                {status === 'today' && (
-                                    <Text style={[styles.type, { marginTop: responsiveHeight(1) }]}>
-                                        {formatDateAndTime(appointmentDate, appointmentStartTime, appointmentEndTime, timezone)}{' '}({appointment.providerTimezoneAbbr})
-                                    </Text>
-                                )}
-
-                                <TouchableOpacity style={styles.upcomingButton}>
-                                    <Text style={styles.upcomingButtonText}>Upcoming</Text>
-                                </TouchableOpacity>
+                                <Text style={[styles.type, { marginTop: responsiveHeight(1) }]}>
+                                    {formatDateAndTime(appointmentDate, appointmentStartTime, appointmentEndTime, timezone)}{' '}({appointment.providerTimezoneAbbr})
+                                </Text>
 
                                 {status === 'future' && (
                                     <View style={styles.calenderView}>
@@ -174,10 +170,11 @@ const UpcomingAppointmentCard = () => {
                         );
                     })
                 )}
-           </View>
+            </View>
         )}
     </View>
-    );
+);
+
 };
 
 export default UpcomingAppointmentCard;
