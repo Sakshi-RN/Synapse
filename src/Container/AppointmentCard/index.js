@@ -5,6 +5,7 @@ import Colors from '../../Themes/Colors';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import { Fonts } from '../../Themes/fonts';
+import { DateTime } from 'luxon';
 
 
 const AppointmentCard = ({ appointment }) => {
@@ -12,6 +13,7 @@ const AppointmentCard = ({ appointment }) => {
     const formattedStartTime = moment(appointment.appointmentStartTime, 'HH:mm:ss').format('h:mm A');
     const formattedEndTime = moment(appointment.appointmentEndTime, 'HH:mm:ss').format('h:mm A');
     const formattedTime = `${formattedStartTime} - ${formattedEndTime}`;
+
     const formattedDate = moment(appointment.appointmentDate, 'MM/DD').format('MMMM DD');
 
     return (
@@ -32,17 +34,19 @@ const AppointmentCard = ({ appointment }) => {
             <View style={[styles.cardRow, { bottom: responsiveHeight(3) }]}>
                 <View>
                     <Text style={styles.name}>Facility Details</Text>
-                    <Text style={styles.type}>{appointment?.facility?.facilityName}</Text>
-                    <Text style={styles.type}>{appointment?.facility?.facilityAddress1}</Text>
-                    <Text style={styles.type}>{appointment?.facility?.facilityCity}</Text>
-                    <Text style={styles.type}>{appointment?.facility?.facilityState}{appointment?.facility?.facilityZip}</Text>
+                    <Text style={styles.type}>{appointment?.facility?.facilityName}{','}</Text>
+                    <Text style={styles.type}>{appointment?.facility?.facilityAddress1}{','}</Text>
+                    <Text style={styles.type}>{appointment?.facility?.facilityCity}{','}</Text>
+                    <Text style={styles.type}>{appointment?.facility?.facilityState}{', '}{appointment?.facility?.facilityZip}</Text>
                 </View>
                 <View style={{ marginTop: responsiveHeight(5) }}>
                     <Text style={[styles.nameNewText]}>Date</Text>
                     <Text style={[styles.secondText]}>{formattedDate}{' '}</Text>
                     <Text style={styles.nameNewText}>Time</Text>
-                    <Text style={[styles.secondText]}>{formattedTime}</Text>
-                    <Text style={styles.nameNewText}>Type</Text>
+                    <Text style={styles.secondText}>
+                        {formattedTime} ({appointment.providerTimezoneAbbr})
+                    </Text>
+                   <Text style={styles.nameNewText}>Type</Text>
                     <Text style={styles.secondText}>{appointment?.visitType}</Text>
                 </View>
             </View>
