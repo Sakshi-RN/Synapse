@@ -28,13 +28,13 @@
       ]
     ],
     "ios": {
-      "bundleIdentifier": "com.shertechinfo.synapse",
+      "bundleIdentifier": "com.aniltaramind2.Taramind",
       "supportsTablet": true,
       "infoPlist": {
         "NSFaceIDUsageDescription": "This app uses Face ID for authentication to enhance security."
       },
       "config": {
-        "googleMapsApiKey": "AIzaSyDHyIjrBQeMHueccXbdOK2gX3XYGmEo6N4"
+        "googleMapsApiKey": "AIzaSyDVPDMm_OdAKmAEqJ0W5nKNsZ6BaBoHcyI"
       }
     },
     "android": {
@@ -48,7 +48,7 @@
       ],
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyDHyIjrBQeMHueccXbdOK2gX3XYGmEo6N4"
+          "apiKey": "AIzaSyDVPDMm_OdAKmAEqJ0W5nKNsZ6BaBoHcyI"
         }
       },
       "package": "com.shertechinfo.synapse"
